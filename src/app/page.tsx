@@ -31,7 +31,7 @@ export default function Page() {
     if (s.mode !== "guide") return; // Phase 2 — diff mode not implemented yet.
     setLoading(true);
     try {
-      const result = await loadGuide(s.filter);
+      const result = await loadGuide({ filter: s.filter, skills: [] });
       setGuide(result);
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
