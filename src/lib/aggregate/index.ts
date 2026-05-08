@@ -2,7 +2,7 @@ import type { Character } from "../types";
 import type { ModDictionary } from "./types";
 import { aggregateAffixModsBySlot } from "./affixMods";
 import { aggregateCharms } from "./charms";
-import { aggregateAvgStats, FEATURED_STATS } from "./avgStats";
+import { aggregateAvgStats } from "./avgStats";
 
 export type { AffixMod, AffixModsBySlot } from "./affixMods";
 export type { CharmsAggregate, CharmModEntry } from "./charms";
@@ -34,6 +34,6 @@ export function aggregateClientSide(
     poolSize: filteredChars.length,
     affixModsBySlot: aggregateAffixModsBySlot(filteredChars, dict),
     charms: aggregateCharms(filteredChars, dict),
-    avgStats: aggregateAvgStats(filteredChars, FEATURED_STATS),
+    avgStats: aggregateAvgStats(filteredChars, dict),
   };
 }
