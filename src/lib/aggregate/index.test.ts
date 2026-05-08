@@ -61,5 +61,34 @@ describe("aggregateClientSide", () => {
     expect(result.poolSize).toBe(0);
     expect(Object.keys(result.affixModsBySlot)).toHaveLength(0);
     expect(result.charms.avgCount).toBe(0);
+    expect(result.avgStats).toHaveLength(0);
   });
+
+  it("returns non-empty avgStats for Paladin pool with FCR > 0", async () => {
+    const { default: snap } = await import("../../../data/snapshot.json");
+    const { filterCharacters } = await import("../filter");
+    const { default: dict } = await import("../../../data/mod-dictionary.json");
+
+    type Snap = { characters: import("../types").Character[] };
+    type Dict = import("./types").ModDictionary;
+
+    const chars = (snap as Snap).characters;
+    const paladins = filterCharacters(chars, { className: "Paladin", skills: [] });
+
+    const result = aggregateClientSide(paladins, dict as Dict);
+
+    expect(result.avgStats.length).toBeGreaterThan(0);
+
+    // FCR should be a common Paladin stat
+    const fcr = result.avgStats.find((s) => s.modName === "item_fastercastrate");
+    expect(fcr).toBeDefined();
+    expect(fcr!.avgValue).toBeGreaterThan(0);
+    expect(fcr!.pctOfChars).toBeGreaterThan(0);
+    expect(fcr!.pctOfChars).toBeLessThanOrEqual(1);
+
+    console.info(
+      `[avgStats smoke] FCR avg=${fcr?.avgValue.toFixed(1)}, ` +
+      `pctOfChars=${((fcr?.pctOfChars ?? 0) * 100).toFixed(0)}%`,
+    );
+  }, 30_000);
 });

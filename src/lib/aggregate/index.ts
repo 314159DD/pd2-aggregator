@@ -2,10 +2,12 @@ import type { Character } from "../types";
 import type { ModDictionary } from "./types";
 import { aggregateAffixModsBySlot } from "./affixMods";
 import { aggregateCharms } from "./charms";
+import { aggregateAvgStats, FEATURED_STATS } from "./avgStats";
 
 export type { AffixMod, AffixModsBySlot } from "./affixMods";
 export type { CharmsAggregate, CharmModEntry } from "./charms";
 export type { ModDictionary, ModDictionaryEntry } from "./types";
+export type { AvgStat } from "./avgStats";
 
 export type ClientAggregates = {
   /** Number of characters in the filtered pool */
@@ -14,6 +16,8 @@ export type ClientAggregates = {
   affixModsBySlot: ReturnType<typeof aggregateAffixModsBySlot>;
   /** Charm statistics across all characters */
   charms: ReturnType<typeof aggregateCharms>;
+  /** Average totals for featured build stats across the pool */
+  avgStats: ReturnType<typeof aggregateAvgStats>;
 };
 
 /**
@@ -30,5 +34,6 @@ export function aggregateClientSide(
     poolSize: filteredChars.length,
     affixModsBySlot: aggregateAffixModsBySlot(filteredChars, dict),
     charms: aggregateCharms(filteredChars, dict),
+    avgStats: aggregateAvgStats(filteredChars, FEATURED_STATS),
   };
 }

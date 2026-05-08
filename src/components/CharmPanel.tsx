@@ -4,20 +4,23 @@ export function CharmPanel({ data }: { data: CharmsAggregate }) {
   return (
     <div className="space-y-5">
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-        <Stat label="Avg charms" value={data.avgCount.toFixed(1)} />
+        <Stat label="Avg charms" value={data.avgCount.toFixed(1)} subtitle="per character" />
         <Stat
           label="Annihilus"
-          value={`${(data.annihilus.pct * 100).toFixed(0)}%`}
+          value={String(data.annihilus.count)}
+          subtitle="characters"
           gold
         />
         <Stat
           label="Hellfire Torch"
-          value={`${(data.torch.pct * 100).toFixed(0)}%`}
+          value={String(data.torch.count)}
+          subtitle="characters"
           gold
         />
         <Stat
           label="Gheed's Fortune"
-          value={`${(data.gheeds.pct * 100).toFixed(0)}%`}
+          value={String(data.gheeds.count)}
+          subtitle="characters"
           gold
         />
       </div>
@@ -41,10 +44,12 @@ export function CharmPanel({ data }: { data: CharmsAggregate }) {
 function Stat({
   label,
   value,
+  subtitle,
   gold,
 }: {
   label: string;
   value: string;
+  subtitle?: string;
   gold?: boolean;
 }) {
   return (
@@ -57,6 +62,9 @@ function Stat({
       >
         {value}
       </div>
+      {subtitle && (
+        <div className="text-[10px] text-muted-foreground mt-0.5">{subtitle}</div>
+      )}
     </div>
   );
 }
@@ -67,6 +75,12 @@ function ModList({ mods }: { mods: CharmModEntry[] }) {
   }
   return (
     <table className="w-full text-sm">
+      <thead>
+        <tr className="text-[10px] uppercase tracking-widest text-muted-foreground/70">
+          <th className="font-normal text-left pb-1">Mod</th>
+          <th className="font-normal text-right pb-1 w-14">Count</th>
+        </tr>
+      </thead>
       <tbody>
         {mods.slice(0, 10).map((m, i) => (
           <tr key={m.modName}>
@@ -77,8 +91,8 @@ function ModList({ mods }: { mods: CharmModEntry[] }) {
             >
               {m.displayLabel}
             </td>
-            <td className="py-1 text-right tabular-nums text-foreground w-12">
-              {(m.pct * 100).toFixed(0)}%
+            <td className="py-1 text-right tabular-nums text-foreground w-14">
+              {m.count.toLocaleString()}
             </td>
           </tr>
         ))}
