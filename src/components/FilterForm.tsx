@@ -81,12 +81,11 @@ export function FilterForm({ initial, onSubmit }: Props) {
         : "text-muted-foreground hover:rarity-unique border-b-2 border-transparent"
     }`;
 
-  // Active button: gold gradient background with dark text — high contrast.
-  // Inactive: lifted warm-stone with parchment text — clearly readable, clearly clickable.
+  // Active: gold gradient bg, near-black text. Inactive: lifted warm-stone bg, bright parchment text.
   const pillBtn = (active: boolean) =>
     active
       ? "px-3 py-1.5 text-sm rounded-sm font-bold uppercase tracking-wider border border-[#5e4a1f] text-[#0a0604] shadow-[inset_0_1px_0_rgba(255,212,122,0.5),0_0_10px_rgba(201,160,75,0.3)] bg-gradient-to-b from-[#dfb55a] to-[#a07a30] transition"
-      : "px-3 py-1.5 text-sm rounded-sm border border-[#5e4a1f] text-foreground bg-gradient-to-b from-[#3a2615] to-[#241509] hover:from-[#4a3220] hover:to-[#2e1d10] hover:border-[#c9a04b] transition";
+      : "px-3 py-1.5 text-sm rounded-sm border-2 border-[#7a5e29] font-medium text-[#f5e3b5] bg-gradient-to-b from-[#5a3f24] to-[#382514] hover:from-[#6e4f30] hover:to-[#4a3220] hover:border-[#c9a04b] hover:text-[#ffd47a] transition";
 
   return (
     <div className="d2-panel rounded-sm p-5 space-y-5">
