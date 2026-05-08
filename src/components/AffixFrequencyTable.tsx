@@ -12,70 +12,57 @@ const SLOT_ORDER = [
   "ring",
 ] as const;
 
-// D2-flavored category colors that pop on dark parchment.
-const CATEGORY_COLOR: Record<string, string> = {
-  skill: "text-[#d4a8ff]",       // arcane violet (skill bonuses)
-  resist: "text-[#ffaa3a]",      // gold-orange resist
-  stat: "text-[#7d8cff]",        // magic-blue for raw stats
-  damage: "text-[#ff6464]",      // blood red
-  speed: "text-[#62e88c]",       // emerald speed
-  leech: "text-[#ff8acd]",       // life-leech pink
-  utility: "text-[#ffd47a]",     // utility gold
-  defense: "text-[#a0b8c8]",     // steel
-  proc: "text-[#ff9a3a]",        // proc orange
-  other: "text-muted-foreground",
-};
-
 export function AffixFrequencyTable({ data }: { data: AffixModsBySlot }) {
   return (
     <div className="space-y-5">
-      {SLOT_ORDER.map((slot) => {
+      {SLOT_ORDER.map((slot, idx) => {
         const mods = data[slot];
-        if (!mods || mods.length === 0) {
-          return (
-            <div key={slot}>
-              <h3 className="d2-title text-base mb-2">{slot}</h3>
-              <p className="text-sm text-muted-foreground italic">
-                — No rare/magic/crafted items in this slot —
-              </p>
-            </div>
-          );
-        }
         return (
           <div key={slot}>
-            <h3 className="d2-title text-base mb-2">{slot}</h3>
-            <table className="d2-table w-full text-sm">
-              <thead>
-                <tr>
-                  <th className="text-left">Mod</th>
-                  <th className="text-right">%</th>
-                  <th className="text-right">Median</th>
-                  <th className="text-right">P75</th>
-                </tr>
-              </thead>
-              <tbody>
-                {mods.slice(0, 12).map((m, i) => (
-                  <tr key={m.modName}>
-                    <td
-                      className={`py-1.5 ${CATEGORY_COLOR[m.category] ?? ""} ${
-                        i < 5 ? "font-semibold" : ""
-                      }`}
-                    >
-                      {m.displayLabel}
-                    </td>
-                    <td className="text-right tabular-nums text-foreground">
-                      {(m.pct * 100).toFixed(0)}%
-                    </td>
-                    <td className="text-right tabular-nums text-muted-foreground">
-                      {m.medianValue ? m.medianValue.toFixed(0) : "-"}
-                    </td>
-                    <td className="text-right tabular-nums text-muted-foreground">
-                      {m.p75Value ? m.p75Value.toFixed(0) : "-"}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            {idx > 0 && <hr className="d2-rule mb-5" />}
+            <div className="d2-slot-block">
+              <h3 className="d2-sublabel mb-2">{slot}</h3>
+              {!mods || mods.length === 0 ? (
+                <p className="text-sm text-muted-foreground italic">
+                  — no rare/magic/crafted items —
+                </p>
+              ) : (
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="text-[10px] uppercase tracking-widest text-muted-foreground/70">
+                      <th className="font-normal text-left pb-1">Mod</th>
+                      <th className="font-normal text-right pb-1 w-14">%</th>
+                      <th className="font-normal text-right pb-1 w-14">Med</th>
+                      <th className="font-normal text-right pb-1 w-14">P75</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {mods.slice(0, 12).map((m, i) => (
+                      <tr key={m.modName}>
+                        <td
+                          className={`py-1 ${
+                            i < 3
+                              ? "rarity-unique font-semibold"
+                              : "text-foreground"
+                          }`}
+                        >
+                          {m.displayLabel}
+                        </td>
+                        <td className="py-1 text-right tabular-nums text-foreground">
+                          {(m.pct * 100).toFixed(0)}%
+                        </td>
+                        <td className="py-1 text-right tabular-nums text-muted-foreground">
+                          {m.medianValue ? m.medianValue.toFixed(0) : "—"}
+                        </td>
+                        <td className="py-1 text-right tabular-nums text-muted-foreground">
+                          {m.p75Value ? m.p75Value.toFixed(0) : "—"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
           </div>
         );
       })}

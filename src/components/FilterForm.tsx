@@ -138,15 +138,16 @@ export function FilterForm({ initial, onSubmit }: Props) {
       </div>
 
       {s.mode === "diff" && (
-        <Input
+        <input
+          type="text"
           placeholder="Character name or account name"
           value={s.diffName}
           onChange={(e) => setS({ ...s, diffName: e.target.value })}
+          className="w-full px-3 py-2 rounded-sm border-2 border-[#7a5e29] focus:border-[#c9a04b] outline-none text-[#f5e3b5] placeholder:text-[#a08560]/70 transition"
           style={{
-            background: "linear-gradient(180deg, #1f1409 0%, #2a1d0e 100%)",
-            boxShadow: "inset 0 2px 4px rgba(0,0,0,0.6)",
+            background: "linear-gradient(180deg, #5a3f24 0%, #382514 100%)",
+            boxShadow: "inset 0 2px 6px rgba(0,0,0,0.6)",
           }}
-          className="border-[#5e4a1f] focus-visible:border-[#c9a04b] focus-visible:ring-[#c9a04b]/20 text-foreground placeholder:text-muted-foreground/60"
         />
       )}
 
