@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { getSkillUsage, type SkillUsageRow } from "@/lib/api";
 import type { UiState } from "@/lib/url-state";
@@ -48,12 +47,11 @@ const CLASSES = [
 
 type Props = {
   initial: UiState;
-  onSubmit: (s: UiState, samplePages: number) => void;
+  onSubmit: (s: UiState) => void;
 };
 
 export function FilterForm({ initial, onSubmit }: Props) {
   const [s, setS] = useState<UiState>(initial);
-  const [samplePages, setSamplePages] = useState(5);
   const [skillList, setSkillList] = useState<SkillUsageRow[]>([]);
   const [skillsLoading, setSkillsLoading] = useState(false);
   const [skillsError, setSkillsError] = useState<string | null>(null);
@@ -221,23 +219,6 @@ export function FilterForm({ initial, onSubmit }: Props) {
         />
       </div>
 
-      {/* Sample pages */}
-      <div>
-        <label className="block text-xs uppercase tracking-widest text-muted-foreground mb-2">
-          Affix-mod sample:{" "}
-          <span className="rarity-unique font-semibold tabular-nums">
-            {samplePages * 50}
-          </span>{" "}
-          <span className="normal-case">raw characters</span>
-        </label>
-        <Slider
-          min={1}
-          max={10}
-          value={[samplePages]}
-          onValueChange={(v) => setSamplePages(v[0])}
-        />
-      </div>
-
       {/* Skills picker */}
       <div>
         <label className="block text-xs uppercase tracking-widest text-muted-foreground mb-2">
@@ -365,7 +346,7 @@ export function FilterForm({ initial, onSubmit }: Props) {
       </div>
 
       <Button
-        onClick={() => onSubmit(s, samplePages)}
+        onClick={() => onSubmit(s)}
         className="w-full sm:w-auto bg-gradient-to-b from-[#c9a04b] to-[#8a6f2e] text-[#0a0604] hover:from-[#dfb55a] hover:to-[#a08036] font-bold uppercase tracking-widest border border-[#5e4a1f] shadow-[inset_0_1px_0_rgba(255,212,122,0.4),0_2px_6px_rgba(0,0,0,0.5)]"
       >
         Generate Guide

@@ -30,7 +30,9 @@ export type LoadSource = "live" | "cache";
 export type GuideRequest = {
   filter: CommonFilter;
   skills: SkillRequirement[];
-  samplePages?: number; // default 5
+  /** @deprecated samplePages is ignored — the loader always fetches the full
+   *  class-filtered pool. Kept for backward compat so callers don't type-error. */
+  samplePages?: number;
 };
 
 export type LoadedGuide = {
@@ -43,6 +45,11 @@ export type LoadedGuide = {
   // Client-aggregate sections (new)
   clientAggregates: ClientAggregates;
   rawSamplePoolSize: number; // total raw chars fetched (across pages)
+  /** Equal to rawSamplePoolSize unless the total exceeded MAX_PAGES * PAGE_SIZE,
+   *  in which case rawSampleTotalAvailable > rawSamplePoolSize. */
+  rawSampleTotalAvailable: number;
+  /** True when the pool exceeded MAX_PAGES * PAGE_SIZE and was truncated. */
+  truncated: boolean;
   filteredPoolSize: number; // chars matching className + skills
   /** Raw (unfiltered) character sample — used for diff lookup fallback. */
   rawSample: Character[];
@@ -52,13 +59,21 @@ export type LoadedGuide = {
 };
 
 // ---------------------------------------------------------------------------
-// Cache internals
+// Constants
 // ---------------------------------------------------------------------------
 
 const SERVER_TTL_MS = 3_600_000; // 1 hour
 const RAW_TTL_MS = 86_400_000; // 24 hours
 
-const DEFAULT_SAMPLE_PAGES = 5;
+/** Hard ceiling on pages fetched for the raw pool. 30 pages * 50 chars = 1500 chars max. */
+const MAX_PAGES = 30;
+const PAGE_SIZE = 50;
+/** Max concurrent page fetches to avoid hammering the API. */
+const CONCURRENCY = 6;
+
+// ---------------------------------------------------------------------------
+// Cache internals
+// ---------------------------------------------------------------------------
 
 type ServerCacheEntry = {
   fetchedAt: number;
@@ -71,18 +86,15 @@ type ServerCacheEntry = {
 type RawCacheEntry = {
   fetchedAt: number;
   characters: Character[];
+  totalAvailable: number;
 };
 
 function serverCacheKey(f: CommonFilter): string {
   return `guide:server:${f.gameMode}|${f.className ?? "*"}|${f.minLevel ?? 0}`;
 }
 
-function rawCacheKey(
-  gameMode: string,
-  minLevel: number | undefined,
-  samplePages: number,
-): string {
-  return `guide:raw:${gameMode}|${minLevel ?? 0}|${samplePages}`;
+function rawCacheKey(f: CommonFilter): string {
+  return `guide:raw:${f.gameMode}|${f.className ?? "*"}|${f.minLevel ?? 0}`;
 }
 
 // ---------------------------------------------------------------------------
@@ -156,26 +168,54 @@ async function fetchServerAggregates(filter: CommonFilter): Promise<ServerCacheE
 }
 
 // ---------------------------------------------------------------------------
-// Raw character fetch
+// Raw character fetch — full pool
 // ---------------------------------------------------------------------------
 
+/**
+ * Fetch the complete class-filtered character pool for the given filter.
+ *
+ * Strategy:
+ * 1. Fetch page 1 to learn `total`.
+ * 2. Compute pagesNeeded = ceil(total / PAGE_SIZE), capped at MAX_PAGES.
+ * 3. Fetch remaining pages 2..N in parallel with concurrency CONCURRENCY.
+ * 4. Return the concatenated pool and the original `total` from the API.
+ */
 async function fetchRawCharacters(
   filter: CommonFilter,
-  samplePages: number,
-): Promise<Character[]> {
-  const pages = await Promise.all(
-    Array.from({ length: samplePages }, (_, i) =>
-      getCharactersPage(filter, i + 1),
-    ),
-  );
+  onProgress?: (msg: string) => void,
+): Promise<{ characters: Character[]; totalAvailable: number }> {
+  // Page 1 — tells us the total
+  onProgress?.("Fetching page 1…");
+  const page1 = await getCharactersPage(filter, 1);
+  const totalAvailable = page1.total;
 
-  const characters: Character[] = [];
-  for (const page of pages) {
-    for (const c of page.characters) {
-      characters.push(c as Character);
+  const pagesNeeded = Math.min(Math.ceil(totalAvailable / PAGE_SIZE), MAX_PAGES);
+
+  const characters: Character[] = (page1.characters as Character[]).slice();
+
+  if (pagesNeeded <= 1) {
+    return { characters, totalAvailable };
+  }
+
+  onProgress?.(`Fetching pages 2–${pagesNeeded} of ${pagesNeeded}…`);
+
+  // Fetch remaining pages with bounded concurrency
+  const pageNumbers = Array.from({ length: pagesNeeded - 1 }, (_, i) => i + 2);
+
+  for (let i = 0; i < pageNumbers.length; i += CONCURRENCY) {
+    const batch = pageNumbers.slice(i, i + CONCURRENCY);
+    const first = batch[0];
+    const last = batch[batch.length - 1];
+    onProgress?.(`Fetching page ${first}–${last} of ${pagesNeeded}…`);
+    const pages = await Promise.all(batch.map((p) => getCharactersPage(filter, p)));
+    for (const page of pages) {
+      for (const c of page.characters) {
+        characters.push(c as Character);
+      }
     }
   }
-  return characters;
+
+  return { characters, totalAvailable };
 }
 
 // ---------------------------------------------------------------------------
@@ -189,21 +229,26 @@ async function fetchRawCharacters(
  * complete LoadedGuide.
  *
  * Cache strategy:
- * - Server cache key includes className (different classes → different server stats).
- * - Raw cache key includes only gameMode + minLevel + samplePages — className and
- *   skills are NOT part of the key because filtering is done client-side from the
- *   cached raw set.
+ * - Server cache key: gameMode + className + minLevel
+ * - Raw cache key: gameMode + className + minLevel (className now included
+ *   because we fetch the server-filtered pool, not all characters)
  *
  * On live-fetch failure:
  * - Server fail + no server cache → re-throws.
  * - Raw fail + stale raw cache → uses stale raw set (logs warning).
  * - Raw fail + no raw cache → re-throws.
+ *
+ * @param onProgress Optional callback called with human-readable progress strings
+ *   during raw-pool fetching (e.g. "Fetching page 3–8 of 13…").
  */
-export async function loadGuide(req: GuideRequest): Promise<LoadedGuide> {
-  const { filter, skills, samplePages: rawSamplePages = DEFAULT_SAMPLE_PAGES } = req;
+export async function loadGuide(
+  req: GuideRequest,
+  onProgress?: (msg: string) => void,
+): Promise<LoadedGuide> {
+  const { filter, skills } = req;
 
   const sKey = serverCacheKey(filter);
-  const rKey = rawCacheKey(filter.gameMode, filter.minLevel, rawSamplePages);
+  const rKey = rawCacheKey(filter);
 
   // 1. Read both caches in parallel
   const now = Date.now();
@@ -219,7 +264,7 @@ export async function loadGuide(req: GuideRequest): Promise<LoadedGuide> {
 
   // 2. If both fresh: assemble from cache
   if (serverFresh && rawFresh) {
-    return assemble(req, cachedServer, cachedRaw.characters, "cache");
+    return assemble(req, cachedServer, cachedRaw.characters, cachedRaw.totalAvailable, "cache");
   }
 
   // 3. Fire missing fetches in parallel — track whether any live data was fetched
@@ -238,20 +283,20 @@ export async function loadGuide(req: GuideRequest): Promise<LoadedGuide> {
           throw err;
         });
 
-  const rawPromise: Promise<Character[]> = rawFresh
-    ? Promise.resolve(cachedRaw.characters)
-    : fetchRawCharacters(filter, rawSamplePages)
-        .then((chars) => {
+  const rawPromise: Promise<{ characters: Character[]; totalAvailable: number }> = rawFresh
+    ? Promise.resolve({ characters: cachedRaw.characters, totalAvailable: cachedRaw.totalAvailable })
+    : fetchRawCharacters(filter, onProgress)
+        .then((result) => {
           rawLive = true;
-          return chars;
+          return result;
         })
         .catch((err: unknown) => {
-          if (cachedRaw) return cachedRaw.characters; // stale fallback
+          if (cachedRaw) return { characters: cachedRaw.characters, totalAvailable: cachedRaw.totalAvailable }; // stale fallback
           throw err;
         });
 
   let serverResult: ServerCacheEntry;
-  let rawResult: Character[];
+  let rawResult: { characters: Character[]; totalAvailable: number };
 
   try {
     [serverResult, rawResult] = await Promise.all([serverPromise, rawPromise]);
@@ -268,14 +313,18 @@ export async function loadGuide(req: GuideRequest): Promise<LoadedGuide> {
   }
   if (rawLive) {
     writePromises.push(
-      _storeSet(rKey, { fetchedAt: Date.now(), characters: rawResult }),
+      _storeSet(rKey, {
+        fetchedAt: Date.now(),
+        characters: rawResult.characters,
+        totalAvailable: rawResult.totalAvailable,
+      }),
     );
   }
   await Promise.all(writePromises);
 
   // Source is "live" only if at least one live fetch succeeded
   const source: LoadSource = serverLive || rawLive ? "live" : "cache";
-  return assemble(req, serverResult, rawResult, source);
+  return assemble(req, serverResult, rawResult.characters, rawResult.totalAvailable, source);
 }
 
 // ---------------------------------------------------------------------------
@@ -286,11 +335,12 @@ function assemble(
   req: GuideRequest,
   server: ServerCacheEntry,
   rawChars: Character[],
+  totalAvailable: number,
   source: LoadSource,
 ): LoadedGuide {
   const { filter, skills } = req;
 
-  // 5. Filter raw set client-side by className + skills
+  // Filter raw set client-side by className + skills
   const filtered = filterCharacters(
     rawChars,
     {
@@ -300,8 +350,10 @@ function assemble(
     },
   );
 
-  // 6. Run client aggregation
+  // Run client aggregation
   const clientAggregates = aggregateClientSide(filtered, modDictionary);
+
+  const truncated = totalAvailable > MAX_PAGES * PAGE_SIZE;
 
   return {
     request: req,
@@ -311,6 +363,8 @@ function assemble(
     skillUsageSampleSize: server.skillUsageSampleSize,
     clientAggregates,
     rawSamplePoolSize: rawChars.length,
+    rawSampleTotalAvailable: totalAvailable,
+    truncated,
     filteredPoolSize: filtered.length,
     rawSample: rawChars,
     source,

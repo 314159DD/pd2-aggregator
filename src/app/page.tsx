@@ -28,6 +28,7 @@ export default function Page() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [hydrated, setHydrated] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState("Consulting the Horadric Cube…");
   const [diff, setDiff] = useState<CharacterDiff | null>(null);
   const [diffNotFound, setDiffNotFound] = useState(false);
 
@@ -38,17 +39,21 @@ export default function Page() {
     setHydrated(true);
   }, []);
 
-  async function run(s: UiState, samplePages: number) {
+  async function run(s: UiState) {
     setUiState(s);
     setError(null);
     setDiff(null);
     setDiffNotFound(false);
+    setLoadingMessage("Consulting the Horadric Cube…");
     if (typeof window !== "undefined") {
       window.history.replaceState(null, "", "?" + uiStateToParams(s).toString());
     }
     setLoading(true);
     try {
-      const result = await loadGuide({ filter: s.filter, skills: s.skills, samplePages });
+      const result = await loadGuide(
+        { filter: s.filter, skills: s.skills },
+        (msg) => setLoadingMessage(msg),
+      );
       setGuide(result);
 
       if (s.mode === "diff" && s.diffName) {
@@ -110,7 +115,7 @@ export default function Page() {
 
       {loading && (
         <div className="d2-panel rounded-sm p-4 text-sm text-muted-foreground italic">
-          Consulting the Horadric Cube…
+          {loadingMessage}
         </div>
       )}
 
@@ -198,40 +203,39 @@ function MatchBanner({
   skillCount: number;
 }) {
   const serverPool = guide.itemUsageSampleSize;
-  const skillFilteredPool = guide.clientAggregates.poolSize;
-  const rawSampled = guide.rawSamplePoolSize;
+  const skillFiltered = guide.clientAggregates.poolSize;
+  const rawPool = guide.rawSamplePoolSize;
   const className = guide.request.filter.className ?? "all classes";
   const minLevel = guide.request.filter.minLevel ?? 1;
   const gameMode = guide.request.filter.gameMode;
 
   return (
-    <div className="d2-panel rounded-sm px-5 py-4 flex items-baseline justify-between gap-4 flex-wrap">
-      <div>
-        <div className="d2-sublabel text-[10px] mb-1">Characters found</div>
-        <div className="d2-title text-3xl rarity-unique tabular-nums">
-          {serverPool.toLocaleString()}
-        </div>
-        <div className="text-xs text-muted-foreground mt-1">
-          {gameMode} {className} · level ≥ {minLevel}
-        </div>
-      </div>
-      {skillCount > 0 && (
-        <div className="text-right">
-          <div className="d2-sublabel text-[10px] mb-1">
-            Skill-filtered pool
-          </div>
-          <div className="d2-title text-2xl rarity-unique tabular-nums">
-            {skillFilteredPool.toLocaleString()}
-            <span className="text-base text-muted-foreground font-normal ml-1">
-              / {rawSampled.toLocaleString()}
-            </span>
+    <div className="d2-panel rounded-sm px-5 py-4">
+      <div className="flex items-baseline justify-between gap-4 flex-wrap">
+        <div>
+          <div className="d2-sublabel text-[10px] mb-1">Characters found</div>
+          <div className="d2-title text-3xl rarity-unique tabular-nums">
+            {(skillCount > 0 ? skillFiltered : serverPool).toLocaleString()}
+            {skillCount > 0 && (
+              <span className="text-base text-muted-foreground font-normal ml-2">
+                of {rawPool.toLocaleString()}
+              </span>
+            )}
           </div>
           <div className="text-xs text-muted-foreground mt-1">
-            {skillCount} skill filter{skillCount === 1 ? "" : "s"} applied to a
-            sample
+            {gameMode} {className} · level ≥ {minLevel}
+            {skillCount > 0
+              ? ` · ${skillCount} skill filter${skillCount === 1 ? "" : "s"}`
+              : ""}
           </div>
         </div>
-      )}
+        {guide.truncated && (
+          <div className="text-xs text-[#ff6464] text-right">
+            (truncated to first {rawPool.toLocaleString()} of{" "}
+            {guide.rawSampleTotalAvailable.toLocaleString()})
+          </div>
+        )}
+      </div>
     </div>
   );
 }
