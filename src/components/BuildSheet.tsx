@@ -2,35 +2,28 @@ import type { BuildSheet as BuildSheetData } from "@/lib/shape/buildSheet";
 
 export function BuildSheet({ data }: { data: BuildSheetData }) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       {/* Skills */}
-      <div>
-        <h3 className="d2-title text-base mb-2">Skill frequency</h3>
+      <div className="d2-slot-block">
+        <h3 className="d2-sublabel mb-2">Skill frequency</h3>
         {data.skillFrequency.length === 0 ? (
-          <p className="text-sm text-muted-foreground italic">— No data —</p>
+          <p className="text-sm text-muted-foreground italic">— no data —</p>
         ) : (
-          <table className="d2-table w-full text-sm">
-            <thead>
-              <tr>
-                <th className="text-left">Skill</th>
-                <th className="text-right">Count</th>
-                <th className="text-right">%</th>
-              </tr>
-            </thead>
+          <table className="w-full text-sm">
             <tbody>
               {data.skillFrequency.map((sk, i) => (
                 <tr key={sk.name}>
                   <td
-                    className={`py-1.5 ${
+                    className={`py-1 ${
                       i < 3 ? "rarity-unique font-semibold" : "text-foreground"
                     }`}
                   >
                     {sk.name}
                   </td>
-                  <td className="text-right tabular-nums text-muted-foreground">
+                  <td className="py-1 text-right tabular-nums text-muted-foreground pl-3">
                     {sk.numOccurrences.toLocaleString()}
                   </td>
-                  <td className="text-right tabular-nums text-foreground">
+                  <td className="py-1 text-right tabular-nums text-foreground w-14">
                     {sk.pct.toFixed(1)}%
                   </td>
                 </tr>
@@ -40,19 +33,23 @@ export function BuildSheet({ data }: { data: BuildSheetData }) {
         )}
       </div>
 
+      <hr className="d2-rule" />
+
       {/* Level distribution */}
-      <div>
-        <h3 className="d2-title text-base mb-2">Level distribution</h3>
+      <div className="d2-slot-block">
+        <h3 className="d2-sublabel mb-2">Level distribution</h3>
         {data.levelDistribution.length === 0 ? (
-          <p className="text-sm text-muted-foreground italic">— No data —</p>
+          <p className="text-sm text-muted-foreground italic">— no data —</p>
         ) : (
-          <div className="text-sm flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-1.5 text-sm">
             {data.levelDistribution.map((b) => (
               <span
                 key={b.level}
-                className="d2-panel rounded-sm px-2.5 py-1"
+                className="px-2 py-0.5 rounded-sm border border-[#3d2817] text-foreground"
               >
-                <span className="text-muted-foreground">L{b.level}</span>{" "}
+                <span className="text-muted-foreground">L</span>
+                {b.level}
+                <span className="text-muted-foreground">·</span>
                 <span className="font-semibold tabular-nums">
                   {b.count.toLocaleString()}
                 </span>
@@ -62,34 +59,38 @@ export function BuildSheet({ data }: { data: BuildSheetData }) {
         )}
       </div>
 
+      <hr className="d2-rule" />
+
       {/* Mercenary */}
-      <div>
-        <h3 className="d2-title text-base mb-2">Mercenary</h3>
-        <div className="text-sm">
+      <div className="d2-slot-block">
+        <h3 className="d2-sublabel mb-2">Mercenary</h3>
+        <div className="text-sm mb-2">
           <span className="text-muted-foreground">Top type: </span>
           <span className="rarity-unique font-semibold">
             {data.mercenary.topType || "—"}
           </span>
         </div>
         {Object.entries(data.mercenary.topItemsBySlot).length > 0 && (
-          <div className="mt-3 space-y-1.5">
+          <div className="space-y-1">
             {Object.entries(data.mercenary.topItemsBySlot).map(
               ([slot, items]) => (
-                <div key={slot} className="text-sm">
-                  <span className="capitalize text-muted-foreground uppercase tracking-wider text-xs">
-                    {slot}:
-                  </span>{" "}
-                  {items.map((it, i) => (
-                    <span key={it.itemName} className="rarity-unique">
-                      {i > 0 && (
-                        <span className="text-muted-foreground">, </span>
-                      )}
-                      {it.itemName}{" "}
-                      <span className="text-muted-foreground tabular-nums">
-                        ({it.pct.toFixed(0)}%)
+                <div key={slot} className="text-sm flex items-baseline gap-2">
+                  <span className="d2-sublabel w-16 shrink-0 text-[10px]">
+                    {slot}
+                  </span>
+                  <span>
+                    {items.map((it, i) => (
+                      <span key={it.itemName} className="rarity-unique">
+                        {i > 0 && (
+                          <span className="text-muted-foreground">, </span>
+                        )}
+                        {it.itemName}{" "}
+                        <span className="text-muted-foreground tabular-nums text-xs">
+                          ({it.pct.toFixed(0)}%)
+                        </span>
                       </span>
-                    </span>
-                  ))}
+                    ))}
+                  </span>
                 </div>
               ),
             )}

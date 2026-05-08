@@ -2,28 +2,37 @@ import type { CharmsAggregate, CharmModEntry } from "@/lib/aggregate";
 
 export function CharmPanel({ data }: { data: CharmsAggregate }) {
   return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+    <div className="space-y-5">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
         <Stat label="Avg charms" value={data.avgCount.toFixed(1)} />
         <Stat
           label="Annihilus"
           value={`${(data.annihilus.pct * 100).toFixed(0)}%`}
-          rare
+          gold
         />
         <Stat
           label="Hellfire Torch"
           value={`${(data.torch.pct * 100).toFixed(0)}%`}
-          rare
+          gold
         />
         <Stat
           label="Gheed's Fortune"
           value={`${(data.gheeds.pct * 100).toFixed(0)}%`}
-          rare
+          gold
         />
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        <ModList title="Top Grand Charm mods" mods={data.topGcMods} />
-        <ModList title="Top Small Charm mods" mods={data.topScMods} />
+
+      <hr className="d2-rule" />
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-5">
+        <div className="d2-slot-block">
+          <h3 className="d2-sublabel mb-2">Grand charm mods</h3>
+          <ModList mods={data.topGcMods} />
+        </div>
+        <div className="d2-slot-block">
+          <h3 className="d2-sublabel mb-2">Small charm mods</h3>
+          <ModList mods={data.topScMods} />
+        </div>
       </div>
     </div>
   );
@@ -32,20 +41,18 @@ export function CharmPanel({ data }: { data: CharmsAggregate }) {
 function Stat({
   label,
   value,
-  rare,
+  gold,
 }: {
   label: string;
   value: string;
-  rare?: boolean;
+  gold?: boolean;
 }) {
   return (
-    <div className="d2-panel rounded-sm p-3">
-      <div className="text-xs uppercase tracking-wider text-muted-foreground">
-        {label}
-      </div>
+    <div className="rounded-sm border border-[#3d2817] px-3 py-2">
+      <div className="d2-sublabel text-[10px] mb-0.5">{label}</div>
       <div
-        className={`text-xl font-semibold tabular-nums mt-1 ${
-          rare ? "rarity-unique" : "text-foreground"
+        className={`text-xl font-semibold tabular-nums ${
+          gold ? "rarity-unique" : "text-foreground"
         }`}
       >
         {value}
@@ -54,26 +61,28 @@ function Stat({
   );
 }
 
-function ModList({ title, mods }: { title: string; mods: CharmModEntry[] }) {
+function ModList({ mods }: { mods: CharmModEntry[] }) {
+  if (mods.length === 0) {
+    return <p className="text-sm text-muted-foreground italic">— no data —</p>;
+  }
   return (
-    <div>
-      <h4 className="d2-title text-sm mb-2">{title}</h4>
-      {mods.length === 0 ? (
-        <p className="text-sm text-muted-foreground italic">— No data —</p>
-      ) : (
-        <table className="d2-table w-full text-sm">
-          <tbody>
-            {mods.slice(0, 10).map((m) => (
-              <tr key={m.modName}>
-                <td className="py-1.5">{m.displayLabel}</td>
-                <td className="text-right tabular-nums">
-                  {(m.pct * 100).toFixed(0)}%
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-    </div>
+    <table className="w-full text-sm">
+      <tbody>
+        {mods.slice(0, 10).map((m, i) => (
+          <tr key={m.modName}>
+            <td
+              className={`py-1 ${
+                i < 3 ? "rarity-unique font-semibold" : "text-foreground"
+              }`}
+            >
+              {m.displayLabel}
+            </td>
+            <td className="py-1 text-right tabular-nums text-foreground w-12">
+              {(m.pct * 100).toFixed(0)}%
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 }
