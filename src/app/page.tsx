@@ -120,6 +120,8 @@ export default function Page() {
         </div>
       )}
 
+      {guide && !loading && <MatchBanner guide={guide} skillCount={uiState.skills.length} />}
+
       {uiState.mode === "diff" && diffNotFound && (
         <div className="d2-panel rounded-sm p-4 text-sm border-[#c9a04b]/40">
           Couldn&apos;t find a character or account named{" "}
@@ -185,6 +187,52 @@ export default function Page() {
         </p>
       )}
     </main>
+  );
+}
+
+function MatchBanner({
+  guide,
+  skillCount,
+}: {
+  guide: LoadedGuide;
+  skillCount: number;
+}) {
+  const serverPool = guide.itemUsageSampleSize;
+  const skillFilteredPool = guide.clientAggregates.poolSize;
+  const rawSampled = guide.rawSamplePoolSize;
+  const className = guide.request.filter.className ?? "all classes";
+  const minLevel = guide.request.filter.minLevel ?? 1;
+  const gameMode = guide.request.filter.gameMode;
+
+  return (
+    <div className="d2-panel rounded-sm px-5 py-4 flex items-baseline justify-between gap-4 flex-wrap">
+      <div>
+        <div className="d2-sublabel text-[10px] mb-1">Characters found</div>
+        <div className="d2-title text-3xl rarity-unique tabular-nums">
+          {serverPool.toLocaleString()}
+        </div>
+        <div className="text-xs text-muted-foreground mt-1">
+          {gameMode} {className} · level ≥ {minLevel}
+        </div>
+      </div>
+      {skillCount > 0 && (
+        <div className="text-right">
+          <div className="d2-sublabel text-[10px] mb-1">
+            Skill-filtered pool
+          </div>
+          <div className="d2-title text-2xl rarity-unique tabular-nums">
+            {skillFilteredPool.toLocaleString()}
+            <span className="text-base text-muted-foreground font-normal ml-1">
+              / {rawSampled.toLocaleString()}
+            </span>
+          </div>
+          <div className="text-xs text-muted-foreground mt-1">
+            {skillCount} skill filter{skillCount === 1 ? "" : "s"} applied to a
+            sample
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 
