@@ -2,10 +2,17 @@
 import { useEffect, useState } from "react";
 import { FilterForm } from "@/components/FilterForm";
 import { ItemFrequencyTable } from "@/components/ItemFrequencyTable";
+import { AffixFrequencyTable } from "@/components/AffixFrequencyTable";
+import { CharmPanel } from "@/components/CharmPanel";
 import { BuildSheet } from "@/components/BuildSheet";
 import { DataFreshness } from "@/components/DataFreshness";
 import { loadGuide, type LoadedGuide } from "@/lib/data-loader";
-import { paramsToUiState, uiStateToParams, DEFAULT_UI_STATE, type UiState } from "@/lib/url-state";
+import {
+  paramsToUiState,
+  uiStateToParams,
+  DEFAULT_UI_STATE,
+  type UiState,
+} from "@/lib/url-state";
 
 export default function Page() {
   const [uiState, setUiState] = useState<UiState>(DEFAULT_UI_STATE);
@@ -17,21 +24,20 @@ export default function Page() {
   // Hydrate from URL on mount.
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const fromUrl = paramsToUiState(new URLSearchParams(window.location.search));
-    setUiState(fromUrl);
+    setUiState(paramsToUiState(new URLSearchParams(window.location.search)));
     setHydrated(true);
   }, []);
 
-  async function run(s: UiState) {
+  async function run(s: UiState, samplePages: number) {
     setUiState(s);
     setError(null);
     if (typeof window !== "undefined") {
       window.history.replaceState(null, "", "?" + uiStateToParams(s).toString());
     }
-    if (s.mode !== "guide") return; // Phase 2 — diff mode not implemented yet.
+    if (s.mode !== "guide") return;
     setLoading(true);
     try {
-      const result = await loadGuide({ filter: s.filter, skills: [] });
+      const result = await loadGuide({ filter: s.filter, skills: s.skills, samplePages });
       setGuide(result);
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
@@ -50,16 +56,20 @@ export default function Page() {
   }
 
   return (
-    <main className="mx-auto max-w-4xl p-6 space-y-6">
-      <header className="flex items-baseline justify-between">
+    <main className="mx-auto max-w-5xl p-6 space-y-6">
+      <header className="flex items-baseline justify-between flex-wrap gap-2">
         <h1 className="text-2xl font-bold">PD2 Build Affix Aggregator</h1>
-        {guide && <DataFreshness source={guide.source} fetchedAt={guide.fetchedAt} />}
+        {guide && (
+          <DataFreshness source={guide.source} fetchedAt={guide.fetchedAt} />
+        )}
       </header>
 
       <FilterForm initial={uiState} onSubmit={run} />
 
       {loading && (
-        <div className="rounded border p-4 text-sm text-muted-foreground">Loading guide…</div>
+        <div className="rounded border p-4 text-sm text-muted-foreground">
+          Loading guide…
+        </div>
       )}
 
       {error && (
@@ -76,33 +86,62 @@ export default function Page() {
 
       {guide && uiState.mode === "guide" && (
         <>
-          <Section title="Top equipped items by slot" subtitle={`n=${guide.itemUsageSampleSize.toLocaleString()}`}>
+          <Section
+            title="Top equipped items by slot"
+            subtitle={`server pool n=${guide.itemUsageSampleSize.toLocaleString()}`}
+          >
             <ItemFrequencyTable data={guide.topItemsBySlot} />
           </Section>
-          <Section title="Build sheet" subtitle={`n=${guide.skillUsageSampleSize.toLocaleString()}`}>
+
+          <Section
+            title="Most common affix mods"
+            subtitle={`skill-filtered n=${guide.clientAggregates.poolSize.toLocaleString()} of ${guide.rawSamplePoolSize.toLocaleString()} sampled`}
+          >
+            <AffixFrequencyTable data={guide.clientAggregates.affixModsBySlot} />
+          </Section>
+
+          <Section
+            title="Charm patterns"
+            subtitle={`n=${guide.clientAggregates.poolSize.toLocaleString()}`}
+          >
+            <CharmPanel data={guide.clientAggregates.charms} />
+          </Section>
+
+          <Section
+            title="Build sheet"
+            subtitle={`server pool n=${guide.skillUsageSampleSize.toLocaleString()}`}
+          >
             <BuildSheet data={guide.buildSheet} />
           </Section>
-          <p className="text-xs text-muted-foreground">
-            Affix mods + charm patterns are Phase 2.
-          </p>
         </>
       )}
 
       {!guide && !loading && !error && uiState.mode === "guide" && (
         <p className="text-sm text-muted-foreground">
-          Pick filters and click <span className="font-semibold">Generate Guide</span>.
+          Pick filters and click{" "}
+          <span className="font-semibold">Generate Guide</span>.
         </p>
       )}
     </main>
   );
 }
 
-function Section({ title, subtitle, children }: { title: string; subtitle?: string; children: React.ReactNode }) {
+function Section({
+  title,
+  subtitle,
+  children,
+}: {
+  title: string;
+  subtitle?: string;
+  children: React.ReactNode;
+}) {
   return (
     <section className="rounded-lg border p-4">
-      <header className="flex items-baseline justify-between mb-3">
+      <header className="flex items-baseline justify-between mb-3 flex-wrap gap-2">
         <h2 className="text-lg font-semibold">{title}</h2>
-        {subtitle && <span className="text-xs text-muted-foreground">{subtitle}</span>}
+        {subtitle && (
+          <span className="text-xs text-muted-foreground">{subtitle}</span>
+        )}
       </header>
       {children}
     </section>
