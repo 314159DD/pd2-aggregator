@@ -39,19 +39,25 @@ export function ItemFrequencyTable({ data }: { data: TopItemsBySlot }) {
                 </p>
               ) : (
                 <table className="w-full text-sm">
+                  <colgroup>
+                    <col />
+                    <col style={{ width: "5.5rem" }} />
+                    <col style={{ width: "4rem" }} />
+                    <col style={{ width: "4rem" }} />
+                  </colgroup>
                   <tbody>
                     {items.map((it) => (
                       <tr key={it.itemName}>
-                        <td className={`py-1 ${rarityClass(it.itemType)}`}>
+                        <td className={`py-1 pr-3 ${rarityClass(it.itemType)}`}>
                           {it.itemName}
                         </td>
-                        <td className="py-1 text-xs text-muted-foreground/70 pl-3">
+                        <td className="py-1 text-right text-xs uppercase tracking-wider text-muted-foreground/70">
                           {it.itemType}
                         </td>
-                        <td className="py-1 text-right tabular-nums text-muted-foreground pl-3">
+                        <td className="py-1 text-right tabular-nums text-muted-foreground">
                           {it.count.toLocaleString()}
                         </td>
-                        <td className="py-1 text-right tabular-nums text-foreground pl-3 w-14">
+                        <td className="py-1 text-right tabular-nums text-foreground">
                           {it.pct.toFixed(1)}%
                         </td>
                       </tr>
