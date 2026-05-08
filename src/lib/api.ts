@@ -26,7 +26,7 @@ export type ItemUsageRow = {
 };
 
 export type SkillUsageRow = { name: string; numOccurrences: number; totalSample: number; pct: number };
-export type MercTypeUsageRow = { name: string; numOccurrences: number; totalSample: number; pct: number };
+export type MercTypeUsageRow = { mercType: string; numOccurrences: number; totalSample: number; pct: number };
 export type MercItemUsageRow = ItemUsageRow;
 
 export type LevelDistribution = {

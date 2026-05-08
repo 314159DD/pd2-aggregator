@@ -12,7 +12,7 @@ describe("shapeBuildSheet", () => {
         hardcore: [{ level: 99, count: 12 }, { level: 95, count: 30 }],
         softcore: [{ level: 99, count: 0 }],
       },
-      mercTypes: [{ name: "Holy Freeze", numOccurrences: 70, totalSample: 100, pct: 70 }],
+      mercTypes: [{ mercType: "Holy Freeze", numOccurrences: 70, totalSample: 100, pct: 70 }],
       mercItems: [],
       gameMode: "hardcore",
     });

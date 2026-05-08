@@ -42,7 +42,7 @@ export function shapeBuildSheet(input: {
     skillFrequency,
     levelDistribution,
     mercenary: {
-      topType: input.mercTypes[0]?.name ?? "",
+      topType: input.mercTypes[0]?.mercType ?? "",
       typeFrequency: input.mercTypes,
       topItemsBySlot: mercItemsBySlot,
     },
