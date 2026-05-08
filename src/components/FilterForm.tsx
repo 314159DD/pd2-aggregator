@@ -81,12 +81,12 @@ export function FilterForm({ initial, onSubmit }: Props) {
         : "text-muted-foreground hover:rarity-unique border-b-2 border-transparent"
     }`;
 
+  // Active button: gold gradient background with dark text — high contrast.
+  // Inactive: lifted warm-stone with parchment text — clearly readable, clearly clickable.
   const pillBtn = (active: boolean) =>
-    `px-3 py-1.5 text-sm rounded-sm transition border ${
-      active
-        ? "bg-[#2a1a0d] rarity-unique border-[#c9a04b] font-semibold shadow-[inset_0_1px_0_rgba(201,160,75,0.25),0_0_8px_rgba(201,160,75,0.15)]"
-        : "bg-transparent text-muted-foreground border-[#3d2817] hover:border-[#c9a04b] hover:text-foreground"
-    }`;
+    active
+      ? "px-3 py-1.5 text-sm rounded-sm font-bold uppercase tracking-wider border border-[#5e4a1f] text-[#0a0604] shadow-[inset_0_1px_0_rgba(255,212,122,0.5),0_0_10px_rgba(201,160,75,0.3)] bg-gradient-to-b from-[#dfb55a] to-[#a07a30] transition"
+      : "px-3 py-1.5 text-sm rounded-sm border border-[#5e4a1f] text-foreground bg-gradient-to-b from-[#3a2615] to-[#241509] hover:from-[#4a3220] hover:to-[#2e1d10] hover:border-[#c9a04b] transition";
 
   return (
     <div className="d2-panel rounded-sm p-5 space-y-5">
@@ -220,10 +220,14 @@ export function FilterForm({ initial, onSubmit }: Props) {
             {s.skills.map((sk) => (
               <span
                 key={sk.name}
-                className="inline-flex items-center gap-1 d2-panel rounded-sm pl-2 pr-1 py-0.5 text-sm rarity-unique"
+                className="inline-flex items-center gap-1 rounded-sm pl-2 pr-1 py-1 text-sm font-semibold border border-[#5e4a1f] text-[#0a0604] shadow-[inset_0_1px_0_rgba(255,212,122,0.4)]"
+                style={{
+                  background:
+                    "linear-gradient(180deg, #dfb55a 0%, #a07a30 100%)",
+                }}
               >
                 <span>{sk.name}</span>
-                <span className="text-xs text-muted-foreground">≥</span>
+                <span className="text-xs opacity-70">≥</span>
                 <input
                   type="number"
                   min={1}
@@ -235,11 +239,11 @@ export function FilterForm({ initial, onSubmit }: Props) {
                       Math.max(1, Math.min(30, Number(e.target.value) || 1)),
                     )
                   }
-                  className="w-10 bg-transparent border-0 text-center text-xs outline-none rarity-unique tabular-nums"
+                  className="w-10 bg-transparent border-0 text-center text-xs outline-none tabular-nums font-bold"
                 />
                 <button
                   type="button"
-                  className="w-5 h-5 flex items-center justify-center rounded-sm text-muted-foreground hover:bg-[#a52a2a] hover:text-foreground"
+                  className="w-5 h-5 flex items-center justify-center rounded-sm hover:bg-[#a52a2a] hover:text-[#f0d9a8] transition"
                   onClick={() => toggleSkill(sk.name)}
                 >
                   ×
@@ -257,12 +261,13 @@ export function FilterForm({ initial, onSubmit }: Props) {
         )}
         {!skillsLoading && !skillsError && skillList.length > 0 && (
           <div
-            className="max-h-60 overflow-y-auto rounded-sm border border-[#5e4a1f] text-sm"
+            className="max-h-60 overflow-y-auto rounded-sm border border-[#7a5e29] text-sm"
             style={{
+              // Clearly LIGHTER than the surrounding panel — reads as a parchment recess.
               background:
-                "linear-gradient(180deg, #1f1409 0%, #2a1d0e 100%)",
+                "linear-gradient(180deg, #4a3320 0%, #38241290 100%), #3a2615",
               boxShadow:
-                "inset 0 2px 6px rgba(0,0,0,0.7), inset 0 -1px 0 rgba(201,160,75,0.08)",
+                "inset 0 2px 6px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(201,160,75,0.08)",
             }}
           >
             {skillList.map((sk, i) => {
@@ -272,27 +277,29 @@ export function FilterForm({ initial, onSubmit }: Props) {
                   key={sk.name}
                   type="button"
                   onClick={() => toggleSkill(sk.name)}
-                  className={`group flex w-full items-center justify-between px-3 py-1.5 text-left transition ${
-                    i > 0 ? "border-t border-[#3d2817]/40" : ""
+                  className={`group flex w-full items-center justify-between px-3 py-2 text-left transition-colors ${
+                    i > 0 ? "border-t border-[#5e4a1f]/40" : ""
                   } ${
                     selected
-                      ? "rarity-unique font-semibold"
-                      : "text-foreground hover:rarity-unique"
+                      ? "font-semibold text-[#0a0604]"
+                      : "text-[#f0d9a8] hover:text-[#ffd47a]"
                   }`}
                   style={
                     selected
                       ? {
                           background:
-                            "linear-gradient(90deg, rgba(201,160,75,0.18) 0%, rgba(201,160,75,0.06) 100%)",
-                          borderLeft: "2px solid #c9a04b",
-                          paddingLeft: "10px",
+                            "linear-gradient(90deg, #dfb55a 0%, #a07a30 100%)",
+                          borderLeft: "3px solid #ffd47a",
+                          paddingLeft: "9px",
+                          boxShadow:
+                            "inset 0 1px 0 rgba(255,212,122,0.4)",
                         }
                       : undefined
                   }
                   onMouseEnter={(e) => {
                     if (!selected) {
                       e.currentTarget.style.background =
-                        "rgba(201,160,75,0.06)";
+                        "rgba(201,160,75,0.12)";
                     }
                   }}
                   onMouseLeave={(e) => {
@@ -302,7 +309,13 @@ export function FilterForm({ initial, onSubmit }: Props) {
                   }}
                 >
                   <span>{sk.name}</span>
-                  <span className="text-xs text-muted-foreground tabular-nums group-hover:text-foreground/70">
+                  <span
+                    className={`text-xs tabular-nums ${
+                      selected
+                        ? "text-[#0a0604]/70 font-semibold"
+                        : "text-[#a08560]"
+                    }`}
+                  >
                     {sk.pct.toFixed(0)}%
                   </span>
                 </button>
