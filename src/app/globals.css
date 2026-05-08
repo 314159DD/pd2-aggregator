@@ -9,7 +9,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+  --font-heading: var(--font-cinzel);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -39,6 +39,12 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-rarity-unique: var(--rarity-unique);
+  --color-rarity-set: var(--rarity-set);
+  --color-rarity-runeword: var(--rarity-runeword);
+  --color-rarity-rare: var(--rarity-rare);
+  --color-rarity-magic: var(--rarity-magic);
+  --color-rarity-crafted: var(--rarity-crafted);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -48,83 +54,128 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* D2 dark palette is the only palette — no light mode. */
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
+  --background: #0a0604;
+  --foreground: #e8d4a4;
+  --card: #160d07;
+  --card-foreground: #e8d4a4;
+  --popover: #160d07;
+  --popover-foreground: #e8d4a4;
+  --primary: #c9a04b;
+  --primary-foreground: #0a0604;
+  --secondary: #2a1a0d;
+  --secondary-foreground: #e8d4a4;
+  --muted: #1f130b;
+  --muted-foreground: #8a7a5e;
+  --accent: #2a1a0d;
+  --accent-foreground: #ffd47a;
+  --destructive: #a52a2a;
+  --border: #3d2817;
+  --input: #2a1a0d;
+  --ring: #c9a04b;
+  --chart-1: #c9a04b;
+  --chart-2: #8a1a1a;
+  --chart-3: #6b6bff;
+  --chart-4: #f5e555;
+  --chart-5: #00b800;
+  --radius: 0.25rem;
+  --sidebar: #160d07;
+  --sidebar-foreground: #e8d4a4;
+  --sidebar-primary: #c9a04b;
+  --sidebar-primary-foreground: #0a0604;
+  --sidebar-accent: #2a1a0d;
+  --sidebar-accent-foreground: #ffd47a;
+  --sidebar-border: #3d2817;
+  --sidebar-ring: #c9a04b;
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  /* D2 item rarity colors (canonical) */
+  --rarity-normal: #e8d4a4;
+  --rarity-magic: #6b6bff;
+  --rarity-rare: #ffff64;
+  --rarity-set: #00b800;
+  --rarity-unique: #a08f5d;
+  --rarity-runeword: #ff8c00;
+  --rarity-crafted: #ff8000;
+  --rarity-superior: #ffffff;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
+
   html {
+    background:
+      radial-gradient(ellipse at top, #1a0f08 0%, #0a0604 60%, #050302 100%) fixed,
+      #050302;
     @apply font-sans;
   }
+
+  body {
+    @apply bg-transparent text-foreground;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(201, 160, 75, 0.04) 0%, transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(138, 26, 26, 0.05) 0%, transparent 50%);
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-cinzel), serif;
+    letter-spacing: 0.02em;
+  }
 }
+
+/* Carved/etched gold heading look for the page title. */
+.d2-title {
+  font-family: var(--font-cinzel), serif;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: linear-gradient(180deg, #f5d480 0%, #c9a04b 50%, #8a6f2e 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* Stone-bevel look for cards and form blocks. */
+.d2-panel {
+  background:
+    linear-gradient(180deg, #1f1409 0%, #110a06 100%);
+  border: 1px solid #3d2817;
+  box-shadow:
+    inset 0 1px 0 rgba(201, 160, 75, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.6),
+    0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+/* Subtle inset for tables. */
+.d2-table {
+  border-collapse: collapse;
+}
+.d2-table thead th {
+  border-bottom: 1px solid #3d2817;
+  color: #8a7a5e;
+  font-family: var(--font-cinzel), serif;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+}
+.d2-table tbody tr {
+  border-bottom: 1px dashed rgba(61, 40, 23, 0.5);
+}
+.d2-table tbody tr:hover {
+  background: rgba(201, 160, 75, 0.04);
+}
+
+/* D2 rarity color helpers used by tables. */
+.rarity-unique { color: var(--rarity-unique); }
+.rarity-set { color: var(--rarity-set); }
+.rarity-runeword { color: var(--rarity-runeword); }
+.rarity-rare { color: var(--rarity-rare); }
+.rarity-magic { color: var(--rarity-magic); }
+.rarity-crafted { color: var(--rarity-crafted); }
+.rarity-normal { color: var(--rarity-normal); }
+.rarity-superior { color: var(--rarity-superior); }

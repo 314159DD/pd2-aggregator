@@ -90,17 +90,17 @@ export default function Page() {
 
   if (!hydrated) {
     return (
-      <main className="mx-auto max-w-4xl p-6">
-        <h1 className="text-2xl font-bold">PD2 Build Affix Aggregator</h1>
-        <p className="text-sm text-muted-foreground mt-2">Loading…</p>
+      <main className="mx-auto max-w-5xl p-6">
+        <h1 className="d2-title text-3xl sm:text-4xl">PD2 Build Aggregator</h1>
+        <p className="text-sm text-muted-foreground mt-2 italic">Summoning…</p>
       </main>
     );
   }
 
   return (
-    <main className="mx-auto max-w-5xl p-6 space-y-6">
-      <header className="flex items-baseline justify-between flex-wrap gap-2">
-        <h1 className="text-2xl font-bold">PD2 Build Affix Aggregator</h1>
+    <main className="mx-auto max-w-5xl p-4 sm:p-6 space-y-6">
+      <header className="flex items-baseline justify-between flex-wrap gap-2 border-b border-[#3d2817] pb-3">
+        <h1 className="d2-title text-3xl sm:text-4xl">PD2 Build Aggregator</h1>
         {guide && (
           <DataFreshness source={guide.source} fetchedAt={guide.fetchedAt} />
         )}
@@ -109,23 +109,24 @@ export default function Page() {
       <FilterForm initial={uiState} onSubmit={run} />
 
       {loading && (
-        <div className="rounded border p-4 text-sm text-muted-foreground">
-          Loading guide…
+        <div className="d2-panel rounded-sm p-4 text-sm text-muted-foreground italic">
+          Consulting the Horadric Cube…
         </div>
       )}
 
       {error && (
-        <div className="rounded border border-rose-500 p-4 text-sm text-rose-700">
+        <div className="d2-panel rounded-sm p-4 text-sm border-[#a52a2a]/60 text-[#ff6464]">
           Failed to load: {error}
         </div>
       )}
 
       {uiState.mode === "diff" && diffNotFound && (
-        <div className="rounded border border-amber-500 p-4 text-sm">
+        <div className="d2-panel rounded-sm p-4 text-sm border-[#c9a04b]/40">
           Couldn&apos;t find a character or account named{" "}
-          <strong>{uiState.diffName}</strong>. Push your character via{" "}
+          <strong className="rarity-unique">{uiState.diffName}</strong>. Push
+          your character via{" "}
           <a
-            className="underline"
+            className="rarity-runeword underline hover:opacity-80"
             href="https://github.com/coleestrin/pd2-character-downloader"
             target="_blank"
             rel="noreferrer"
@@ -178,9 +179,9 @@ export default function Page() {
       )}
 
       {!guide && !loading && !error && (
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-muted-foreground italic">
           Pick filters and click{" "}
-          <span className="font-semibold">Generate Guide</span>.
+          <span className="rarity-unique font-semibold not-italic">Generate Guide</span>.
         </p>
       )}
     </main>
@@ -197,11 +198,13 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section className="rounded-lg border p-4">
-      <header className="flex items-baseline justify-between mb-3 flex-wrap gap-2">
-        <h2 className="text-lg font-semibold">{title}</h2>
+    <section className="d2-panel rounded-sm p-5">
+      <header className="flex items-baseline justify-between mb-4 flex-wrap gap-2 border-b border-[#3d2817] pb-2">
+        <h2 className="d2-title text-xl">{title}</h2>
         {subtitle && (
-          <span className="text-xs text-muted-foreground">{subtitle}</span>
+          <span className="text-xs text-muted-foreground tabular-nums">
+            {subtitle}
+          </span>
         )}
       </header>
       {children}

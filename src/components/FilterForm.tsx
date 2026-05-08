@@ -3,10 +3,8 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
-import { Badge } from "@/components/ui/badge";
 import { getSkillUsage, type SkillUsageRow } from "@/lib/api";
 import type { UiState } from "@/lib/url-state";
-import type { SkillRequirement } from "@/lib/filter";
 
 const CLASSES = [
   "Amazon",
@@ -30,7 +28,6 @@ export function FilterForm({ initial, onSubmit }: Props) {
   const [skillsLoading, setSkillsLoading] = useState(false);
   const [skillsError, setSkillsError] = useState<string | null>(null);
 
-  // Fetch skill list for the active class.
   useEffect(() => {
     let cancelled = false;
     if (!s.filter.className) {
@@ -42,7 +39,6 @@ export function FilterForm({ initial, onSubmit }: Props) {
     getSkillUsage({ gameMode: s.filter.gameMode, className: s.filter.className })
       .then((rows) => {
         if (!cancelled) {
-          // Sort by pct descending
           const sorted = [...rows].sort((a, b) => b.pct - a.pct);
           setSkillList(sorted);
         }
@@ -78,24 +74,38 @@ export function FilterForm({ initial, onSubmit }: Props) {
     });
   }
 
+  const tabBtn = (active: boolean) =>
+    `px-3 py-1.5 text-sm uppercase tracking-wider transition ${
+      active
+        ? "rarity-unique font-semibold border-b-2 border-[#c9a04b]"
+        : "text-muted-foreground hover:rarity-unique border-b-2 border-transparent"
+    }`;
+
+  const pillBtn = (active: boolean) =>
+    `px-3 py-1.5 text-sm rounded-sm transition border ${
+      active
+        ? "bg-[#2a1a0d] rarity-unique border-[#c9a04b] font-semibold shadow-[inset_0_1px_0_rgba(201,160,75,0.25),0_0_8px_rgba(201,160,75,0.15)]"
+        : "bg-transparent text-muted-foreground border-[#3d2817] hover:border-[#c9a04b] hover:text-foreground"
+    }`;
+
   return (
-    <div className="space-y-5 rounded-lg border p-4">
-      {/* Mode toggle */}
-      <div className="flex gap-2">
-        <Button
-          variant={s.mode === "guide" ? "default" : "outline"}
-          size="sm"
+    <div className="d2-panel rounded-sm p-5 space-y-5">
+      {/* Mode toggle as tabs */}
+      <div className="flex gap-1 border-b border-[#3d2817] -mt-1">
+        <button
+          type="button"
+          className={tabBtn(s.mode === "guide")}
           onClick={() => setS({ ...s, mode: "guide" })}
         >
           Build a guide
-        </Button>
-        <Button
-          variant={s.mode === "diff" ? "default" : "outline"}
-          size="sm"
+        </button>
+        <button
+          type="button"
+          className={tabBtn(s.mode === "diff")}
           onClick={() => setS({ ...s, mode: "diff" })}
         >
           Diff my character
-        </Button>
+        </button>
       </div>
 
       {s.mode === "diff" && (
@@ -103,47 +113,48 @@ export function FilterForm({ initial, onSubmit }: Props) {
           placeholder="Character name or account name"
           value={s.diffName}
           onChange={(e) => setS({ ...s, diffName: e.target.value })}
+          className="bg-[#0a0604] border-[#3d2817] focus-visible:border-[#c9a04b]"
         />
       )}
 
       {/* Game mode */}
       <div>
-        <label className="block text-xs uppercase tracking-wide text-muted-foreground mb-2">
+        <label className="block text-xs uppercase tracking-widest text-muted-foreground mb-2">
           Game mode
         </label>
         <div className="flex gap-2">
-          <Button
-            variant={s.filter.gameMode === "hardcore" ? "default" : "outline"}
-            size="sm"
+          <button
+            type="button"
+            className={pillBtn(s.filter.gameMode === "hardcore")}
             onClick={() =>
               setS({ ...s, filter: { ...s.filter, gameMode: "hardcore" } })
             }
           >
             Hardcore
-          </Button>
-          <Button
-            variant={s.filter.gameMode === "softcore" ? "default" : "outline"}
-            size="sm"
+          </button>
+          <button
+            type="button"
+            className={pillBtn(s.filter.gameMode === "softcore")}
             onClick={() =>
               setS({ ...s, filter: { ...s.filter, gameMode: "softcore" } })
             }
           >
             Softcore
-          </Button>
+          </button>
         </div>
       </div>
 
       {/* Class selector */}
       <div>
-        <label className="block text-xs uppercase tracking-wide text-muted-foreground mb-2">
+        <label className="block text-xs uppercase tracking-widest text-muted-foreground mb-2">
           Class
         </label>
         <div className="grid grid-cols-3 sm:grid-cols-7 gap-2">
           {CLASSES.map((c) => (
-            <Button
+            <button
               key={c}
-              variant={s.filter.className === c ? "default" : "outline"}
-              size="sm"
+              type="button"
+              className={pillBtn(s.filter.className === c)}
               onClick={() =>
                 setS({
                   ...s,
@@ -153,16 +164,16 @@ export function FilterForm({ initial, onSubmit }: Props) {
               }
             >
               {c}
-            </Button>
+            </button>
           ))}
         </div>
       </div>
 
       {/* Min level */}
       <div>
-        <label className="block text-xs uppercase tracking-wide text-muted-foreground mb-2">
+        <label className="block text-xs uppercase tracking-widest text-muted-foreground mb-2">
           Min character level:{" "}
-          <span className="font-semibold text-foreground">
+          <span className="rarity-unique font-semibold tabular-nums">
             {s.filter.minLevel ?? 80}
           </span>
         </label>
@@ -178,12 +189,12 @@ export function FilterForm({ initial, onSubmit }: Props) {
 
       {/* Sample pages */}
       <div>
-        <label className="block text-xs uppercase tracking-wide text-muted-foreground mb-2">
+        <label className="block text-xs uppercase tracking-widest text-muted-foreground mb-2">
           Affix-mod sample:{" "}
-          <span className="font-semibold text-foreground">
+          <span className="rarity-unique font-semibold tabular-nums">
             {samplePages * 50}
           </span>{" "}
-          raw chars
+          <span className="normal-case">raw characters</span>
         </label>
         <Slider
           min={1}
@@ -195,24 +206,20 @@ export function FilterForm({ initial, onSubmit }: Props) {
 
       {/* Skills picker */}
       <div>
-        <label className="block text-xs uppercase tracking-wide text-muted-foreground mb-2">
-          Skills{" "}
-          <span className="normal-case">
-            (filters affix mods + charms — server aggregates use class only)
-          </span>
+        <label className="block text-xs uppercase tracking-widest text-muted-foreground mb-2">
+          Skills
         </label>
 
         {/* Selected skills as chips */}
         {s.skills.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-3">
             {s.skills.map((sk) => (
-              <Badge
+              <span
                 key={sk.name}
-                variant="secondary"
-                className="gap-1 pl-2 pr-1 py-0.5 h-auto"
+                className="inline-flex items-center gap-1 d2-panel rounded-sm pl-2 pr-1 py-0.5 text-sm rarity-unique"
               >
                 <span>{sk.name}</span>
-                <span className="text-xs">≥</span>
+                <span className="text-xs text-muted-foreground">≥</span>
                 <input
                   type="number"
                   min={1}
@@ -224,29 +231,28 @@ export function FilterForm({ initial, onSubmit }: Props) {
                       Math.max(1, Math.min(30, Number(e.target.value) || 1)),
                     )
                   }
-                  className="w-10 bg-transparent border-0 text-center text-xs outline-none"
+                  className="w-10 bg-transparent border-0 text-center text-xs outline-none rarity-unique tabular-nums"
                 />
                 <button
                   type="button"
-                  className="px-1 hover:bg-destructive hover:text-destructive-foreground rounded"
+                  className="w-5 h-5 flex items-center justify-center rounded-sm text-muted-foreground hover:bg-[#a52a2a] hover:text-foreground"
                   onClick={() => toggleSkill(sk.name)}
                 >
                   ×
                 </button>
-              </Badge>
+              </span>
             ))}
           </div>
         )}
 
-        {/* Skill picker list */}
         {skillsError && (
-          <p className="text-sm text-rose-700">{skillsError}</p>
+          <p className="text-sm text-[#ff6464]">{skillsError}</p>
         )}
         {skillsLoading && (
-          <p className="text-sm text-muted-foreground">Loading skills…</p>
+          <p className="text-sm text-muted-foreground italic">Consulting the Tomes…</p>
         )}
         {!skillsLoading && !skillsError && skillList.length > 0 && (
-          <div className="max-h-60 overflow-y-auto rounded border divide-y text-sm">
+          <div className="max-h-60 overflow-y-auto rounded-sm border border-[#3d2817] bg-[#0a0604] text-sm">
             {skillList.map((sk) => {
               const selected = selectedSkillNames.has(sk.name);
               return (
@@ -254,12 +260,14 @@ export function FilterForm({ initial, onSubmit }: Props) {
                   key={sk.name}
                   type="button"
                   onClick={() => toggleSkill(sk.name)}
-                  className={`flex w-full items-center justify-between px-3 py-1.5 text-left ${
-                    selected ? "bg-accent" : "hover:bg-muted"
+                  className={`flex w-full items-center justify-between px-3 py-1.5 text-left border-b border-[#3d2817]/50 transition ${
+                    selected
+                      ? "bg-[#2a1a0d] rarity-unique"
+                      : "hover:bg-[#160d07] hover:rarity-unique"
                   }`}
                 >
                   <span>{sk.name}</span>
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-xs text-muted-foreground tabular-nums">
                     {sk.pct.toFixed(0)}%
                   </span>
                 </button>
@@ -268,15 +276,15 @@ export function FilterForm({ initial, onSubmit }: Props) {
           </div>
         )}
         {!skillsLoading && !skillsError && s.skills.length === 0 && (
-          <p className="text-xs text-muted-foreground mt-2">
-            No skill filters — all class characters at minLevel will be sampled.
+          <p className="text-xs text-muted-foreground mt-2 italic">
+            No skill filters — all {s.filter.className}s at minLevel will be sampled.
           </p>
         )}
       </div>
 
       <Button
         onClick={() => onSubmit(s, samplePages)}
-        className="w-full sm:w-auto"
+        className="w-full sm:w-auto bg-gradient-to-b from-[#c9a04b] to-[#8a6f2e] text-[#0a0604] hover:from-[#dfb55a] hover:to-[#a08036] font-bold uppercase tracking-widest border border-[#5e4a1f] shadow-[inset_0_1px_0_rgba(255,212,122,0.4),0_2px_6px_rgba(0,0,0,0.5)]"
       >
         Generate Guide
       </Button>
