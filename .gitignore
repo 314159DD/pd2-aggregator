@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# build-mod-dictionary temp files
+.tmp-pd2-tools/
+mod-ids.txt
