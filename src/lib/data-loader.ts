@@ -44,6 +44,8 @@ export type LoadedGuide = {
   clientAggregates: ClientAggregates;
   rawSamplePoolSize: number; // total raw chars fetched (across pages)
   filteredPoolSize: number; // chars matching className + skills
+  /** Raw (unfiltered) character sample — used for diff lookup fallback. */
+  rawSample: Character[];
   // Provenance
   source: LoadSource;
   fetchedAt: number;
@@ -310,6 +312,7 @@ function assemble(
     clientAggregates,
     rawSamplePoolSize: rawChars.length,
     filteredPoolSize: filtered.length,
+    rawSample: rawChars,
     source,
     fetchedAt: server.fetchedAt,
   };

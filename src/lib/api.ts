@@ -82,5 +82,11 @@ export async function getCharactersByAccount(accountName: string): Promise<unkno
   const r = await fetch(`${BASE}/characters/accounts/${encodeURIComponent(accountName)}`);
   if (r.status === 404) return null;
   if (!r.ok) throw new Error(`characters/accounts/${accountName} HTTP ${r.status}`);
-  return r.json();
+  const body = await r.json();
+  // The API returns 200 with {"error":{"message":"..."}} when the account exists
+  // but has no characters. Treat any error envelope as "not found".
+  if (body && typeof body === "object" && "error" in body) return null;
+  // Also treat responses with no characters array as not found.
+  if (!Array.isArray((body as Record<string, unknown>).characters)) return null;
+  return body;
 }

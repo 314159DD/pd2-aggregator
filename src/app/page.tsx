@@ -6,6 +6,7 @@ import { AffixFrequencyTable } from "@/components/AffixFrequencyTable";
 import { CharmPanel } from "@/components/CharmPanel";
 import { BuildSheet } from "@/components/BuildSheet";
 import { DataFreshness } from "@/components/DataFreshness";
+import { DiffView } from "@/components/DiffView";
 import { loadGuide, type LoadedGuide } from "@/lib/data-loader";
 import {
   paramsToUiState,
@@ -13,6 +14,13 @@ import {
   DEFAULT_UI_STATE,
   type UiState,
 } from "@/lib/url-state";
+import {
+  diffCharacter,
+  findCharacterInSample,
+  pickCharacterFromAccountResponse,
+  type CharacterDiff,
+} from "@/lib/diff";
+import { getCharactersByAccount } from "@/lib/api";
 
 export default function Page() {
   const [uiState, setUiState] = useState<UiState>(DEFAULT_UI_STATE);
@@ -20,6 +28,8 @@ export default function Page() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [hydrated, setHydrated] = useState(false);
+  const [diff, setDiff] = useState<CharacterDiff | null>(null);
+  const [diffNotFound, setDiffNotFound] = useState(false);
 
   // Hydrate from URL on mount.
   useEffect(() => {
@@ -31,14 +41,46 @@ export default function Page() {
   async function run(s: UiState, samplePages: number) {
     setUiState(s);
     setError(null);
+    setDiff(null);
+    setDiffNotFound(false);
     if (typeof window !== "undefined") {
       window.history.replaceState(null, "", "?" + uiStateToParams(s).toString());
     }
-    if (s.mode !== "guide") return;
     setLoading(true);
     try {
       const result = await loadGuide({ filter: s.filter, skills: s.skills, samplePages });
       setGuide(result);
+
+      if (s.mode === "diff" && s.diffName) {
+        let found = null;
+
+        // 1. Try the per-account API first.
+        try {
+          const accountResp = await getCharactersByAccount(s.diffName);
+          if (accountResp) {
+            found = pickCharacterFromAccountResponse(s.diffName, accountResp);
+          }
+        } catch {
+          // fall through to local sample search
+        }
+
+        // 2. Fall back to searching the cached raw sample.
+        if (!found) {
+          found = findCharacterInSample(s.diffName, result.rawSample);
+        }
+
+        if (found) {
+          setDiff(
+            diffCharacter(found, {
+              topItemsBySlot: result.topItemsBySlot,
+              affixModsBySlot: result.clientAggregates.affixModsBySlot,
+              poolMercType: result.buildSheet.mercenary.topType || null,
+            }),
+          );
+        } else {
+          setDiffNotFound(true);
+        }
+      }
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
     } finally {
@@ -78,13 +120,32 @@ export default function Page() {
         </div>
       )}
 
-      {uiState.mode === "diff" && (
+      {uiState.mode === "diff" && diffNotFound && (
         <div className="rounded border border-amber-500 p-4 text-sm">
-          Diff mode is Phase 2 — not yet implemented.
+          Couldn&apos;t find a character or account named{" "}
+          <strong>{uiState.diffName}</strong>. Push your character via{" "}
+          <a
+            className="underline"
+            href="https://github.com/coleestrin/pd2-character-downloader"
+            target="_blank"
+            rel="noreferrer"
+          >
+            pd2-character-downloader
+          </a>{" "}
+          so it appears here.
         </div>
       )}
 
-      {guide && uiState.mode === "guide" && (
+      {uiState.mode === "diff" && diff && (
+        <Section
+          title="Diff vs pool"
+          subtitle={`pool n=${guide?.clientAggregates.poolSize.toLocaleString() ?? "?"}`}
+        >
+          <DiffView data={diff} />
+        </Section>
+      )}
+
+      {guide && (
         <>
           <Section
             title="Top equipped items by slot"
@@ -116,7 +177,7 @@ export default function Page() {
         </>
       )}
 
-      {!guide && !loading && !error && uiState.mode === "guide" && (
+      {!guide && !loading && !error && (
         <p className="text-sm text-muted-foreground">
           Pick filters and click{" "}
           <span className="font-semibold">Generate Guide</span>.
