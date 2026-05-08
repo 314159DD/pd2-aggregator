@@ -11,7 +11,7 @@ export type CommonFilter = {
 function qs(f: CommonFilter, extra: Record<string, string | number> = {}): string {
   const p = new URLSearchParams();
   p.set("gameMode", f.gameMode);
-  if (f.className) p.set("className", f.className);
+  if (f.className) p.set("classes", f.className);
   if (f.minLevel !== undefined) p.set("minLevel", String(f.minLevel));
   for (const [k, v] of Object.entries(extra)) p.set(k, String(v));
   return p.toString();
