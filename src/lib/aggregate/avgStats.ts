@@ -1,4 +1,5 @@
 import type { Character, Item } from "../types";
+import type { ModDictionary } from "./types";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -16,46 +17,75 @@ export type AvgStat = {
   pctOfChars: number;
 };
 
-export type FeaturedStatDef = {
-  modName: string;
-  label: string;
-  suffix: string;
-};
-
-// ---------------------------------------------------------------------------
-// Curated whitelist of build stats to surface
-// ---------------------------------------------------------------------------
-
-// Mod names verified against actual snapshot data — basic stats are bare
-// (no `item_` prefix) while % modifiers are `item_*`. See docs/decisions/
-// or snapshot inspection for ground truth.
-export const FEATURED_STATS: FeaturedStatDef[] = [
-  { modName: "item_fastercastrate", label: "Faster Cast Rate", suffix: "%" },
-  { modName: "maxhp", label: "Life", suffix: "" },
-  { modName: "all_resist", label: "All Resistances", suffix: "" },
-  { modName: "strength", label: "Strength", suffix: "" },
-  { modName: "dexterity", label: "Dexterity", suffix: "" },
-  { modName: "vitality", label: "Vitality", suffix: "" },
-  { modName: "item_fastergethitrate", label: "Faster Hit Recovery", suffix: "%" },
-  { modName: "item_magicbonus", label: "Magic Find", suffix: "%" },
-];
-
 // ---------------------------------------------------------------------------
 // Charm discriminator helpers (duplicated from charms.ts to avoid coupling)
 // ---------------------------------------------------------------------------
 
-const UNIQUE_CHARM_NAMES = new Set(["Annihilus", "Hellfire Torch", "Gheed's Fortune"]);
+const UNIQUE_CHARM_NAMES = new Set([
+  "Annihilus",
+  "Hellfire Torch",
+  "Gheed's Fortune",
+]);
 
 function isNonUniqueCharm(item: Item): boolean {
   const t = item.base.type;
   if (t !== "Small Charm" && t !== "Medium Charm" && t !== "Large Charm") {
     return false;
   }
-  // Exclude the three named unique charms
-  if (item.quality?.name === "Unique" && item.name && UNIQUE_CHARM_NAMES.has(item.name)) {
+  if (
+    item.quality?.name === "Unique" &&
+    item.name &&
+    UNIQUE_CHARM_NAMES.has(item.name)
+  ) {
     return false;
   }
   return true;
+}
+
+// ---------------------------------------------------------------------------
+// Filters & helpers
+// ---------------------------------------------------------------------------
+
+const META_FLAG_LABELS = new Set(["corrupted", "desecrated", "mirrored"]);
+
+/**
+ * Mods we actively want to NOT show in the avg-stats summary because they're
+ * either non-quantitative (binary indicators) or get displayed elsewhere
+ * (e.g., charm patterns / +X to specific skill tab).
+ */
+const EXCLUDED_MOD_NAMES = new Set<string>([
+  // Skill-tab is multi-valued (split per tab in affix table); avg is meaningless.
+  "item_addskill_tab",
+  // Single-skill +N is per-skill — not meaningful as a pool average.
+  "item_singleskill",
+  // Charged-skill / proc skills aren't a "build stat" you stack.
+  "item_charged_skill",
+  "item_skillonhit",
+  "item_skillonattack",
+  "item_skillongethit",
+  "item_skillonkill",
+  "item_skillondeath",
+]);
+
+/**
+ * Heuristic for whether a mod's value is a percentage (gets a "%" suffix in
+ * the UI). Based on conventional D2 mod naming patterns.
+ */
+function suffixForMod(modName: string, displayLabel: string): string {
+  if (/^item_(faster|magicbonus|magicfind|goldbonus|find_gold|find_magic|fastergethitrate|fastercastrate|fasterattackrate|fasterrunwalk|crushingblow|deadlystrike|attackrate|maxdeadlystrike|tohit_percent|armorpercent|absorb|reduce_)/.test(
+      modName,
+    ))
+  {
+    return "%";
+  }
+  if (
+    /(faster|attack rate|cast rate|hit recovery|run\/walk|magic find|gold find|deadly strike|crushing blow|chance to|enhanced|reduced|absorb)/i.test(
+      displayLabel,
+    )
+  ) {
+    return "%";
+  }
+  return "";
 }
 
 // ---------------------------------------------------------------------------
@@ -63,69 +93,79 @@ function isNonUniqueCharm(item: Item): boolean {
 // ---------------------------------------------------------------------------
 
 /**
- * For each stat in `featuredStats`, compute:
- *   - avgValue: sum of modifier values across ALL equipped items + non-unique
- *               charms for each char, averaged over the pool (zeros count).
- *   - charsWithMod: chars whose total for this mod is > 0.
- *   - pctOfChars: charsWithMod / poolSize.
+ * Walks every character's equipped items + non-unique charms, accumulates
+ * per-character totals for every distinct mod name, then returns the topN
+ * mods ranked by `charsWithMod` (i.e. "most prevalent across the pool").
  *
- * Items scanned: ALL equipped items (any quality) + inventory charms (excl.
- * Annihilus/Torch/Gheed's).  Modifiers from mercenary items are excluded.
+ * For each returned mod:
+ *   - avgValue is summed across all chars in the pool (zeros for chars
+ *     without it). This represents "what a typical char has".
+ *   - charsWithMod / pctOfChars tells you how many chars actually carry it.
  *
- * Note: for item_resistall, each modifier occurrence adds values[0] once —
- * the modifier itself represents "all resists" so there is no multiplication.
+ * Mods in EXCLUDED_MOD_NAMES and meta-flag labels are filtered out.
+ *
+ * Mercenary items are not included (those are surfaced separately in
+ * the build-sheet section).
  */
 export function aggregateAvgStats(
   chars: Character[],
-  featuredStats: FeaturedStatDef[] = FEATURED_STATS,
+  dict: ModDictionary,
+  topN = 8,
 ): AvgStat[] {
   const n = chars.length;
   if (n === 0) return [];
 
-  // For each featured mod: accumulate per-char totals
-  const modIndices = new Map<string, number>(
-    featuredStats.map((s, i) => [s.modName, i]),
-  );
-  // perCharTotals[charIdx][statIdx] = running total of values[0] for that mod
-  const perCharTotals: number[][] = Array.from({ length: n }, () =>
-    new Array(featuredStats.length).fill(0),
-  );
+  // modName → array of per-char running totals
+  const totals = new Map<string, number[]>();
 
   for (let ci = 0; ci < n; ci++) {
     const char = chars[ci];
     for (const item of char.items) {
-      // Include: equipped items (any quality) + non-unique charms (inventory)
       const isCharm = isNonUniqueCharm(item);
       const isEquipped = item.location?.zone === "Equipped";
       if (!isCharm && !isEquipped) continue;
 
       for (const mod of item.modifiers) {
-        const statIdx = modIndices.get(mod.name);
-        if (statIdx === undefined) continue;
+        if (EXCLUDED_MOD_NAMES.has(mod.name)) continue;
+        let arr = totals.get(mod.name);
+        if (!arr) {
+          arr = new Array(n).fill(0);
+          totals.set(mod.name, arr);
+        }
         const val = Array.isArray(mod.values)
           ? (mod.values[0] ?? 0)
           : Number(mod.values) || 0;
-        perCharTotals[ci][statIdx] += val;
+        arr[ci] += val;
       }
     }
   }
 
-  // Build AvgStat entries
-  return featuredStats.map((def, statIdx) => {
-    let sumTotal = 0;
+  const candidates: AvgStat[] = [];
+  for (const [modName, arr] of totals.entries()) {
+    let sum = 0;
     let charsWithMod = 0;
-    for (let ci = 0; ci < n; ci++) {
-      const v = perCharTotals[ci][statIdx];
-      sumTotal += v;
+    for (const v of arr) {
+      sum += v;
       if (v > 0) charsWithMod++;
     }
-    return {
-      modName: def.modName,
-      displayLabel: def.label,
-      suffix: def.suffix,
-      avgValue: sumTotal / n,
+    if (charsWithMod === 0) continue;
+
+    const dictEntry = dict[modName];
+    const displayLabel = dictEntry?.displayLabel ?? modName;
+    if (META_FLAG_LABELS.has(displayLabel.toLowerCase().trim())) continue;
+
+    candidates.push({
+      modName,
+      displayLabel,
+      suffix: suffixForMod(modName, displayLabel),
+      avgValue: sum / n,
       charsWithMod,
       pctOfChars: charsWithMod / n,
-    };
-  });
+    });
+  }
+
+  // Rank by prevalence (chars carrying the mod), descending.
+  candidates.sort((a, b) => b.charsWithMod - a.charsWithMod);
+
+  return candidates.slice(0, topN);
 }

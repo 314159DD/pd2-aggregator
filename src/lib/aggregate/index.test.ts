@@ -77,18 +77,29 @@ describe("aggregateClientSide", () => {
 
     const result = aggregateClientSide(paladins, dict as Dict);
 
+    // Dynamic: top 8 most prevalent mods across the filtered pool.
     expect(result.avgStats.length).toBeGreaterThan(0);
+    expect(result.avgStats.length).toBeLessThanOrEqual(8);
 
-    // FCR should be a common Paladin stat
-    const fcr = result.avgStats.find((s) => s.modName === "item_fastercastrate");
-    expect(fcr).toBeDefined();
-    expect(fcr!.avgValue).toBeGreaterThan(0);
-    expect(fcr!.pctOfChars).toBeGreaterThan(0);
-    expect(fcr!.pctOfChars).toBeLessThanOrEqual(1);
+    // Each entry should have meaningful, non-zero stats.
+    for (const s of result.avgStats) {
+      expect(s.charsWithMod).toBeGreaterThan(0);
+      expect(s.pctOfChars).toBeGreaterThan(0);
+      expect(s.pctOfChars).toBeLessThanOrEqual(1);
+    }
+
+    // Sorted by prevalence descending.
+    for (let i = 1; i < result.avgStats.length; i++) {
+      expect(result.avgStats[i - 1].charsWithMod).toBeGreaterThanOrEqual(
+        result.avgStats[i].charsWithMod,
+      );
+    }
 
     console.info(
-      `[avgStats smoke] FCR avg=${fcr?.avgValue.toFixed(1)}, ` +
-      `pctOfChars=${((fcr?.pctOfChars ?? 0) * 100).toFixed(0)}%`,
+      `[avgStats smoke] top mods: ${result.avgStats
+        .slice(0, 5)
+        .map((s) => `${s.displayLabel}(${(s.pctOfChars * 100).toFixed(0)}%)`)
+        .join(", ")}`,
     );
   }, 30_000);
 });
