@@ -26,15 +26,18 @@ export type FeaturedStatDef = {
 // Curated whitelist of build stats to surface
 // ---------------------------------------------------------------------------
 
+// Mod names verified against actual snapshot data — basic stats are bare
+// (no `item_` prefix) while % modifiers are `item_*`. See docs/decisions/
+// or snapshot inspection for ground truth.
 export const FEATURED_STATS: FeaturedStatDef[] = [
   { modName: "item_fastercastrate", label: "Faster Cast Rate", suffix: "%" },
-  { modName: "item_maxhp", label: "Life", suffix: "" },
-  { modName: "item_resistall", label: "All Resistances", suffix: "" },
-  { modName: "item_strength", label: "Strength", suffix: "" },
-  { modName: "item_dexterity", label: "Dexterity", suffix: "" },
-  { modName: "item_vitality", label: "Vitality", suffix: "" },
-  { modName: "item_fasterhitrecovery", label: "Faster Hit Recovery", suffix: "%" },
-  { modName: "item_magicfind", label: "Magic Find", suffix: "%" },
+  { modName: "maxhp", label: "Life", suffix: "" },
+  { modName: "all_resist", label: "All Resistances", suffix: "" },
+  { modName: "strength", label: "Strength", suffix: "" },
+  { modName: "dexterity", label: "Dexterity", suffix: "" },
+  { modName: "vitality", label: "Vitality", suffix: "" },
+  { modName: "item_fastergethitrate", label: "Faster Hit Recovery", suffix: "%" },
+  { modName: "item_magicbonus", label: "Magic Find", suffix: "%" },
 ];
 
 // ---------------------------------------------------------------------------
