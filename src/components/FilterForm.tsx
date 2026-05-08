@@ -113,7 +113,11 @@ export function FilterForm({ initial, onSubmit }: Props) {
           placeholder="Character name or account name"
           value={s.diffName}
           onChange={(e) => setS({ ...s, diffName: e.target.value })}
-          className="bg-[#0a0604] border-[#3d2817] focus-visible:border-[#c9a04b]"
+          style={{
+            background: "linear-gradient(180deg, #1f1409 0%, #2a1d0e 100%)",
+            boxShadow: "inset 0 2px 4px rgba(0,0,0,0.6)",
+          }}
+          className="border-[#5e4a1f] focus-visible:border-[#c9a04b] focus-visible:ring-[#c9a04b]/20 text-foreground placeholder:text-muted-foreground/60"
         />
       )}
 
@@ -252,22 +256,53 @@ export function FilterForm({ initial, onSubmit }: Props) {
           <p className="text-sm text-muted-foreground italic">Consulting the Tomes…</p>
         )}
         {!skillsLoading && !skillsError && skillList.length > 0 && (
-          <div className="max-h-60 overflow-y-auto rounded-sm border border-[#3d2817] bg-[#0a0604] text-sm">
-            {skillList.map((sk) => {
+          <div
+            className="max-h-60 overflow-y-auto rounded-sm border border-[#5e4a1f] text-sm"
+            style={{
+              background:
+                "linear-gradient(180deg, #1f1409 0%, #2a1d0e 100%)",
+              boxShadow:
+                "inset 0 2px 6px rgba(0,0,0,0.7), inset 0 -1px 0 rgba(201,160,75,0.08)",
+            }}
+          >
+            {skillList.map((sk, i) => {
               const selected = selectedSkillNames.has(sk.name);
               return (
                 <button
                   key={sk.name}
                   type="button"
                   onClick={() => toggleSkill(sk.name)}
-                  className={`flex w-full items-center justify-between px-3 py-1.5 text-left border-b border-[#3d2817]/50 transition ${
+                  className={`group flex w-full items-center justify-between px-3 py-1.5 text-left transition ${
+                    i > 0 ? "border-t border-[#3d2817]/40" : ""
+                  } ${
                     selected
-                      ? "bg-[#2a1a0d] rarity-unique"
-                      : "hover:bg-[#160d07] hover:rarity-unique"
+                      ? "rarity-unique font-semibold"
+                      : "text-foreground hover:rarity-unique"
                   }`}
+                  style={
+                    selected
+                      ? {
+                          background:
+                            "linear-gradient(90deg, rgba(201,160,75,0.18) 0%, rgba(201,160,75,0.06) 100%)",
+                          borderLeft: "2px solid #c9a04b",
+                          paddingLeft: "10px",
+                        }
+                      : undefined
+                  }
+                  onMouseEnter={(e) => {
+                    if (!selected) {
+                      e.currentTarget.style.background =
+                        "rgba(201,160,75,0.06)";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!selected) {
+                      e.currentTarget.style.background = "transparent";
+                    }
+                  }}
                 >
                   <span>{sk.name}</span>
-                  <span className="text-xs text-muted-foreground tabular-nums">
+                  <span className="text-xs text-muted-foreground tabular-nums group-hover:text-foreground/70">
                     {sk.pct.toFixed(0)}%
                   </span>
                 </button>
