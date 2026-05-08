@@ -6,6 +6,36 @@ import { Slider } from "@/components/ui/slider";
 import { getSkillUsage, type SkillUsageRow } from "@/lib/api";
 import type { UiState } from "@/lib/url-state";
 
+// PD2 wiki MediaWiki Special:FilePath redirect resolves to the actual icon CDN.
+// Skill name spaces → underscores; everything else URL-encoded.
+function skillIconUrl(name: string): string {
+  const slug = name.replace(/ /g, "_");
+  return `https://wiki.projectdiablo2.com/wiki/Special:FilePath/${encodeURIComponent(slug)}.png`;
+}
+
+function SkillIcon({ name, size = 24 }: { name: string; size?: number }) {
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={skillIconUrl(name)}
+      alt=""
+      width={size}
+      height={size}
+      loading="lazy"
+      onError={(e) => {
+        // Hide if the wiki has no matching icon (skill name mismatch, etc.)
+        e.currentTarget.style.visibility = "hidden";
+      }}
+      style={{
+        width: size,
+        height: size,
+        imageRendering: "pixelated",
+        flexShrink: 0,
+      }}
+    />
+  );
+}
+
 const CLASSES = [
   "Amazon",
   "Assassin",
@@ -219,12 +249,13 @@ export function FilterForm({ initial, onSubmit }: Props) {
             {s.skills.map((sk) => (
               <span
                 key={sk.name}
-                className="inline-flex items-center gap-1 rounded-sm pl-2 pr-1 py-1 text-sm font-semibold border border-[#5e4a1f] text-[#0a0604] shadow-[inset_0_1px_0_rgba(255,212,122,0.4)]"
+                className="inline-flex items-center gap-2 rounded-sm pl-1.5 pr-1 py-1 text-sm font-semibold border border-[#5e4a1f] text-[#0a0604] shadow-[inset_0_1px_0_rgba(255,212,122,0.4)]"
                 style={{
                   background:
                     "linear-gradient(180deg, #dfb55a 0%, #a07a30 100%)",
                 }}
               >
+                <SkillIcon name={sk.name} size={20} />
                 <span>{sk.name}</span>
                 <span className="text-xs opacity-70">≥</span>
                 <input
@@ -276,7 +307,7 @@ export function FilterForm({ initial, onSubmit }: Props) {
                   key={sk.name}
                   type="button"
                   onClick={() => toggleSkill(sk.name)}
-                  className={`group flex w-full items-center justify-between px-3 py-2 text-left transition-colors ${
+                  className={`group flex w-full items-center justify-between px-3 py-1.5 text-left transition-colors ${
                     i > 0 ? "border-t border-[#5e4a1f]/40" : ""
                   } ${
                     selected
@@ -307,12 +338,15 @@ export function FilterForm({ initial, onSubmit }: Props) {
                     }
                   }}
                 >
-                  <span>{sk.name}</span>
+                  <span className="flex items-center gap-2.5 min-w-0">
+                    <SkillIcon name={sk.name} size={26} />
+                    <span className="truncate">{sk.name}</span>
+                  </span>
                   <span
-                    className={`text-xs tabular-nums ${
+                    className={`text-xs tabular-nums shrink-0 ml-2 ${
                       selected
                         ? "text-[#0a0604]/70 font-semibold"
-                        : "text-[#a08560]"
+                        : "text-[#c9a04b]"
                     }`}
                   >
                     {sk.pct.toFixed(0)}%
