@@ -12,7 +12,7 @@ let itemIdCounter = 1;
 function makeItem(opts: {
   equipment: string;
   qualityName: string;
-  mods?: Array<{ name: string; values: number[] }>;
+  mods?: Array<{ name: string; label?: string; values: number[] }>;
 }): Item {
   return {
     id: itemIdCounter++,
@@ -42,7 +42,7 @@ function makeItem(opts: {
     category: "misc",
     modifiers: (opts.mods ?? []).map((m) => ({
       name: m.name,
-      label: m.name,
+      label: m.label ?? m.name,
       values: m.values,
       priority: 0,
     })),
@@ -226,6 +226,106 @@ describe("aggregateAffixModsBySlot", () => {
     expect(mod).toBeDefined();
     expect(mod!.displayLabel).toBe("exotic_unknown_mod");
     expect(mod!.category).toBe("unknown");
+  });
+
+  // ---------------------------------------------------------------------------
+  // Skill-tab splitting tests
+  // ---------------------------------------------------------------------------
+
+  it("item_addskill_tab: splits different tabs into separate buckets", () => {
+    // Two items: one with Combat Skills, one with Offensive Auras — same amulet slot
+    const chars = [
+      makeChar([
+        makeItem({
+          equipment: "Amulet",
+          qualityName: "Rare",
+          mods: [
+            {
+              name: "item_addskill_tab",
+              label: "+3 to Combat Skills (Paladin Only)",
+              values: [24, 3],
+            },
+          ],
+        }),
+      ]),
+      makeChar([
+        makeItem({
+          equipment: "Amulet",
+          qualityName: "Rare",
+          mods: [
+            {
+              name: "item_addskill_tab",
+              label: "+1 to Offensive Auras Skills (Paladin Only)",
+              values: [25, 1],
+            },
+          ],
+        }),
+      ]),
+    ];
+    const result = aggregateAffixModsBySlot(chars, DICT);
+    const amulet = result.amulet ?? [];
+    const combat = amulet.find((m) =>
+      m.modName === "item_addskill_tab|Combat Skills (Paladin Only)",
+    );
+    const auras = amulet.find((m) =>
+      m.modName === "item_addskill_tab|Offensive Auras Skills (Paladin Only)",
+    );
+    expect(combat).toBeDefined();
+    expect(auras).toBeDefined();
+    // They must be distinct entries
+    expect(combat!.modName).not.toBe(auras!.modName);
+    expect(combat!.count).toBe(1);
+    expect(auras!.count).toBe(1);
+  });
+
+  it("item_addskill_tab: collapses different magnitudes of the same tab into one bucket", () => {
+    // Three items: +1, +2, +3 to the same tab — should all land in one bucket
+    const chars = [1, 2, 3].map((n) =>
+      makeChar([
+        makeItem({
+          equipment: "Amulet",
+          qualityName: "Rare",
+          mods: [
+            {
+              name: "item_addskill_tab",
+              label: `+${n} to Warcries Skills (Barbarian Only)`,
+              values: [34, n],
+            },
+          ],
+        }),
+      ]),
+    );
+    const result = aggregateAffixModsBySlot(chars, DICT);
+    const amulet = result.amulet ?? [];
+    const warcries = amulet.find((m) =>
+      m.modName === "item_addskill_tab|Warcries Skills (Barbarian Only)",
+    );
+    expect(warcries).toBeDefined();
+    expect(warcries!.count).toBe(3);
+    expect(warcries!.displayLabel).toBe("Warcries Skills (Barbarian Only)");
+  });
+
+  it("item_addskill_tab: displayLabel is the tab name without the magnitude", () => {
+    const char = makeChar([
+      makeItem({
+        equipment: "Amulet",
+        qualityName: "Magic",
+        mods: [
+          {
+            name: "item_addskill_tab",
+            label: "+4 to Summoning Skills (Druid Only)",
+            values: [40, 4],
+          },
+        ],
+      }),
+    ]);
+    const result = aggregateAffixModsBySlot([char], DICT);
+    const amulet = result.amulet ?? [];
+    const summoning = amulet.find((m) =>
+      m.modName.startsWith("item_addskill_tab|"),
+    );
+    expect(summoning).toBeDefined();
+    expect(summoning!.displayLabel).toBe("Summoning Skills (Druid Only)");
   });
 
   // Snapshot-driven smoke test

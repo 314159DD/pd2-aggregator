@@ -166,7 +166,10 @@ export default function Page() {
             title="Most common affix mods"
             subtitle={`skill-filtered n=${guide.clientAggregates.poolSize.toLocaleString()} of ${guide.rawSamplePoolSize.toLocaleString()} sampled`}
           >
-            <AffixFrequencyTable data={guide.clientAggregates.affixModsBySlot} />
+            <AffixFrequencyTable
+              data={guide.clientAggregates.affixModsBySlot}
+              avgStats={guide.clientAggregates.avgStats}
+            />
           </Section>
 
           <Section

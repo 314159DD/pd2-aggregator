@@ -3,7 +3,16 @@ import type { Character, Slot } from "../types";
 import type { ModDictionary } from "./types";
 
 export type AffixMod = {
-  /** Mod key / id (e.g. "item_fastercastrate") */
+  /**
+   * Grouping key for this mod entry.
+   *
+   * For most mods this equals `modifier.name` (e.g. "item_fastercastrate").
+   * For `item_addskill_tab` entries the key is suffixed with the specific tab
+   * name to keep each tab in a separate bucket:
+   *   "item_addskill_tab|Combat Skills (Paladin Only)"
+   *
+   * This is an opaque key — do not parse it for display; use `displayLabel`.
+   */
   modName: string;
   /** Human-readable label from the mod dictionary, or modName as fallback */
   displayLabel: string;
@@ -26,6 +35,27 @@ export type AffixModsBySlot = Record<Slot, AffixMod[]>;
 // ---------------------------------------------------------------------------
 
 const ELIGIBLE_QUALITIES = new Set(["Rare", "Magic", "Crafted"]);
+
+/**
+ * Strip a leading magnitude from a skill-tab modifier label so entries with
+ * different magnitudes ("+1 to", "+3 to") collapse to the same display key.
+ *
+ * "+3 to Combat Skills (Paladin Only)" → "Combat Skills (Paladin Only)"
+ * "+1 to Warcries Skills (Barbarian Only)" → "Warcries Skills (Barbarian Only)"
+ *
+ * The pattern matches an optional leading + sign, one or more digits (with
+ * optional decimal), optional whitespace, optional literal "to" with trailing
+ * whitespace.
+ */
+const SKILL_TAB_MAGNITUDE_RE = /^\+?\d+(?:\.\d+)?\s+(?:to\s+)?/i;
+
+function skillTabBucketKey(modifierName: string, label: string): string {
+  // Strip the magnitude prefix to get the stable tab name
+  const tabName = label.replace(SKILL_TAB_MAGNITUDE_RE, "").trim();
+  return `${modifierName}|${tabName}`;
+}
+
+const SKILL_TAB_MOD = "item_addskill_tab";
 
 function median(sorted: number[]): number {
   if (sorted.length === 0) return 0;
@@ -78,16 +108,24 @@ export function aggregateAffixModsBySlot(
       if (!modValues[slot]) modValues[slot] = new Map();
       const slotMap = modValues[slot]!;
 
-      // Bucket each modifier
+      // Bucket each modifier.
+      // For item_addskill_tab we use the label-derived tab name as part of the
+      // key so that "+1 to Combat Skills" and "+3 to Combat Skills" land in the
+      // same bucket (keyed as "item_addskill_tab|Combat Skills (Paladin Only)")
+      // while "+1 to Warcries Skills" lands in a separate bucket.
       for (const mod of item.modifiers) {
         const val = Array.isArray(mod.values)
           ? (mod.values[0] ?? 0)
           : Number(mod.values) || 0;
-        const existing = slotMap.get(mod.name);
+        const bucketKey =
+          mod.name === SKILL_TAB_MOD
+            ? skillTabBucketKey(mod.name, mod.label)
+            : mod.name;
+        const existing = slotMap.get(bucketKey);
         if (existing) {
           existing.push(val);
         } else {
-          slotMap.set(mod.name, [val]);
+          slotMap.set(bucketKey, [val]);
         }
       }
     }
@@ -103,13 +141,32 @@ export function aggregateAffixModsBySlot(
     const totalItems = itemCount[slotKey] ?? 0;
 
     const mods: AffixMod[] = [];
-    for (const [modName, vals] of slotMap.entries()) {
+    for (const [bucketKey, vals] of slotMap.entries()) {
       const sorted = [...vals].sort((a, b) => a - b);
-      const dictEntry = dict[modName];
+
+      // For skill-tab entries the bucket key is "item_addskill_tab|Tab Name".
+      // Extract the raw modifier name (before "|") for dictionary lookup and
+      // use the tab name part as the displayLabel.
+      let rawModName: string;
+      let displayLabel: string;
+      let category: string;
+
+      if (bucketKey.startsWith(SKILL_TAB_MOD + "|")) {
+        rawModName = SKILL_TAB_MOD;
+        // Everything after the first "|" is the tab label
+        displayLabel = bucketKey.slice(SKILL_TAB_MOD.length + 1);
+        category = dict[rawModName]?.category ?? "skill";
+      } else {
+        rawModName = bucketKey;
+        const dictEntry = dict[rawModName];
+        displayLabel = dictEntry?.displayLabel ?? rawModName;
+        category = dictEntry?.category ?? "unknown";
+      }
+
       mods.push({
-        modName,
-        displayLabel: dictEntry?.displayLabel ?? modName,
-        category: dictEntry?.category ?? "unknown",
+        modName: bucketKey,
+        displayLabel,
+        category,
         count: vals.length,
         pct: totalItems > 0 ? vals.length / totalItems : 0,
         medianValue: median(sorted),
