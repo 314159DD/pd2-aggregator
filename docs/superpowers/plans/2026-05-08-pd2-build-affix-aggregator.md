@@ -1,5 +1,7 @@
 # PD2 Build Affix Aggregator Implementation Plan
 
+> **REVISION (2026-05-08, mid-execution):** API recon during Phase 1 revealed that `/characters` paginates 50/page (full data = 1.4 GB) and that `className`/`requiredSkills` filters are silently ignored on that endpoint. The server, however, exposes pre-aggregated `/characters/stats/*` endpoints that DO accept full filters. The architecture pivots from "download everything, aggregate locally" to a hybrid: server aggregates for items/skills/level/merc, plus a small sampled raw fetch for affix mods + charms only. **Phases 4, 6, 7 below are partially superseded.** The plan revisions are appended at the end of this file under "Revised Phases" — execute those, not the original Phase 4/6/7 tasks.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Build a Next.js 15 static-export app that fetches the public pd2.tools `/characters` dump, filters it by class + skills + gameMode, aggregates the matched cohort to surface top equipped items by slot, top affix mods on rare/crafted gear, charm patterns, build sheet, and a "diff my character" mode — all client-side with IndexedDB caching, no backend.
@@ -2667,6 +2669,567 @@ git add CLAUDE.md
 git commit -m "docs: add deploy URL"
 git push
 ```
+
+---
+
+## REVISED PHASES (2026-05-08 mid-execution)
+
+The phases below supersede the originals where overlap exists. Execute these in order. Tasks already completed (0.1, 0.2, 0.3, 1.1) are kept. Task 1.2 needs a redo. Phase 4, 6, 7 are mostly rewritten.
+
+### Task R-1.2: Re-fetch snapshot with pagination
+
+**Files:**
+- Modify: `scripts/refresh-snapshot.ts`
+- Modify: `data/snapshot.json` (regenerated)
+
+The existing script grabs only 50 chars (page 1). We need a sampled snapshot of 5 pages of HC chars at minLevel ≥ 80, concatenated.
+
+- [ ] **Step 1: Replace `scripts/refresh-snapshot.ts`** with:
+
+```ts
+import { writeFile, mkdir } from "node:fs/promises";
+import { join } from "node:path";
+
+const BASE = "https://api.pd2.tools/api/v1/characters";
+const PAGES = 5;
+const FILTERS = "gameMode=hardcore&minLevel=80";
+const OUT = join(process.cwd(), "data", "snapshot.json");
+
+type ApiResp = { total: number; characters: unknown[] };
+
+async function fetchPage(page: number): Promise<ApiResp> {
+  const url = `${BASE}?${FILTERS}&page=${page}`;
+  console.log(`Fetching page ${page} ...`);
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`HTTP ${res.status} on page ${page}`);
+  return (await res.json()) as ApiResp;
+}
+
+async function main() {
+  const all: unknown[] = [];
+  let total = 0;
+  for (let p = 1; p <= PAGES; p++) {
+    const j = await fetchPage(p);
+    total = j.total;
+    all.push(...j.characters);
+  }
+  await mkdir(join(process.cwd(), "data"), { recursive: true });
+  const out = {
+    fetchedAt: Date.now(),
+    filters: FILTERS,
+    pagesFetched: PAGES,
+    sampleSize: all.length,
+    populationTotal: total,
+    characters: all,
+  };
+  const text = JSON.stringify(out);
+  await writeFile(OUT, text, "utf8");
+  console.log(`Wrote ${OUT}`);
+  console.log(`  population total (HC ≥80): ${total}`);
+  console.log(`  sampled: ${all.length}`);
+  console.log(`  size: ${(text.length / 1024 / 1024).toFixed(2)} MB`);
+}
+
+main().catch((e) => { console.error(e); process.exit(1); });
+```
+
+- [ ] **Step 2: Run it**
+
+```powershell
+npx tsx scripts/refresh-snapshot.ts
+```
+
+Expected: `population total (HC ≥80): 3000-3500`, `sampled: 250`, size ~17 MB.
+
+- [ ] **Step 3: Commit**
+
+```powershell
+git add scripts/refresh-snapshot.ts data/snapshot.json
+git commit -m "fix(scripts): paginate snapshot fetch (5 pages of HC ≥L80)"
+```
+
+---
+
+### Task R-2: API client module
+
+**Files:**
+- Create: `src/lib/api.ts`
+- Create: `src/lib/api.test.ts` (smoke tests against live API)
+
+- [ ] **Step 1: Write the client**
+
+Create `src/lib/api.ts`:
+
+```ts
+const BASE = "https://api.pd2.tools/api/v1";
+
+export type GameMode = "hardcore" | "softcore";
+
+export type CommonFilter = {
+  gameMode: GameMode;
+  className?: string;
+  minLevel?: number;
+};
+
+function qs(f: CommonFilter, extra: Record<string, string | number> = {}): string {
+  const p = new URLSearchParams();
+  p.set("gameMode", f.gameMode);
+  if (f.className) p.set("className", f.className);
+  if (f.minLevel !== undefined) p.set("minLevel", String(f.minLevel));
+  for (const [k, v] of Object.entries(extra)) p.set(k, String(v));
+  return p.toString();
+}
+
+export type ItemUsageRow = {
+  item: string;
+  itemType: "Unique" | "Set" | "Runeword" | "Rare" | "Magic" | "Crafted" | string;
+  numOccurrences: number;
+  totalSample: number;
+  pct: number;
+};
+
+export type SkillUsageRow = { name: string; numOccurrences: number; totalSample: number; pct: number };
+export type MercTypeUsageRow = { name: string; numOccurrences: number; totalSample: number; pct: number };
+export type MercItemUsageRow = ItemUsageRow;
+
+export type LevelDistribution = {
+  hardcore: Array<{ level: number; count: number }>;
+  softcore: Array<{ level: number; count: number }>;
+};
+
+export type RawCharactersPage = {
+  total: number;
+  characters: unknown[]; // typed in src/lib/types.ts
+};
+
+export async function getItemUsage(f: CommonFilter): Promise<ItemUsageRow[]> {
+  const r = await fetch(`${BASE}/characters/stats/item-usage?${qs(f)}`);
+  if (!r.ok) throw new Error(`item-usage HTTP ${r.status}`);
+  return r.json();
+}
+
+export async function getSkillUsage(f: CommonFilter): Promise<SkillUsageRow[]> {
+  const r = await fetch(`${BASE}/characters/stats/skill-usage?${qs(f)}`);
+  if (!r.ok) throw new Error(`skill-usage HTTP ${r.status}`);
+  return r.json();
+}
+
+export async function getMercTypeUsage(f: CommonFilter): Promise<MercTypeUsageRow[]> {
+  const r = await fetch(`${BASE}/characters/stats/merc-type-usage?${qs(f)}`);
+  if (!r.ok) throw new Error(`merc-type-usage HTTP ${r.status}`);
+  return r.json();
+}
+
+export async function getMercItemUsage(f: CommonFilter): Promise<MercItemUsageRow[]> {
+  const r = await fetch(`${BASE}/characters/stats/merc-item-usage?${qs(f)}`);
+  if (!r.ok) throw new Error(`merc-item-usage HTTP ${r.status}`);
+  return r.json();
+}
+
+export async function getLevelDistribution(f: Pick<CommonFilter, "gameMode" | "className">): Promise<LevelDistribution> {
+  const r = await fetch(`${BASE}/characters/stats/level-distribution?${qs({ gameMode: f.gameMode, className: f.className })}`);
+  if (!r.ok) throw new Error(`level-distribution HTTP ${r.status}`);
+  return r.json();
+}
+
+export async function getCharactersPage(
+  f: Pick<CommonFilter, "gameMode" | "minLevel">,
+  page: number,
+): Promise<RawCharactersPage> {
+  const r = await fetch(`${BASE}/characters?${qs({ gameMode: f.gameMode, minLevel: f.minLevel }, { page })}`);
+  if (!r.ok) throw new Error(`characters page=${page} HTTP ${r.status}`);
+  return r.json();
+}
+
+export async function getCharactersByAccount(accountName: string): Promise<unknown> {
+  const r = await fetch(`${BASE}/characters/accounts/${encodeURIComponent(accountName)}`);
+  if (r.status === 404) return null;
+  if (!r.ok) throw new Error(`characters/accounts/${accountName} HTTP ${r.status}`);
+  return r.json();
+}
+```
+
+- [ ] **Step 2: Smoke tests**
+
+Create `src/lib/api.test.ts`:
+
+```ts
+import { describe, it, expect } from "vitest";
+import {
+  getItemUsage,
+  getSkillUsage,
+  getMercTypeUsage,
+  getLevelDistribution,
+  getCharactersPage,
+  getCharactersByAccount,
+} from "./api";
+
+const HC_PALA_L85 = { gameMode: "hardcore" as const, className: "Paladin", minLevel: 85 };
+
+describe("api (smoke)", () => {
+  it("getItemUsage returns rows with totalSample > 0", async () => {
+    const rows = await getItemUsage(HC_PALA_L85);
+    expect(rows.length).toBeGreaterThan(0);
+    expect(rows[0].totalSample).toBeGreaterThan(0);
+    expect(rows[0]).toHaveProperty("item");
+    expect(rows[0]).toHaveProperty("pct");
+  }, 15000);
+
+  it("getSkillUsage returns rows", async () => {
+    const rows = await getSkillUsage(HC_PALA_L85);
+    expect(rows.length).toBeGreaterThan(0);
+  }, 15000);
+
+  it("getMercTypeUsage returns rows", async () => {
+    const rows = await getMercTypeUsage(HC_PALA_L85);
+    expect(rows.length).toBeGreaterThan(0);
+  }, 15000);
+
+  it("getLevelDistribution returns hardcore + softcore arrays", async () => {
+    const d = await getLevelDistribution({ gameMode: "hardcore", className: "Paladin" });
+    expect(Array.isArray(d.hardcore)).toBe(true);
+    expect(Array.isArray(d.softcore)).toBe(true);
+  }, 15000);
+
+  it("getCharactersPage page=1 returns 50 raw chars", async () => {
+    const p = await getCharactersPage({ gameMode: "hardcore", minLevel: 80 }, 1);
+    expect(p.total).toBeGreaterThan(0);
+    expect(Array.isArray(p.characters)).toBe(true);
+  }, 15000);
+
+  it("getCharactersByAccount returns null for non-existent account", async () => {
+    const r = await getCharactersByAccount("__definitely_not_a_real_account__zzzzzz");
+    expect(r).toBeNull();
+  }, 15000);
+});
+```
+
+- [ ] **Step 3: Run**
+
+```powershell
+npm test -- src/lib/api.test.ts
+```
+
+Expected: all 6 tests pass.
+
+- [ ] **Step 4: Commit**
+
+```powershell
+git add src/lib/api.ts src/lib/api.test.ts
+git commit -m "feat(api): typed client for pd2.tools v1 endpoints"
+```
+
+---
+
+### Task R-3: Slot detection (replaces original Task 4.1)
+
+Same as the original Task 4.1, but the slot detection now ALSO operates on the `itemType` field returned by `/characters/stats/item-usage` (which gives broad type strings like "Unique", "Set", "Runeword" but not slot info — slot is derived from the item NAME via a static lookup table, plus from the raw character `Item.location` field for the affix-mod aggregator).
+
+**Files:**
+- Create: `src/lib/slot.ts`
+- Create: `src/lib/slot.test.ts`
+- Create: `data/item-slots.json` (lookup table mapping unique/set/runeword item NAMES → slot)
+
+- [ ] **Step 1: Build the item-name → slot lookup**
+
+Use `coleestrin/pd2-tools` source (MIT-licensed per Task 1.1) OR scrape from `wiki.projectdiablo2.com` lists. Result: a JSON file like:
+
+```json
+{
+  "Heart of the Oak": "weapon",
+  "Crown of Ages": "helm",
+  "Enigma": "armor",
+  "Raven Frost": "ring",
+  ...
+}
+```
+
+Save to `data/item-slots.json`. This is referenced by both shape/topItems.ts and the affixMods aggregator.
+
+- [ ] **Step 2: Write `src/lib/slot.ts`**
+
+Two helpers, both pure:
+
+```ts
+import slotByName from "../../data/item-slots.json";
+import type { Slot } from "./types";
+
+export function slotFromItemName(itemName: string): Slot | null {
+  const map = slotByName as Record<string, string>;
+  const v = map[itemName];
+  return (v ?? null) as Slot | null;
+}
+
+// For raw Item records (from /characters): infer slot from the location field.
+// Adjust SLOT_BY_LOCATION map to match the actual `location` values seen in
+// data/snapshot.json. Use scripts/inspect-snapshot.ts to enumerate them.
+const SLOT_BY_LOCATION: Record<string, Slot | null> = {
+  head: "helm",
+  torso: "armor",
+  right_arm: "weapon",
+  left_arm: "offhand",
+  gloves: "gloves",
+  belt: "belt",
+  feet: "boots",
+  neck: "amulet",
+  left_finger: "ring",
+  right_finger: "ring",
+  inventory: null,
+  stash: null,
+  cube: null,
+};
+
+export function slotFromRawItem(item: { location?: string; slot?: string }): Slot | null {
+  const loc = (item.location ?? item.slot ?? "").toString();
+  return SLOT_BY_LOCATION[loc] ?? null;
+}
+```
+
+- [ ] **Step 3: Tests**
+
+Create `src/lib/slot.test.ts`:
+
+```ts
+import { describe, it, expect } from "vitest";
+import { slotFromItemName, slotFromRawItem } from "./slot";
+
+describe("slotFromItemName", () => {
+  it("maps Heart of the Oak to weapon", () => {
+    expect(slotFromItemName("Heart of the Oak")).toBe("weapon");
+  });
+  it("maps Crown of Ages to helm", () => {
+    expect(slotFromItemName("Crown of Ages")).toBe("helm");
+  });
+  it("returns null for unknown items", () => {
+    expect(slotFromItemName("Totally Made Up Item Name")).toBeNull();
+  });
+});
+
+describe("slotFromRawItem", () => {
+  it("merges left_finger and right_finger into ring", () => {
+    expect(slotFromRawItem({ location: "left_finger" })).toBe("ring");
+    expect(slotFromRawItem({ location: "right_finger" })).toBe("ring");
+  });
+  it("returns null for inventory", () => {
+    expect(slotFromRawItem({ location: "inventory" })).toBeNull();
+  });
+});
+```
+
+- [ ] **Step 4: Run, commit**
+
+```powershell
+npm test -- src/lib/slot.test.ts
+git add src/lib/slot.ts src/lib/slot.test.ts data/item-slots.json
+git commit -m "feat(slot): item-name and raw-item slot detection + lookup"
+```
+
+---
+
+### Task R-4: shape/topItems — turn /item-usage response into UI rows
+
+**Files:**
+- Create: `src/lib/shape/topItems.ts`
+- Create: `src/lib/shape/topItems.test.ts`
+
+- [ ] **Step 1: Failing tests**
+
+Create `src/lib/shape/topItems.test.ts`:
+
+```ts
+import { describe, it, expect } from "vitest";
+import { shapeTopItemsBySlot } from "./topItems";
+import type { ItemUsageRow } from "../api";
+
+describe("shapeTopItemsBySlot", () => {
+  it("buckets rows into slots via item-name lookup, top 8 per slot", () => {
+    const rows: ItemUsageRow[] = [
+      { item: "Heart of the Oak", itemType: "Runeword", numOccurrences: 78, totalSample: 100, pct: 78 },
+      { item: "Crown of Ages", itemType: "Unique", numOccurrences: 62, totalSample: 100, pct: 62 },
+      { item: "Raven Frost", itemType: "Unique", numOccurrences: 91, totalSample: 100, pct: 91 },
+    ];
+    const out = shapeTopItemsBySlot(rows);
+    expect(out.weapon[0]).toMatchObject({ itemName: "Heart of the Oak", pct: 78 });
+    expect(out.helm[0]).toMatchObject({ itemName: "Crown of Ages", pct: 62 });
+    expect(out.ring[0]).toMatchObject({ itemName: "Raven Frost", pct: 91 });
+  });
+
+  it("ignores items with no slot match", () => {
+    const rows: ItemUsageRow[] = [
+      { item: "Mystery Trinket", itemType: "Unique", numOccurrences: 5, totalSample: 100, pct: 5 },
+    ];
+    const out = shapeTopItemsBySlot(rows);
+    for (const arr of Object.values(out)) expect(arr).toEqual([]);
+  });
+});
+```
+
+- [ ] **Step 2: Implementation**
+
+Create `src/lib/shape/topItems.ts`:
+
+```ts
+import type { ItemUsageRow } from "../api";
+import { slotFromItemName } from "../slot";
+import type { Slot } from "../types";
+
+const SLOTS: Slot[] = ["helm", "armor", "weapon", "offhand", "gloves", "belt", "boots", "amulet", "ring"];
+
+export type ShapedItem = {
+  itemName: string;
+  itemType: string;
+  count: number;
+  pct: number;
+};
+
+export type TopItemsBySlot = Record<Slot, ShapedItem[]>;
+
+export function shapeTopItemsBySlot(rows: ItemUsageRow[]): TopItemsBySlot {
+  const out = Object.fromEntries(SLOTS.map((s) => [s, [] as ShapedItem[]])) as TopItemsBySlot;
+  for (const row of rows) {
+    const slot = slotFromItemName(row.item);
+    if (!slot) continue;
+    out[slot].push({ itemName: row.item, itemType: row.itemType, count: row.numOccurrences, pct: row.pct });
+  }
+  for (const s of SLOTS) {
+    out[s].sort((a, b) => b.count - a.count);
+    out[s] = out[s].slice(0, 8);
+  }
+  return out;
+}
+```
+
+- [ ] **Step 3: Run, commit**
+
+```powershell
+npm test -- src/lib/shape/topItems.test.ts
+git add src/lib/shape/topItems.ts src/lib/shape/topItems.test.ts
+git commit -m "feat(shape): topItems by slot from /item-usage response"
+```
+
+---
+
+### Task R-5: shape/buildSheet — combine /skill-usage + /level-distribution + /merc-* into one card
+
+**Files:**
+- Create: `src/lib/shape/buildSheet.ts`
+- Create: `src/lib/shape/buildSheet.test.ts`
+
+- [ ] **Step 1: Failing tests**
+
+Create `src/lib/shape/buildSheet.test.ts`:
+
+```ts
+import { describe, it, expect } from "vitest";
+import { shapeBuildSheet } from "./buildSheet";
+
+describe("shapeBuildSheet", () => {
+  it("assembles top 6 skills, level histogram for the active gameMode, top merc type", () => {
+    const out = shapeBuildSheet({
+      skills: [
+        { name: "Holy Bolt", numOccurrences: 100, totalSample: 100, pct: 100 },
+        { name: "Fist of the Heavens", numOccurrences: 95, totalSample: 100, pct: 95 },
+      ],
+      levelDist: {
+        hardcore: [{ level: 99, count: 12 }, { level: 95, count: 30 }],
+        softcore: [{ level: 99, count: 0 }],
+      },
+      mercTypes: [{ name: "Holy Freeze", numOccurrences: 70, totalSample: 100, pct: 70 }],
+      mercItems: [],
+      gameMode: "hardcore",
+    });
+
+    expect(out.skillFrequency[0].name).toBe("Holy Bolt");
+    expect(out.levelDistribution.find((b) => b.level === 95)?.count).toBe(30);
+    expect(out.mercenary.topType).toBe("Holy Freeze");
+  });
+});
+```
+
+- [ ] **Step 2: Implementation**
+
+Create `src/lib/shape/buildSheet.ts`:
+
+```ts
+import type { SkillUsageRow, LevelDistribution, MercTypeUsageRow, MercItemUsageRow, GameMode } from "../api";
+import { slotFromItemName } from "../slot";
+
+export type BuildSheet = {
+  skillFrequency: SkillUsageRow[];
+  levelDistribution: Array<{ level: number; count: number }>;
+  mercenary: {
+    topType: string;
+    typeFrequency: MercTypeUsageRow[];
+    topItemsBySlot: Record<string, Array<{ itemName: string; pct: number }>>;
+  };
+};
+
+export function shapeBuildSheet(input: {
+  skills: SkillUsageRow[];
+  levelDist: LevelDistribution;
+  mercTypes: MercTypeUsageRow[];
+  mercItems: MercItemUsageRow[];
+  gameMode: GameMode;
+}): BuildSheet {
+  const skillFrequency = [...input.skills].sort((a, b) => b.pct - a.pct).slice(0, 12);
+  const levelDistribution = input.levelDist[input.gameMode] ?? [];
+
+  const mercItemsBySlot: Record<string, Array<{ itemName: string; pct: number }>> = {};
+  for (const it of input.mercItems) {
+    const slot = slotFromItemName(it.item) ?? "other";
+    mercItemsBySlot[slot] ??= [];
+    mercItemsBySlot[slot].push({ itemName: it.item, pct: it.pct });
+  }
+  for (const k of Object.keys(mercItemsBySlot)) {
+    mercItemsBySlot[k].sort((a, b) => b.pct - a.pct);
+    mercItemsBySlot[k] = mercItemsBySlot[k].slice(0, 5);
+  }
+
+  return {
+    skillFrequency,
+    levelDistribution,
+    mercenary: {
+      topType: input.mercTypes[0]?.name ?? "",
+      typeFrequency: input.mercTypes,
+      topItemsBySlot: mercItemsBySlot,
+    },
+  };
+}
+```
+
+- [ ] **Step 3: Run, commit**
+
+```powershell
+npm test -- src/lib/shape/buildSheet.test.ts
+git add src/lib/shape/buildSheet.ts src/lib/shape/buildSheet.test.ts
+git commit -m "feat(shape): buildSheet from /skill-usage + /level-distribution + /merc-*"
+```
+
+---
+
+### Task R-6 onward — Affix mods, charms, types, mod dictionary, fixtures, filter, diff, data-loader, worker, UI, deploy
+
+Tasks R-6 through R-N follow the original plan with these substitutions:
+
+| Original task                  | Status              | Replace with / changes                                                                                       |
+| ------------------------------ | ------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Task 1.3 (sample + types)      | KEEP                | Run `inspect-snapshot.ts` on the new multi-page snapshot to derive the raw `Item.mods`/`location`/`quality` field names. |
+| Task 1.4 (mod dictionary)      | KEEP                | Branch A (MIT, copy from pd2-tools) — already decided in Task 1.1.                                            |
+| Task 2.1 (test fixtures)       | KEEP                | Pull a real character from new snapshot for shape reference. Hand-craft 6 chars (down from 8 — game mode now server-filtered, no need for SC fixture). |
+| Task 3.1, 3.2 (filter)         | KEEP, simpler       | filter() now works on the sampled raw set only. Skill-level filter remains client-side. gameMode/minLevel are NOT in client-side filter (server already applied them). |
+| Task 4.1 (slot)                | REPLACED            | Replaced by Task R-3.                                                                                        |
+| Task 4.2 (top items aggregate) | DELETED             | Replaced by Task R-4 (shape).                                                                                |
+| Task 4.3 (affix mods aggregate)| KEEP                | Operates on filtered sampled raw. Same logic, smaller pool size.                                              |
+| Task 4.4 (charms aggregate)    | KEEP                | Operates on filtered sampled raw. Same logic.                                                                |
+| Task 4.5 (build sheet aggregate)| DELETED            | Replaced by Task R-5 (shape).                                                                                |
+| Task 4.6 (facade)              | REVISE              | Becomes: `getGuide(filter)` calls api + filters + aggregates + shapes, returns combined GuideSections.        |
+| Task 5.1 (diff)                | REVISE              | First tries `getCharactersByAccount(name)`. Fallback: search sampled raw. UX message unchanged.               |
+| Task 6.1 (data-loader)         | REVISE              | Caches per-endpoint per-filter-combo in IndexedDB. Sample-set has 24h TTL. Server aggregates have 1h TTL.    |
+| Task 7.1 (worker)              | REVISE              | Worker only runs filter + affix mods + charms. Server aggregates fetched on main thread.                      |
+| Phase 8 (UI)                   | KEEP                | Components mostly unchanged. Page wiring updates to call `getGuide(filter)` on submit, surfaces n= badges showing item-usage sample size separately from affix-mods sample size. |
+| Phase 9 (deploy)               | KEEP                | Unchanged.                                                                                                   |
+
+**Detailed task text for each of these will be written incrementally as we reach them, since the principles are now established.**
 
 ---
 

@@ -2,7 +2,9 @@
 
 **Date:** 2026-05-08
 **Owner:** Steven Obst
-**Status:** Approved (design); pending implementation plan
+**Status:** Approved (design); revised 2026-05-08 mid-implementation after API reality check.
+
+> **Revision note (2026-05-08):** The original design assumed `GET /api/v1/characters` returned all ~21k tracked characters in one 3.4 MB payload. That was wrong — the endpoint paginates 50 per page, and the full dataset is ~1.4 GB. See the **Revised data layer** section near the bottom of this doc for the corrected architecture. Earlier sections that still apply are unchanged; sections that were affected are marked with `(SUPERSEDED — see Revised data layer)`.
 
 ---
 
@@ -126,7 +128,7 @@ PD2/
 - The web worker is the only place async aggregation happens. The main thread stays responsive.
 - Reference data (`mod-dictionary.json`, `item-bases.json`) is imported as JSON. Never fetched at runtime.
 
-## Data layer
+## Data layer (SUPERSEDED — see Revised data layer)
 
 ### Live API
 
@@ -228,7 +230,7 @@ Match logic mirrors pd2.tools: a character matches if it has the requested class
 
 After filtering, characters are sorted by `character.level` descending and the top `topN` are taken (default 100). The owner can change topN via the form.
 
-## Aggregation
+## Aggregation (PARTIALLY SUPERSEDED — most sections come from server endpoints; only affix mods and charms are aggregated client-side)
 
 `lib/aggregate.ts` produces:
 
@@ -373,3 +375,97 @@ User pastes their character name OR account name. We search the cached dump for 
 ## License decision (deferred to implementation)
 
 `coleestrin/pd2-tools` LICENSE inspected at first task of implementation. Decision recorded in `docs/decisions/<date>-pd2-tools-license.md`.
+
+Result (2026-05-08): **MIT**. We may copy mod-label maps and item-base data from `coleestrin/pd2-tools` directly with attribution.
+
+---
+
+## Revised data layer (2026-05-08, supersedes earlier "Data layer" section)
+
+### What we learned at implementation time
+
+`GET /api/v1/characters` paginates 50 records per page. Full dataset = ~424 pages × 3.4 MB ≈ 1.4 GB. Fetching the whole thing client-side is not viable.
+
+Server-side filters on `/characters` are partial:
+- `?gameMode=hardcore|softcore` — works (drops total from ~21k to ~4.5k for HC).
+- `?minLevel=N` — works.
+- `?className=...`, `?requiredSkills=...` — silently ignored.
+
+But the API also exposes **server-side aggregate endpoints** that DO accept the full filter set including `className`. These return tiny pre-aggregated JSON.
+
+### Endpoint inventory (verified at implementation time)
+
+| Endpoint                                     | Filters accepted                              | Returns                                        | Size       |
+| -------------------------------------------- | --------------------------------------------- | ---------------------------------------------- | ---------- |
+| `/api/v1/characters/stats/item-usage`        | `gameMode`, `className`, `minLevel`           | `[{item, itemType, numOccurrences, totalSample, pct}]`     | ~50 KB     |
+| `/api/v1/characters/stats/skill-usage`       | `gameMode`, `className`, `minLevel`           | `[{name, numOccurrences, totalSample, pct}]`   | ~18 KB     |
+| `/api/v1/characters/stats/merc-item-usage`   | `gameMode`, `className`, `minLevel`           | merc gear frequency table                      | ~tiny      |
+| `/api/v1/characters/stats/merc-type-usage`   | `gameMode`, `className`, `minLevel`           | merc type frequency                            | ~tiny      |
+| `/api/v1/characters/stats/level-distribution`| `gameMode`, `className`                       | level histogram (separate softcore/hardcore arrays) | ~1 KB      |
+| `/api/v1/characters?gameMode=&minLevel=&page=` | `gameMode`, `minLevel`                       | 50 raw chars per page                          | ~3.4 MB/pg |
+| `/api/v1/characters/accounts/{accountName}`  | path                                          | one account's characters                       | varies     |
+| `/api/v1/statistics/character-counts`        | none                                          | `{hardcore, softcore}` totals                  | ~30 B      |
+
+### Hybrid approach
+
+Three sections of the guide come straight from server aggregates — zero local computation:
+
+| Guide section                           | Source                                                                          |
+| --------------------------------------- | ------------------------------------------------------------------------------- |
+| Top equipped items by slot              | `/characters/stats/item-usage` + a small slot lookup over the returned itemType |
+| Build sheet — skill points              | `/characters/stats/skill-usage` (top 6 by pct)                                  |
+| Build sheet — level distribution        | `/characters/stats/level-distribution`                                          |
+| Build sheet — mercenary type            | `/characters/stats/merc-type-usage`                                             |
+| Build sheet — mercenary items           | `/characters/stats/merc-item-usage`                                             |
+
+Two sections still need raw character data — the API doesn't aggregate them server-side:
+
+| Guide section            | Source                                                                                                                                                                |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Most common affix mods   | Sampled raw chars (5 pages × 50 = 250 raw records, filtered by `gameMode`+`minLevel` server-side, then by `className`+skill levels client-side, then aggregated locally). |
+| Charm patterns           | Same sampled raw set as above.                                                                                                                                        |
+
+Sample size is a knob: 5 pages = ~250 raw chars = ~17 MB total payload, ~70–100 matches for a given class+skill combo (enough for percentage stats with ±5% confidence). User can crank it up via a UI knob if they want tighter numbers.
+
+### Revised module map
+
+```
+src/
+├─ lib/
+│  ├─ api.ts             # Thin HTTP client. One function per endpoint. Pure I/O.
+│  ├─ data-loader.ts     # Orchestrates: server aggregates + sampled raw fetch + IndexedDB cache.
+│  ├─ filter.ts          # Pure: filters the sampled raw set by className+skills+charLevel.
+│  ├─ slot.ts            # Maps itemType / item location → slot enum.
+│  ├─ aggregate/
+│  │  ├─ affixMods.ts    # Pure: aggregates affix mods from filtered raw chars.
+│  │  └─ charms.ts       # Pure: aggregates charm patterns from filtered raw chars.
+│  ├─ shape/
+│  │  ├─ topItems.ts     # Pure: shapes /item-usage response into UI rows + slot bucketing.
+│  │  ├─ buildSheet.ts   # Pure: shapes /skill-usage, /level-distribution, /merc-* into one card.
+│  │  └─ index.ts        # Re-exports.
+│  └─ diff.ts            # Pure: diffs a single character's items vs the guide sections.
+└─ workers/
+   └─ aggregate.worker.ts  # Runs filter + affixMods + charms only. The shape/* fns run on main thread (cheap).
+```
+
+### Caching strategy (revised)
+
+- **Server-aggregate endpoints** are cheap (≤50 KB, fast). Cache per-filter-combo in IndexedDB with a 1h TTL. Filter changes typically invalidate.
+- **Sampled raw set** is the expensive call (~17 MB). Cache per `(gameMode, minLevel, samplePages)` key in IndexedDB with a 24h TTL.
+- **Per-account character** (diff mode) cached per accountName for 1h.
+- **Snapshot fallback** is a small JSON checked into the repo (5 pages of HC chars at minLevel 80) used when the network is unreachable. It's smaller now — ~17 MB instead of the original 1.4 GB nonsense.
+
+### Diff mode (revised)
+
+User pastes a name (character or account). Lookup order:
+1. Try `/characters/accounts/{name}` — 200 → render diff against the active filter's guide.
+2. If 404, search the cached sampled raw set for `character.name` matching case-insensitively.
+3. If still no match, surface the "push your character via pd2-character-downloader" message.
+
+This is more robust than the original local-search-only plan because we now hit the per-account endpoint first, which works even if the user's character isn't in our sampled subset.
+
+### Open issues with revised approach
+
+- **affixMods + charms accuracy depends on sample size.** With 250 raw chars filtered to ~80 of the right class, percentages have ~±5% confidence. UI surfaces this as "n=80" so the user knows. Knob to fetch more pages if they want tighter numbers.
+- **Server aggregates may not match client filtering exactly.** The server-aggregate endpoints don't accept `requiredSkills`, so the item-usage table reflects ALL Paladins at minLevel ≥ X, not just Paladins running this exact skill loadout. We surface this distinction in the UI ("Top items across all HC Paladins ≥ L80, n=3491; affix-mod stats below filtered to skill match, n=80"). Not perfect but transparent.
+
