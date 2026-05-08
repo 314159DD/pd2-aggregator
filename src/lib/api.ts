@@ -70,10 +70,12 @@ export async function getLevelDistribution(f: Pick<CommonFilter, "gameMode" | "c
 }
 
 export async function getCharactersPage(
-  f: Pick<CommonFilter, "gameMode" | "minLevel">,
+  f: Pick<CommonFilter, "gameMode" | "minLevel" | "className">,
   page: number,
 ): Promise<RawCharactersPage> {
-  const r = await fetch(`${BASE}/characters?${qs({ gameMode: f.gameMode, minLevel: f.minLevel }, { page })}`);
+  const r = await fetch(
+    `${BASE}/characters?${qs({ gameMode: f.gameMode, className: f.className, minLevel: f.minLevel }, { page })}`,
+  );
   if (!r.ok) throw new Error(`characters page=${page} HTTP ${r.status}`);
   return r.json();
 }

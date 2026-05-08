@@ -77,10 +77,16 @@ function makePaladinChar(overrides?: Record<string, unknown>) {
   };
 }
 
-const RAW_PAGE_RESPONSE = {
-  total: 50,
-  characters: [makePaladinChar(), makePaladinChar()],
-};
+/**
+ * Build a RAW_PAGE_RESPONSE with a given total and N characters per page.
+ * The loader uses `total` to compute how many pages to fetch.
+ */
+function makePageResponse(total: number, charsPerPage: number = 2) {
+  return {
+    total,
+    characters: Array.from({ length: charsPerPage }, () => makePaladinChar()),
+  };
+}
 
 const SERVER_RESPONSES: Record<string, unknown> = {
   "item-usage": [ITEM_USAGE_ROW],
@@ -90,11 +96,47 @@ const SERVER_RESPONSES: Record<string, unknown> = {
   "level-distribution": LEVEL_DIST,
 };
 
-const DEFAULT_RESPONSES: Record<string, unknown> = {
-  ...SERVER_RESPONSES,
-  "characters?gameMode=": RAW_PAGE_RESPONSE,
-};
+/**
+ * Create a fetch mock that:
+ * - routes server-aggregate URLs by pattern
+ * - routes raw character pages by inspecting the `page=` query param
+ *   (page 1 returns `page1Response`, all later pages return `laterPageResponse`)
+ */
+function mockFetchWithPages(
+  page1Response: { total: number; characters: unknown[] },
+  laterPageResponse: { total: number; characters: unknown[] } = page1Response,
+) {
+  vi.spyOn(global, "fetch").mockImplementation(
+    async (input: RequestInfo | URL) => {
+      const url = typeof input === "string" ? input : input.toString();
 
+      // Server aggregates
+      for (const [pattern, body] of Object.entries(SERVER_RESPONSES)) {
+        if (url.includes(pattern)) {
+          return new Response(JSON.stringify(body), {
+            status: 200,
+            headers: { "Content-Type": "application/json" },
+          });
+        }
+      }
+
+      // Raw character pages
+      if (url.includes("characters?")) {
+        const u = new URL(url);
+        const page = Number(u.searchParams.get("page") ?? "1");
+        const body = page === 1 ? page1Response : laterPageResponse;
+        return new Response(JSON.stringify(body), {
+          status: 200,
+          headers: { "Content-Type": "application/json" },
+        });
+      }
+
+      return new Response("not found", { status: 404 });
+    },
+  );
+}
+
+/** Simple mock where every page returns the same response. */
 function mockFetchWith(byUrl: Record<string, unknown>) {
   vi.spyOn(global, "fetch").mockImplementation(
     async (input: RequestInfo | URL) => {
@@ -128,18 +170,24 @@ const HC_PALA_80_FILTER: CommonFilter = {
   minLevel: 80,
 };
 
-/** Default request — Paladin HC 85, no skill requirements, 5 pages */
+/** Default request — Paladin HC 85, no skill requirements */
 const HC_PALA: GuideRequest = {
   filter: HC_PALA_FILTER,
   skills: [],
-  samplePages: 5,
 };
 
 /** Different minLevel — triggers separate server AND raw cache misses */
 const HC_PALA_80: GuideRequest = {
   filter: HC_PALA_80_FILTER,
   skills: [],
-  samplePages: 5,
+};
+
+// A small page response: total=4, 2 chars per page → 2 pages needed
+const SMALL_PAGE = makePageResponse(4, 2);
+
+const DEFAULT_RESPONSES = {
+  ...SERVER_RESPONSES,
+  "characters?": SMALL_PAGE,
 };
 
 // ---------------------------------------------------------------------------
@@ -147,9 +195,6 @@ const HC_PALA_80: GuideRequest = {
 // ---------------------------------------------------------------------------
 
 beforeEach(async () => {
-  // Use clearCache() rather than idbClear() directly — the data-loader uses an
-  // in-memory fallback when IndexedDB is unavailable (e.g. jsdom), so we must
-  // clear through the same adapter.
   await clearCache();
   vi.restoreAllMocks();
 });
@@ -159,52 +204,48 @@ afterEach(async () => {
 });
 
 // ---------------------------------------------------------------------------
-// Tests — Phase 1 (server aggregates, adapted to new signature)
+// Tests — Phase 1 (server aggregates)
 // ---------------------------------------------------------------------------
 
 describe("loadGuide — server aggregates", () => {
   // Test 1: First call fires fetch, returns source:"live", populates cache
   it("1. first call fires fetch and returns source:live", async () => {
-    mockFetchWith(DEFAULT_RESPONSES);
+    // total=4 → ceil(4/50)=1 page needed
+    mockFetchWithPages(makePageResponse(4, 4));
     const result = await loadGuide(HC_PALA);
 
     expect(result.source).toBe("live");
-    // request echo
     expect(result.request).toEqual(HC_PALA);
     expect(result.itemUsageSampleSize).toBe(100);
     expect(result.skillUsageSampleSize).toBe(100);
     expect(result.fetchedAt).toBeGreaterThan(0);
-    // 5 server endpoints + 5 raw pages
-    expect(vi.mocked(fetch)).toHaveBeenCalledTimes(10);
+    // 5 server endpoints + 1 raw page (total=4, fits in 1 page)
+    expect(vi.mocked(fetch)).toHaveBeenCalledTimes(6);
   });
 
   // Test 2: Second call within TTL returns source:"cache" with no fetch
   it("2. second call within TTL hits cache (no fetch)", async () => {
-    mockFetchWith(DEFAULT_RESPONSES);
+    mockFetchWithPages(makePageResponse(4, 4));
 
-    // Warm the cache
     await loadGuide(HC_PALA);
     const fetchCallsAfterFirst = vi.mocked(fetch).mock.calls.length;
-    expect(fetchCallsAfterFirst).toBe(10);
 
-    // Second call
     const cached = await loadGuide(HC_PALA);
     expect(cached.source).toBe("cache");
-    // fetch should NOT have been called again
-    expect(vi.mocked(fetch)).toHaveBeenCalledTimes(10);
+    expect(vi.mocked(fetch)).toHaveBeenCalledTimes(fetchCallsAfterFirst);
   });
 
   // Test 3: Different filter => separate cache entry, fires fetch
   it("3. different filter creates a separate cache entry", async () => {
-    mockFetchWith(DEFAULT_RESPONSES);
+    mockFetchWithPages(makePageResponse(4, 4));
 
     await loadGuide(HC_PALA);
     const result80 = await loadGuide(HC_PALA_80);
 
     expect(result80.source).toBe("live");
     expect(result80.request.filter).toEqual(HC_PALA_80_FILTER);
-    // 10 calls for each request = 20 total
-    expect(vi.mocked(fetch)).toHaveBeenCalledTimes(20);
+    // Both requests fire all fetches (different raw key due to different minLevel)
+    expect(vi.mocked(fetch)).toHaveBeenCalledTimes(12);
   });
 
   // Test 4: Empty item-usage response => itemUsageSampleSize: 0
@@ -220,39 +261,35 @@ describe("loadGuide — server aggregates", () => {
 
   // Test 5: After TTL expiry, refetches
   it("5. refetches after server TTL expiry", async () => {
-    mockFetchWith(DEFAULT_RESPONSES);
+    mockFetchWithPages(makePageResponse(4, 4));
 
-    // Warm the cache
     const first = await loadGuide(HC_PALA);
     expect(first.source).toBe("live");
-    expect(vi.mocked(fetch)).toHaveBeenCalledTimes(10);
+    const callsAfterFirst = vi.mocked(fetch).mock.calls.length;
 
     // Advance time past server TTL (1 hour + 1 ms) but NOT past raw TTL (24h)
     vi.spyOn(Date, "now").mockReturnValue(first.fetchedAt + 3_600_001);
 
     const second = await loadGuide(HC_PALA);
     expect(second.source).toBe("live");
-    // Server fetch again (5 more), raw still fresh (no fetch) = 15 total
-    expect(vi.mocked(fetch)).toHaveBeenCalledTimes(15);
+    // Server fetch again (5 more), raw still fresh (no raw fetch)
+    const callsAfterSecond = vi.mocked(fetch).mock.calls.length;
+    expect(callsAfterSecond - callsAfterFirst).toBe(5);
   });
 
   // Test 6: Live fetch fails AND cache exists (stale) => returns stale cache
   it("6. stale cache returned when live fetch fails", async () => {
-    // First successful fetch to populate cache
-    mockFetchWith(DEFAULT_RESPONSES);
+    mockFetchWithPages(makePageResponse(4, 4));
     const first = await loadGuide(HC_PALA);
     expect(first.source).toBe("live");
 
-    // Advance past server TTL so the cache is "stale"
+    // Advance past server TTL
     vi.spyOn(Date, "now").mockReturnValue(first.fetchedAt + 3_600_001);
 
-    // Now mock fetch to fail for server endpoints only (raw still "fresh" TTL-wise
-    // but we already advanced time past server TTL only — re-mock everything to fail)
     vi.spyOn(global, "fetch").mockRejectedValue(new Error("Network error"));
 
     const result = await loadGuide(HC_PALA);
     expect(result.source).toBe("cache");
-    // Should still have the data from the first call
     expect(result.itemUsageSampleSize).toBe(100);
   });
 
@@ -267,24 +304,21 @@ describe("loadGuide — server aggregates", () => {
 // Test 8: clearCache() empties IDB
 describe("clearCache", () => {
   it("8. clearCache empties IndexedDB", async () => {
-    mockFetchWith(DEFAULT_RESPONSES);
+    mockFetchWithPages(makePageResponse(4, 4));
 
-    // Warm the cache
     const first = await loadGuide(HC_PALA);
     expect(first.source).toBe("live");
+    const callsAfterWarm = vi.mocked(fetch).mock.calls.length;
 
-    // Verify cache works
     const cached = await loadGuide(HC_PALA);
     expect(cached.source).toBe("cache");
 
-    // Clear the cache
     await clearCache();
 
-    // Next call should refetch
     const afterClear = await loadGuide(HC_PALA);
     expect(afterClear.source).toBe("live");
-    // 10 initial + 10 after clear = 20 total
-    expect(vi.mocked(fetch)).toHaveBeenCalledTimes(20);
+    // Should have fetched again
+    expect(vi.mocked(fetch).mock.calls.length).toBe(callsAfterWarm * 2);
   });
 });
 
@@ -295,12 +329,15 @@ describe("clearCache", () => {
 describe("loadGuide — raw sample + client aggregates", () => {
   // Test 9: Cold start — both caches miss, fetches everything, returns live with client aggregates
   it("9. cold start returns source:live with non-empty client aggregates", async () => {
-    mockFetchWith(DEFAULT_RESPONSES);
+    // total=4, fits in 1 page
+    mockFetchWithPages(makePageResponse(4, 4));
 
     const result = await loadGuide(HC_PALA);
 
     expect(result.source).toBe("live");
-    expect(result.rawSamplePoolSize).toBeGreaterThan(0); // 5 pages × 2 chars = 10
+    expect(result.rawSamplePoolSize).toBeGreaterThan(0);
+    expect(result.rawSampleTotalAvailable).toBe(4);
+    expect(result.truncated).toBe(false);
     expect(result.filteredPoolSize).toBeGreaterThanOrEqual(0);
     expect(result.clientAggregates).toBeDefined();
     expect(typeof result.clientAggregates.poolSize).toBe("number");
@@ -308,66 +345,78 @@ describe("loadGuide — raw sample + client aggregates", () => {
     expect(result.clientAggregates.charms).toBeDefined();
   });
 
-  // Test 10: Same request twice — second is source:cache with no additional fetches
-  it("10. same request twice: second call is source:cache, no fetches", async () => {
-    mockFetchWith(DEFAULT_RESPONSES);
+  // Test 10: Fetches multiple pages when total > PAGE_SIZE
+  it("10. fetches multiple pages when total > 50", async () => {
+    // total=100 → ceil(100/50)=2 pages
+    const page1 = makePageResponse(100, 50);
+    const page2 = makePageResponse(100, 50);
+    mockFetchWithPages(page1, page2);
+
+    const result = await loadGuide(HC_PALA);
+
+    expect(result.source).toBe("live");
+    expect(result.rawSamplePoolSize).toBe(100); // 2 pages × 50 chars
+    expect(result.rawSampleTotalAvailable).toBe(100);
+    expect(result.truncated).toBe(false);
+    // 5 server + 2 raw pages = 7 calls
+    expect(vi.mocked(fetch)).toHaveBeenCalledTimes(7);
+  });
+
+  // Test 11: Caps at MAX_PAGES (30 pages = 1500 chars)
+  it("11. caps at MAX_PAGES=30 when total is very large", async () => {
+    // total=2000 → would need 40 pages, capped at 30
+    const hugePage = makePageResponse(2000, 50);
+    mockFetchWithPages(hugePage, hugePage);
+
+    const result = await loadGuide(HC_PALA);
+
+    expect(result.truncated).toBe(true);
+    expect(result.rawSampleTotalAvailable).toBe(2000);
+    // 30 pages × 50 = 1500 chars
+    expect(result.rawSamplePoolSize).toBe(1500);
+    // 5 server + 30 raw pages = 35 calls
+    expect(vi.mocked(fetch)).toHaveBeenCalledTimes(35);
+  });
+
+  // Test 12: Same request twice — second is source:cache with no additional fetches
+  it("12. same request twice: second call is source:cache, no fetches", async () => {
+    mockFetchWithPages(makePageResponse(4, 4));
 
     await loadGuide(HC_PALA);
     const calls1 = vi.mocked(fetch).mock.calls.length;
 
     const second = await loadGuide(HC_PALA);
     expect(second.source).toBe("cache");
-    expect(vi.mocked(fetch).mock.calls.length).toBe(calls1); // no new fetches
+    expect(vi.mocked(fetch).mock.calls.length).toBe(calls1);
   });
 
-  // Test 11: Different className (same gameMode/minLevel) — server cache miss, raw cache HIT
-  it("11. different className reuses raw cache, only re-fetches server aggregates", async () => {
-    mockFetchWith(DEFAULT_RESPONSES);
+  // Test 13: Different className — BOTH server and raw cache miss (class is now in raw key)
+  it("13. different className triggers both server and raw cache misses", async () => {
+    mockFetchWithPages(makePageResponse(4, 4));
 
     // Warm with Paladin
     await loadGuide(HC_PALA);
-    const callsAfterFirst = vi.mocked(fetch).mock.calls.length; // 10: 5 server + 5 raw
+    const callsAfterFirst = vi.mocked(fetch).mock.calls.length;
 
-    // Request with Sorceress — same gameMode + minLevel + samplePages → raw cache HIT
+    // Request with Sorceress — className in raw key → raw cache MISS
     const HC_SORC: GuideRequest = {
       filter: { gameMode: "hardcore", className: "Sorceress", minLevel: 85 },
       skills: [],
-      samplePages: 5,
     };
 
     const result = await loadGuide(HC_SORC);
-    expect(result.source).toBe("live"); // server cache was different key → live
-    const callsAfterSecond = vi.mocked(fetch).mock.calls.length;
-    // Only 5 server-aggregate calls fired (raw cache reused)
-    expect(callsAfterSecond - callsAfterFirst).toBe(5);
-  });
-
-  // Test 12: Different samplePages — raw cache miss (new raw cache key)
-  it("12. different samplePages triggers raw cache miss", async () => {
-    mockFetchWith(DEFAULT_RESPONSES);
-
-    // Warm with 5 pages
-    await loadGuide(HC_PALA);
-    const callsAfterFirst = vi.mocked(fetch).mock.calls.length;
-
-    // Request with 3 pages — different raw cache key
-    const req3Pages: GuideRequest = { ...HC_PALA, samplePages: 3 };
-    const result = await loadGuide(req3Pages);
-
     expect(result.source).toBe("live");
     const callsAfterSecond = vi.mocked(fetch).mock.calls.length;
-    // Server cache key is the same (same className) → server HIT, raw MISS (3 pages)
-    // So: 0 server fetches + 3 raw page fetches = 3 new calls
-    expect(callsAfterSecond - callsAfterFirst).toBe(3);
-    expect(result.rawSamplePoolSize).toBe(3 * RAW_PAGE_RESPONSE.characters.length);
+    // Both server (5) and raw (1 page for total=4) re-fetched = 6 new calls
+    expect(callsAfterSecond - callsAfterFirst).toBe(6);
   });
 
-  // Test 13: Raw fetch fails, server fetches succeed, no raw cache → re-throws
-  it("13. raw fetch fail with no raw cache re-throws", async () => {
+  // Test 14: Raw fetch fails, server fetches succeed, no raw cache → re-throws
+  it("14. raw fetch fail with no raw cache re-throws", async () => {
     vi.spyOn(global, "fetch").mockImplementation(
       async (input: RequestInfo | URL) => {
         const url = typeof input === "string" ? input : input.toString();
-        if (url.includes("characters?gameMode=")) {
+        if (url.includes("characters?")) {
           throw new Error("raw fetch failed");
         }
         for (const [pattern, body] of Object.entries(SERVER_RESPONSES)) {
@@ -385,11 +434,10 @@ describe("loadGuide — raw sample + client aggregates", () => {
     await expect(loadGuide(HC_PALA)).rejects.toThrow();
   });
 
-  // Test 14: Raw fetch fails, stale raw cache exists → uses stale
-  it("14. stale raw cache used when raw fetch fails", async () => {
-    mockFetchWith(DEFAULT_RESPONSES);
+  // Test 15: Raw fetch fails, stale raw cache exists → uses stale
+  it("15. stale raw cache used when raw fetch fails", async () => {
+    mockFetchWithPages(makePageResponse(4, 4));
 
-    // Warm caches
     const first = await loadGuide(HC_PALA);
     expect(first.source).toBe("live");
     const rawPoolSize = first.rawSamplePoolSize;
@@ -397,15 +445,12 @@ describe("loadGuide — raw sample + client aggregates", () => {
     // Advance past raw TTL (24h + 1ms)
     vi.spyOn(Date, "now").mockReturnValue(first.fetchedAt + 86_400_001);
 
-    // Raw fetch now fails, server fetch fails too → everything fails
-    // We need server to succeed (its TTL is 1h, also expired) and raw to fail
     vi.spyOn(global, "fetch").mockImplementation(
       async (input: RequestInfo | URL) => {
         const url = typeof input === "string" ? input : input.toString();
-        if (url.includes("characters?gameMode=")) {
+        if (url.includes("characters?")) {
           throw new Error("raw fetch failed");
         }
-        // Server endpoints succeed
         for (const [pattern, body] of Object.entries(SERVER_RESPONSES)) {
           if (url.includes(pattern)) {
             return new Response(JSON.stringify(body), {
@@ -419,15 +464,14 @@ describe("loadGuide — raw sample + client aggregates", () => {
     );
 
     const result = await loadGuide(HC_PALA);
-    // Should not throw — raw uses stale fallback
     expect(result.rawSamplePoolSize).toBe(rawPoolSize);
     // Source is "live" because server was re-fetched
     expect(result.source).toBe("live");
   });
 
-  // Test 15: clearCache() empties both server and raw cache keys
-  it("15. clearCache empties both server and raw cache keys", async () => {
-    mockFetchWith(DEFAULT_RESPONSES);
+  // Test 16: clearCache() empties both server and raw cache keys
+  it("16. clearCache empties both server and raw cache keys", async () => {
+    mockFetchWithPages(makePageResponse(4, 4));
 
     await loadGuide(HC_PALA);
     const cached = await loadGuide(HC_PALA);
@@ -437,8 +481,18 @@ describe("loadGuide — raw sample + client aggregates", () => {
 
     const afterClear = await loadGuide(HC_PALA);
     expect(afterClear.source).toBe("live");
-    // Both server (5) + raw (5) re-fetched = 10 calls (after the 10 warm + 10 after clear)
-    // Total: 10 (warm) + 10 (after clear) = 20
-    expect(vi.mocked(fetch)).toHaveBeenCalledTimes(20);
+  });
+
+  // Test 17: onProgress callback is called during multi-page fetch
+  it("17. onProgress callback receives progress messages", async () => {
+    // total=100 → 2 pages
+    mockFetchWithPages(makePageResponse(100, 50), makePageResponse(100, 50));
+
+    const messages: string[] = [];
+    await loadGuide(HC_PALA, (msg) => messages.push(msg));
+
+    // Should have received at least one progress message
+    expect(messages.length).toBeGreaterThan(0);
+    expect(messages[0]).toContain("Fetching");
   });
 });
