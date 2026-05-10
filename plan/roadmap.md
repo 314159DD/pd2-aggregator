@@ -1,6 +1,6 @@
 # Roadmap
 
-**Updated:** 2026-05-10 (Sprint 2.1 shipped)
+**Updated:** 2026-05-11 (Sprint 2.2 shipped)
 
 ## Core Loop
 
@@ -78,7 +78,19 @@ The sprints below are scaffolded but not yet detailed — they'll be filled in o
 
 **One-commit hotfix.** Cohort-mismatch bug spotted by Steven post-2.1 deploy: our server-stats sections (top items, mercenary, level distribution) were aggregating across the entire class, not the skill-filtered cohort. The bug pre-dated Sprint 2.1 — pd2.tools' API accepts a `skills` query param, our client never sent one. Now passed on all five server endpoints; cache key extended to include skills.
 
-### Sprint 2.2 — TBD
+### Sprint 2.2 — Correctness audit + integration prep (DONE 2026-05-11)
+
+**Branch:** `sprint/2.2-correctness-audit` (merged to main)
+**Detail:** [`sprints/archive/sprint-2.2-correctness-audit.md`](sprints/archive/sprint-2.2-correctness-audit.md) · [`docs/specs/2026-05-11-sprint-2.2-correctness-audit-design.md`](../docs/specs/2026-05-11-sprint-2.2-correctness-audit-design.md)
+
+**Delivered:**
+- **Validation test suite** — `src/lib/validation/parity.test.ts` + 7 canonical-build fixtures + `scripts/refresh-validation-fixtures.ts`. Catches the 2.1.1 + 2.1.2 bug shapes. Fixture refresh is single-purpose; URL contract is covered by separate mocked-fetch tests in `src/lib/api.url-contract.test.ts`.
+- **Open-source posture** — `LICENSE` (MIT, matching `coleestrin/pd2-tools`), full `README.md` rewrite with attribution.
+- **Integration prep** — `plan/architecture/integration-notes.md` captures the conversation agenda for coleestrin (current stack, portability map, open questions, suggested port decomposition).
+
+**Verification:** test suite grew 126 → 180 (+54: 12 URL contract + 42 parity). tsc clean. next build clean.
+
+### Sprint 2.3 — TBD
 
 Drawn from this release's community follow-up + still-open items:
 - Reach out to `coleestrin` (pd2.tools maintainer) — courtesy ping, share what's being built, ask about API courtesy limits
