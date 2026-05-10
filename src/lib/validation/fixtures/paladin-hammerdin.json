@@ -1,0 +1,584 @@
+{
+  "_meta": {
+    "build": "paladin-hammerdin",
+    "fetchedAt": "2026-05-10T23:21:36.224Z",
+    "filter": {
+      "gameMode": "hardcore",
+      "minLevel": 80,
+      "className": "Paladin"
+    },
+    "skills": [
+      {
+        "name": "Blessed Hammer",
+        "minLevel": 20
+      }
+    ]
+  },
+  "itemUsage": [
+    {
+      "item": "Spirit",
+      "itemType": "Runeword",
+      "numOccurrences": 4,
+      "totalSample": 8,
+      "pct": 50
+    },
+    {
+      "item": "Trang-Oul's Claws",
+      "itemType": "Set",
+      "numOccurrences": 4,
+      "totalSample": 8,
+      "pct": 50
+    },
+    {
+      "item": "Arachnid Mesh",
+      "itemType": "Unique",
+      "numOccurrences": 3,
+      "totalSample": 8,
+      "pct": 37.5
+    },
+    {
+      "item": "Akarat's Devotion",
+      "itemType": "Unique",
+      "numOccurrences": 3,
+      "totalSample": 8,
+      "pct": 37.5
+    },
+    {
+      "item": "Herald of Zakarum",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 8,
+      "pct": 25
+    },
+    {
+      "item": "Alma Negra",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 8,
+      "pct": 25
+    },
+    {
+      "item": "Constricting Loop",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 8,
+      "pct": 25
+    },
+    {
+      "item": "Enigma",
+      "itemType": "Runeword",
+      "numOccurrences": 2,
+      "totalSample": 8,
+      "pct": 25
+    },
+    {
+      "item": "Griswold's Valor",
+      "itemType": "Set",
+      "numOccurrences": 2,
+      "totalSample": 8,
+      "pct": 25
+    },
+    {
+      "item": "Harlequin Crest",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 8,
+      "pct": 25
+    },
+    {
+      "item": "Que-Hegan's Wisdom",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 8,
+      "pct": 25
+    },
+    {
+      "item": "Tearhaunch",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 8,
+      "pct": 25
+    },
+    {
+      "item": "Atma's Wail",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "Heart of the Oak",
+      "itemType": "Runeword",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "Ephemeral",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "Infernostride",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "Magefist",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "Mara's Kaleidoscope",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "War Traveler",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "Rockstopper",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "Seraph's Hymn",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "Skin of the Vipermagi",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "Dracul's Grasp",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "Wizardspike",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "Griswold's Heart",
+      "itemType": "Set",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "Griswold's Honor",
+      "itemType": "Set",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "Griswold's Redemption",
+      "itemType": "Set",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "The Fetid Sprinkler",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    }
+  ],
+  "skillUsage": [
+    {
+      "name": "Blessed Aim",
+      "numOccurrences": 8,
+      "totalSample": 8,
+      "pct": 100
+    },
+    {
+      "name": "Blessed Hammer",
+      "numOccurrences": 8,
+      "totalSample": 8,
+      "pct": 100
+    },
+    {
+      "name": "Concentration",
+      "numOccurrences": 8,
+      "totalSample": 8,
+      "pct": 100
+    },
+    {
+      "name": "Vigor",
+      "numOccurrences": 8,
+      "totalSample": 8,
+      "pct": 100
+    }
+  ],
+  "mercTypeUsage": [
+    {
+      "mercType": "Defensive Auras",
+      "numOccurrences": 7,
+      "totalSample": 8,
+      "pct": 87.5
+    },
+    {
+      "mercType": "Cold Arrow",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    }
+  ],
+  "mercItemUsage": [
+    {
+      "item": "Insight",
+      "itemType": "Runeword",
+      "numOccurrences": 5,
+      "totalSample": 8,
+      "pct": 62.5
+    },
+    {
+      "item": "Asylum",
+      "itemType": "Runeword",
+      "numOccurrences": 3,
+      "totalSample": 8,
+      "pct": 37.5
+    },
+    {
+      "item": "Gore Rider",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 8,
+      "pct": 25
+    },
+    {
+      "item": "Laying of Hands",
+      "itemType": "Set",
+      "numOccurrences": 2,
+      "totalSample": 8,
+      "pct": 25
+    },
+    {
+      "item": "String of Ears",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 8,
+      "pct": 25
+    },
+    {
+      "item": "Guardian Angel",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "Guillaume's Face",
+      "itemType": "Set",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "Harlequin Crest",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "Heavenly Garb",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "Infernostride",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "Innocence",
+      "itemType": "Runeword",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "Lava Gout",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "Leviathan",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "Razortail",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "Rite of Passage",
+      "itemType": "Set",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "Sazabi's Ghost Liberator",
+      "itemType": "Set",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "Siggard's Staunch",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "Soul Drainer",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "Vampire Gaze",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "Corpsemourn",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "Ferocity",
+      "itemType": "Runeword",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "Ghoulhide",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    },
+    {
+      "item": "Griswold's Heart",
+      "itemType": "Set",
+      "numOccurrences": 1,
+      "totalSample": 8,
+      "pct": 12.5
+    }
+  ],
+  "levelDistribution": {
+    "softcore": [
+      {
+        "level": 80,
+        "count": 6437
+      },
+      {
+        "level": 81,
+        "count": 6421
+      },
+      {
+        "level": 82,
+        "count": 6434
+      },
+      {
+        "level": 83,
+        "count": 6582
+      },
+      {
+        "level": 84,
+        "count": 6859
+      },
+      {
+        "level": 85,
+        "count": 8057
+      },
+      {
+        "level": 86,
+        "count": 8955
+      },
+      {
+        "level": 87,
+        "count": 10165
+      },
+      {
+        "level": 88,
+        "count": 11271
+      },
+      {
+        "level": 89,
+        "count": 11854
+      },
+      {
+        "level": 90,
+        "count": 13028
+      },
+      {
+        "level": 91,
+        "count": 12274
+      },
+      {
+        "level": 92,
+        "count": 10826
+      },
+      {
+        "level": 93,
+        "count": 9200
+      },
+      {
+        "level": 94,
+        "count": 7054
+      },
+      {
+        "level": 95,
+        "count": 5390
+      },
+      {
+        "level": 96,
+        "count": 3026
+      },
+      {
+        "level": 97,
+        "count": 1378
+      },
+      {
+        "level": 98,
+        "count": 482
+      },
+      {
+        "level": 99,
+        "count": 1124
+      }
+    ],
+    "hardcore": [
+      {
+        "level": 80,
+        "count": 1396
+      },
+      {
+        "level": 81,
+        "count": 1292
+      },
+      {
+        "level": 82,
+        "count": 1300
+      },
+      {
+        "level": 83,
+        "count": 1361
+      },
+      {
+        "level": 84,
+        "count": 1421
+      },
+      {
+        "level": 85,
+        "count": 1578
+      },
+      {
+        "level": 86,
+        "count": 1778
+      },
+      {
+        "level": 87,
+        "count": 2113
+      },
+      {
+        "level": 88,
+        "count": 2221
+      },
+      {
+        "level": 89,
+        "count": 2321
+      },
+      {
+        "level": 90,
+        "count": 2512
+      },
+      {
+        "level": 91,
+        "count": 2326
+      },
+      {
+        "level": 92,
+        "count": 2015
+      },
+      {
+        "level": 93,
+        "count": 1810
+      },
+      {
+        "level": 94,
+        "count": 1442
+      },
+      {
+        "level": 95,
+        "count": 1069
+      },
+      {
+        "level": 96,
+        "count": 716
+      },
+      {
+        "level": 97,
+        "count": 315
+      },
+      {
+        "level": 98,
+        "count": 141
+      },
+      {
+        "level": 99,
+        "count": 289
+      }
+    ]
+  }
+}
