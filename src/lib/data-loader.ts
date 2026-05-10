@@ -89,11 +89,21 @@ type RawCacheEntry = {
   totalAvailable: number;
 };
 
-function serverCacheKey(f: CommonFilter): string {
-  return `guide:server:${f.gameMode}|${f.className ?? "*"}|${f.minLevel ?? 0}`;
+function serverCacheKey(f: CommonFilter, skills: SkillRequirement[]): string {
+  // Cohort changes when skills change → key must include them.
+  // Sort by name so order-independent submissions hit the same cache entry.
+  const s = skills
+    .slice()
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .map((sk) => `${sk.name}@${sk.minLevel}`)
+    .join(",");
+  return `guide:server:${f.gameMode}|${f.className ?? "*"}|${f.minLevel ?? 0}|${s}`;
 }
 
 function rawCacheKey(f: CommonFilter): string {
+  // Raw pool is the full class-filtered character set — independent of the
+  // skill filter (which we apply client-side over the pool). One raw cache
+  // entry per class, reused across many skill combos.
   return `guide:raw:${f.gameMode}|${f.className ?? "*"}|${f.minLevel ?? 0}`;
 }
 
@@ -139,14 +149,17 @@ async function _storeClear(): Promise<void> {
 // Server-aggregate fetch + shape
 // ---------------------------------------------------------------------------
 
-async function fetchServerAggregates(filter: CommonFilter): Promise<ServerCacheEntry> {
+async function fetchServerAggregates(
+  filter: CommonFilter,
+  skills: SkillRequirement[],
+): Promise<ServerCacheEntry> {
   const [itemUsage, skillUsage, mercTypes, mercItems, levelDist] =
     await Promise.all([
-      getItemUsage(filter),
-      getSkillUsage(filter),
-      getMercTypeUsage(filter),
-      getMercItemUsage(filter),
-      getLevelDistribution(filter),
+      getItemUsage(filter, skills),
+      getSkillUsage(filter, skills),
+      getMercTypeUsage(filter, skills),
+      getMercItemUsage(filter, skills),
+      getLevelDistribution(filter, skills),
     ]);
 
   const topItemsBySlot = shapeTopItemsBySlot(itemUsage);
@@ -247,7 +260,7 @@ export async function loadGuide(
 ): Promise<LoadedGuide> {
   const { filter, skills } = req;
 
-  const sKey = serverCacheKey(filter);
+  const sKey = serverCacheKey(filter, skills);
   const rKey = rawCacheKey(filter);
 
   // 1. Read both caches in parallel
@@ -273,7 +286,7 @@ export async function loadGuide(
 
   const serverPromise: Promise<ServerCacheEntry> = serverFresh
     ? Promise.resolve(cachedServer)
-    : fetchServerAggregates(filter)
+    : fetchServerAggregates(filter, skills)
         .then((result) => {
           serverLive = true;
           return result;

@@ -71,11 +71,18 @@ The sprints below are scaffolded but not yet detailed — they'll be filled in o
 
 **Verification:** test suite grew 90 → 126; tsc clean; next build clean. Live verification on `pd2-aggregator.vercel.app` after merge.
 
+### Sprint 2.1.1 — Pass skills to server stats endpoints (DONE 2026-05-10)
+
+**Branch:** `sprint/2.1.1-pass-skills-to-server` (merged to main)
+**Detail:** [`sprints/archive/sprint-2.1.1-pass-skills-to-server.md`](sprints/archive/sprint-2.1.1-pass-skills-to-server.md)
+
+**One-commit hotfix.** Cohort-mismatch bug spotted by Steven post-2.1 deploy: our server-stats sections (top items, mercenary, level distribution) were aggregating across the entire class, not the skill-filtered cohort. The bug pre-dated Sprint 2.1 — pd2.tools' API accepts a `skills` query param, our client never sent one. Now passed on all five server endpoints; cache key extended to include skills.
+
 ### Sprint 2.2 — TBD
 
 Drawn from this release's community follow-up + still-open items:
 - Reach out to `coleestrin` (pd2.tools maintainer) — courtesy ping, share what's being built, ask about API courtesy limits
-- Aggregation accuracy audit: do our cohort counts match pd2.tools' own filter UI? Document deltas.
+- **Aggregation accuracy audit (P1, raised after Sprint 2.1.1):** automated check that top-N items per slot match pd2.tools' UI for a basket of canonical builds; flag any drift. The 2.1.1 bug went undetected because no such audit existed.
 - Snapshot refresh automation via GitHub Actions cron
 - Privacy-friendly analytics so we know which filter combos are actually used
 - Backfill popular runewords missing from `item-slots.json` (Grief, Death, Doom, BotD — not in current snapshot)

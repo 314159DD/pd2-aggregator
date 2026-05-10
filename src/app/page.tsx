@@ -157,14 +157,14 @@ export default function Page() {
         <>
           <Section
             title="Top equipped items by slot"
-            subtitle={`server pool n=${guide.itemUsageSampleSize.toLocaleString()}`}
+            subtitle={`n=${guide.itemUsageSampleSize.toLocaleString()}`}
           >
             <ItemFrequencyTable data={guide.topItemsBySlot} />
           </Section>
 
           <Section
             title="Most common affix mods"
-            subtitle={`skill-filtered n=${guide.clientAggregates.poolSize.toLocaleString()} of ${guide.rawSamplePoolSize.toLocaleString()} sampled`}
+            subtitle={`n=${guide.clientAggregates.poolSize.toLocaleString()} (sample of ${guide.rawSamplePoolSize.toLocaleString()})`}
           >
             <AffixFrequencyTable
               data={guide.clientAggregates.affixModsBySlot}
@@ -181,11 +181,11 @@ export default function Page() {
 
           <Section
             title="Build sheet"
-            subtitle={
+            subtitle={`n=${(
               guide.clientAggregates.skillUsage
-                ? `skill-filtered n=${guide.clientAggregates.poolSize.toLocaleString()}`
-                : `server pool n=${guide.skillUsageSampleSize.toLocaleString()}`
-            }
+                ? guide.clientAggregates.poolSize
+                : guide.skillUsageSampleSize
+            ).toLocaleString()}`}
           >
             <BuildSheet
               data={guide.buildSheet}
