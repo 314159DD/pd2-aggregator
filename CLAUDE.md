@@ -20,6 +20,7 @@ Next.js 16 static-export app that aggregates Project Diablo 2 ladder builds from
 - `npx tsx scripts/refresh-snapshot.ts` — refresh `data/snapshot.json`
 - `npx tsx scripts/build-mod-dictionary.ts` — rebuild `data/mod-dictionary.json`
 - `npx tsx scripts/build-skill-prereqs.ts` — rebuild `data/skill-prereqs.json` (scrapes wiki.projectdiablo2.com — re-run on each PD2 season patch)
+- `npx tsx scripts/build-item-slots.ts` — rebuild `data/item-slots.json` from the snapshot's `location.equipment` + `base.category` (re-run after refreshing the snapshot)
 
 ## Module boundaries
 - `src/lib/data-loader.ts` is the ONLY module that does network or IndexedDB I/O.
