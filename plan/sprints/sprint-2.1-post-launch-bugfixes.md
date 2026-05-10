@@ -1,0 +1,168 @@
+# Sprint 2.1 — Post-launch bugfixes
+
+**Branch:** `sprint/2.1-post-launch-bugfixes`
+**Goal:** Fix the three bugs reported in the Reddit launch thread, ship to production, post back to the community.
+
+## Context
+
+PD2 Aggregator MVP launched on r/ProjectDiablo2 in 2026-05. Six comments came back; three contained concrete bugs:
+
+- **A** — Power Strike (1-pt prerequisite) shown as a "build skill" in Lightning Strike / Fury / Plague Javelin builds.
+- **D** — Helmets misclassified as weapons in some builds (called out: Barbarian 2H Whirlwind / Battle Cry).
+- **F** — Diff vs pool puts charms into gear slots.
+
+Three other commenters (B, C, E) gave clean positive signal without action items. The core thesis is validated; these bugs gate trust.
+
+Reference: `pd2.madebykontra.com` enumerates canonical builds by characteristic skill combos. Useful as a future browsing/labeling layer (Phase 3 candidate). Not needed for the prereq fix — PD2 skill trees are static, so a per-class prereq + synergy map deterministically classifies main / synergy / utility / prereq.
+
+---
+
+## Tasks
+
+### 1. Skill prereq + synergy dataset
+
+**Status:** pending
+**What:** Build a static per-class skill map: for each skill, list its prerequisites and the skills that synergize with it. PD2 skill trees don't change between sessions.
+
+**Sourcing strategy (in order):**
+1. Check `coleestrin/pd2-tools` repo — we already copy from them (MIT, attribution in `data/mod-dictionary.json`). If they have skill tree data, reuse it.
+2. Check `pd2.tools` API for a skill-metadata endpoint. We currently only use `/characters`; there may be a `/skills` or similar.
+3. Last resort: hand-build from in-game data + pd2.wiki. ~30 skills × 7 classes = ~210 entries. Tractable in one sitting.
+
+**Output:** `data/skill-prereqs.json`
+**Shape:**
+```json
+{
+  "Amazon": {
+    "Lightning Strike": {
+      "prereqs": ["Jab", "Power Strike", "Lightning Bolt", "Charged Strike"],
+      "synergies": ["Charged Strike", "Lightning Bolt", "Power Strike"]
+    }
+  }
+}
+```
+
+**Accept when:**
+- [ ] File exists, covers all 7 classes (Amazon, Assassin, Barbarian, Druid, Necromancer, Paladin, Sorceress)
+- [ ] Unit test asserts every referenced prereq/synergy also exists as a key in the same class
+- [ ] Inline attribution in source if copied from pd2-tools (matches existing pattern in `scripts/build-mod-dictionary.ts`)
+
+**Files:** `data/skill-prereqs.json`, `scripts/build-skill-prereqs.ts` (new, similar shape to `build-mod-dictionary.ts`), `src/lib/aggregate/buildSheet.test.ts`
+
+---
+
+### 2. Filter prereqs from build sheet (commenter A)
+
+**Status:** pending
+**What:** In the build sheet, classify each skill in the cohort as `main` / `synergy` / `utility` / `prereq` and hide prereqs by default. Toggle in UI to show all.
+
+**Algorithm:**
+- For a single character, use `realSkills[].baseLevel` (points actually invested, no +skills bonuses):
+  - Skills with `baseLevel ≥ 20` → strong investment (main or heavy synergy)
+  - Skills with `1 ≤ baseLevel < 20` → light investment
+  - A skill at `baseLevel === 1` is a **prereq** if some skill at `baseLevel > 1` lists it in its prereq chain (from `data/skill-prereqs.json`)
+- Aggregate across the cohort. A skill is "the build" for the cohort if it's classified as main or synergy in ≥ X% of characters (X TBD during impl, start with 30%).
+
+**UI:**
+- Default: hide skills classified as pure prereq for the cohort
+- Add a "Show prerequisites" toggle in the BuildSheet section header
+
+**Verification case:** Filter Amazon + Lightning Strike. Power Strike should not appear as a top skill (it's a 1-pt prereq for ~all of those characters). Charged Strike at 20 pts SHOULD still appear (it's the main synergy).
+
+**Accept when:**
+- [ ] Lightning Strike Javazon filter no longer surfaces Power Strike as a main/top skill
+- [ ] Charged Strike (synergy) still surfaces
+- [ ] "Show prerequisites" toggle reveals filtered skills
+- [ ] Unit tests cover: pure prereq (Jab at 1 pt), synergy at 20 pts, main skill, utility (Battle Orders for any caster)
+
+**Files:** `src/lib/aggregate/buildSheet.ts` or wherever skill aggregation lives, `src/lib/shape/buildSheet.ts`, `src/components/BuildSheet.tsx`, plus tests
+
+---
+
+### 3. Fix item-slot misclassification (commenter D)
+
+**Status:** pending
+**What:** Find why Barbarian 2H WW BC builds show helmets in the weapon slot, fix it, harden the slot logic against similar issues.
+
+**Lead from code recon:** `src/lib/types.ts:98` documents observed `location.equipment` values as `"Amulet", "Head"`. But `src/lib/slot.ts:10-23` `SLOT_BY_EQUIPMENT` map keys on `"Helm"`, not `"Head"`. **Likely root cause:** API uses `"Head"`, our map uses `"Helm"`, helms fall through to null; some downstream code may then fall back to a name-based lookup that mis-buckets class-specific helms (Wolfhead, Hawkmask, Antlers, Falcon Mask, Spirit Mask, Alpha Helm, Griffon Headress, Hunter's Guise, Sacred Feathers) into weapons.
+
+**Investigation steps:**
+1. Inspect `data/snapshot.json` for actual `location.equipment` values across all gear slots (run a one-off script if needed). Confirm "Head" not "Helm".
+2. Check what feeds `topItemsBySlot` — likely `data/item-slots.json` lookup via `slotFromItemName`. Verify class-specific helms are present and mapped to "helm".
+3. Audit `data/item-slots.json` against a known-complete list of PD2 helm bases per class.
+
+**Fix:**
+- Update `SLOT_BY_EQUIPMENT` map keys to match actual API values ("Head", "Right Arm", etc.) — or canonicalize via a lookup table.
+- Ensure `data/item-slots.json` covers every class-specific helm/orb/shield/weapon base.
+- Add unit test fixtures with one item per class-specific category (barb helm, druid pelt, paladin shield, necro shrunken head, sorc orb, ama bow, sin claw).
+
+**Accept when:**
+- [ ] Filter "Barbarian + WW + BC + 2H" → helm slot shows actual top helms; weapon slot shows actual top weapons
+- [ ] All 7 classes' class-specific bases route to correct slots
+- [ ] `slot.test.ts` covers each class's class-specific bases
+- [ ] No regression on universal items (rings, amulets, basic armors)
+
+**Files:** `src/lib/slot.ts`, `src/lib/slot.test.ts`, `data/item-slots.json` (if data fix needed)
+
+---
+
+### 4. Fix charms-in-gear-slots in diff view (commenter F)
+
+**Status:** pending
+**What:** In `diffCharacter`, the slot lookup is matching charms (and possibly other inventory items) into gear slots. Fix.
+
+**Hypothesis:** `src/lib/diff.ts:55` does `c.items.find((it) => slotFromRawItem(it) === slot)`. `slotFromRawItem` returns `null` for items not equipped, BUT — note the fallback at `slot.ts:32`: `(item.location ... .equipment) ?? item.slot ?? ""`. If the API returns a non-empty `slot` field on inventory items (e.g., from a previous equip state), we'd match incorrectly. Could also share root cause with Bug 3 — if `equipment` is wrong/missing for non-equipped items and a name-based fallback engages.
+
+**Likely correct guard:** explicitly require `item.location.zone === "Equipped"` (per types.ts:96 comment) before considering an item a candidate for a gear slot. Charms would always have `zone !== "Equipped"`.
+
+**Investigation steps:**
+1. Pull a known-affected character (use `Bonk` from snapshot or any with charms) and dump every item's `location` shape. Confirm what `zone` / `equipment` values inventory items have.
+2. Check whether Bug 2 fix (item 3 above) collapses this — same `slot.ts` logic.
+
+**Fix:**
+- Filter `c.items` to `location.zone === "Equipped"` items before the per-slot match.
+- OR: make `slotFromRawItem` return null for any item with `location.zone !== "Equipped"`.
+
+**Accept when:**
+- [ ] Diff for a character with charms in inventory: every gear slot shows either an equipped item or "(empty)", never a charm
+- [ ] `diff.test.ts` includes a fixture character with multiple charms + jewels in inventory
+- [ ] No regression on actually-equipped items appearing in their correct slots
+
+**Files:** `src/lib/diff.ts`, `src/lib/slot.ts`, `src/lib/diff.test.ts`
+
+---
+
+### 5. Verify, ship, close the loop with the community
+
+**Status:** pending
+**What:** Pre-deploy checks, deploy, post a follow-up reply to the original Reddit thread acknowledging each commenter and the fix.
+
+**Accept when:**
+- [ ] `npm test && npm run typecheck && npm run build` — all pass clean
+- [ ] Manual smoke test on the deployed Vercel preview: each of the three reproductions from tasks 2/3/4 confirmed fixed
+- [ ] Merged to main, Vercel auto-deploys to `pd2-aggregator.vercel.app`
+- [ ] Reply posted to the original Reddit thread mentioning A, D, F by username and what changed
+- [ ] `plan/roadmap.md` Feature Map updated: rows 11/12 of the sprint goals reflected as done, sprint marked complete
+
+**Files:** none (process + deploy)
+
+---
+
+## Done When
+
+- [ ] All five task acceptance bullet groups met
+- [ ] `npm test && npm run typecheck && npm run build` pass
+- [ ] Sprint file updated with completion date
+- [ ] Branch merged to main
+- [ ] Sprint Close Checklist (CLAUDE.md) followed in full
+
+## Risks
+
+- **Skill prereq dataset effort is uncertain.** Could be 30 min if pd2-tools has it, half a day if hand-built. If pd2-tools doesn't have it and hand-build is too slow, fallback: ship a simpler "exclude all 1-point skills" rule — coarser, but unblocks tasks 2/3/4 and ships some Bug 1 relief.
+- **Bug 2 and Bug 3 may share root cause** — both touch `slot.ts`. Fixing Bug 2 may collapse Bug 3, or vice versa. Investigation will clarify after task 1.
+- **Reddit follow-up post may surface more bug reports.** Defer new bugs to Sprint 2.2 unless trivially small. Don't expand this sprint's scope mid-flight.
+
+## Cut if running long
+
+- Task 2's "show prerequisites" UI toggle can ship in 2.2; the underlying classification + filtering is the real fix.
+- The class-specific base audit in Task 3 can be limited to the classes/bases that actually appear in the bug reproduction (Barb 2H WW BC) — the rest can be a follow-up task.
