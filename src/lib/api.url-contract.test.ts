@@ -92,6 +92,16 @@ describe("api.ts URL contract", () => {
       expect(new URL(capturedUrls[0]).searchParams.has("skills")).toBe(false);
     });
 
+    it("getMercTypeUsage URL omits skills=", async () => {
+      await getMercTypeUsage(FILTER);
+      expect(new URL(capturedUrls[0]).searchParams.has("skills")).toBe(false);
+    });
+
+    it("getMercItemUsage URL omits skills=", async () => {
+      await getMercItemUsage(FILTER);
+      expect(new URL(capturedUrls[0]).searchParams.has("skills")).toBe(false);
+    });
+
     it("getLevelDistribution URL omits skills=", async () => {
       await getLevelDistribution({
         gameMode: FILTER.gameMode,
