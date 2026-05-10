@@ -1,6 +1,6 @@
 # Sprint 2.2 — Correctness audit + integration prep
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Branch:** `sprint/2.2-correctness-audit`
 **Spec:** [`docs/specs/2026-05-11-sprint-2.2-correctness-audit-design.md`](../../docs/specs/2026-05-11-sprint-2.2-correctness-audit-design.md)
@@ -48,7 +48,7 @@ Catches the 2.1.1-shape bug: our query builder must include `skills=` when given
 **Files:**
 - Create: `src/lib/api.url-contract.test.ts`
 
-- [ ] **Step 1 — Write the test file**
+- [x] **Step 1 — Write the test file**
 
 Create `src/lib/api.url-contract.test.ts`:
 
@@ -168,13 +168,13 @@ describe("api.ts URL contract", () => {
 });
 ```
 
-- [ ] **Step 2 — Run the tests**
+- [x] **Step 2 — Run the tests**
 
 Run: `npx vitest run src/lib/api.url-contract.test.ts`
 
 Expected: all 11 tests pass. (Existing api.ts code from Sprint 2.1.1 already implements this contract; the tests lock it in.)
 
-- [ ] **Step 3 — Commit**
+- [x] **Step 3 — Commit**
 
 ```bash
 git add src/lib/api.url-contract.test.ts
@@ -202,13 +202,13 @@ Pulls live data from pd2.tools for 7 canonical builds and writes one JSON file p
 - Create: `scripts/refresh-validation-fixtures.ts`
 - Create: 7 fixture files under `src/lib/validation/fixtures/`
 
-- [ ] **Step 1 — Make the fixtures directory**
+- [x] **Step 1 — Make the fixtures directory**
 
 ```bash
 mkdir -p "C:/Coding/III____Full_Circle/PD2/src/lib/validation/fixtures"
 ```
 
-- [ ] **Step 2 — Write the refresh script**
+- [x] **Step 2 — Write the refresh script**
 
 Create `scripts/refresh-validation-fixtures.ts`:
 
@@ -345,7 +345,7 @@ main().catch((e) => {
 });
 ```
 
-- [ ] **Step 3 — Run the script**
+- [x] **Step 3 — Run the script**
 
 Run: `npx tsx scripts/refresh-validation-fixtures.ts`
 
@@ -365,7 +365,7 @@ Fetching: sorceress-blizzard…
 ✓ Wrote 7 fixtures to .../src/lib/validation/fixtures
 ```
 
-- [ ] **Step 4 — Sanity-check one fixture**
+- [x] **Step 4 — Sanity-check one fixture**
 
 Run:
 ```bash
@@ -380,7 +380,7 @@ Expected:
 
 If the totalSample is suspiciously large (e.g., > 500), the `skills` parameter isn't being sent and we have a regression — fix before continuing.
 
-- [ ] **Step 5 — Add the refresh command to CLAUDE.md**
+- [x] **Step 5 — Add the refresh command to CLAUDE.md**
 
 Edit `CLAUDE.md`, find the Commands section, and add this line after `build-item-slots-from-wiki.ts`:
 
@@ -388,7 +388,7 @@ Edit `CLAUDE.md`, find the Commands section, and add this line after `build-item
 - `npx tsx scripts/refresh-validation-fixtures.ts` — refresh `src/lib/validation/fixtures/*.json` (run weekly, on PD2 patches, or when parity tests start looking suspicious)
 ```
 
-- [ ] **Step 6 — Commit**
+- [x] **Step 6 — Commit**
 
 ```bash
 git add scripts/refresh-validation-fixtures.ts src/lib/validation/fixtures/ CLAUDE.md
@@ -419,7 +419,7 @@ Explains what fixtures are, when to refresh, what to look for when refreshing.
 **Files:**
 - Create: `src/lib/validation/fixtures/README.md`
 
-- [ ] **Step 1 — Write the README**
+- [x] **Step 1 — Write the README**
 
 Create `src/lib/validation/fixtures/README.md`:
 
@@ -476,7 +476,7 @@ Each fixture is a single JSON file:
 ```
 ```
 
-- [ ] **Step 2 — Commit**
+- [x] **Step 2 — Commit**
 
 ```bash
 git add src/lib/validation/fixtures/README.md
@@ -499,7 +499,7 @@ The main correctness deliverable. Five assertions per build × 7 builds = 35 sub
 **Files:**
 - Create: `src/lib/validation/parity.test.ts`
 
-- [ ] **Step 1 — Write the parity test file**
+- [x] **Step 1 — Write the parity test file**
 
 Create `src/lib/validation/parity.test.ts`:
 
@@ -629,7 +629,7 @@ describe("server-aggregate parity per canonical build", () => {
 });
 ```
 
-- [ ] **Step 2 — Run the tests**
+- [x] **Step 2 — Run the tests**
 
 Run: `npx vitest run src/lib/validation/parity.test.ts`
 
@@ -640,13 +640,13 @@ If the coverage test fails for a build:
 - Run `npx tsx scripts/build-item-slots-from-wiki.ts` to pick up any new items the wiki has.
 - Re-run the test.
 
-- [ ] **Step 3 — Run the full test suite**
+- [x] **Step 3 — Run the full test suite**
 
 Run: `npm test`
 
 Expected: all tests pass. Previous count was 126; this sprint adds the URL contract tests (11) + parity tests (35) = 172 total tests.
 
-- [ ] **Step 4 — Commit**
+- [x] **Step 4 — Commit**
 
 ```bash
 git add src/lib/validation/parity.test.ts
@@ -679,7 +679,7 @@ MIT license, matching `coleestrin/pd2-tools` for zero compat friction at integra
 **Files:**
 - Create: `LICENSE`
 
-- [ ] **Step 1 — Write the LICENSE file**
+- [x] **Step 1 — Write the LICENSE file**
 
 Create `LICENSE`:
 
@@ -707,7 +707,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-- [ ] **Step 2 — Commit**
+- [x] **Step 2 — Commit**
 
 ```bash
 git add LICENSE
@@ -728,7 +728,7 @@ Replace 2-line stub with a real project README.
 **Files:**
 - Modify: `README.md` (rewrite)
 
-- [ ] **Step 1 — Rewrite README.md**
+- [x] **Step 1 — Rewrite README.md**
 
 Replace the entire content of `README.md` with:
 
@@ -779,7 +779,7 @@ Issues and PRs welcome. The current sprint and roadmap live in [`plan/`](plan/).
 [MIT](LICENSE).
 ```
 
-- [ ] **Step 2 — Commit**
+- [x] **Step 2 — Commit**
 
 ```bash
 git add README.md
@@ -801,7 +801,7 @@ Agenda for the integration conversation with coleestrin. Not a port plan.
 **Files:**
 - Create: `plan/architecture/integration-notes.md`
 
-- [ ] **Step 1 — Write the integration notes**
+- [x] **Step 1 — Write the integration notes**
 
 Create `plan/architecture/integration-notes.md`:
 
@@ -892,7 +892,7 @@ Estimated total: 2–4 weeks depending on stack overlap.
 Until porting completes, `pd2-aggregator.vercel.app` stays live. The validation test suite (Sprint 2.2) keeps us honest about correctness. If porting drags out past Sprint 2.3, revisit whether the standalone version is worth ongoing maintenance.
 ```
 
-- [ ] **Step 2 — Commit**
+- [x] **Step 2 — Commit**
 
 ```bash
 git add plan/architecture/integration-notes.md
@@ -926,15 +926,15 @@ Standard close checklist: update roadmap + CLAUDE.md status, move sprint file to
 - Modify: `CLAUDE.md`
 - Move: `plan/sprints/sprint-2.2-correctness-audit.md` → `plan/sprints/archive/`
 
-- [ ] **Step 1 — Mark all task checkboxes as completed in this sprint file**
+- [x] **Step 1 — Mark all task checkboxes as completed in this sprint file**
 
-Use sed or manual edits to flip `- [ ]` to `- [x]` throughout this file.
+Use sed or manual edits to flip `- [x]` to `- [x]` throughout this file.
 
 ```bash
 sed -i 's/- \[ \]/- [x]/g' "C:/Coding/III____Full_Circle/PD2/plan/sprints/sprint-2.2-correctness-audit.md"
 ```
 
-- [ ] **Step 2 — Update plan/roadmap.md**
+- [x] **Step 2 — Update plan/roadmap.md**
 
 Add Sprint 2.2 done section. Open `plan/roadmap.md`, find the Sprint 2.1.2 / Sprint 2.2 - TBD section, and replace the "Sprint 2.2 — TBD" header with:
 
@@ -954,7 +954,7 @@ Add Sprint 2.2 done section. Open `plan/roadmap.md`, find the Sprint 2.1.2 / Spr
 ### Sprint 2.3 — TBD
 ```
 
-- [ ] **Step 3 — Update CLAUDE.md status line**
+- [x] **Step 3 — Update CLAUDE.md status line**
 
 Edit `CLAUDE.md`, find the `**Status:**` line, replace it with:
 
@@ -962,13 +962,13 @@ Edit `CLAUDE.md`, find the `**Status:**` line, replace it with:
 **Status:** Phase 2 in progress. Sprint 2.2 shipped 2026-05-11 (validation test suite, MIT license, README rewrite, integration-prep doc for the coleestrin conversation). Sprint 2.3 scope TBD; main candidates are responding to coleestrin's integration offer and any new community feedback.
 ```
 
-- [ ] **Step 4 — Move sprint file to archive**
+- [x] **Step 4 — Move sprint file to archive**
 
 ```bash
 git mv "C:/Coding/III____Full_Circle/PD2/plan/sprints/sprint-2.2-correctness-audit.md" "C:/Coding/III____Full_Circle/PD2/plan/sprints/archive/sprint-2.2-correctness-audit.md"
 ```
 
-- [ ] **Step 5 — Verify everything still builds**
+- [x] **Step 5 — Verify everything still builds**
 
 Run in order:
 ```bash
@@ -980,7 +980,7 @@ npm run build
 
 Expected: 172 tests pass, tsc clean, next build clean.
 
-- [ ] **Step 6 — Commit the close**
+- [x] **Step 6 — Commit the close**
 
 ```bash
 git add CLAUDE.md plan/roadmap.md plan/sprints
@@ -996,7 +996,7 @@ Closes the Sprint Close Checklist per CLAUDE.md.
 Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>"
 ```
 
-- [ ] **Step 7 — Push branch + merge to main**
+- [x] **Step 7 — Push branch + merge to main**
 
 ```bash
 git push -u origin sprint/2.2-correctness-audit
@@ -1018,11 +1018,11 @@ git push origin main
 
 ## Done When
 
-- [ ] All 8 tasks' checkboxes marked completed
-- [ ] `npm test && npm run typecheck && npm run build` all pass
-- [ ] Sprint file archived
-- [ ] Branch merged to main and pushed
-- [ ] Vercel auto-deploys (no UI changes — should be a no-op deploy)
+- [x] All 8 tasks' checkboxes marked completed
+- [x] `npm test && npm run typecheck && npm run build` all pass
+- [x] Sprint file archived
+- [x] Branch merged to main and pushed
+- [x] Vercel auto-deploys (no UI changes — should be a no-op deploy)
 
 ## Out of scope (verbatim from spec)
 
