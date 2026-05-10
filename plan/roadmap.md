@@ -1,6 +1,6 @@
 # Roadmap
 
-**Updated:** 2026-05-10
+**Updated:** 2026-05-10 (Sprint 2.1 shipped)
 
 ## Core Loop
 
@@ -28,11 +28,15 @@ UI renders sections + optional "diff vs pool"
 | 8 | Snapshot fallback when API down | Core | 1 | shipped | done |
 | 9 | Avg build stats / dynamic top-mod selection | Enhancement | 1 | shipped | done |
 | 10 | Reddit launch + community signal | Milestone | 1 | shipped | done |
-| 11 | Reddit feedback triage → Phase 2 plan | Process | 2 | 2.1 | pending |
-| 12 | Aggregation accuracy audit vs pd2.tools | Quality | 2 | TBD | pending |
-| 13 | Snapshot refresh automation (CI cron) | Infra | 2 | TBD | pending |
-| 14 | Contact pd2.tools maintainer | Process | 2 | 2.1 | pending |
-| 15 | Lightweight analytics (privacy-friendly) | Enhancement | 2 | TBD | pending |
+| 11 | Reddit feedback triage → Sprint 2.1 scope | Process | 2 | 2.1 | done |
+| 12 | Skill prereq classification (commenter A) | Bugfix | 2 | 2.1 | done |
+| 13 | Item-slot misclassification fix (commenter D) | Bugfix | 2 | 2.1 | done |
+| 14 | Charm-in-slot diff fix (commenter F) | Bugfix | 2 | 2.1 | done |
+| 15 | Build preset buttons | Enhancement | 2 | 2.1 | done |
+| 16 | Aggregation accuracy audit vs pd2.tools | Quality | 2 | TBD | pending |
+| 17 | Snapshot refresh automation (CI cron) | Infra | 2 | TBD | pending |
+| 18 | Contact pd2.tools maintainer | Process | 2 | TBD | pending |
+| 19 | Lightweight analytics (privacy-friendly) | Enhancement | 2 | TBD | pending |
 
 ## Phase 1 — MVP (DONE)
 
@@ -54,24 +58,30 @@ UI renders sections + optional "diff vs pool"
 
 The sprints below are scaffolded but not yet detailed — they'll be filled in once Sprint 2.1 surfaces concrete priorities from Reddit / Discord feedback.
 
-### Sprint 2.1 — Triage & Foundation
+### Sprint 2.1 — Post-launch bugfixes (DONE 2026-05-10)
 
-**Goal:** Convert post-launch community signal into a prioritized backlog, and shore up the things needed to be a "real" community tool (maintainer contact, accuracy check, basic ops hygiene).
+**Branch:** `sprint/2.1-post-launch-bugfixes` (merged to main)
+**Detail:** [`sprints/archive/sprint-2.1-post-launch-bugfixes.md`](sprints/archive/sprint-2.1-post-launch-bugfixes.md)
 
-Tentative items (to be confirmed when sprint file is written):
-- Read every Reddit comment + DM, extract feature requests + bug reports into `plan/tasks/`
+**Delivered:**
+- **Skill prereq classifier** — `data/skill-prereqs.json` (220 skills × 7 classes scraped from `wiki.projectdiablo2.com`), client-side `aggregateSkillUsage` that classifies 1-pt prereqs vs real-investment skills. Build sheet hides prereqs by default; "Show prerequisites (N)" toggle reveals them. Fixes commenter A.
+- **Item-slot map regenerated from snapshot** — `data/item-slots.json` 61 → 475 entries; 38 corrections including Halaberd's Reign (PD2 Primal Helm) which the old hand-rolled file had listed as a weapon. New `scripts/build-item-slots.ts` makes the file reproducible. Fixes commenter D.
+- **Diff view zone gate** — `slotFromRawItem` now requires `location.zone === "Equipped"` before classifying. The pd2.tools API leaves `location.equipment` populated with garbage on inventory items; we were trusting it. Fixes commenter F + silently fixes the same pollution in the affix-mods table.
+- **Build preset buttons** — `data/builds.json` × 50 canonical builds across 7 classes, one-click skill filter under the class selector. Active preset highlights when current filter matches.
+
+**Verification:** test suite grew 90 → 126; tsc clean; next build clean. Live verification on `pd2-aggregator.vercel.app` after merge.
+
+### Sprint 2.2 — TBD
+
+Drawn from this release's community follow-up + still-open items:
 - Reach out to `coleestrin` (pd2.tools maintainer) — courtesy ping, share what's being built, ask about API courtesy limits
-- Run an accuracy audit: do our cohort counts match pd2.tools' own filter UI? Document deltas.
-- Decide donation/monetization stance (vision doc Open Question)
-- Decide open-source posture (vision doc Open Question)
-
-### Sprint 2.2+ — TBD
-
-Drawn from triaged backlog. Likely candidates based on the existing system:
+- Aggregation accuracy audit: do our cohort counts match pd2.tools' own filter UI? Document deltas.
 - Snapshot refresh automation via GitHub Actions cron
 - Privacy-friendly analytics so we know which filter combos are actually used
+- Backfill popular runewords missing from `item-slots.json` (Grief, Death, Doom, BotD — not in current snapshot)
 - Performance: shrink the live JSON payload (paginated stitching is slow for big classes)
 - "Share this build" UX polish (OG meta tags, screenshot generation)
+- Open product-vision questions still unanswered (donations stance, custom domain, open-source posture)
 
 ## Future Phases
 
