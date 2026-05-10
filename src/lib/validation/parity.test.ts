@@ -36,15 +36,27 @@ const COVERAGE_FLOOR = 0.95;
 describe("server-aggregate parity per canonical build", () => {
   for (const f of FIXTURES) {
     describe(f._meta.build, () => {
+      // ── Sanity: fixture is non-empty ──────────────────────────────────────
+      // Catches a fixture refresh that wrote empty arrays (e.g., pd2.tools
+      // outage during refresh). Without this, the remaining tests would
+      // either silent-return or vacuously pass.
+      it("fixture is non-empty (sanity check)", () => {
+        expect(
+          f.itemUsage.length,
+          `${f._meta.build}: itemUsage is empty — fixture may be stale`,
+        ).toBeGreaterThan(0);
+        expect(
+          f.skillUsage.length,
+          `${f._meta.build}: skillUsage is empty — fixture may be stale`,
+        ).toBeGreaterThan(0);
+      });
+
       // ── Test 1: totalSample consistency across endpoints ──────────────────
       // The server reports the same cohort size on every stats endpoint for
       // the same filter. If item-usage's totalSample disagrees with
       // skill-usage's, the server's filter semantics changed upstream.
       it("totalSample agrees between itemUsage and skillUsage", () => {
-        const itemN = f.itemUsage[0]?.totalSample;
-        const skillN = f.skillUsage[0]?.totalSample;
-        if (itemN === undefined || skillN === undefined) return;
-        expect(skillN).toBe(itemN);
+        expect(f.skillUsage[0].totalSample).toBe(f.itemUsage[0].totalSample);
       });
 
       // ── Test 2: item-slot coverage ≥ 95% ──────────────────────────────────
@@ -52,7 +64,6 @@ describe("server-aggregate parity per canonical build", () => {
       // data/item-slots.json. If not, it's silently dropped from the UI
       // (this is the Sprint 2.1.2 bug shape — 32% drop on Cold Arrow Amazon).
       it(`item-slot coverage ≥ ${(COVERAGE_FLOOR * 100).toFixed(0)}%`, () => {
-        if (f.itemUsage.length === 0) return;
         const hits = f.itemUsage.filter(
           (r) => slotFromItemName(r.item) !== null,
         ).length;
@@ -93,7 +104,7 @@ describe("server-aggregate parity per canonical build", () => {
           for (const item of items) {
             expect(
               slotFromItemName(item.itemName),
-              `${f._meta.build}: "${item.itemName}" is in shaped output's ${slot} bucket but slotFromItemName says it belongs elsewhere`,
+              `${f._meta.build}: "${item.itemName}" is in shaped output's ${slot} bucket but slotFromItemName returned ${JSON.stringify(slotFromItemName(item.itemName))} (null = unknown to slot map)`,
             ).toBe(slot);
           }
         }
@@ -113,7 +124,7 @@ describe("server-aggregate parity per canonical build", () => {
             expect(
               item.pct,
               `${f._meta.build}/${slot}/${item.itemName}: shaped pct=${item.pct} but API pct=${apiRow!.pct}`,
-            ).toBeCloseTo(apiRow!.pct, 2);
+            ).toBe(apiRow!.pct);
           }
         }
       });
