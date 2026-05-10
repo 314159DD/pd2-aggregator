@@ -1,0 +1,1488 @@
+{
+  "_meta": {
+    "build": "druid-wind-tornado",
+    "fetchedAt": "2026-05-10T23:21:36.228Z",
+    "filter": {
+      "gameMode": "hardcore",
+      "minLevel": 80,
+      "className": "Druid"
+    },
+    "skills": [
+      {
+        "name": "Tornado",
+        "minLevel": 20
+      }
+    ]
+  },
+  "itemUsage": [
+    {
+      "item": "Frostwind",
+      "itemType": "Unique",
+      "numOccurrences": 16,
+      "totalSample": 49,
+      "pct": 32.6530612244898
+    },
+    {
+      "item": "Skin of the Vipermagi",
+      "itemType": "Unique",
+      "numOccurrences": 14,
+      "totalSample": 49,
+      "pct": 28.57142857142857
+    },
+    {
+      "item": "Stormshield",
+      "itemType": "Unique",
+      "numOccurrences": 13,
+      "totalSample": 49,
+      "pct": 26.53061224489796
+    },
+    {
+      "item": "Trang-Oul's Claws",
+      "itemType": "Set",
+      "numOccurrences": 11,
+      "totalSample": 49,
+      "pct": 22.448979591836736
+    },
+    {
+      "item": "Nightwing's Veil",
+      "itemType": "Unique",
+      "numOccurrences": 10,
+      "totalSample": 49,
+      "pct": 20.408163265306122
+    },
+    {
+      "item": "Horizon's Tornado",
+      "itemType": "Unique",
+      "numOccurrences": 9,
+      "totalSample": 49,
+      "pct": 18.367346938775512
+    },
+    {
+      "item": "Spirit",
+      "itemType": "Runeword",
+      "numOccurrences": 8,
+      "totalSample": 49,
+      "pct": 16.3265306122449
+    },
+    {
+      "item": "Titan's Grip",
+      "itemType": "Unique",
+      "numOccurrences": 7,
+      "totalSample": 49,
+      "pct": 14.285714285714285
+    },
+    {
+      "item": "Heart of the Oak",
+      "itemType": "Runeword",
+      "numOccurrences": 7,
+      "totalSample": 49,
+      "pct": 14.285714285714285
+    },
+    {
+      "item": "Magefist",
+      "itemType": "Unique",
+      "numOccurrences": 7,
+      "totalSample": 49,
+      "pct": 14.285714285714285
+    },
+    {
+      "item": "Arachnid Mesh",
+      "itemType": "Unique",
+      "numOccurrences": 7,
+      "totalSample": 49,
+      "pct": 14.285714285714285
+    },
+    {
+      "item": "Medusa's Gaze",
+      "itemType": "Unique",
+      "numOccurrences": 6,
+      "totalSample": 49,
+      "pct": 12.244897959183673
+    },
+    {
+      "item": "Snowclash",
+      "itemType": "Unique",
+      "numOccurrences": 6,
+      "totalSample": 49,
+      "pct": 12.244897959183673
+    },
+    {
+      "item": "Fenris",
+      "itemType": "Unique",
+      "numOccurrences": 6,
+      "totalSample": 49,
+      "pct": 12.244897959183673
+    },
+    {
+      "item": "Waterwalk",
+      "itemType": "Unique",
+      "numOccurrences": 6,
+      "totalSample": 49,
+      "pct": 12.244897959183673
+    },
+    {
+      "item": "Aldur's Advance",
+      "itemType": "Set",
+      "numOccurrences": 5,
+      "totalSample": 49,
+      "pct": 10.204081632653061
+    },
+    {
+      "item": "Denmother",
+      "itemType": "Unique",
+      "numOccurrences": 5,
+      "totalSample": 49,
+      "pct": 10.204081632653061
+    },
+    {
+      "item": "Jalal's Mane",
+      "itemType": "Unique",
+      "numOccurrences": 4,
+      "totalSample": 49,
+      "pct": 8.16326530612245
+    },
+    {
+      "item": "Bul-Kathos' Wedding Band",
+      "itemType": "Unique",
+      "numOccurrences": 4,
+      "totalSample": 49,
+      "pct": 8.16326530612245
+    },
+    {
+      "item": "Mara's Kaleidoscope",
+      "itemType": "Unique",
+      "numOccurrences": 4,
+      "totalSample": 49,
+      "pct": 8.16326530612245
+    },
+    {
+      "item": "Nagelring",
+      "itemType": "Unique",
+      "numOccurrences": 4,
+      "totalSample": 49,
+      "pct": 8.16326530612245
+    },
+    {
+      "item": "Que-Hegan's Wisdom",
+      "itemType": "Unique",
+      "numOccurrences": 3,
+      "totalSample": 49,
+      "pct": 6.122448979591836
+    },
+    {
+      "item": "Rhyme",
+      "itemType": "Runeword",
+      "numOccurrences": 3,
+      "totalSample": 49,
+      "pct": 6.122448979591836
+    },
+    {
+      "item": "Raven Frost",
+      "itemType": "Unique",
+      "numOccurrences": 3,
+      "totalSample": 49,
+      "pct": 6.122448979591836
+    },
+    {
+      "item": "Earthshaker",
+      "itemType": "Unique",
+      "numOccurrences": 3,
+      "totalSample": 49,
+      "pct": 6.122448979591836
+    },
+    {
+      "item": "Sandstorm Trek",
+      "itemType": "Unique",
+      "numOccurrences": 3,
+      "totalSample": 49,
+      "pct": 6.122448979591836
+    },
+    {
+      "item": "Gerke's Sanctuary",
+      "itemType": "Unique",
+      "numOccurrences": 3,
+      "totalSample": 49,
+      "pct": 6.122448979591836
+    },
+    {
+      "item": "Verdungo's Hearty Cord",
+      "itemType": "Unique",
+      "numOccurrences": 3,
+      "totalSample": 49,
+      "pct": 6.122448979591836
+    },
+    {
+      "item": "Wisp Projector",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Arkaine's Valor",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Athena's Wrath",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Atma's Wail",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Constricting Loop",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Credendum",
+      "itemType": "Set",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Delirium",
+      "itemType": "Runeword",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Dracul's Grasp",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Dwarf Star",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Frostburn",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Guardian Angel",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Harlequin Crest",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Milabrega's Orb",
+      "itemType": "Set",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Moser's Blessed Circle",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Ormus' Robes",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Quetzalcoatl",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Spirit Ward",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Twilight's Reflection",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Blade of Ali Baba",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Memory",
+      "itemType": "Runeword",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "War Traveler",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Radament's Sphere",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Infernostride",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Ravenlore",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Enigma",
+      "itemType": "Runeword",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Sage's Defiance",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Demon Limb",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Sigon's Guard",
+      "itemType": "Set",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Silkweave",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Dark Clan Crusher",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Crown of Ages",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Soul Drainer",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Cleglaw's Claw",
+      "itemType": "Set",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Spirit Keeper",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Blackoak Shield",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Steelclash",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Stormchaser",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Chromatic Ire",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "The Stone of Jordan",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "The Ward",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Chance Guards",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Bloodfist",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Ancients' Pledge",
+      "itemType": "Runeword",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Twitchthroe",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Nightsmoke",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Merman's Sprocket",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Occultist",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Ondal's Wisdom",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    }
+  ],
+  "skillUsage": [
+    {
+      "name": "Tornado",
+      "numOccurrences": 49,
+      "totalSample": 49,
+      "pct": 100
+    },
+    {
+      "name": "Arctic Blast",
+      "numOccurrences": 49,
+      "totalSample": 49,
+      "pct": 100
+    },
+    {
+      "name": "Hurricane",
+      "numOccurrences": 48,
+      "totalSample": 49,
+      "pct": 97.95918367346938
+    },
+    {
+      "name": "Twister",
+      "numOccurrences": 24,
+      "totalSample": 49,
+      "pct": 48.97959183673469
+    },
+    {
+      "name": "Cyclone Armor",
+      "numOccurrences": 23,
+      "totalSample": 49,
+      "pct": 46.93877551020408
+    },
+    {
+      "name": "Lycanthropy",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "name": "Summon Grizzly",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    }
+  ],
+  "mercTypeUsage": [
+    {
+      "mercType": "Defensive Auras",
+      "numOccurrences": 21,
+      "totalSample": 49,
+      "pct": 42.857142857142854
+    },
+    {
+      "mercType": "Might Merc",
+      "numOccurrences": 13,
+      "totalSample": 49,
+      "pct": 26.53061224489796
+    },
+    {
+      "mercType": "Fire Arrow",
+      "numOccurrences": 11,
+      "totalSample": 49,
+      "pct": 22.448979591836736
+    },
+    {
+      "mercType": "Cold Arrow",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "mercType": "Lightning Spells",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    }
+  ],
+  "mercItemUsage": [
+    {
+      "item": "Laying of Hands",
+      "itemType": "Set",
+      "numOccurrences": 13,
+      "totalSample": 49,
+      "pct": 26.53061224489796
+    },
+    {
+      "item": "The Reaper's Toll",
+      "itemType": "Unique",
+      "numOccurrences": 10,
+      "totalSample": 49,
+      "pct": 20.408163265306122
+    },
+    {
+      "item": "Insight",
+      "itemType": "Runeword",
+      "numOccurrences": 8,
+      "totalSample": 49,
+      "pct": 16.3265306122449
+    },
+    {
+      "item": "String of Ears",
+      "itemType": "Unique",
+      "numOccurrences": 8,
+      "totalSample": 49,
+      "pct": 16.3265306122449
+    },
+    {
+      "item": "Tal Rasha's Horadric Crest",
+      "itemType": "Set",
+      "numOccurrences": 7,
+      "totalSample": 49,
+      "pct": 14.285714285714285
+    },
+    {
+      "item": "Gore Rider",
+      "itemType": "Unique",
+      "numOccurrences": 6,
+      "totalSample": 49,
+      "pct": 12.244897959183673
+    },
+    {
+      "item": "Infinity",
+      "itemType": "Runeword",
+      "numOccurrences": 5,
+      "totalSample": 49,
+      "pct": 10.204081632653061
+    },
+    {
+      "item": "Dracul's Grasp",
+      "itemType": "Unique",
+      "numOccurrences": 5,
+      "totalSample": 49,
+      "pct": 10.204081632653061
+    },
+    {
+      "item": "Infernostride",
+      "itemType": "Unique",
+      "numOccurrences": 5,
+      "totalSample": 49,
+      "pct": 10.204081632653061
+    },
+    {
+      "item": "The Gladiator's Bane",
+      "itemType": "Unique",
+      "numOccurrences": 4,
+      "totalSample": 49,
+      "pct": 8.16326530612245
+    },
+    {
+      "item": "Magefist",
+      "itemType": "Unique",
+      "numOccurrences": 4,
+      "totalSample": 49,
+      "pct": 8.16326530612245
+    },
+    {
+      "item": "Duriel's Shell",
+      "itemType": "Unique",
+      "numOccurrences": 4,
+      "totalSample": 49,
+      "pct": 8.16326530612245
+    },
+    {
+      "item": "The Gavel of Pain",
+      "itemType": "Unique",
+      "numOccurrences": 4,
+      "totalSample": 49,
+      "pct": 8.16326530612245
+    },
+    {
+      "item": "Smoke",
+      "itemType": "Runeword",
+      "numOccurrences": 4,
+      "totalSample": 49,
+      "pct": 8.16326530612245
+    },
+    {
+      "item": "Vampire Gaze",
+      "itemType": "Unique",
+      "numOccurrences": 3,
+      "totalSample": 49,
+      "pct": 6.122448979591836
+    },
+    {
+      "item": "Rockstopper",
+      "itemType": "Unique",
+      "numOccurrences": 3,
+      "totalSample": 49,
+      "pct": 6.122448979591836
+    },
+    {
+      "item": "Sander's Taboo",
+      "itemType": "Set",
+      "numOccurrences": 3,
+      "totalSample": 49,
+      "pct": 6.122448979591836
+    },
+    {
+      "item": "Andariel's Visage",
+      "itemType": "Unique",
+      "numOccurrences": 3,
+      "totalSample": 49,
+      "pct": 6.122448979591836
+    },
+    {
+      "item": "Sigon's Gage",
+      "itemType": "Set",
+      "numOccurrences": 3,
+      "totalSample": 49,
+      "pct": 6.122448979591836
+    },
+    {
+      "item": "Sigon's Wrap",
+      "itemType": "Set",
+      "numOccurrences": 3,
+      "totalSample": 49,
+      "pct": 6.122448979591836
+    },
+    {
+      "item": "Marrowwalk",
+      "itemType": "Unique",
+      "numOccurrences": 3,
+      "totalSample": 49,
+      "pct": 6.122448979591836
+    },
+    {
+      "item": "Trang-Oul's Claws",
+      "itemType": "Set",
+      "numOccurrences": 3,
+      "totalSample": 49,
+      "pct": 6.122448979591836
+    },
+    {
+      "item": "Merman's Sprocket",
+      "itemType": "Unique",
+      "numOccurrences": 3,
+      "totalSample": 49,
+      "pct": 6.122448979591836
+    },
+    {
+      "item": "Rite of Passage",
+      "itemType": "Set",
+      "numOccurrences": 3,
+      "totalSample": 49,
+      "pct": 6.122448979591836
+    },
+    {
+      "item": "Nosferatu's Coil",
+      "itemType": "Unique",
+      "numOccurrences": 3,
+      "totalSample": 49,
+      "pct": 6.122448979591836
+    },
+    {
+      "item": "Goblin Toe",
+      "itemType": "Unique",
+      "numOccurrences": 3,
+      "totalSample": 49,
+      "pct": 6.122448979591836
+    },
+    {
+      "item": "Sandstorm Trek",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Immortal King's Detail",
+      "itemType": "Set",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Harlequin Crest",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "M'avina's Tenet",
+      "itemType": "Set",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Bloodfist",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Heavenly Garb",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Pus Spitter",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Sander's Riprap",
+      "itemType": "Set",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Witchwild String",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Veil of Steel",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Natalya's Soul",
+      "itemType": "Set",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Sage's Defiance",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Innocence",
+      "itemType": "Runeword",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Leviathan",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Tearhaunch",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Skin of the Vipermagi",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Guillaume's Face",
+      "itemType": "Set",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Anvilguard Strap",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Shaftstop",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 49,
+      "pct": 4.081632653061225
+    },
+    {
+      "item": "Undead Crown",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Verdungo's Hearty Cord",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "War Traveler",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Wilhelm's Pride",
+      "itemType": "Set",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Windforce",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Windhammer",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Wisdom",
+      "itemType": "Runeword",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Wraithskin",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Aetherwing",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Wrath",
+      "itemType": "Runeword",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Arachnid Mesh",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Bannerlord's Call",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Basilisk's Quill",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Bladebuckle",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Bonehew",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Crown of Ages",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Crown of Thieves",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Cyclopean Roar",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Darkglow",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Goldwrap",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Gravepalm",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Griffon's Eye",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Griswold's Heart",
+      "itemType": "Set",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Hellslayer",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Hustle",
+      "itemType": "Runeword",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Immortal King's Pillar",
+      "itemType": "Set",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Kira's Guardian",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Lava Gout",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Lawbringer",
+      "itemType": "Runeword",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Lidless Wall",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Magnus' Skin",
+      "itemType": "Set",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "M'avina's Embrace",
+      "itemType": "Set",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "M'avina's True Sight",
+      "itemType": "Set",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Naj's Light Plate",
+      "itemType": "Set",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Obsession",
+      "itemType": "Runeword",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Ondal's Wisdom",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Ormus' Robes",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Que-Hegan's Wisdom",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Radiance",
+      "itemType": "Runeword",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Rockfleece",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Sazabi's Cobalt Redeemer",
+      "itemType": "Set",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Sazabi's Mental Sheath",
+      "itemType": "Set",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Siggard's Staunch",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Sigon's Sabot",
+      "itemType": "Set",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Skyfall",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Stealskull",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Tancred's Hobnails",
+      "itemType": "Set",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Templar's Might",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "The Cranium Basher",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "The Salamander",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Thundergod's Vigor",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Tombsong",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Treachery",
+      "itemType": "Runeword",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    },
+    {
+      "item": "Treads of Cthon",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 49,
+      "pct": 2.0408163265306123
+    }
+  ],
+  "levelDistribution": {
+    "softcore": [
+      {
+        "level": 80,
+        "count": 6437
+      },
+      {
+        "level": 81,
+        "count": 6421
+      },
+      {
+        "level": 82,
+        "count": 6434
+      },
+      {
+        "level": 83,
+        "count": 6582
+      },
+      {
+        "level": 84,
+        "count": 6859
+      },
+      {
+        "level": 85,
+        "count": 8057
+      },
+      {
+        "level": 86,
+        "count": 8955
+      },
+      {
+        "level": 87,
+        "count": 10165
+      },
+      {
+        "level": 88,
+        "count": 11271
+      },
+      {
+        "level": 89,
+        "count": 11854
+      },
+      {
+        "level": 90,
+        "count": 13028
+      },
+      {
+        "level": 91,
+        "count": 12274
+      },
+      {
+        "level": 92,
+        "count": 10826
+      },
+      {
+        "level": 93,
+        "count": 9200
+      },
+      {
+        "level": 94,
+        "count": 7054
+      },
+      {
+        "level": 95,
+        "count": 5390
+      },
+      {
+        "level": 96,
+        "count": 3026
+      },
+      {
+        "level": 97,
+        "count": 1378
+      },
+      {
+        "level": 98,
+        "count": 482
+      },
+      {
+        "level": 99,
+        "count": 1124
+      }
+    ],
+    "hardcore": [
+      {
+        "level": 80,
+        "count": 1396
+      },
+      {
+        "level": 81,
+        "count": 1292
+      },
+      {
+        "level": 82,
+        "count": 1300
+      },
+      {
+        "level": 83,
+        "count": 1361
+      },
+      {
+        "level": 84,
+        "count": 1421
+      },
+      {
+        "level": 85,
+        "count": 1578
+      },
+      {
+        "level": 86,
+        "count": 1778
+      },
+      {
+        "level": 87,
+        "count": 2113
+      },
+      {
+        "level": 88,
+        "count": 2221
+      },
+      {
+        "level": 89,
+        "count": 2321
+      },
+      {
+        "level": 90,
+        "count": 2512
+      },
+      {
+        "level": 91,
+        "count": 2326
+      },
+      {
+        "level": 92,
+        "count": 2015
+      },
+      {
+        "level": 93,
+        "count": 1810
+      },
+      {
+        "level": 94,
+        "count": 1442
+      },
+      {
+        "level": 95,
+        "count": 1069
+      },
+      {
+        "level": 96,
+        "count": 716
+      },
+      {
+        "level": 97,
+        "count": 315
+      },
+      {
+        "level": 98,
+        "count": 141
+      },
+      {
+        "level": 99,
+        "count": 289
+      }
+    ]
+  }
+}
