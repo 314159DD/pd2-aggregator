@@ -4,6 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { getSkillUsage, type SkillUsageRow } from "@/lib/api";
 import type { UiState } from "@/lib/url-state";
+import {
+  BUILD_PRESETS,
+  PRESET_MIN_LEVEL,
+  isPresetActive,
+} from "@/lib/buildPresets";
 
 // PD2 wiki MediaWiki Special:FilePath redirect resolves to the actual icon CDN.
 // Skill name spaces → underscores; everything else URL-encoded.
@@ -200,6 +205,45 @@ export function FilterForm({ initial, onSubmit }: Props) {
           ))}
         </div>
       </div>
+
+      {/* Build presets (only when a class is selected) */}
+      {s.filter.className && BUILD_PRESETS[s.filter.className] && (
+        <div>
+          <label className="block text-xs uppercase tracking-widest text-muted-foreground mb-2">
+            Build preset
+          </label>
+          <div className="flex flex-wrap gap-2">
+            {BUILD_PRESETS[s.filter.className].map((preset) => {
+              const active = isPresetActive(
+                s.skills.map((sk) => sk.name),
+                preset,
+              );
+              return (
+                <button
+                  key={preset.name}
+                  type="button"
+                  className={
+                    active
+                      ? "px-2.5 py-1 text-xs rounded-sm font-bold uppercase tracking-wider border border-[#5e4a1f] text-[#0a0604] shadow-[inset_0_1px_0_rgba(255,212,122,0.5),0_0_10px_rgba(201,160,75,0.3)] bg-gradient-to-b from-[#dfb55a] to-[#a07a30] transition"
+                      : "px-2.5 py-1 text-xs rounded-sm border border-[#7a5e29] font-medium text-[#f5e3b5] bg-gradient-to-b from-[#5a3f24] to-[#382514] hover:from-[#6e4f30] hover:to-[#4a3220] hover:border-[#c9a04b] hover:text-[#ffd47a] transition"
+                  }
+                  onClick={() =>
+                    setS({
+                      ...s,
+                      skills: preset.skills.map((name) => ({
+                        name,
+                        minLevel: PRESET_MIN_LEVEL,
+                      })),
+                    })
+                  }
+                >
+                  {preset.name}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Min level */}
       <div>
