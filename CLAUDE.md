@@ -19,6 +19,7 @@ Next.js 16 static-export app that aggregates Project Diablo 2 ladder builds from
 - `npm run typecheck` — type check only
 - `npx tsx scripts/refresh-snapshot.ts` — refresh `data/snapshot.json`
 - `npx tsx scripts/build-mod-dictionary.ts` — rebuild `data/mod-dictionary.json`
+- `npx tsx scripts/build-skill-prereqs.ts` — rebuild `data/skill-prereqs.json` (scrapes wiki.projectdiablo2.com — re-run on each PD2 season patch)
 
 ## Module boundaries
 - `src/lib/data-loader.ts` is the ONLY module that does network or IndexedDB I/O.
