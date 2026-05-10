@@ -181,9 +181,16 @@ export default function Page() {
 
           <Section
             title="Build sheet"
-            subtitle={`server pool n=${guide.skillUsageSampleSize.toLocaleString()}`}
+            subtitle={
+              guide.clientAggregates.skillUsage
+                ? `skill-filtered n=${guide.clientAggregates.poolSize.toLocaleString()}`
+                : `server pool n=${guide.skillUsageSampleSize.toLocaleString()}`
+            }
           >
-            <BuildSheet data={guide.buildSheet} />
+            <BuildSheet
+              data={guide.buildSheet}
+              skillUsage={guide.clientAggregates.skillUsage}
+            />
           </Section>
         </>
       )}

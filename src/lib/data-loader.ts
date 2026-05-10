@@ -350,8 +350,12 @@ function assemble(
     },
   );
 
-  // Run client aggregation
-  const clientAggregates = aggregateClientSide(filtered, modDictionary);
+  // Run client aggregation (className enables prereq-classified skill usage)
+  const clientAggregates = aggregateClientSide(
+    filtered,
+    modDictionary,
+    filter.className,
+  );
 
   const truncated = totalAvailable > MAX_PAGES * PAGE_SIZE;
 
