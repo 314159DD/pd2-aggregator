@@ -2,7 +2,7 @@
 
 Next.js 16 static-export app that aggregates Project Diablo 2 ladder builds from the pd2.tools public API and produces filterable build guides. Live at https://pd2-aggregator.vercel.app.
 
-**Status:** Phase 2 in progress. Sprint 2.1 shipped 2026-05-10 (Reddit bug fixes A/D/F + build presets). Sprint 2.1.1 same day — server stats endpoints now receive the `skills` filter. Sprint 2.1.2 same day — wiki-scraped `data/item-slots.json` now covers every PD2 unique/set/runeword (475 → 1591 entries; was dropping 32% of named items including M'avina set, Lore, Hellrack, Kuko Shakaku because they weren't in the snapshot). Sprint 2.2 scope TBD.
+**Status:** Phase 2 in progress. Sprint 2.1 shipped 2026-05-10 (Reddit bug fixes A/D/F + build presets). Sprint 2.1.1 same day — server stats endpoints now receive the `skills` filter. Sprint 2.1.2 same day — wiki-scraped `data/item-slots.json` now covers every PD2 unique/set/runeword (475 → 1591 entries; was dropping 32% of named items including M'avina set, Lore, Hellrack, Kuko Shakaku because they weren't in the snapshot). Sprint 2.2 shipped 2026-05-11 (validation test suite, MIT license, README rewrite, integration-prep doc for the coleestrin conversation). Sprint 2.3 scope TBD.
 
 **Plan is the source of truth.** If it's not in `plan/`, it doesn't exist. Start a session by reading [`plan/README.md`](plan/README.md) → [`plan/roadmap.md`](plan/roadmap.md) → the active sprint file.
 
@@ -22,6 +22,7 @@ Next.js 16 static-export app that aggregates Project Diablo 2 ladder builds from
 - `npx tsx scripts/build-skill-prereqs.ts` — rebuild `data/skill-prereqs.json` (scrapes wiki.projectdiablo2.com — re-run on each PD2 season patch)
 - `npx tsx scripts/build-item-slots.ts` — rebuild `data/item-slots.json` from the snapshot's `location.equipment` + `base.category` (re-run after refreshing the snapshot)
 - `npx tsx scripts/build-item-slots-from-wiki.ts` — extend `data/item-slots.json` with every unique/set/runeword from wiki.projectdiablo2.com (re-run after PD2 patches that add items); snapshot entries always win on conflicts
+- `npx tsx scripts/refresh-validation-fixtures.ts` — refresh `src/lib/validation/fixtures/*.json` (run weekly, on PD2 patches, or when parity tests start looking suspicious)
 
 ## Module boundaries
 - `src/lib/data-loader.ts` is the ONLY module that does network or IndexedDB I/O.
