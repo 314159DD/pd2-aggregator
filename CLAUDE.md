@@ -2,7 +2,7 @@
 
 Next.js 16 static-export app that aggregates Project Diablo 2 ladder builds from the pd2.tools public API and produces filterable build guides. Live at https://pd2-aggregator.vercel.app.
 
-**Status:** Phase 1 (MVP) shipped + launched on Reddit (2026-05). Phase 2 (community release) — Sprint 2.1 pending: triage post-launch feedback.
+**Status:** Phase 2 in progress. Sprint 2.1 shipped 2026-05-10 (post-launch bugfixes from Reddit feedback A/D/F + build preset buttons). Sprint 2.2 scope TBD pending follow-up community feedback.
 
 **Plan is the source of truth.** If it's not in `plan/`, it doesn't exist. Start a session by reading [`plan/README.md`](plan/README.md) → [`plan/roadmap.md`](plan/roadmap.md) → the active sprint file.
 

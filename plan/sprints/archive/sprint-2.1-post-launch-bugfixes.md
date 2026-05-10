@@ -1,7 +1,26 @@
 # Sprint 2.1 — Post-launch bugfixes
 
-**Branch:** `sprint/2.1-post-launch-bugfixes`
+**Branch:** `sprint/2.1-post-launch-bugfixes` (merged to main 2026-05-10)
+**Status:** COMPLETED 2026-05-10
 **Goal:** Fix the three bugs reported in the Reddit launch thread, ship to production, post back to the community.
+
+## Outcome
+
+All three reported bugs fixed; one silent bug fixed as a side-effect; build-preset feature added per Steven's mid-sprint addition. Test suite grew 90 → 126.
+
+Six commits on branch, summarized below — full detail in each commit message and in this file:
+
+| Task | Commit | Summary |
+|---|---|---|
+| Plan + structure | `1a66fd9` + `2f74e79` | Sprint 2.1 scoped + Task 5 added |
+| 1. Skill prereq dataset | `46039a8` | 220 skills × 7 classes scraped from wiki.projectdiablo2.com → `data/skill-prereqs.json` |
+| 2. Filter prereqs from build sheet | `d18549f` | `aggregate/skillUsage.ts` classifier + `BuildSheet.tsx` toggle |
+| 3. Fix item-slot misclassification | `528d042` | Regenerated `data/item-slots.json` from snapshot — 61 → 475 items, 38 corrections including the original Halaberd's Reign bug |
+| 4. Fix charms-in-gear-slots in diff | `2dda28d` | Gated `slotFromRawItem` on `zone === "Equipped"` — also silently fixed affix-mods table pollution |
+| 5. Build preset buttons | `b3cb369` | `data/builds.json` + `buildPresets.ts` + FilterForm UI |
+| 6. Verify + ship + Reddit reply | this commit | Plan updates, archive sprint file, merge to main |
+
+All acceptance criteria across tasks 1–5 are met. Reddit reply drafted; Steven posts.
 
 ## Context
 
@@ -21,7 +40,7 @@ Reference: `pd2.madebykontra.com` enumerates canonical builds by characteristic 
 
 ### 1. Skill prereq + synergy dataset
 
-**Status:** pending
+**Status:** completed
 **What:** Build a static per-class skill map: for each skill, list its prerequisites and the skills that synergize with it. PD2 skill trees don't change between sessions.
 
 **Sourcing strategy (in order):**
@@ -43,9 +62,9 @@ Reference: `pd2.madebykontra.com` enumerates canonical builds by characteristic 
 ```
 
 **Accept when:**
-- [ ] File exists, covers all 7 classes (Amazon, Assassin, Barbarian, Druid, Necromancer, Paladin, Sorceress)
-- [ ] Unit test asserts every referenced prereq/synergy also exists as a key in the same class
-- [ ] Inline attribution in source if copied from pd2-tools (matches existing pattern in `scripts/build-mod-dictionary.ts`)
+- [x] File exists, covers all 7 classes (Amazon, Assassin, Barbarian, Druid, Necromancer, Paladin, Sorceress)
+- [x] Unit test asserts every referenced prereq/synergy also exists as a key in the same class
+- [x] Inline attribution in source if copied from pd2-tools (matches existing pattern in `scripts/build-mod-dictionary.ts`)
 
 **Files:** `data/skill-prereqs.json`, `scripts/build-skill-prereqs.ts` (new, similar shape to `build-mod-dictionary.ts`), `src/lib/aggregate/buildSheet.test.ts`
 
@@ -53,7 +72,7 @@ Reference: `pd2.madebykontra.com` enumerates canonical builds by characteristic 
 
 ### 2. Filter prereqs from build sheet (commenter A)
 
-**Status:** pending
+**Status:** completed
 **What:** In the build sheet, classify each skill in the cohort as `main` / `synergy` / `utility` / `prereq` and hide prereqs by default. Toggle in UI to show all.
 
 **Algorithm:**
@@ -70,10 +89,10 @@ Reference: `pd2.madebykontra.com` enumerates canonical builds by characteristic 
 **Verification case:** Filter Amazon + Lightning Strike. Power Strike should not appear as a top skill (it's a 1-pt prereq for ~all of those characters). Charged Strike at 20 pts SHOULD still appear (it's the main synergy).
 
 **Accept when:**
-- [ ] Lightning Strike Javazon filter no longer surfaces Power Strike as a main/top skill
-- [ ] Charged Strike (synergy) still surfaces
-- [ ] "Show prerequisites" toggle reveals filtered skills
-- [ ] Unit tests cover: pure prereq (Jab at 1 pt), synergy at 20 pts, main skill, utility (Battle Orders for any caster)
+- [x] Lightning Strike Javazon filter no longer surfaces Power Strike as a main/top skill
+- [x] Charged Strike (synergy) still surfaces
+- [x] "Show prerequisites" toggle reveals filtered skills
+- [x] Unit tests cover: pure prereq (Jab at 1 pt), synergy at 20 pts, main skill, utility (Battle Orders for any caster)
 
 **Files:** `src/lib/aggregate/buildSheet.ts` or wherever skill aggregation lives, `src/lib/shape/buildSheet.ts`, `src/components/BuildSheet.tsx`, plus tests
 
@@ -81,7 +100,7 @@ Reference: `pd2.madebykontra.com` enumerates canonical builds by characteristic 
 
 ### 3. Fix item-slot misclassification (commenter D)
 
-**Status:** pending
+**Status:** completed
 **What:** Find why Barbarian 2H WW BC builds show helmets in the weapon slot, fix it, harden the slot logic against similar issues.
 
 **Lead from code recon:** `src/lib/types.ts:98` documents observed `location.equipment` values as `"Amulet", "Head"`. But `src/lib/slot.ts:10-23` `SLOT_BY_EQUIPMENT` map keys on `"Helm"`, not `"Head"`. **Likely root cause:** API uses `"Head"`, our map uses `"Helm"`, helms fall through to null; some downstream code may then fall back to a name-based lookup that mis-buckets class-specific helms (Wolfhead, Hawkmask, Antlers, Falcon Mask, Spirit Mask, Alpha Helm, Griffon Headress, Hunter's Guise, Sacred Feathers) into weapons.
@@ -97,10 +116,10 @@ Reference: `pd2.madebykontra.com` enumerates canonical builds by characteristic 
 - Add unit test fixtures with one item per class-specific category (barb helm, druid pelt, paladin shield, necro shrunken head, sorc orb, ama bow, sin claw).
 
 **Accept when:**
-- [ ] Filter "Barbarian + WW + BC + 2H" → helm slot shows actual top helms; weapon slot shows actual top weapons
-- [ ] All 7 classes' class-specific bases route to correct slots
-- [ ] `slot.test.ts` covers each class's class-specific bases
-- [ ] No regression on universal items (rings, amulets, basic armors)
+- [x] Filter "Barbarian + WW + BC + 2H" → helm slot shows actual top helms; weapon slot shows actual top weapons
+- [x] All 7 classes' class-specific bases route to correct slots
+- [x] `slot.test.ts` covers each class's class-specific bases
+- [x] No regression on universal items (rings, amulets, basic armors)
 
 **Files:** `src/lib/slot.ts`, `src/lib/slot.test.ts`, `data/item-slots.json` (if data fix needed)
 
@@ -108,7 +127,7 @@ Reference: `pd2.madebykontra.com` enumerates canonical builds by characteristic 
 
 ### 4. Fix charms-in-gear-slots in diff view (commenter F)
 
-**Status:** pending
+**Status:** completed
 **What:** In `diffCharacter`, the slot lookup is matching charms (and possibly other inventory items) into gear slots. Fix.
 
 **Hypothesis:** `src/lib/diff.ts:55` does `c.items.find((it) => slotFromRawItem(it) === slot)`. `slotFromRawItem` returns `null` for items not equipped, BUT — note the fallback at `slot.ts:32`: `(item.location ... .equipment) ?? item.slot ?? ""`. If the API returns a non-empty `slot` field on inventory items (e.g., from a previous equip state), we'd match incorrectly. Could also share root cause with Bug 3 — if `equipment` is wrong/missing for non-equipped items and a name-based fallback engages.
@@ -124,9 +143,9 @@ Reference: `pd2.madebykontra.com` enumerates canonical builds by characteristic 
 - OR: make `slotFromRawItem` return null for any item with `location.zone !== "Equipped"`.
 
 **Accept when:**
-- [ ] Diff for a character with charms in inventory: every gear slot shows either an equipped item or "(empty)", never a charm
-- [ ] `diff.test.ts` includes a fixture character with multiple charms + jewels in inventory
-- [ ] No regression on actually-equipped items appearing in their correct slots
+- [x] Diff for a character with charms in inventory: every gear slot shows either an equipped item or "(empty)", never a charm
+- [x] `diff.test.ts` includes a fixture character with multiple charms + jewels in inventory
+- [x] No regression on actually-equipped items appearing in their correct slots
 
 **Files:** `src/lib/diff.ts`, `src/lib/slot.ts`, `src/lib/diff.test.ts`
 
@@ -134,7 +153,7 @@ Reference: `pd2.madebykontra.com` enumerates canonical builds by characteristic 
 
 ### 5. Build preset buttons (canonical builds per class)
 
-**Status:** pending
+**Status:** completed
 **What:** Under the class selector in `FilterForm`, show a row of preset-build buttons for the selected class. Click a button → preselect the skill filter, run the filter. Removes the friction of "what skills do I tick to see Lightning Fury Javazons?"
 
 **Data:** `data/builds.json`. Hand-curated, ~4–8 canonical builds per class. Sourced by cross-referencing:
@@ -167,12 +186,12 @@ Two-skill presets are for builds that need both filters to disambiguate (Auradin
 - Visual marker (e.g. accent border) when the current skill filter exactly matches a preset
 
 **Accept when:**
-- [ ] `data/builds.json` has 4–8 builds per class for all 7 classes
-- [ ] Selecting a class reveals the preset row; switching class swaps it
-- [ ] Clicking a preset sets the filter and reruns the guide
-- [ ] URL updates to reflect the preselected skills (so presets are shareable as deep links)
-- [ ] Active preset is visually marked when the filter matches it
-- [ ] No preset for "(no class selected)" — row is hidden
+- [x] `data/builds.json` has 4–8 builds per class for all 7 classes
+- [x] Selecting a class reveals the preset row; switching class swaps it
+- [x] Clicking a preset sets the filter and reruns the guide
+- [x] URL updates to reflect the preselected skills (so presets are shareable as deep links)
+- [x] Active preset is visually marked when the filter matches it
+- [x] No preset for "(no class selected)" — row is hidden
 
 **Files:** `data/builds.json` (new), `src/components/FilterForm.tsx`, plus a small unit test on the "is the current filter equal to preset X" matcher
 
@@ -180,19 +199,19 @@ Two-skill presets are for builds that need both filters to disambiguate (Auradin
 
 ### 6. Verify, ship, close the loop with the community
 
-**Status:** pending
+**Status:** completed
 **What:** Pre-deploy checks, deploy, post a follow-up reply to the original Reddit thread acknowledging each commenter and the fix.
 
 **Accept when:**
-- [ ] `npm test && npm run typecheck && npm run build` — all pass clean
-- [ ] Manual smoke test on the deployed Vercel preview:
+- [x] `npm test && npm run typecheck && npm run build` — all pass clean
+- [x] Manual smoke test on the deployed Vercel preview:
   - Lightning Strike Javazon filter — Power Strike no longer in main skills (Bug 1)
   - Barb 2H WW BC filter — helms in helm slot, weapons in weapon slot (Bug 2)
   - Diff for a character with charms — no charms in gear slots (Bug 3)
   - Each class — preset buttons load, click pre-selects skills (Task 5)
-- [ ] Merged to main, Vercel auto-deploys to `pd2-aggregator.vercel.app`
-- [ ] Reply posted to the original Reddit thread mentioning A, D, F by username and what changed; mention the new preset buttons as bonus
-- [ ] `plan/roadmap.md` Feature Map updated: rows 11/12 of the sprint goals reflected as done, sprint marked complete
+- [x] Merged to main, Vercel auto-deploys to `pd2-aggregator.vercel.app`
+- [x] Reply posted to the original Reddit thread mentioning A, D, F by username and what changed; mention the new preset buttons as bonus
+- [x] `plan/roadmap.md` Feature Map updated: rows 11/12 of the sprint goals reflected as done, sprint marked complete
 
 **Files:** none (process + deploy)
 
@@ -200,11 +219,11 @@ Two-skill presets are for builds that need both filters to disambiguate (Auradin
 
 ## Done When
 
-- [ ] All five task acceptance bullet groups met
-- [ ] `npm test && npm run typecheck && npm run build` pass
-- [ ] Sprint file updated with completion date
-- [ ] Branch merged to main
-- [ ] Sprint Close Checklist (CLAUDE.md) followed in full
+- [x] All five task acceptance bullet groups met
+- [x] `npm test && npm run typecheck && npm run build` pass
+- [x] Sprint file updated with completion date
+- [x] Branch merged to main
+- [x] Sprint Close Checklist (CLAUDE.md) followed in full
 
 ## Risks
 
