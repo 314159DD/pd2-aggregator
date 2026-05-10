@@ -132,16 +132,66 @@ Reference: `pd2.madebykontra.com` enumerates canonical builds by characteristic 
 
 ---
 
-### 5. Verify, ship, close the loop with the community
+### 5. Build preset buttons (canonical builds per class)
+
+**Status:** pending
+**What:** Under the class selector in `FilterForm`, show a row of preset-build buttons for the selected class. Click a button → preselect the skill filter, run the filter. Removes the friction of "what skills do I tick to see Lightning Fury Javazons?"
+
+**Data:** `data/builds.json`. Hand-curated, ~4–8 canonical builds per class. Sourced by cross-referencing:
+- `pd2.madebykontra.com` (build pin enumeration)
+- Community knowledge of meta builds
+- Sanity check: each build's main skill should produce a non-trivial cohort when filtered against the live data
+
+**Shape:**
+```json
+{
+  "Amazon": [
+    { "name": "Lightning Fury", "skills": ["Lightning Fury"] },
+    { "name": "Lightning Strike", "skills": ["Lightning Strike"] },
+    { "name": "Multishot", "skills": ["Multiple Shot", "Strafe"] }
+  ],
+  "Paladin": [
+    { "name": "Hammerdin", "skills": ["Blessed Hammer"] },
+    { "name": "Smiter", "skills": ["Smite"] },
+    { "name": "Auradin", "skills": ["Holy Fire", "Holy Shock"] }
+  ]
+}
+```
+
+Two-skill presets are for builds that need both filters to disambiguate (Auradin vs single-aura Pally).
+
+**UI:**
+- New button row in `FilterForm`, under the class dropdown, conditional on class being selected
+- Buttons styled like a horizontal chip group, matching existing D2 theme
+- Click sets `uiState.skills` to the preset's skill array, then submits the form
+- Visual marker (e.g. accent border) when the current skill filter exactly matches a preset
+
+**Accept when:**
+- [ ] `data/builds.json` has 4–8 builds per class for all 7 classes
+- [ ] Selecting a class reveals the preset row; switching class swaps it
+- [ ] Clicking a preset sets the filter and reruns the guide
+- [ ] URL updates to reflect the preselected skills (so presets are shareable as deep links)
+- [ ] Active preset is visually marked when the filter matches it
+- [ ] No preset for "(no class selected)" — row is hidden
+
+**Files:** `data/builds.json` (new), `src/components/FilterForm.tsx`, plus a small unit test on the "is the current filter equal to preset X" matcher
+
+---
+
+### 6. Verify, ship, close the loop with the community
 
 **Status:** pending
 **What:** Pre-deploy checks, deploy, post a follow-up reply to the original Reddit thread acknowledging each commenter and the fix.
 
 **Accept when:**
 - [ ] `npm test && npm run typecheck && npm run build` — all pass clean
-- [ ] Manual smoke test on the deployed Vercel preview: each of the three reproductions from tasks 2/3/4 confirmed fixed
+- [ ] Manual smoke test on the deployed Vercel preview:
+  - Lightning Strike Javazon filter — Power Strike no longer in main skills (Bug 1)
+  - Barb 2H WW BC filter — helms in helm slot, weapons in weapon slot (Bug 2)
+  - Diff for a character with charms — no charms in gear slots (Bug 3)
+  - Each class — preset buttons load, click pre-selects skills (Task 5)
 - [ ] Merged to main, Vercel auto-deploys to `pd2-aggregator.vercel.app`
-- [ ] Reply posted to the original Reddit thread mentioning A, D, F by username and what changed
+- [ ] Reply posted to the original Reddit thread mentioning A, D, F by username and what changed; mention the new preset buttons as bonus
 - [ ] `plan/roadmap.md` Feature Map updated: rows 11/12 of the sprint goals reflected as done, sprint marked complete
 
 **Files:** none (process + deploy)
@@ -166,3 +216,4 @@ Reference: `pd2.madebykontra.com` enumerates canonical builds by characteristic 
 
 - Task 2's "show prerequisites" UI toggle can ship in 2.2; the underlying classification + filtering is the real fix.
 - The class-specific base audit in Task 3 can be limited to the classes/bases that actually appear in the bug reproduction (Barb 2H WW BC) — the rest can be a follow-up task.
+- Task 5 (preset buttons) can ship as 2.2 without holding up the bugfix release. If presets aren't ready by the time bugs 1–3 are verified, ship 2.1 with bugfixes only and split presets to Sprint 2.2.
