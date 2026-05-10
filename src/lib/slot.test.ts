@@ -48,13 +48,43 @@ describe("slotFromItemName", () => {
 
 describe("slotFromRawItem", () => {
   it("merges left_finger and right_finger into ring", () => {
-    expect(slotFromRawItem({ location: { equipment: "Left Ring" } })).toBe("ring");
-    expect(slotFromRawItem({ location: { equipment: "Right Ring" } })).toBe("ring");
+    expect(
+      slotFromRawItem({ location: { zone: "Equipped", equipment: "Left Ring" } }),
+    ).toBe("ring");
+    expect(
+      slotFromRawItem({ location: { zone: "Equipped", equipment: "Right Ring" } }),
+    ).toBe("ring");
   });
   it("returns null for inventory", () => {
-    expect(slotFromRawItem({ location: { equipment: "" } })).toBeNull();
+    expect(slotFromRawItem({ location: { zone: "Equipped", equipment: "" } })).toBeNull();
   });
   it("returns null for unknown location", () => {
-    expect(slotFromRawItem({ location: { equipment: "weird_unknown" } })).toBeNull();
+    expect(
+      slotFromRawItem({ location: { zone: "Equipped", equipment: "weird_unknown" } }),
+    ).toBeNull();
+  });
+
+  // Regression from the Reddit launch — commenter F ("some of my gear slots
+  // are equipped with charms"). The pd2.tools API leaves location.equipment
+  // populated with phantom gear-slot names on items sitting in inventory.
+  // Without gating on zone, inventory charms were classified into gear slots.
+  it("returns null for inventory items with phantom equipment field (sprint 2.1 bug 3)", () => {
+    // Real example pulled from snapshot.json — a Small Charm of Vita sitting
+    // in a Barb's inventory with equipment "Helm" still set.
+    expect(
+      slotFromRawItem({
+        location: { zone: "Stored", equipment: "Helm" },
+      }),
+    ).toBeNull();
+    expect(
+      slotFromRawItem({
+        location: { zone: "Stored", equipment: "Left Ring" },
+      }),
+    ).toBeNull();
+    expect(
+      slotFromRawItem({
+        location: { zone: "Stored", equipment: "Right Hand" },
+      }),
+    ).toBeNull();
   });
 });

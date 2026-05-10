@@ -23,9 +23,21 @@ const SLOT_BY_EQUIPMENT: Record<string, Slot | null> = {
 };
 
 export function slotFromRawItem(item: {
-  location?: { equipment?: string } | null;
+  location?: { zone?: string; equipment?: string } | null;
   slot?: string;
 }): Slot | null {
+  // The pd2.tools API leaves `location.equipment` populated with phantom
+  // gear-slot names ("Helm", "Right Hand", "Armor", "Left Ring", …) on items
+  // that aren't equipped — most visibly on charms sitting in inventory.
+  // The authoritative signal is `location.zone`, which is "Equipped" only
+  // for actually-equipped gear. Without this gate, the diff view buckets
+  // inventory charms into gear slots and the affix-mods aggregator includes
+  // charm modifiers in per-slot rare/magic/crafted stats.
+  if (item.location && typeof item.location === "object") {
+    const zone = (item.location as { zone?: string }).zone;
+    if (zone !== "Equipped") return null;
+  }
+
   const equipment =
     (item.location && typeof item.location === "object" && "equipment" in item.location
       ? (item.location as { equipment?: string }).equipment
