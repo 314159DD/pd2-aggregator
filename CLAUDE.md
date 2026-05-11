@@ -2,7 +2,7 @@
 
 Next.js 16 static-export app that aggregates Project Diablo 2 ladder builds from the pd2.tools public API and produces filterable build guides. Live at https://pd2-aggregator.vercel.app.
 
-**Status:** Phase 2 in progress. Sprint 2.1 shipped 2026-05-10 (Reddit bug fixes A/D/F + build presets). Sprint 2.1.1 same day — server stats endpoints now receive the `skills` filter. Sprint 2.1.2 same day — wiki-scraped `data/item-slots.json` now covers every PD2 unique/set/runeword (475 → 1591 entries; was dropping 32% of named items including M'avina set, Lore, Hellrack, Kuko Shakaku because they weren't in the snapshot). Sprint 2.2 shipped 2026-05-11 (validation test suite, MIT license, README rewrite, integration-prep doc for the coleestrin conversation). Sprint 2.3 scope TBD.
+**Status:** Phase 2 in progress. Sprint 2.1 shipped 2026-05-10 (Reddit bug fixes A/D/F + build presets). Sprint 2.1.1 same day — server stats endpoints now receive the `skills` filter. Sprint 2.1.2 same day — wiki-scraped `data/item-slots.json` now covers every PD2 unique/set/runeword (475 → 1591 entries; was dropping 32% of named items including M'avina set, Lore, Hellrack, Kuko Shakaku because they weren't in the snapshot). Sprint 2.2 shipped 2026-05-11 (validation test suite, MIT license, README rewrite, integration-prep doc for the coleestrin conversation). Sprint 2.3 shipped 2026-05-11 (meta integration into pd2.tools — fork at https://github.com/314159DD/pd2-tools, PR pending on coleestrin/pd2-tools, 67 tests, 25 commits).
 
 **Plan is the source of truth.** If it's not in `plan/`, it doesn't exist. Start a session by reading [`plan/README.md`](plan/README.md) → [`plan/roadmap.md`](plan/roadmap.md) → the active sprint file.
 

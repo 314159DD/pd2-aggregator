@@ -1,6 +1,6 @@
 # Roadmap
 
-**Updated:** 2026-05-11 (Sprint 2.2 shipped)
+**Updated:** 2026-05-11 (Sprint 2.3 shipped)
 
 ## Core Loop
 
@@ -90,17 +90,16 @@ The sprints below are scaffolded but not yet detailed — they'll be filled in o
 
 **Verification:** test suite grew 126 → 180 (+54: 12 URL contract + 42 parity). tsc clean. next build clean.
 
-### Sprint 2.3 — TBD
+### Sprint 2.3 — Meta integration into pd2.tools (DONE 2026-05-11)
 
-Drawn from this release's community follow-up + still-open items:
-- Reach out to `coleestrin` (pd2.tools maintainer) — courtesy ping, share what's being built, ask about API courtesy limits
-- **Aggregation accuracy audit (P1, raised after Sprint 2.1.1):** automated check that top-N items per slot match pd2.tools' UI for a basket of canonical builds; flag any drift. The 2.1.1 bug went undetected because no such audit existed.
-- Snapshot refresh automation via GitHub Actions cron
-- Privacy-friendly analytics so we know which filter combos are actually used
-- Backfill popular runewords missing from `item-slots.json` (Grief, Death, Doom, BotD — not in current snapshot)
-- Performance: shrink the live JSON payload (paginated stitching is slow for big classes)
-- "Share this build" UX polish (OG meta tags, screenshot generation)
-- Open product-vision questions still unanswered (donations stance, custom domain, open-source posture)
+**Branch:** `feature/meta-build-aggregator` in `pd2-tools-fork/` (PR pending on `coleestrin/pd2-tools`)
+**Detail:** [`sprints/archive/sprint-2.3-meta-integration.md`](sprints/archive/sprint-2.3-meta-integration.md)
+
+**Delivered:**
+- **Backend** — `api/src/routes/meta.ts` + `api/src/database/postgres/meta.ts`: 7 aggregation methods (findCohort, aggregateItemUsage, aggregateSkillUsageClassified, aggregateMercType, aggregateMercItems, aggregateLevelDistribution, aggregateAffixMods). All routes use `autoCache(900)` + `validateSeason`.
+- **Frontend** — `web/src/pages/Meta.tsx` + 8 Mantine v7 components (FilterForm, BuildSheet, ItemFrequencyTable, AffixFrequencyTable, CharmPanel, DiffView, DataFreshness, MatchBanner). React Query hook, typed API client, ported pure logic + data files from `PD2/`.
+- **Tests** — 67 Jest+supertest integration tests covering validation paths + parity assertions across 7 canonical builds (Hammerdin, Blizz Sorc, WW Barb, Bone Spear Necro, Wind Druid, Trapsin, LF Zon). tsc + eslint clean on both api/ and web/.
+- **25 commits** on `feature/meta-build-aggregator`. PR pending — Steven opens it and pings coleestrin (LAMP) on Discord.
 
 ## Future Phases
 
