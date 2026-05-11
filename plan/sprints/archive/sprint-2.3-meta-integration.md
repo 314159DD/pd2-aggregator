@@ -1,6 +1,6 @@
-# Sprint 2.3 — Meta integration into pd2.tools
+﻿# Sprint 2.3 — Meta integration into pd2.tools
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Branch (planning artifacts only):** `sprint/2.3-meta-integration` in `PD2/` repo
 **Branch (actual implementation):** `feature/meta-build-aggregator` in `pd2-tools-fork/`
@@ -94,15 +94,15 @@
 
 **Files:** none (GitHub UI action)
 
-- [ ] **Step 1: Fork the upstream repo**
+- [x] **Step 1: Fork the upstream repo**
 
 Go to https://github.com/coleestrin/pd2-tools and click **Fork**. Choose `314159DD` as the owner. Keep the default name `pd2-tools`. Untick "Copy the main branch only" if you want all branches (not needed for this sprint).
 
-- [ ] **Step 2: Verify the fork exists**
+- [x] **Step 2: Verify the fork exists**
 
 Visit https://github.com/314159DD/pd2-tools. Confirm it's there and shows "forked from coleestrin/pd2-tools".
 
-- [ ] **Step 3: Confirm done**
+- [x] **Step 3: Confirm done**
 
 Report back. Next task clones it locally.
 
@@ -112,7 +112,7 @@ Report back. Next task clones it locally.
 
 **Files:** none in PD2/. Creates new directory `C:\Coding\III____Full_Circle\pd2-tools-fork`.
 
-- [ ] **Step 1: Clone the fork**
+- [x] **Step 1: Clone the fork**
 
 ```bash
 cd "C:/Coding/III____Full_Circle"
@@ -120,7 +120,7 @@ git clone https://github.com/314159DD/pd2-tools.git pd2-tools-fork
 cd pd2-tools-fork
 ```
 
-- [ ] **Step 2: Add upstream remote**
+- [x] **Step 2: Add upstream remote**
 
 ```bash
 git remote add upstream https://github.com/coleestrin/pd2-tools.git
@@ -135,7 +135,7 @@ upstream  https://github.com/coleestrin/pd2-tools.git (fetch)
 upstream  https://github.com/coleestrin/pd2-tools.git (push)
 ```
 
-- [ ] **Step 3: Install backend dependencies**
+- [x] **Step 3: Install backend dependencies**
 
 ```bash
 cd api
@@ -144,14 +144,14 @@ npm install
 
 Expected: clean install (no high-severity audit warnings that block).
 
-- [ ] **Step 4: Install frontend dependencies**
+- [x] **Step 4: Install frontend dependencies**
 
 ```bash
 cd ../web
 npm install
 ```
 
-- [ ] **Step 5: Check `.env.example` for required environment variables**
+- [x] **Step 5: Check `.env.example` for required environment variables**
 
 ```bash
 cat ../.env.example
@@ -159,7 +159,7 @@ cat ../.env.example
 
 Note all required env vars (Postgres connection, Redis, etc.). If a `.env` doesn't exist at repo root, copy `.env.example` to `.env` and ask Steven for the dev credentials (we may need to either point at a dev/staging DB they share, or stand up a local Postgres with seed data).
 
-- [ ] **Step 6: Try `docker-compose up`**
+- [x] **Step 6: Try `docker-compose up`**
 
 ```bash
 cd ..
@@ -170,11 +170,11 @@ Expected: Postgres + Redis + api + web all come up. Frontend reachable at `http:
 
 If docker-compose fails (network errors, Windows path issues, missing env vars): STOP and report BLOCKED. We need a working local environment before we can build anything.
 
-- [ ] **Step 7: Manual smoke test**
+- [x] **Step 7: Manual smoke test**
 
 Open `http://localhost:4173` in a browser. Click around — verify `/builds`, `/economy`, `/statistics`, `/leaderboard` all load. Verify the navbar renders. Verify API calls in the network tab return data (this proves the local Postgres has seed data).
 
-- [ ] **Step 8: Commit nothing yet, just confirm setup**
+- [x] **Step 8: Commit nothing yet, just confirm setup**
 
 Report back with: clone path, npm install results, docker-compose status, smoke test screenshots/notes. No commits until Task 3.
 
@@ -187,7 +187,7 @@ Report back with: clone path, npm install results, docker-compose status, smoke 
 - Modify: `web/src/App.tsx`
 - Modify: `web/src/components/layout/NavBar.tsx`
 
-- [ ] **Step 1: Create feature branch**
+- [x] **Step 1: Create feature branch**
 
 ```bash
 cd "C:/Coding/III____Full_Circle/pd2-tools-fork"
@@ -196,7 +196,7 @@ git pull origin main  # ensure latest
 git checkout -b feature/meta-build-aggregator
 ```
 
-- [ ] **Step 2: Create placeholder `Meta.tsx`**
+- [x] **Step 2: Create placeholder `Meta.tsx`**
 
 Create `web/src/pages/Meta.tsx`:
 
@@ -223,7 +223,7 @@ export default function Meta() {
 }
 ```
 
-- [ ] **Step 3: Register the route in App.tsx**
+- [x] **Step 3: Register the route in App.tsx**
 
 Read `web/src/App.tsx` to find the existing `<Routes>` block. Add an import for `Meta` (matching the style of existing page imports, likely lazy-loaded with `React.lazy` — match what other pages do). Add `<Route path="/meta" element={<Meta />} />` in the appropriate position (typically after `/builds`).
 
@@ -243,11 +243,11 @@ import Meta from "./pages/Meta";
 
 Mirror the existing style exactly.
 
-- [ ] **Step 4: Add NavBar entry**
+- [x] **Step 4: Add NavBar entry**
 
 Read `web/src/components/layout/NavBar.tsx`. Find the existing menu links (likely an array of `{ link, label }` objects or `<NavLink>` elements). Add `{ link: "/meta", label: "Meta" }` between the existing entries — placement to discuss with Steven (probably between `/builds` and `/economy`).
 
-- [ ] **Step 5: Run the dev server**
+- [x] **Step 5: Run the dev server**
 
 ```bash
 cd web
@@ -256,7 +256,7 @@ npm run dev
 
 Expected: Vite dev server starts on port 4173 (or wherever their config has it). Visit `http://localhost:4173/meta`. Verify the placeholder page renders. Verify the navbar shows "Meta".
 
-- [ ] **Step 6: Run lint + typecheck**
+- [x] **Step 6: Run lint + typecheck**
 
 ```bash
 npm run lint
@@ -265,7 +265,7 @@ npx tsc --noEmit
 
 Expected: clean (no errors).
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 cd ..
@@ -284,7 +284,7 @@ Next: backend SQL aggregations."
 
 **Files:** none modified. This task produces a notes file we'll delete at sprint close.
 
-- [ ] **Step 1: Read the existing characters DB module**
+- [x] **Step 1: Read the existing characters DB module**
 
 Read `api/src/database/postgres/index.ts` (or whichever module exports `characterDB`). Note:
 - The character table name
@@ -292,18 +292,18 @@ Read `api/src/database/postgres/index.ts` (or whichever module exports `characte
 - Any views or stored procedures
 - The query pattern for "filter characters by class + level"
 
-- [ ] **Step 2: Read the characters route**
+- [x] **Step 2: Read the characters route**
 
 Read `api/src/routes/characters.ts`. Note:
 - How filters from query params are passed into the DB layer (zod? express-validator? plain destructuring?)
 - How responses are shaped (do they wrap in `{ data, meta }`? plain arrays?)
 - How `autoCache(seconds)` is applied
 
-- [ ] **Step 3: Read the economy DB module for aggregation patterns**
+- [x] **Step 3: Read the economy DB module for aggregation patterns**
 
 Read `api/src/database/postgres/economy.ts`. Look for `GROUP BY` queries — economy data is aggregated like ours will be. Note the patterns: parameterized queries, casting, JOINs.
 
-- [ ] **Step 4: Run a sample query**
+- [x] **Step 4: Run a sample query**
 
 If the dev DB is reachable:
 
@@ -320,7 +320,7 @@ pool.query('SELECT column_name, data_type FROM information_schema.columns WHERE 
 
 (Adjust the import paths to match their actual files.) Document the character table's columns. Repeat for items, skills, mercenary tables.
 
-- [ ] **Step 5: Write schema notes**
+- [x] **Step 5: Write schema notes**
 
 Create `pd2-tools-fork/.meta-recon-notes.md` (this file is temporary — we delete it at sprint close):
 
@@ -342,12 +342,12 @@ Create `pd2-tools-fork/.meta-recon-notes.md` (this file is temporary — we dele
 autoCache(900) decorator — applied at route level via `router.get("/", autoCache(900), handler)`.
 
 ## Open questions for SQL design
-- [ ] How does the schema represent "skill at minLevel ≥ 20"? `base_level` column? Separate `realSkills` table?
-- [ ] Are items normalized or stored as jsonb on the character row?
-- [ ] What's the right way to express "AND character has Skill1 ≥ 20 AND Skill2 ≥ 20 AND ..."?
+- [x] How does the schema represent "skill at minLevel ≥ 20"? `base_level` column? Separate `realSkills` table?
+- [x] Are items normalized or stored as jsonb on the character row?
+- [x] What's the right way to express "AND character has Skill1 ≥ 20 AND Skill2 ≥ 20 AND ..."?
 ```
 
-- [ ] **Step 6: Commit the recon notes**
+- [x] **Step 6: Commit the recon notes**
 
 ```bash
 git add .meta-recon-notes.md
@@ -365,7 +365,7 @@ the meta route SQL. Delete at sprint close."
 - Create: `api/src/types/meta.ts`
 - Modify: `api/src/types/index.ts`
 
-- [ ] **Step 1: Write the types file**
+- [x] **Step 1: Write the types file**
 
 Create `api/src/types/meta.ts`:
 
@@ -434,7 +434,7 @@ export type MetaResponse = {
 };
 ```
 
-- [ ] **Step 2: Re-export from index**
+- [x] **Step 2: Re-export from index**
 
 Open `api/src/types/index.ts`. Add at the bottom:
 
@@ -444,7 +444,7 @@ export * from "./meta";
 
 (If their index uses named re-exports rather than `*`, match their style.)
 
-- [ ] **Step 3: Verify typecheck**
+- [x] **Step 3: Verify typecheck**
 
 ```bash
 cd api
@@ -453,7 +453,7 @@ npx tsc --noEmit
 
 Expected: clean.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add api/src/types/meta.ts api/src/types/index.ts
@@ -472,7 +472,7 @@ responses since /meta replaces those calls."
 - Create: `api/src/database/postgres/meta.ts`
 - Modify: `api/src/database/index.ts`
 
-- [ ] **Step 1: Stub the DB module**
+- [x] **Step 1: Stub the DB module**
 
 Create `api/src/database/postgres/meta.ts` with the module skeleton:
 
@@ -532,7 +532,7 @@ export async function findCohort(query: MetaQuery): Promise<number[]> {
 
 **IMPORTANT:** the table names (`character`, `character_skill`) and column names (`class_name`, `level`, `game_mode`, `base_level`, etc.) are guesses based on the recon notes. **Before continuing, verify against `.meta-recon-notes.md` and the actual schema.** If names differ, adjust here and propagate to subsequent queries.
 
-- [ ] **Step 2: Export the module**
+- [x] **Step 2: Export the module**
 
 Open `api/src/database/index.ts`. Add:
 
@@ -542,7 +542,7 @@ export * as metaDB from "./postgres/meta";
 
 (Match their existing pattern — they may export individual functions or a namespace; mirror their convention.)
 
-- [ ] **Step 3: Quick sanity test**
+- [x] **Step 3: Quick sanity test**
 
 Write a one-off script to call `findCohort` against the dev DB:
 
@@ -566,7 +566,7 @@ Expected: returns a cohort. The size should be small for Hammerdin in HC (matche
 
 If the query fails (column doesn't exist, etc.): STOP and update the table/column names. Then re-test.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add api/src/database/postgres/meta.ts api/src/database/index.ts
@@ -584,7 +584,7 @@ relies on the (character_id, skill_name) index for performance."
 **Files (in `pd2-tools-fork/`):**
 - Modify: `api/src/database/postgres/meta.ts`
 
-- [ ] **Step 1: Add `aggregateItemUsage`**
+- [x] **Step 1: Add `aggregateItemUsage`**
 
 Append to `api/src/database/postgres/meta.ts`:
 
@@ -630,7 +630,7 @@ export async function aggregateItemUsage(
 - `character_item` table with: `character_id`, `item_name`, `item_type`, `is_equipped` (bool)
 - If their schema uses a different shape (e.g., items in a jsonb column on `character`, or a `location` column instead of `is_equipped`), adjust here.
 
-- [ ] **Step 2: Sanity test**
+- [x] **Step 2: Sanity test**
 
 ```bash
 cd api
@@ -655,7 +655,7 @@ Expected: returns named items with reasonable percentages. Top items for Hammerd
 
 Compare against `pd2-aggregator.vercel.app/?...skills=[{"name":"Blessed Hammer","minLevel":20}]` — same top items? Within ±5% same percentages? **If not, the SQL is wrong — fix before continuing.**
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add api/src/database/postgres/meta.ts
@@ -673,7 +673,7 @@ can't be name-aggregated; future work to aggregate them by base."
 **Files (in `pd2-tools-fork/`):**
 - Modify: `api/src/database/postgres/meta.ts`
 
-- [ ] **Step 1: Add `aggregateSkillUsage`**
+- [x] **Step 1: Add `aggregateSkillUsage`**
 
 Append:
 
@@ -704,7 +704,7 @@ export async function aggregateSkillUsage(
 }
 ```
 
-- [ ] **Step 2: Add `aggregateMercType` and `aggregateMercItems`**
+- [x] **Step 2: Add `aggregateMercType` and `aggregateMercItems`**
 
 Append:
 
@@ -757,7 +757,7 @@ export async function aggregateMercItems(
 
 **Note:** the merc table structure (`character_mercenary` with separate `mercenary_item` table) is a guess. If their schema embeds merc items directly in the character row or uses a different join structure, adjust.
 
-- [ ] **Step 3: Add `aggregateLevelDistribution`**
+- [x] **Step 3: Add `aggregateLevelDistribution`**
 
 Append:
 
@@ -788,11 +788,11 @@ export async function aggregateLevelDistribution(
 }
 ```
 
-- [ ] **Step 4: Sanity test each**
+- [x] **Step 4: Sanity test each**
 
 Run a script that calls all four. Compare to the standalone's output for the same filter (Hammerdin) — values should match within a percentage point (small rounding differences expected if the cohorts differ by a character or two due to update timing).
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add api/src/database/postgres/meta.ts
@@ -810,7 +810,7 @@ documented in code comments — adjust if pd2.tools' actual tables differ."
 - Create: `api/src/routes/meta.ts`
 - Modify: `api/src/routes/index.ts`
 
-- [ ] **Step 1: Write the route handler**
+- [x] **Step 1: Write the route handler**
 
 Create `api/src/routes/meta.ts`:
 
@@ -924,7 +924,7 @@ export default router;
 
 **Note:** the `HttpError` class above is a stub — check `api/src/middleware/error-handler.ts` to see how their existing routes signal HTTP errors. If they use a different error class (e.g., from a library or a shared `errors.ts`), use that instead and remove the local class.
 
-- [ ] **Step 2: Register the route**
+- [x] **Step 2: Register the route**
 
 Open `api/src/routes/index.ts`. Find where other routes are mounted (e.g., `router.use("/characters", charactersRoutes)`). Add:
 
@@ -934,7 +934,7 @@ import metaRoutes from "./meta";
 router.use("/meta", metaRoutes);
 ```
 
-- [ ] **Step 3: Smoke test the endpoint**
+- [x] **Step 3: Smoke test the endpoint**
 
 Restart the dev server (`docker-compose restart api` or whatever their workflow is). Hit the endpoint:
 
@@ -946,11 +946,11 @@ Expected: returns a JSON response with cohortSize > 0 and non-empty arrays. (Adj
 
 If it returns 500: check the API logs for the SQL error. If 404: check that the route is registered. If empty results: check the cohort query parameters.
 
-- [ ] **Step 4: Compare to standalone**
+- [x] **Step 4: Compare to standalone**
 
 Hit the same filter against `pd2-aggregator.vercel.app` and confirm cohortSize matches (or is very close — drift of 1-2 characters is OK due to update timing). Confirm top items match.
 
-- [ ] **Step 5: Lint + typecheck**
+- [x] **Step 5: Lint + typecheck**
 
 ```bash
 cd api
@@ -960,7 +960,7 @@ npx tsc --noEmit
 
 Expected: clean.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add api/src/routes/meta.ts api/src/routes/index.ts
@@ -984,14 +984,14 @@ return 400 with a clear message."
 
 This task ports Sprint 2.2's parity tests from `PD2/src/lib/validation/parity.test.ts` to the fork's backend. Same 7 canonical builds × 5 assertion types, but now testing the full SQL → API → JSON pipeline via supertest.
 
-- [ ] **Step 1: Check test infrastructure**
+- [x] **Step 1: Check test infrastructure**
 
 Read `api/package.json` for the test command (`jest` directly? `tsc + jest`?). Read an existing test file (`api/src/routes/routes.test.ts` or `api/src/database/postgres/economy.test.ts`) to understand:
 - How they spin up the Express app for supertest (`app.ts` exported separately?)
 - How they handle the DB during tests (real DB? mocked? jest-mock-extended? separate test DB?)
 - Any setup/teardown patterns
 
-- [ ] **Step 2: Write the test file**
+- [x] **Step 2: Write the test file**
 
 Create `api/src/routes/meta.test.ts`:
 
@@ -1089,7 +1089,7 @@ describe("/api/meta parity per canonical build", () => {
 });
 ```
 
-- [ ] **Step 3: Run the tests**
+- [x] **Step 3: Run the tests**
 
 ```bash
 cd api
@@ -1102,7 +1102,7 @@ If `app` isn't exported from `api/src/app.ts`, refactor their app entry point �
 
 If tests fail because the dev DB has different data than expected: that's actually fine — these are SHAPE assertions, not value assertions. They pass as long as the cohort is non-empty and the math is internally consistent.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add api/src/routes/meta.test.ts
@@ -1129,7 +1129,7 @@ so they pass regardless of ladder state."
 - Create: `web/src/api/meta.ts`
 - Modify: `web/src/config/api.ts`
 
-- [ ] **Step 1: Add the endpoint constant**
+- [x] **Step 1: Add the endpoint constant**
 
 Open `web/src/config/api.ts`. Find `API_ENDPOINTS` (or equivalent object). Add:
 
@@ -1139,7 +1139,7 @@ META: "/meta",
 
 (Match their object's existing format. If they prefer absolute paths or have a `BUILDS: "/builds"` style, match it exactly.)
 
-- [ ] **Step 2: Write the typed client**
+- [x] **Step 2: Write the typed client**
 
 Read `web/src/api/characters.ts` to understand their wrapping pattern (probably exports a `charactersAPI` object with methods that call the `APIClient`).
 
@@ -1216,7 +1216,7 @@ export const metaAPI = {
 
 (Adjust `APIClient` instantiation to match their actual pattern — they may export a singleton, or `APIClient.get(path, params)` may differ.)
 
-- [ ] **Step 3: Typecheck**
+- [x] **Step 3: Typecheck**
 
 ```bash
 cd web
@@ -1225,7 +1225,7 @@ npx tsc --noEmit
 
 Expected: clean.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add web/src/api/meta.ts web/src/config/api.ts
@@ -1244,11 +1244,11 @@ Uses the existing APIClient wrapper pattern."
 **Files (in `pd2-tools-fork/`):**
 - Create: `web/src/hooks/useMetaData.ts`
 
-- [ ] **Step 1: Read an existing hook**
+- [x] **Step 1: Read an existing hook**
 
 Read `web/src/hooks/useCharacterData.ts` (or equivalent — find one of their React Query hooks). Note the pattern: `useQuery` key shape, staleTime, error handling.
 
-- [ ] **Step 2: Write the hook**
+- [x] **Step 2: Write the hook**
 
 Create `web/src/hooks/useMetaData.ts`:
 
@@ -1273,14 +1273,14 @@ export function useMetaData(query: MetaQuery): UseQueryResult<MetaResponse, Erro
 }
 ```
 
-- [ ] **Step 3: Typecheck**
+- [x] **Step 3: Typecheck**
 
 ```bash
 cd web
 npx tsc --noEmit
 ```
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add web/src/hooks/useMetaData.ts
@@ -1297,7 +1297,7 @@ filter so different builds get distinct cache entries."
 **Files (in `pd2-tools-fork/`):**
 - Modify: `web/src/pages/Meta.tsx`
 
-- [ ] **Step 1: Replace the placeholder with a working JSON dump**
+- [x] **Step 1: Replace the placeholder with a working JSON dump**
 
 Replace `web/src/pages/Meta.tsx` content:
 
@@ -1341,13 +1341,13 @@ export default function Meta() {
 }
 ```
 
-- [ ] **Step 2: Test in browser**
+- [x] **Step 2: Test in browser**
 
 Run `docker-compose up` (or restart the FE dev server). Visit `http://localhost:4173/meta`. Expected: loader appears briefly, then cohort size + top 10 items displayed as JSON.
 
 Verify the cohort size matches what Task 9's curl test showed for the same filter.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add web/src/pages/Meta.tsx
@@ -1372,7 +1372,7 @@ response. Validates the full FE → React Query → Express → SQL pipeline."
 
 These ports are mechanical file copies with minor import path adjustments.
 
-- [ ] **Step 1: Copy data files**
+- [x] **Step 1: Copy data files**
 
 ```bash
 mkdir -p "C:/Coding/III____Full_Circle/pd2-tools-fork/web/src/data"
@@ -1382,7 +1382,7 @@ cp "C:/Coding/III____Full_Circle/PD2/data/builds.json" "C:/Coding/III____Full_Ci
 cp "C:/Coding/III____Full_Circle/PD2/data/mod-dictionary.json" "C:/Coding/III____Full_Circle/pd2-tools-fork/web/src/data/"
 ```
 
-- [ ] **Step 2: Copy lib files**
+- [x] **Step 2: Copy lib files**
 
 ```bash
 mkdir -p "C:/Coding/III____Full_Circle/pd2-tools-fork/web/src/lib/aggregate" \
@@ -1403,7 +1403,7 @@ cp "C:/Coding/III____Full_Circle/PD2/src/lib/types.ts" "C:/Coding/III____Full_Ci
 cp "C:/Coding/III____Full_Circle/PD2/src/lib/url-state.ts" "C:/Coding/III____Full_Circle/pd2-tools-fork/web/src/lib/"
 ```
 
-- [ ] **Step 3: Fix import paths**
+- [x] **Step 3: Fix import paths**
 
 Each ported file references data via `../../../data/<file>.json`. The new location is `web/src/lib/aggregate/skillUsage.ts` → `web/src/data/skill-prereqs.json`, which is `../../data/skill-prereqs.json`.
 
@@ -1426,7 +1426,7 @@ cd "C:/Coding/III____Full_Circle/pd2-tools-fork/web/src/lib"
 grep -rln "data/.*\.json" .
 ```
 
-- [ ] **Step 4: Verify the types-only file `types.ts` is correct**
+- [x] **Step 4: Verify the types-only file `types.ts` is correct**
 
 Open `web/src/lib/types.ts`. It contains the `Character`, `Item`, etc. types we ported. These describe the OLD shape that `api.pd2.tools` returned. Some of our ported aggregators take `Character[]` — but in the fork, we don't have raw Character objects on the frontend (the backend does the aggregation). 
 
@@ -1455,7 +1455,7 @@ rm affixMods.ts avgStats.ts charms.ts skillUsage.ts types.ts
 
 Update `web/src/lib/aggregate/index.ts` to remove imports of deleted files. If after slimming there's nothing left to export, delete `index.ts` too and adjust consumers.
 
-- [ ] **Step 5: Typecheck**
+- [x] **Step 5: Typecheck**
 
 ```bash
 cd "C:/Coding/III____Full_Circle/pd2-tools-fork/web"
@@ -1464,7 +1464,7 @@ npx tsc --noEmit
 
 Fix any import errors that surface.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add web/src/lib/ web/src/data/
@@ -1501,7 +1501,7 @@ aggregation in a later sprint."
 
 This is the largest UI port. Reference `PD2/src/components/FilterForm.tsx` for the structure; rewrite each piece using Mantine components.
 
-- [ ] **Step 1: Read the PD2 FilterForm source**
+- [x] **Step 1: Read the PD2 FilterForm source**
 
 Open `PD2/src/components/FilterForm.tsx`. Note its sections:
 - Mode toggle (Build a guide / Diff my character) — tabs
@@ -1513,7 +1513,7 @@ Open `PD2/src/components/FilterForm.tsx`. Note its sections:
 - Skill picker (selected skills as chips + a scrollable list of available skills)
 - Submit button
 
-- [ ] **Step 2: Map shadcn/Tailwind → Mantine equivalents**
+- [x] **Step 2: Map shadcn/Tailwind → Mantine equivalents**
 
 | Standalone (shadcn) | Mantine equivalent |
 |---|---|
@@ -1525,7 +1525,7 @@ Open `PD2/src/components/FilterForm.tsx`. Note its sections:
 | Submit button | `<Button>` |
 | Skill icon `<img>` | Keep as `<img>` — Mantine doesn't add value here |
 
-- [ ] **Step 3: Write the FilterForm**
+- [x] **Step 3: Write the FilterForm**
 
 Create `web/src/components/meta/FilterForm.tsx`. Use Mantine `Stack`, `Group`, `Tabs`, `Button`, `Pill`, `Slider`, `ScrollArea`, `NumberInput`, `TextInput`. Style with Mantine props (no Tailwind classes).
 
@@ -1752,7 +1752,7 @@ export function FilterForm({ initial, onSubmit }: Props) {
 
 (This is a draft — adjust to match pd2.tools' typical styling: probably use `Container` widths, Mantine theming colors, etc. Look at `Builds.tsx` for the conventions.)
 
-- [ ] **Step 4: Wire FilterForm into Meta.tsx**
+- [x] **Step 4: Wire FilterForm into Meta.tsx**
 
 Replace `web/src/pages/Meta.tsx`:
 
@@ -1816,7 +1816,7 @@ export default function Meta() {
 }
 ```
 
-- [ ] **Step 5: Test in browser**
+- [x] **Step 5: Test in browser**
 
 `npm run dev` (or `docker-compose up`). Visit `/meta`. Click through:
 - Switch tabs (Build a guide / Diff my character)
@@ -1826,7 +1826,7 @@ export default function Meta() {
 - Adjust min level slider
 - Click "Generate guide" — verify URL updates and data refetches
 
-- [ ] **Step 6: Lint + typecheck**
+- [x] **Step 6: Lint + typecheck**
 
 ```bash
 cd "C:/Coding/III____Full_Circle/pd2-tools-fork/web"
@@ -1834,7 +1834,7 @@ npm run lint
 npx tsc --noEmit
 ```
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add web/src/components/meta/FilterForm.tsx web/src/pages/Meta.tsx
@@ -1859,13 +1859,13 @@ so the source of truth is one place."
 - Create: `web/src/components/meta/ItemFrequencyTable.tsx`
 - Modify: `web/src/pages/Meta.tsx`
 
-- [ ] **Step 1: Read the existing reference**
+- [x] **Step 1: Read the existing reference**
 
 Open `pd2-tools-fork/web/src/components/builds/UniqueCard/index.tsx` or whichever component shows tabular item data on the `/builds` page. Note: do they use `mantine-react-table`? A custom `<Table>`? Match their pattern.
 
 Also read `PD2/src/components/ItemFrequencyTable.tsx` for the data shape we display.
 
-- [ ] **Step 2: Write the component**
+- [x] **Step 2: Write the component**
 
 Create `web/src/components/meta/ItemFrequencyTable.tsx`. Use `mantine-react-table` if pd2-tools uses it elsewhere; otherwise a plain Mantine `<Table>` with `<Tabs>` for the 9 slot views.
 
@@ -1938,11 +1938,11 @@ function rarityColor(itemType: string): string {
 }
 ```
 
-- [ ] **Step 3: Wire into Meta.tsx**
+- [x] **Step 3: Wire into Meta.tsx**
 
 Replace the JSON dump in Meta.tsx with `<ItemFrequencyTable rows={data.itemUsage} />` inside an Accordion or Stack section.
 
-- [ ] **Step 4: Test in browser + commit**
+- [x] **Step 4: Test in browser + commit**
 
 Verify the table renders for the current filter. Commit:
 
@@ -1963,7 +1963,7 @@ shapeTopItemsBySlot from the ported lib."
 - Create: `web/src/components/meta/AffixFrequencyTable.tsx`
 - Modify: `web/src/pages/Meta.tsx`
 
-- [ ] **Step 1: Backend gap check**
+- [x] **Step 1: Backend gap check**
 
 Look at the current `MetaResponse` shape. It has `itemUsage` (named items) but NOT affix-mod aggregations. Affix mods are computed client-side in PD2 from raw characters; the fork doesn't have raw characters on the FE.
 
@@ -2024,11 +2024,11 @@ export async function aggregateAffixMods(
 
 Add to the meta route + types as well. Then the FE can consume it directly.
 
-- [ ] **Step 2: Update backend types + route**
+- [x] **Step 2: Update backend types + route**
 
 Add `affixMods: AffixModRow[]` to `MetaResponse` in both `api/src/types/meta.ts` and `web/src/api/meta.ts`. Add to the route's Promise.all.
 
-- [ ] **Step 3: Write the component**
+- [x] **Step 3: Write the component**
 
 Similar to ItemFrequencyTable — tabs per slot, table per slot showing modName, pct, avg, median, p75. Use a mod-name dictionary lookup for display labels (port logic from PD2's affix display).
 
@@ -2091,7 +2091,7 @@ export function AffixFrequencyTable({ rows }: { rows: AffixModRow[] }) {
 }
 ```
 
-- [ ] **Step 4: Wire + test + commit**
+- [x] **Step 4: Wire + test + commit**
 
 Add `<AffixFrequencyTable rows={data.affixMods} />` to Meta.tsx. Verify table renders. Commit:
 
@@ -2132,7 +2132,7 @@ Decision: **A**. The prereq classification is one of our key features (it direct
 
 This is significant new backend work. Pull it out as Task 18a:
 
-- [ ] **Task 18a — Backend: classified skill aggregation**
+- [x] **Task 18a — Backend: classified skill aggregation**
 
 In `api/src/database/postgres/meta.ts`:
 
@@ -2252,7 +2252,7 @@ Update `MetaResponse.skillUsage: ClassifiedSkillRow[]`. Update the route. Update
 
 Then port BuildSheet, CharmPanel, DataFreshness, MatchBanner as Mantine components — each ~50-100 lines.
 
-- [ ] **Step 4: Wire all components into Meta.tsx + test + commit**
+- [x] **Step 4: Wire all components into Meta.tsx + test + commit**
 
 Compose all sections in Meta.tsx in the same order PD2 uses. Test in browser.
 
@@ -2279,15 +2279,15 @@ Frontend: 4 new Mantine components composing the full Meta page UI."
 
 The diff view compares a user-named character against the cohort's top items. In the fork, character lookup uses pd2-tools' existing characters API (we already have `charactersAPI` available).
 
-- [ ] **Step 1: Use existing character API**
+- [x] **Step 1: Use existing character API**
 
 Read `web/src/api/characters.ts`. Confirm there's a method like `charactersAPI.getCharacterByName(name)` or `getAccount(account)`. Use that to fetch the character.
 
-- [ ] **Step 2: Port the diff function**
+- [x] **Step 2: Port the diff function**
 
 Our `web/src/lib/diff.ts` is already ported (Task 14). It takes a `Character` and a `GuideSlice`. The fork's character API likely returns characters in a slightly different shape — write an adapter function in `web/src/lib/diff-adapter.ts` that converts a fork-shaped character to the PD2 `Character` type.
 
-- [ ] **Step 3: Write DiffView**
+- [x] **Step 3: Write DiffView**
 
 ```tsx
 import { Stack, Table, Text, Alert } from "@mantine/core";
@@ -2322,11 +2322,11 @@ export function DiffView({ data }: { data: CharacterDiff }) {
 }
 ```
 
-- [ ] **Step 4: Wire into Meta.tsx**
+- [x] **Step 4: Wire into Meta.tsx**
 
 When `uiState.mode === "diff"` and `uiState.diffName` is set, fetch the character via `charactersAPI` and compute the diff using `diffCharacter()`. Show the DiffView; hide the cohort tables.
 
-- [ ] **Step 5: Test + commit**
+- [x] **Step 5: Test + commit**
 
 Pick a real character name from pd2.tools. Test the diff. Commit:
 
@@ -2348,30 +2348,30 @@ top items, renders a per-slot comparison table."
 **Files (in `pd2-tools-fork/`):**
 - Modify: `web/src/pages/Meta.tsx` and all `web/src/components/meta/*.tsx`
 
-- [ ] **Step 1: Loading states**
+- [x] **Step 1: Loading states**
 
 For each section (FilterForm, ItemFrequencyTable, AffixFrequencyTable, etc.), add a Mantine `<Skeleton>` or `<Loader>` when data is loading.
 
-- [ ] **Step 2: Error handling**
+- [x] **Step 2: Error handling**
 
 Wrap the data fetch in a Mantine `<Alert color="red">` with a "retry" button on error.
 
-- [ ] **Step 3: Empty state**
+- [x] **Step 3: Empty state**
 
 If `cohortSize === 0`: show a friendly empty state ("No characters match this filter. Try a different class or skills.")
 
-- [ ] **Step 4: Mobile responsive**
+- [x] **Step 4: Mobile responsive**
 
 Test at 375px width (iPhone SE). Mantine components are mostly responsive by default, but tables may need to scroll horizontally. Wrap tables in `<ScrollArea>` or use Mantine's responsive table props.
 
-- [ ] **Step 5: Accessibility check**
+- [x] **Step 5: Accessibility check**
 
 - All interactive elements have `aria-label` or visible text
 - Tab navigation works for keyboard users
 - Color contrast meets WCAG AA (Mantine's defaults usually do)
 - Focus states are visible
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add web/src/pages/Meta.tsx web/src/components/meta/
@@ -2390,7 +2390,7 @@ mobile, keyboard tab order verified."
 
 **Files (in PD2/ and pd2-tools-fork/):**
 
-- [ ] **Step 1: Final smoke test in fork**
+- [x] **Step 1: Final smoke test in fork**
 
 `docker-compose up`. Visit `/meta`. Test:
 - Hammerdin filter → see Hammerdin data
@@ -2400,7 +2400,7 @@ mobile, keyboard tab order verified."
 
 Run `npm run lint`, `npx tsc --noEmit`, `npm test` (backend Jest only — frontend has no test script). All clean.
 
-- [ ] **Step 2: Delete the temporary recon notes**
+- [x] **Step 2: Delete the temporary recon notes**
 
 ```bash
 cd "C:/Coding/III____Full_Circle/pd2-tools-fork"
@@ -2408,7 +2408,7 @@ git rm .meta-recon-notes.md
 git commit -m "chore(meta): drop temporary schema recon notes"
 ```
 
-- [ ] **Step 3: Write the PR description**
+- [x] **Step 3: Write the PR description**
 
 In a separate file or as the PR body — draft:
 
@@ -2477,7 +2477,7 @@ Express route + autoCache(900) middleware.
 Built by Steven Obst — happy to iterate on review feedback. Discord thread for context: [link]
 ```
 
-- [ ] **Step 4: Push branch + open PR**
+- [x] **Step 4: Push branch + open PR**
 
 ```bash
 cd "C:/Coding/III____Full_Circle/pd2-tools-fork"
@@ -2488,13 +2488,13 @@ Go to GitHub: https://github.com/coleestrin/pd2-tools/compare/main...314159DD:pd
 
 Open the PR. Use the description above. Don't mark "Ready for review" yet — discuss with Steven first if anything needs tweaking before announcing on Discord.
 
-- [ ] **Step 5: Ping coleestrin on Discord**
+- [x] **Step 5: Ping coleestrin on Discord**
 
 Send LAMP a Discord message:
 
 > Hey, the meta page PR is ready: [link]. Took the look-and-feel approach we discussed; backend uses direct DB queries via a new `/meta` route with autoCache, frontend ports the aggregation logic + UI in Mantine. Jest tests cover the parity assertions. Let me know what feedback you have — happy to iterate.
 
-- [ ] **Step 6: In PD2/: update plan docs + close sprint**
+- [x] **Step 6: In PD2/: update plan docs + close sprint**
 
 ```bash
 cd "C:/Coding/III____Full_Circle/PD2"
@@ -2516,12 +2516,12 @@ git checkout sprint/2.3-meta-integration
 
 ## Done When
 
-- [ ] All 21 tasks marked completed
-- [ ] PR open against `coleestrin/pd2-tools:main` from `314159DD:pd2-tools:feature/meta-build-aggregator`
-- [ ] Backend Jest tests green in CI
-- [ ] Frontend tsc + eslint green in CI
-- [ ] Discord ping sent to LAMP
-- [ ] PD2/ sprint 2.3 file archived, roadmap + CLAUDE.md updated, merged to main
+- [x] All 21 tasks marked completed
+- [x] PR open against `coleestrin/pd2-tools:main` from `314159DD:pd2-tools:feature/meta-build-aggregator`
+- [x] Backend Jest tests green in CI
+- [x] Frontend tsc + eslint green in CI
+- [x] Discord ping sent to LAMP
+- [x] PD2/ sprint 2.3 file archived, roadmap + CLAUDE.md updated, merged to main
 
 ## Out of scope (per spec)
 
