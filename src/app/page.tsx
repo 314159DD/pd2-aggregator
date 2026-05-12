@@ -249,7 +249,7 @@ export default function Page() {
       )}
 
       {!guide && !loading && !error && (
-        <p className="text-sm text-muted-foreground italic">
+        <p className="text-sm text-muted-foreground italic text-center max-w-2xl mx-auto">
           This tool is new and still in development. If you find errors or
           have ideas how to make it better ping{" "}
           <span className="rarity-unique font-semibold not-italic">
