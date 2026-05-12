@@ -1,7 +1,7 @@
 # Integration notes — pd2-aggregator → pd2.tools
 
 **Updated:** 2026-05-11
-**Status:** Planning — awaiting conversation with [@coleestrin](https://github.com/coleestrin)
+**Status:** Port shipped to PR (coleestrin/pd2-tools#20). The agenda below describes the pre-conversation thinking from Sprint 2.2; Sprint 2.3 collapsed steps 2.x.1 through 2.x.3 into a single push because their stack already runs React + Mantine. Kept as-is for reference; live state is in [`sprints/archive/sprint-2.3-pd2-tools-integration.md`](../sprints/archive/sprint-2.3-pd2-tools-integration.md).
 
 After the Reddit launch of `pd2-aggregator.vercel.app`, coleestrin (pd2.tools maintainer) offered to host the tool as a subpage on pd2.tools and pointed at his open-source repo for contribution. This doc captures what we'd want to align on **before** any porting work starts.
 
