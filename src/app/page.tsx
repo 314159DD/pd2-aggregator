@@ -109,25 +109,44 @@ export default function Page() {
       <header className="flex items-center justify-between flex-wrap gap-3 border-b border-[#3d2817] pb-3">
         <h1 className="d2-title text-3xl sm:text-4xl">PD2 Build Aggregator</h1>
         <div className="flex flex-col items-end gap-1">
+          {/* Hand-rolled to match the BMC generator settings (color #c29946,
+              black outline, yellow coffee cup) so it blends with the D2 gold
+              theme. Can't use BMC's JS button — buymeacoffee.com is on every
+              major ad blocker's default list and the script gets stripped. */}
           <a
             href="https://www.buymeacoffee.com/SteenC"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Buy me a coffee"
-            className="opacity-90 hover:opacity-100 transition"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-black text-black text-xs font-semibold hover:brightness-110 active:brightness-95 transition"
+            style={{
+              backgroundColor: "#c29946",
+              fontFamily: '"Bree Serif", "Georgia", serif',
+            }}
           >
-            {/* Same-origin mirror — buymeacoffee's CDN is on most ad-blocker
-                default lists and gets silently dropped by uBlock, Brave Shields,
-                etc. Serving from /bmc-button.png slips past that. */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/bmc-button.png"
-              alt="Buy me a coffee"
-              width={130}
-              height={36}
-              style={{ height: 36, width: "auto" }}
-              loading="lazy"
-            />
+            <svg
+              width={14}
+              height={14}
+              viewBox="0 0 24 24"
+              aria-hidden
+              fill="none"
+            >
+              <path
+                d="M4 8h13v6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V8zm13 1.5h2a2.5 2.5 0 0 1 0 5h-2"
+                stroke="#000"
+                strokeWidth={1.6}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                fill="#FFDD00"
+              />
+              <path
+                d="M7 3v2M10.5 3v2M14 3v2"
+                stroke="#000"
+                strokeWidth={1.4}
+                strokeLinecap="round"
+              />
+            </svg>
+            Buy me a coffee
           </a>
           {guide && (
             <DataFreshness source={guide.source} fetchedAt={guide.fetchedAt} />
