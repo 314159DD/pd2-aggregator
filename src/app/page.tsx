@@ -116,9 +116,12 @@ export default function Page() {
             aria-label="Buy me a coffee"
             className="opacity-90 hover:opacity-100 transition"
           >
+            {/* Same-origin mirror — buymeacoffee's CDN is on most ad-blocker
+                default lists and gets silently dropped by uBlock, Brave Shields,
+                etc. Serving from /bmc-button.png slips past that. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://cdn.buymeacoffee.com/buttons/v2/arial-red.png"
+              src="/bmc-button.png"
               alt="Buy me a coffee"
               width={130}
               height={36}
