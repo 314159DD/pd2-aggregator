@@ -106,11 +106,30 @@ export default function Page() {
 
   return (
     <main className="mx-auto max-w-5xl p-4 sm:p-6 space-y-6">
-      <header className="flex items-baseline justify-between flex-wrap gap-2 border-b border-[#3d2817] pb-3">
+      <header className="flex items-center justify-between flex-wrap gap-3 border-b border-[#3d2817] pb-3">
         <h1 className="d2-title text-3xl sm:text-4xl">PD2 Build Aggregator</h1>
-        {guide && (
-          <DataFreshness source={guide.source} fetchedAt={guide.fetchedAt} />
-        )}
+        <div className="flex flex-col items-end gap-1">
+          <a
+            href="https://www.buymeacoffee.com/SteenC"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Buy me a coffee"
+            className="opacity-90 hover:opacity-100 transition"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://cdn.buymeacoffee.com/buttons/v2/arial-red.png"
+              alt="Buy me a coffee"
+              width={130}
+              height={36}
+              style={{ height: 36, width: "auto" }}
+              loading="lazy"
+            />
+          </a>
+          {guide && (
+            <DataFreshness source={guide.source} fetchedAt={guide.fetchedAt} />
+          )}
+        </div>
       </header>
 
       <FilterForm initial={uiState} onSubmit={run} />
