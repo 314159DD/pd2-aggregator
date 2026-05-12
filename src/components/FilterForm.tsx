@@ -404,7 +404,7 @@ export function FilterForm({ initial, onSubmit }: Props) {
         )}
         {!skillsLoading && !skillsError && s.skills.length === 0 && (
           <p className="text-xs text-muted-foreground mt-2 italic">
-            No skill filters — all {s.filter.className}s at minLevel will be sampled.
+            Pick a class, pick 1-3 skills and hit Generate.
           </p>
         )}
       </div>

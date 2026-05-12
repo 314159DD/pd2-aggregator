@@ -250,8 +250,12 @@ export default function Page() {
 
       {!guide && !loading && !error && (
         <p className="text-sm text-muted-foreground italic">
-          Pick filters and click{" "}
-          <span className="rarity-unique font-semibold not-italic">Generate Guide</span>.
+          This tool is new and still in development. If you find errors or
+          have ideas how to make it better ping{" "}
+          <span className="rarity-unique font-semibold not-italic">
+            @tekk0n
+          </span>{" "}
+          on Discord.
         </p>
       )}
     </main>
