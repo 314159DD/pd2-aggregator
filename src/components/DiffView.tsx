@@ -1,5 +1,6 @@
 import type { CharacterDiff } from "@/lib/diff";
 import type { Slot } from "@/lib/types";
+import { ItemTooltip, useItemsData } from "./ItemTooltip";
 
 const SLOT_ORDER: Slot[] = [
   "weapon",
@@ -14,6 +15,7 @@ const SLOT_ORDER: Slot[] = [
 ];
 
 export function DiffView({ data }: { data: CharacterDiff }) {
+  const itemsData = useItemsData();
   return (
     <div className="space-y-4">
       <div className="d2-panel rounded-sm p-3 text-sm">
@@ -63,7 +65,14 @@ export function DiffView({ data }: { data: CharacterDiff }) {
                     Pool top
                   </span>
                   <div className="rarity-unique font-medium">
-                    {d.poolTopItemName ?? (
+                    {d.poolTopItemName ? (
+                      <ItemTooltip
+                        name={d.poolTopItemName}
+                        itemsData={itemsData}
+                      >
+                        {d.poolTopItemName}
+                      </ItemTooltip>
+                    ) : (
                       <span className="text-muted-foreground italic font-normal">
                         —
                       </span>
@@ -83,7 +92,12 @@ export function DiffView({ data }: { data: CharacterDiff }) {
                             : "text-foreground"
                         }
                       >
-                        {d.userItemName}
+                        <ItemTooltip
+                          name={d.userItemName}
+                          itemsData={itemsData}
+                        >
+                          {d.userItemName}
+                        </ItemTooltip>
                         {d.userItemQuality && !d.userMatchesPoolTop && (
                           <span className="text-xs text-muted-foreground ml-2">
                             ({d.userItemQuality})

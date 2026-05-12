@@ -50,8 +50,9 @@ const META_FLAG_LABELS = new Set(["corrupted", "desecrated", "mirrored"]);
 
 /**
  * Mods we actively want to NOT show in the avg-stats summary because they're
- * either non-quantitative (binary indicators) or get displayed elsewhere
- * (e.g., charm patterns / +X to specific skill tab).
+ * either non-quantitative (binary indicators), get displayed elsewhere
+ * (e.g., charm patterns / +X to specific skill tab), or cap so averages are
+ * misleading (resistances cap at 75 in PD2).
  */
 const EXCLUDED_MOD_NAMES = new Set<string>([
   // Skill-tab is multi-valued (split per tab in affix table); avg is meaningless.
@@ -65,6 +66,16 @@ const EXCLUDED_MOD_NAMES = new Set<string>([
   "item_skillongethit",
   "item_skillonkill",
   "item_skillondeath",
+  // Resistances cap at 75 — everyone has them, averaging is uninteresting.
+  "fireresist",
+  "coldresist",
+  "lightresist",
+  "poisonresist",
+  "all_resist",
+  "maxfireresist",
+  "maxcoldresist",
+  "maxlightresist",
+  "maxpoisonresist",
 ]);
 
 /**

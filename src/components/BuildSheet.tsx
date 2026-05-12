@@ -2,22 +2,37 @@
 import { useState } from "react";
 import type { BuildSheet as BuildSheetData } from "@/lib/shape/buildSheet";
 import type { SkillUsageEntry } from "@/lib/aggregate";
+import skillClassificationRaw from "../../data/skill-classification.json";
+import { ItemTooltip, useItemsData } from "./ItemTooltip";
+
+type SkillRole = "core" | "synergy";
+const SKILL_CLASSIFICATION = skillClassificationRaw as Record<
+  string,
+  Record<string, SkillRole>
+>;
 
 export function BuildSheet({
   data,
   skillUsage,
+  className,
 }: {
   data: BuildSheetData;
   /** Prereq-classified skill usage. When present, replaces the server-side
    *  `data.skillFrequency` table and unlocks the "Show prerequisites" toggle. */
   skillUsage?: SkillUsageEntry[] | null;
+  /** Character class — drives the Core/Synergy classification lookup. */
+  className?: string;
 }) {
+  const itemsData = useItemsData();
   return (
     <div className="space-y-5">
       {/* Skills */}
       <div className="d2-slot-block">
         {skillUsage && skillUsage.length > 0 ? (
-          <SkillFrequencyClassified rows={skillUsage} />
+          <SkillFrequencyClassified
+            rows={skillUsage}
+            className={className}
+          />
         ) : (
           <SkillFrequencyLegacy rows={data.skillFrequency} />
         )}
@@ -28,25 +43,7 @@ export function BuildSheet({
       {/* Level distribution */}
       <div className="d2-slot-block">
         <h3 className="d2-sublabel mb-2">Level distribution</h3>
-        {data.levelDistribution.length === 0 ? (
-          <p className="text-sm text-muted-foreground italic">— no data —</p>
-        ) : (
-          <div className="flex flex-wrap gap-1.5 text-sm">
-            {data.levelDistribution.map((b) => (
-              <span
-                key={b.level}
-                className="px-2 py-0.5 rounded-sm border border-[#3d2817] text-foreground"
-              >
-                <span className="text-muted-foreground">L</span>
-                {b.level}
-                <span className="text-muted-foreground">·</span>
-                <span className="font-semibold tabular-nums">
-                  {b.count.toLocaleString()}
-                </span>
-              </span>
-            ))}
-          </div>
-        )}
+        <LevelDistributionChart buckets={data.levelDistribution} />
       </div>
 
       <hr className="d2-rule" />
@@ -74,7 +71,9 @@ export function BuildSheet({
                         {i > 0 && (
                           <span className="text-muted-foreground">, </span>
                         )}
-                        {it.itemName}{" "}
+                        <ItemTooltip name={it.itemName} itemsData={itemsData}>
+                          {it.itemName}
+                        </ItemTooltip>{" "}
                         <span className="text-muted-foreground tabular-nums text-xs">
                           ({it.pct.toFixed(0)}%)
                         </span>
@@ -95,67 +94,145 @@ export function BuildSheet({
 // Skill frequency — classified (prereq-aware) variant
 // ---------------------------------------------------------------------------
 
-function SkillFrequencyClassified({ rows }: { rows: SkillUsageEntry[] }) {
+function SkillFrequencyClassified({
+  rows,
+  className,
+}: {
+  rows: SkillUsageEntry[];
+  className?: string;
+}) {
+  const [showSynergies, setShowSynergies] = useState(false);
   const [showPrereqs, setShowPrereqs] = useState(false);
 
-  // Build view: skills classified as part of the build for any character.
-  const buildRows = rows.filter((r) => r.numAsBuild > 0);
-  // Prereq view: skills classified ONLY as prereqs (never as build for anyone).
+  const classMap = className ? SKILL_CLASSIFICATION[className] ?? {} : {};
+  const roleOf = (name: string): SkillRole => classMap[name] ?? "core";
+
+  // 20-hard-point threshold matches pd2.tools/builds.
+  const allBuildRows = rows
+    .filter((r) => r.numAtTwenty > 0)
+    .sort((a, b) => b.pctAtTwenty - a.pctAtTwenty);
+
+  const coreRows = allBuildRows.filter((r) => roleOf(r.name) === "core");
+  const synergyRows = allBuildRows.filter((r) => roleOf(r.name) === "synergy");
+
+  // Prereqs: skills no one builds, but commonly taken as 1-pt prereqs.
   const prereqOnlyRows = rows.filter(
-    (r) => r.numAsBuild === 0 && r.numAsPrereq > 0,
+    (r) => r.numAtTwenty === 0 && r.numAsPrereq > 0,
   );
 
-  const display = showPrereqs ? [...buildRows, ...prereqOnlyRows] : buildRows;
+  const visibleBuildRows = showSynergies ? allBuildRows : coreRows;
+  const display = [
+    ...visibleBuildRows,
+    ...(showPrereqs ? prereqOnlyRows : []),
+  ];
+
+  const topCoreNames = new Set(coreRows.slice(0, 3).map((r) => r.name));
 
   return (
     <>
       <div className="flex items-baseline justify-between gap-2 mb-2 flex-wrap">
-        <h3 className="d2-sublabel">Skill frequency</h3>
-        {prereqOnlyRows.length > 0 && (
-          <button
-            type="button"
-            onClick={() => setShowPrereqs((v) => !v)}
-            className="text-xs text-muted-foreground hover:text-foreground transition underline-offset-2 hover:underline"
-          >
-            {showPrereqs
-              ? `Hide prerequisites (${prereqOnlyRows.length})`
-              : `Show prerequisites (${prereqOnlyRows.length})`}
-          </button>
-        )}
+        <h3 className="d2-sublabel">Core skills</h3>
+        <div className="flex gap-3">
+          {synergyRows.length > 0 && (
+            <button
+              type="button"
+              onClick={() => setShowSynergies((v) => !v)}
+              className="text-xs text-muted-foreground hover:text-foreground transition underline-offset-2 hover:underline"
+            >
+              {showSynergies
+                ? `Hide synergies (${synergyRows.length})`
+                : `Show synergies (${synergyRows.length})`}
+            </button>
+          )}
+          {prereqOnlyRows.length > 0 && (
+            <button
+              type="button"
+              onClick={() => setShowPrereqs((v) => !v)}
+              className="text-xs text-muted-foreground hover:text-foreground transition underline-offset-2 hover:underline"
+            >
+              {showPrereqs
+                ? `Hide prerequisites (${prereqOnlyRows.length})`
+                : `Show prerequisites (${prereqOnlyRows.length})`}
+            </button>
+          )}
+        </div>
       </div>
 
       {display.length === 0 ? (
         <p className="text-sm text-muted-foreground italic">— no data —</p>
       ) : (
         <table className="w-full text-sm">
+          <thead>
+            <tr className="text-[10px] uppercase tracking-widest text-muted-foreground/70">
+              <th className="font-normal text-left pb-1">Skill</th>
+              <th className="font-normal text-left pb-1 w-20">Type</th>
+              <th className="font-normal text-right pb-1 w-20">
+                <span title="Characters with 20+ hard points in this skill (matches pd2.tools/builds threshold).">
+                  Chars 20+
+                </span>
+              </th>
+              <th className="font-normal text-right pb-1 w-16">
+                <span
+                  className="underline decoration-dotted underline-offset-2 cursor-help"
+                  title="% of cohort with 20+ hard points in this skill (same threshold pd2.tools/builds uses)."
+                >
+                  Hard %
+                </span>
+              </th>
+              <th className="font-normal text-right pb-1 w-14">
+                <span
+                  className="underline decoration-dotted underline-offset-2 cursor-help"
+                  title="% of cohort with any base level in this skill (includes 1-pt prereqs)."
+                >
+                  Any %
+                </span>
+              </th>
+            </tr>
+          </thead>
           <tbody>
-            {display.map((sk, i) => {
-              const isPrereqOnly = sk.numAsBuild === 0;
-              // Highlight only top-3 build skills.
-              const isTopBuild = !isPrereqOnly && i < 3;
+            {display.map((sk) => {
+              const isPrereqRow = sk.numAtTwenty === 0;
+              const isSynergyRow =
+                !isPrereqRow && roleOf(sk.name) === "synergy";
+              const isTopBuild = topCoreNames.has(sk.name);
               return (
                 <tr key={sk.name}>
                   <td
                     className={`py-1 ${
-                      isPrereqOnly
+                      isPrereqRow
                         ? "text-muted-foreground italic"
-                        : isTopBuild
-                          ? "rarity-unique font-semibold"
-                          : "text-foreground"
+                        : isSynergyRow
+                          ? "text-muted-foreground"
+                          : isTopBuild
+                            ? "rarity-unique font-semibold"
+                            : "text-foreground"
                     }`}
                   >
                     {sk.name}
-                    {isPrereqOnly && (
-                      <span className="ml-2 text-[10px] uppercase tracking-wider text-muted-foreground/70 not-italic">
-                        prereq
+                  </td>
+                  <td className="py-1">
+                    {isPrereqRow ? (
+                      <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded-sm border border-[#3d2817] text-muted-foreground">
+                        Prereq
                       </span>
-                    )}
+                    ) : isSynergyRow ? (
+                      <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded-sm bg-[#3d2817]/40 text-muted-foreground">
+                        Synergy
+                      </span>
+                    ) : null}
                   </td>
-                  <td className="py-1 text-right tabular-nums text-muted-foreground pl-3">
-                    {sk.numAsBuild.toLocaleString()}
+                  <td className="py-1 text-right tabular-nums text-muted-foreground">
+                    {sk.numAtTwenty.toLocaleString()}
                   </td>
-                  <td className="py-1 text-right tabular-nums text-foreground w-14">
-                    {(sk.pctBuild * 100).toFixed(1)}%
+                  <td
+                    className={`py-1 text-right tabular-nums ${
+                      isTopBuild ? "font-semibold" : "text-foreground"
+                    }`}
+                  >
+                    {(sk.pctAtTwenty * 100).toFixed(1)}%
+                  </td>
+                  <td className="py-1 text-right tabular-nums text-muted-foreground">
+                    {(sk.pctAny * 100).toFixed(1)}%
                   </td>
                 </tr>
               );
@@ -165,7 +242,7 @@ function SkillFrequencyClassified({ rows }: { rows: SkillUsageEntry[] }) {
       )}
 
       <p className="mt-2 text-[10px] text-muted-foreground/70 italic">
-        Prereq detection uses skill-tree data from{" "}
+        Skill classification + prereq data scraped from{" "}
         <a
           href="https://wiki.projectdiablo2.com"
           target="_blank"
@@ -183,6 +260,49 @@ function SkillFrequencyClassified({ rows }: { rows: SkillUsageEntry[] }) {
 // ---------------------------------------------------------------------------
 // Skill frequency — legacy variant (fallback when no className filter)
 // ---------------------------------------------------------------------------
+
+// ---------------------------------------------------------------------------
+// Level distribution — vertical bar chart (Tailwind, no chart library)
+// ---------------------------------------------------------------------------
+
+function LevelDistributionChart({
+  buckets,
+}: {
+  buckets: BuildSheetData["levelDistribution"];
+}) {
+  const visible = buckets.filter((b) => b.count > 0);
+  if (visible.length === 0) {
+    return <p className="text-sm text-muted-foreground italic">— no data —</p>;
+  }
+  const maxCount = Math.max(...visible.map((b) => b.count));
+  const BAR_AREA = 96;
+  return (
+    <div
+      className="flex gap-1.5 items-end"
+      style={{ height: BAR_AREA + 22 }}
+    >
+      {visible.map((b) => {
+        const h = maxCount > 0 ? Math.max(3, (b.count / maxCount) * BAR_AREA) : 0;
+        return (
+          <div
+            key={b.level}
+            className="flex flex-col items-center justify-end flex-1 min-w-4 cursor-default"
+            style={{ height: "100%" }}
+            title={`L${b.level}: ${b.count.toLocaleString()}`}
+          >
+            <div
+              className="w-full max-w-7 rounded-sm bg-[#c9a04b] hover:bg-[#dfb55a] transition"
+              style={{ height: h }}
+            />
+            <span className="text-[10px] text-muted-foreground tabular-nums leading-none mt-1">
+              {b.level}
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
 
 function SkillFrequencyLegacy({
   rows,

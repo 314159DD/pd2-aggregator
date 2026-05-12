@@ -37,7 +37,10 @@ export function paramsToUiState(p: URLSearchParams): UiState {
     filter: {
       gameMode: ((p.get("gameMode") as GameMode) ?? DEFAULTS.filter.gameMode),
       className: p.get("className") ?? DEFAULTS.filter.className,
-      minLevel: p.get("minLevel") ? Number(p.get("minLevel")) : DEFAULTS.filter.minLevel,
+      // Clamp to 80 — old shared URLs from before the cap need to upgrade.
+      minLevel: p.get("minLevel")
+        ? Math.max(80, Number(p.get("minLevel")))
+        : DEFAULTS.filter.minLevel,
     },
     mode: ((p.get("mode") as "guide" | "diff") ?? DEFAULTS.mode),
     diffName: p.get("char") ?? "",
