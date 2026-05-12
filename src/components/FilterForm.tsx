@@ -10,11 +10,12 @@ import {
   isPresetActive,
 } from "@/lib/buildPresets";
 
-// PD2 wiki MediaWiki Special:FilePath redirect resolves to the actual icon CDN.
-// Skill name spaces → underscores; everything else URL-encoded.
+// Icons mirrored from pd2.tools/icons (218 PD2 skill icons, ~970 KB total).
+// Self-hosted because the wiki's Special:FilePath redirect drops some skills
+// (e.g. Prayer, where the wiki slug doesn't match the skill name 1:1).
+// Refresh the mirror on PD2 patches that add or rename skills.
 function skillIconUrl(name: string): string {
-  const slug = name.replace(/ /g, "_");
-  return `https://wiki.projectdiablo2.com/wiki/Special:FilePath/${encodeURIComponent(slug)}.png`;
+  return `/icons/${name.replace(/ /g, "_")}.png`;
 }
 
 function SkillIcon({ name, size = 24 }: { name: string; size?: number }) {
