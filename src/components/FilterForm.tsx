@@ -62,6 +62,12 @@ export function FilterForm({ initial, onSubmit }: Props) {
   const [skillsLoading, setSkillsLoading] = useState(false);
   const [skillsError, setSkillsError] = useState<string | null>(null);
 
+  // Refetch the skill list whenever the cohort filter changes. Including
+  // s.skills makes the picker behave like pd2.tools/builds: clicking a skill
+  // re-aggregates the percentages within "the subset of chars who already
+  // have this skill", so the list reads as "what else do Holy-Bolt paladins
+  // run?" instead of a static class-wide popularity.
+  const skillsKey = s.skills.map((sk) => sk.name).join(",");
   useEffect(() => {
     let cancelled = false;
     if (!s.filter.className) {
@@ -70,7 +76,10 @@ export function FilterForm({ initial, onSubmit }: Props) {
     }
     setSkillsLoading(true);
     setSkillsError(null);
-    getSkillUsage({ gameMode: s.filter.gameMode, className: s.filter.className })
+    getSkillUsage(
+      { gameMode: s.filter.gameMode, className: s.filter.className },
+      s.skills,
+    )
       .then((rows) => {
         if (!cancelled) {
           const sorted = [...rows].sort((a, b) => b.pct - a.pct);
@@ -87,7 +96,11 @@ export function FilterForm({ initial, onSubmit }: Props) {
     return () => {
       cancelled = true;
     };
-  }, [s.filter.className, s.filter.gameMode]);
+    // s.skills is keyed by name only so editing minLevel in a chip doesn't
+    // refire the fetch on every keystroke. Min levels still ship to the
+    // server when the user hits Generate Guide.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [s.filter.className, s.filter.gameMode, skillsKey]);
 
   const selectedSkillNames = new Set(s.skills.map((sk) => sk.name));
 
