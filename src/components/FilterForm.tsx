@@ -413,7 +413,7 @@ export function FilterForm({ initial, onSubmit }: Props) {
         onClick={() => onSubmit(s)}
         className="w-full sm:w-auto bg-gradient-to-b from-[#c9a04b] to-[#8a6f2e] text-[#0a0604] hover:from-[#dfb55a] hover:to-[#a08036] font-bold uppercase tracking-widest border border-[#5e4a1f] shadow-[inset_0_1px_0_rgba(255,212,122,0.4),0_2px_6px_rgba(0,0,0,0.5)]"
       >
-        Generate Guide
+        Generate
       </Button>
     </div>
   );
