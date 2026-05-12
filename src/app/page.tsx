@@ -7,6 +7,8 @@ import { CharmPanel } from "@/components/CharmPanel";
 import { BuildSheet } from "@/components/BuildSheet";
 import { DataFreshness } from "@/components/DataFreshness";
 import { DiffView } from "@/components/DiffView";
+import { AvgStatsPanel } from "@/components/AvgStatsPanel";
+import { TopAffixAveragesPanel } from "@/components/TopAffixAveragesPanel";
 import { loadGuide, type LoadedGuide } from "@/lib/data-loader";
 import {
   paramsToUiState,
@@ -156,6 +158,16 @@ export default function Page() {
       {guide && (
         <>
           <Section
+            title="Average build stats"
+            subtitle={`n=${guide.clientAggregates.poolSize.toLocaleString()}`}
+          >
+            <div className="space-y-5">
+              <AvgStatsPanel rows={guide.clientAggregates.coreStats} />
+              <TopAffixAveragesPanel rows={guide.clientAggregates.avgStats} />
+            </div>
+          </Section>
+
+          <Section
             title="Top equipped items by slot"
             subtitle={`n=${guide.itemUsageSampleSize.toLocaleString()}`}
           >
@@ -168,7 +180,6 @@ export default function Page() {
           >
             <AffixFrequencyTable
               data={guide.clientAggregates.affixModsBySlot}
-              avgStats={guide.clientAggregates.avgStats}
             />
           </Section>
 
@@ -190,6 +201,7 @@ export default function Page() {
             <BuildSheet
               data={guide.buildSheet}
               skillUsage={guide.clientAggregates.skillUsage}
+              className={guide.request.filter.className}
             />
           </Section>
         </>

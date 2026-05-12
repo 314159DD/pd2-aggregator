@@ -3,12 +3,14 @@ import type { ModDictionary } from "./types";
 import { aggregateAffixModsBySlot } from "./affixMods";
 import { aggregateCharms } from "./charms";
 import { aggregateAvgStats } from "./avgStats";
+import { aggregateCoreStats } from "./coreStats";
 import { aggregateSkillUsage } from "./skillUsage";
 
 export type { AffixMod, AffixModsBySlot } from "./affixMods";
 export type { CharmsAggregate, CharmModEntry } from "./charms";
 export type { ModDictionary, ModDictionaryEntry } from "./types";
 export type { AvgStat } from "./avgStats";
+export type { CoreStat } from "./coreStats";
 export type { SkillUsageEntry } from "./skillUsage";
 
 export type ClientAggregates = {
@@ -20,6 +22,8 @@ export type ClientAggregates = {
   charms: ReturnType<typeof aggregateCharms>;
   /** Average totals for featured build stats across the pool */
   avgStats: ReturnType<typeof aggregateAvgStats>;
+  /** Per-character base stats (strength/dex/vit/energy/life/mana) averaged. */
+  coreStats: ReturnType<typeof aggregateCoreStats>;
   /** Skill usage with prereq classification. `null` when no className was
    *  specified (in which case BuildSheet falls back to server-side data). */
   skillUsage: ReturnType<typeof aggregateSkillUsage>;
@@ -44,6 +48,7 @@ export function aggregateClientSide(
     affixModsBySlot: aggregateAffixModsBySlot(filteredChars, dict),
     charms: aggregateCharms(filteredChars, dict),
     avgStats: aggregateAvgStats(filteredChars, dict),
+    coreStats: aggregateCoreStats(filteredChars),
     skillUsage: className ? aggregateSkillUsage(filteredChars, className) : null,
   };
 }

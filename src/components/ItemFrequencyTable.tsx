@@ -1,4 +1,5 @@
 import type { TopItemsBySlot } from "@/lib/shape/topItems";
+import { ItemTooltip, useItemsData } from "./ItemTooltip";
 
 const SLOT_ORDER = [
   "weapon",
@@ -24,6 +25,7 @@ function rarityClass(itemType: string): string {
 }
 
 export function ItemFrequencyTable({ data }: { data: TopItemsBySlot }) {
+  const itemsData = useItemsData();
   return (
     <div className="space-y-5">
       {SLOT_ORDER.map((slot, idx) => {
@@ -49,7 +51,13 @@ export function ItemFrequencyTable({ data }: { data: TopItemsBySlot }) {
                     {items.map((it) => (
                       <tr key={it.itemName}>
                         <td className={`py-1 pr-3 ${rarityClass(it.itemType)}`}>
-                          {it.itemName}
+                          <ItemTooltip
+                            name={it.itemName}
+                            itemType={it.itemType}
+                            itemsData={itemsData}
+                          >
+                            {it.itemName}
+                          </ItemTooltip>
                         </td>
                         <td className="py-1 text-right text-xs uppercase tracking-wider text-muted-foreground/70">
                           {it.itemType}

@@ -24,6 +24,9 @@ export type SkillUsageEntry = {
   /** Characters where this skill is classified as prereq-only for the
    *  character's actually-invested skills. */
   numAsPrereq: number;
+  /** Characters with 20+ hard points in this skill. Matches the threshold
+   *  pd2.tools/builds uses to identify "the build's main skills". */
+  numAtTwenty: number;
   /** Average baseLevel across characters with the skill (any classification). */
   avgBaseLevel: number;
   /** Average baseLevel restricted to characters where it's part of the build. */
@@ -34,6 +37,8 @@ export type SkillUsageEntry = {
   pctBuild: number;
   /** numWithAny / totalSample (0..1). */
   pctAny: number;
+  /** numAtTwenty / totalSample (0..1). */
+  pctAtTwenty: number;
 };
 
 // ---------------------------------------------------------------------------
@@ -92,6 +97,7 @@ export function aggregateSkillUsage(
     numWithAny: number;
     numAsBuild: number;
     numAsPrereq: number;
+    numAtTwenty: number;
     sumBaseLevel: number;
     sumBaseLevelAsBuild: number;
   };
@@ -104,6 +110,7 @@ export function aggregateSkillUsage(
         numWithAny: 0,
         numAsBuild: 0,
         numAsPrereq: 0,
+        numAtTwenty: 0,
         sumBaseLevel: 0,
         sumBaseLevelAsBuild: 0,
       };
@@ -123,6 +130,7 @@ export function aggregateSkillUsage(
       const s = ensure(skillName);
       s.numWithAny++;
       s.sumBaseLevel += baseLevel;
+      if (baseLevel >= 20) s.numAtTwenty++;
 
       if (isPrereqOnly(skillName, charSkills, classMap)) {
         s.numAsPrereq++;
@@ -141,12 +149,14 @@ export function aggregateSkillUsage(
       numWithAny: s.numWithAny,
       numAsBuild: s.numAsBuild,
       numAsPrereq: s.numAsPrereq,
+      numAtTwenty: s.numAtTwenty,
       avgBaseLevel: s.numWithAny > 0 ? s.sumBaseLevel / s.numWithAny : 0,
       avgBaseLevelAsBuild:
         s.numAsBuild > 0 ? s.sumBaseLevelAsBuild / s.numAsBuild : 0,
       totalSample: total,
       pctBuild: s.numAsBuild / total,
       pctAny: s.numWithAny / total,
+      pctAtTwenty: s.numAtTwenty / total,
     });
   }
 

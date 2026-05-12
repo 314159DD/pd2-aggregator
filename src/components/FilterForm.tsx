@@ -245,7 +245,8 @@ export function FilterForm({ initial, onSubmit }: Props) {
         </div>
       )}
 
-      {/* Min level */}
+      {/* Min level (capped at 80 — characters below 80 aren't endgame and
+          pollute the meta snapshot). */}
       <div>
         <label className="block text-xs uppercase tracking-widest text-muted-foreground mb-2">
           Min character level:{" "}
@@ -254,13 +255,18 @@ export function FilterForm({ initial, onSubmit }: Props) {
           </span>
         </label>
         <Slider
-          min={1}
+          min={80}
           max={99}
-          value={[s.filter.minLevel ?? 80]}
+          value={[Math.max(80, s.filter.minLevel ?? 80)]}
           onValueChange={(v) =>
             setS({ ...s, filter: { ...s.filter, minLevel: v[0] } })
           }
         />
+        <div className="mt-1 flex justify-between text-[10px] text-muted-foreground/70 tabular-nums">
+          <span>80</span>
+          <span>90</span>
+          <span>99</span>
+        </div>
       </div>
 
       {/* Skills picker */}
