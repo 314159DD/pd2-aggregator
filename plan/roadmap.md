@@ -1,6 +1,6 @@
 # Roadmap
 
-**Updated:** 2026-05-11 (Sprint 2.3 shipped to PR)
+**Updated:** 2026-05-13 (Sprint 2.4 shipped — Vercel parity + polish)
 
 ## Core Loop
 
@@ -105,16 +105,29 @@ The sprints below are scaffolded but not yet detailed — they'll be filled in o
 
 **Awaiting:** Cole's review on PR #20.
 
-**Carried into Sprint 2.4 (TBD):**
-- Reach out to `coleestrin` for review and screen-share
-- Aggregation accuracy audit (still open from Sprint 2.1.1 follow-up)
-- Snapshot refresh automation via GitHub Actions cron
-- Privacy-friendly analytics so we know which filter combos are actually used
+### Sprint 2.4 — Vercel parity + polish (DONE 2026-05-13)
+
+**Branch:** worked on `main` directly (eleven commits, all live)
+**Detail:** [`sprints/archive/sprint-2.4-vercel-parity-and-polish.md`](sprints/archive/sprint-2.4-vercel-parity-and-polish.md)
+
+**Delivered:**
+- **Feature parity with PR #20** for the standalone Vercel app: own collapsible "Average build stats" section (CoreStatsPanel + TopAffixAveragesPanel), level-distribution bar chart, Core/Synergy classification with toggles + Type pill column + Hard %, item hover tooltips with image / req-level / attribute lines, min-level slider clamped to 80–99, resists + skill/proc filtered from cross-slot affix views.
+- **Sidebar interactivity bug fixed** — `FilterForm` now refetches `/skill-usage` when the skill selection changes, so the popularity list re-aggregates within the filtered cohort the way pd2.tools/builds does.
+- **Self-hosted skill icons** — 218 PNGs mirrored from `pd2.tools/icons/` into `public/icons/`, replacing the wiki MediaWiki redirect that was dropping skills like Prayer.
+- **Buy Me a Coffee button** in the header (hand-rolled to match the user's BMC generator settings; D2-gold theme; no external requests so ad blockers can't strip it).
+- **Polish:** custom favicon (`src/app/icon.png`), centered dev callout, "Generate Guide" → "Generate", clearer skill-picker empty state, Discord callout copy.
+- **Vercel Web Analytics** wired (`@vercel/analytics`); needs the dashboard toggle flipped to start collecting.
+
+**Carried forward (not blocking):**
+- Enable Web Analytics in the Vercel dashboard
+- `items.json` + skill icons will go stale on PD2 patches — needs a CI cron eventually
+- Per-character synergy classification (long-term — current static class-level classification is fine for now)
+- Decision on whether the standalone stays live as a mirror once `pd2.tools/meta` ships
+- Aggregation accuracy audit (still open from Sprint 2.1.1)
 - Backfill popular runewords missing from `item-slots.json` (Grief, Death, Doom, BotD)
 - Performance: shrink the live JSON payload (paginated stitching is slow for big classes)
 - "Share this build" UX polish (OG meta tags, screenshot generation)
-- Open product-vision questions still unanswered (donations stance, custom domain, open-source posture)
-- Decision on whether the standalone stays as a mirror once the port goes prod on pd2.tools
+- Open product-vision questions (donations stance, custom domain, open-source posture)
 
 ## Future Phases
 
