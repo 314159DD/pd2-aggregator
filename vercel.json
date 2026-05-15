@@ -1,6 +1,14 @@
 {
   "redirects": [
     {
+      "source": "/",
+      "has": [
+        { "type": "host", "value": "pd2-aggregator.vercel.app" }
+      ],
+      "destination": "https://www.pd2meta.info/",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "has": [
         { "type": "host", "value": "pd2-aggregator.vercel.app" }
