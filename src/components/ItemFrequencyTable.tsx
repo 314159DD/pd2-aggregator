@@ -2,7 +2,8 @@ import { useMemo } from "react";
 import type { TopItemsBySlot } from "@/lib/shape/topItems";
 import { ItemTooltip, useItemsData } from "./ItemTooltip";
 import { usePriceSnapshot } from "@/lib/price/snapshot";
-import { useLivePrices } from "@/lib/price/pd2trader";
+import { useLivePrices, useRunePrices } from "@/lib/price/pd2trader";
+import { useRunewordRecipes, computeRunewordCost } from "@/lib/price/runewords";
 import { formatPrice } from "@/lib/price/parse";
 import { MarketLinkButton } from "./MarketLinkButton";
 
@@ -43,6 +44,8 @@ export function ItemFrequencyTable({
     [data],
   );
   const livePrices = useLivePrices(allNames, gameMode);
+  const recipes = useRunewordRecipes();
+  const runePrices = useRunePrices(gameMode);
   return (
     <div className="space-y-5">
       {SLOT_ORDER.map((slot, idx) => {
@@ -88,12 +91,43 @@ export function ItemFrequencyTable({
                         <td className="py-1 text-right tabular-nums text-foreground">
                           {it.pct.toFixed(1)}%
                         </td>
-                        <td className="py-1 text-right tabular-nums text-muted-foreground">
+                        <td className="py-1 text-right tabular-nums text-muted-foreground align-top">
                           {(() => {
                             const live = livePrices.get(it.itemName);
-                            if (live) return formatPrice(live.medianPrice);
-                            if (livePrices.has(it.itemName)) return "";
-                            return <span className="text-muted-foreground/40">…</span>;
+                            const isRuneword = it.itemType.toLowerCase() === "runeword";
+                            const recipe = isRuneword ? recipes[it.itemName] : undefined;
+                            const runeCost = recipe ? computeRunewordCost(recipe, runePrices) : null;
+
+                            // Live price line. If we have one, show it. If pd2trader
+                            // resolved but had no listings, fall through to rune-cost
+                            // (for runewords) or blank.
+                            const liveResolved = livePrices.has(it.itemName);
+                            const liveLine = live
+                              ? formatPrice(live.medianPrice)
+                              : liveResolved
+                                ? null
+                                : <span className="text-muted-foreground/40">…</span>;
+
+                            const runeLine = runeCost != null ? (
+                              <span className="block text-[10px] text-muted-foreground/70 italic">
+                                runes {formatPrice(runeCost)}
+                              </span>
+                            ) : null;
+
+                            // Fallback: no live price but it's a runeword with rune
+                            // cost available — promote rune cost to the main line.
+                            if (liveLine === null && runeCost != null) {
+                              return (
+                                <span className="block italic">{formatPrice(runeCost)}</span>
+                              );
+                            }
+                            if (liveLine === null) return "";
+                            return (
+                              <>
+                                <span className="block">{liveLine}</span>
+                                {runeLine}
+                              </>
+                            );
                           })()}
                         </td>
                         <td className="py-1 text-right">
