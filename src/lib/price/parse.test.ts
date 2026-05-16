@@ -15,6 +15,7 @@ describe("parsePriceHr", () => {
     expect(parsePriceHr("0")).toBeNull();
     expect(parsePriceHr("-1")).toBeNull();
     expect(parsePriceHr("abc")).toBeNull();
+    expect(parsePriceHr("1abc")).toBeNull();
     expect(parsePriceHr(undefined)).toBeNull();
   });
 });
