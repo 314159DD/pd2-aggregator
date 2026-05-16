@@ -332,12 +332,14 @@ export function FilterForm({ initial, onSubmit }: Props) {
         {skillsError && (
           <p className="text-sm text-[#ff6464]">{skillsError}</p>
         )}
-        {skillsLoading && (
+        {skillsLoading && skillList.length === 0 && (
           <p className="text-sm text-muted-foreground italic">Consulting the Tomes…</p>
         )}
-        {!skillsLoading && !skillsError && skillList.length > 0 && (
+        {!skillsError && skillList.length > 0 && (
           <div
-            className="max-h-60 overflow-y-auto rounded-sm border border-[#7a5e29] text-sm"
+            className={`max-h-60 overflow-y-auto rounded-sm border border-[#7a5e29] text-sm transition-opacity duration-150 ${
+              skillsLoading ? "opacity-60" : "opacity-100"
+            }`}
             style={{
               // Clearly LIGHTER than the surrounding panel — reads as a parchment recess.
               background:
