@@ -192,7 +192,7 @@ export default function Page() {
           title="Diff vs pool"
           subtitle={`pool n=${guide?.clientAggregates.poolSize.toLocaleString() ?? "?"}`}
         >
-          <DiffView data={diff} />
+          <DiffView data={diff} gameMode={uiState.filter.gameMode} />
         </Section>
       )}
 

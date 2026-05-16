@@ -1,6 +1,8 @@
+import { useMemo } from "react";
 import type { TopItemsBySlot } from "@/lib/shape/topItems";
 import { ItemTooltip, useItemsData } from "./ItemTooltip";
 import { usePriceSnapshot } from "@/lib/price/snapshot";
+import { useLivePrices } from "@/lib/price/pd2trader";
 import { formatPrice } from "@/lib/price/parse";
 import { MarketLinkButton } from "./MarketLinkButton";
 
@@ -36,6 +38,11 @@ export function ItemFrequencyTable({
 }) {
   const itemsData = useItemsData();
   const priceData = usePriceSnapshot();
+  const allNames = useMemo(
+    () => SLOT_ORDER.flatMap((slot) => data[slot].map((it) => it.itemName)),
+    [data],
+  );
+  const livePrices = useLivePrices(allNames, gameMode);
   return (
     <div className="space-y-5">
       {SLOT_ORDER.map((slot, idx) => {
@@ -83,8 +90,10 @@ export function ItemFrequencyTable({
                         </td>
                         <td className="py-1 text-right tabular-nums text-muted-foreground">
                           {(() => {
-                            const entry = priceData.get(it.itemName);
-                            return entry ? formatPrice(entry.medianHr) : "";
+                            const live = livePrices.get(it.itemName);
+                            if (live) return formatPrice(live.medianPrice);
+                            if (livePrices.has(it.itemName)) return "";
+                            return <span className="text-muted-foreground/40">…</span>;
                           })()}
                         </td>
                         <td className="py-1 text-right">

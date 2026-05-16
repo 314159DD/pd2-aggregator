@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useState } from "react";
 
 const BASE = "https://pd2trader.com";
 
@@ -31,7 +32,8 @@ export type HoverPrice = {
   corruptions: CorruptionPrice[];
 };
 
-const cache = new Map<string, Promise<HoverPrice>>();
+const averageCache = new Map<string, Promise<AveragePrice | null>>();
+const corruptionCache = new Map<string, Promise<CorruptionPrice[]>>();
 
 function key(itemName: string, gameMode: "hardcore" | "softcore"): string {
   return `${gameMode}:${itemName}`;
@@ -44,35 +46,72 @@ function commonParams(gameMode: "hardcore" | "softcore"): URLSearchParams {
   return p;
 }
 
-async function fetchAverage(itemName: string, gameMode: "hardcore" | "softcore"): Promise<AveragePrice | null> {
+export function fetchAveragePrice(itemName: string, gameMode: "hardcore" | "softcore"): Promise<AveragePrice | null> {
+  const k = key(itemName, gameMode);
+  const hit = averageCache.get(k);
+  if (hit) return hit;
+
   const p = commonParams(gameMode);
   p.set("itemName", itemName);
   p.set("hours", "168");
-  const res = await fetch(`${BASE}/item-prices/average?${p.toString()}`);
-  if (!res.ok) return null;
-  return res.json() as Promise<AveragePrice>;
+  const promise = fetch(`${BASE}/item-prices/average?${p.toString()}`)
+    .then((r) => (r.ok ? (r.json() as Promise<AveragePrice>) : null))
+    .catch(() => null);
+
+  averageCache.set(k, promise);
+  return promise;
 }
 
-async function fetchCorruptions(itemName: string, gameMode: "hardcore" | "softcore"): Promise<CorruptionPrice[]> {
+function fetchCorruptions(itemName: string, gameMode: "hardcore" | "softcore"): Promise<CorruptionPrice[]> {
+  const k = key(itemName, gameMode);
+  const hit = corruptionCache.get(k);
+  if (hit) return hit;
+
   const p = commonParams(gameMode);
   p.set("itemName", itemName);
-  const res = await fetch(`${BASE}/item-prices/corruption-prices?${p.toString()}`);
-  if (!res.ok) return [];
-  const body = (await res.json()) as { corruptionPrices?: CorruptionPrice[] };
-  return body.corruptionPrices ?? [];
+  const promise = fetch(`${BASE}/item-prices/corruption-prices?${p.toString()}`)
+    .then((r) => (r.ok ? (r.json() as Promise<{ corruptionPrices?: CorruptionPrice[] }>) : { corruptionPrices: [] }))
+    .then((body) => body.corruptionPrices ?? [])
+    .catch(() => []);
+
+  corruptionCache.set(k, promise);
+  return promise;
 }
 
 export function fetchHoverPrice(itemName: string, gameMode: "hardcore" | "softcore"): Promise<HoverPrice> {
-  const k = key(itemName, gameMode);
-  const hit = cache.get(k);
-  if (hit) return hit;
-
-  const promise = Promise.all([
-    fetchAverage(itemName, gameMode).catch(() => null),
-    fetchCorruptions(itemName, gameMode).catch(() => []),
+  return Promise.all([
+    fetchAveragePrice(itemName, gameMode),
+    fetchCorruptions(itemName, gameMode),
   ]).then(([average, corruptions]) => ({ average, corruptions }));
+}
 
-  cache.set(k, promise);
-  promise.catch(() => cache.delete(k));
-  return promise;
+// Hook for batch inline-column lookups. Fires one /average request per name
+// (deduped at module level by fetchAveragePrice), returns a Map keyed by name.
+// Browser caps concurrent requests to the same origin at ~6, so larger tables
+// naturally throttle without us doing anything.
+export function useLivePrices(
+  names: string[],
+  gameMode: "hardcore" | "softcore",
+): Map<string, AveragePrice | null> {
+  const namesKey = names.join("|");
+  const [prices, setPrices] = useState<Map<string, AveragePrice | null>>(new Map());
+
+  useEffect(() => {
+    let cancelled = false;
+    const next = new Map<string, AveragePrice | null>();
+    for (const name of names) {
+      fetchAveragePrice(name, gameMode).then((p) => {
+        if (cancelled) return;
+        next.set(name, p);
+        setPrices(new Map(next));
+      });
+    }
+    return () => {
+      cancelled = true;
+    };
+    // names is stabilized through namesKey to avoid refetching on reference change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [namesKey, gameMode]);
+
+  return prices;
 }
