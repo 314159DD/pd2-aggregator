@@ -45,7 +45,7 @@ export function ItemFrequencyTable({
   );
   const livePrices = useLivePrices(allNames, gameMode);
   const recipes = useRunewordRecipes();
-  const runePrices = useRunePrices(gameMode);
+  const { prices: runePrices, loaded: runesLoaded } = useRunePrices(gameMode);
   return (
     <div className="space-y-5">
       {SLOT_ORDER.map((slot, idx) => {
@@ -96,11 +96,11 @@ export function ItemFrequencyTable({
                             const live = livePrices.get(it.itemName);
                             const isRuneword = it.itemType.toLowerCase() === "runeword";
                             const recipe = isRuneword ? recipes[it.itemName] : undefined;
-                            const runeCost = recipe ? computeRunewordCost(recipe, runePrices) : null;
+                            const runeCost =
+                              recipe && runesLoaded
+                                ? computeRunewordCost(recipe, runePrices)
+                                : null;
 
-                            // Live price line. If we have one, show it. If pd2trader
-                            // resolved but had no listings, fall through to rune-cost
-                            // (for runewords) or blank.
                             const liveResolved = livePrices.has(it.itemName);
                             const liveLine = live
                               ? formatPrice(live.medianPrice)
@@ -114,8 +114,8 @@ export function ItemFrequencyTable({
                               </span>
                             ) : null;
 
-                            // Fallback: no live price but it's a runeword with rune
-                            // cost available — promote rune cost to the main line.
+                            // No live price but it's a runeword with a rune cost —
+                            // promote the rune cost to the main line in italic.
                             if (liveLine === null && runeCost != null) {
                               return (
                                 <span className="block italic">{formatPrice(runeCost)}</span>

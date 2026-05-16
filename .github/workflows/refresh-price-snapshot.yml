@@ -1,4 +1,4 @@
-name: Refresh price snapshot
+name: Refresh data snapshots
 
 on:
   schedule:
@@ -19,14 +19,15 @@ jobs:
           cache: "npm"
       - run: npm ci
       - run: npx tsx scripts/build-price-snapshot.ts
+      - run: npx tsx scripts/build-runeword-runes.ts
       - name: Commit if changed
         run: |
           git config user.name "pd2-aggregator-bot"
           git config user.email "bot@pd2-aggregator.local"
-          git add public/price-snapshot.json data/unique-ids.json
+          git add public/price-snapshot.json data/unique-ids.json public/runeword-runes.json
           if git diff --staged --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "data: refresh price snapshot"
+            git commit -m "data: refresh nightly snapshots"
             git push
           fi
