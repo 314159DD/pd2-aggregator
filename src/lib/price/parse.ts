@@ -1,7 +1,6 @@
 export function parsePriceHr(raw: string | undefined): number | null {
   if (!raw) return null;
-  const normalized = raw.startsWith(".") ? "0" + raw : raw;
-  const n = parseFloat(normalized);
+  const n = Number(raw);
   if (!Number.isFinite(n) || n <= 0) return null;
   return n;
 }
