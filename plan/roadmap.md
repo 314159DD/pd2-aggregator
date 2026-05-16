@@ -37,6 +37,7 @@ UI renders sections + optional "diff vs pool"
 | 17 | Snapshot refresh automation (CI cron) | Infra | 2 | TBD | pending |
 | 18 | Contact pd2.tools maintainer | Process | 2 | TBD | pending |
 | 19 | Lightweight analytics (privacy-friendly) | Enhancement | 2 | TBD | pending |
+| 20 | Inline market prices + live hover sidecar | Enhancement | 3 | 3.1 | done |
 
 ## Phase 1 — MVP (DONE)
 
@@ -128,6 +129,20 @@ The sprints below are scaffolded but not yet detailed — they'll be filled in o
 - Performance: shrink the live JSON payload (paginated stitching is slow for big classes)
 - "Share this build" UX polish (OG meta tags, screenshot generation)
 - Open product-vision questions (donations stance, custom domain, open-source posture)
+
+### Sprint 3.1 - Market price integration (SHIPPED 2026-05-16, awaiting merge)
+
+**Branch:** `sprint/3.1-market-prices`
+**Detail:** [`sprints/sprint-3.1-market-prices.md`](sprints/sprint-3.1-market-prices.md)
+**Design:** [`../docs/specs/2026-05-16-market-price-integration-design.md`](../docs/specs/2026-05-16-market-price-integration-design.md)
+
+**Delivered:**
+- Inline median price column on `ItemFrequencyTable` for uniques, sets, and runewords (634 priced items in the first snapshot).
+- Per-row deeplink button to `projectdiablo2.com/market`.
+- Live hover sidecar (`MarketDetailsCard`) showing the cheapest 5 listings via a Vercel Edge proxy at `api/market.ts`.
+- Nightly GH Action refreshing `public/price-snapshot.json`.
+
+**Verification:** test suite 180 to 201 (+21). tsc clean. next build clean.
 
 ## Future Phases
 
