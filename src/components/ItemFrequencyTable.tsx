@@ -133,7 +133,14 @@ export function ItemFrequencyTable({
                         <td className="py-1 text-right">
                           {(() => {
                             const entry = priceData.get(it.itemName);
-                            return entry ? <MarketLinkButton entry={entry} name={it.itemName} /> : null;
+                            return (
+                              <MarketLinkButton
+                                itemType={it.itemType}
+                                name={it.itemName}
+                                uniqueId={entry?.uniqueId}
+                                runewordKey={entry?.runewordKey}
+                              />
+                            );
                           })()}
                         </td>
                       </tr>
