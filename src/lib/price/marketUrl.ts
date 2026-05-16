@@ -1,14 +1,4 @@
-// Temporary local type so this file compiles before Task 5 lands.
-// Task 5 will replace this with: import type { PriceEntry } from "./snapshot";
-type PriceEntry = {
-  type: "Unique" | "Set" | "Runeword";
-  uniqueId?: number;
-  runewordKey?: string;
-  medianHr: number;
-  low: number;
-  high: number;
-  sampleCount: number;
-};
+import type { PriceEntry } from "./snapshot";
 
 const BASE = "https://www.projectdiablo2.com/market";
 
