@@ -212,7 +212,10 @@ export default function Page() {
             title="Top equipped items by slot"
             subtitle={`n=${guide.itemUsageSampleSize.toLocaleString()}`}
           >
-            <ItemFrequencyTable data={guide.topItemsBySlot} />
+            <ItemFrequencyTable
+              data={guide.topItemsBySlot}
+              gameMode={guide.request.filter.gameMode}
+            />
           </Section>
 
           <Section

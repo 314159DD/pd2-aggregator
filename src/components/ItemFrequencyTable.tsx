@@ -27,7 +27,13 @@ function rarityClass(itemType: string): string {
   return "rarity-normal";
 }
 
-export function ItemFrequencyTable({ data }: { data: TopItemsBySlot }) {
+export function ItemFrequencyTable({
+  data,
+  gameMode,
+}: {
+  data: TopItemsBySlot;
+  gameMode: "hardcore" | "softcore";
+}) {
   const itemsData = useItemsData();
   const priceData = usePriceSnapshot();
   return (
@@ -61,7 +67,7 @@ export function ItemFrequencyTable({ data }: { data: TopItemsBySlot }) {
                             name={it.itemName}
                             itemType={it.itemType}
                             itemsData={itemsData}
-                            priceEntry={priceData.get(it.itemName)}
+                            gameMode={gameMode}
                           >
                             {it.itemName}
                           </ItemTooltip>

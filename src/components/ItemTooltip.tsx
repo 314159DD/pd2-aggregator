@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState, type ReactNode } from "react";
-import type { PriceEntry } from "@/lib/price/snapshot";
 import { MarketDetailsCard } from "./MarketDetailsCard";
 
 export type ItemData = {
@@ -57,17 +56,21 @@ interface Props {
   name: string;
   itemType?: string;
   itemsData: Map<string, ItemData>;
-  priceEntry?: PriceEntry;
+  gameMode?: "hardcore" | "softcore";
   children: ReactNode;
 }
 
-export function ItemTooltip({ name, itemType, itemsData, priceEntry, children }: Props) {
+export function ItemTooltip({ name, itemType, itemsData, gameMode, children }: Props) {
   const data = itemsData.get(name);
   const attrs = data?.afterAttributes ?? data?.beforeAttributes ?? "";
   const lines = attrs.split(",").map((s) => s.trim()).filter(Boolean);
+  const [hovering, setHovering] = useState(false);
 
   return (
-    <span className="relative inline-block group/tt">
+    <span
+      className="relative inline-block group/tt"
+      onMouseEnter={() => setHovering(true)}
+    >
       <span className="cursor-help">{children}</span>
       <span
         className="pointer-events-none absolute left-0 top-full z-50 mt-1 flex gap-2 opacity-0 transition-opacity duration-150 group-hover/tt:opacity-100"
@@ -113,7 +116,9 @@ export function ItemTooltip({ name, itemType, itemsData, priceEntry, children }:
             )}
           </span>
         )}
-        {priceEntry && <MarketDetailsCard entry={priceEntry} />}
+        {gameMode && (
+          <MarketDetailsCard name={name} gameMode={gameMode} active={hovering} />
+        )}
       </span>
     </span>
   );
