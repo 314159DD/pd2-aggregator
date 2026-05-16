@@ -1,5 +1,7 @@
 "use client";
 import { useEffect, useState, type ReactNode } from "react";
+import type { PriceEntry } from "@/lib/price/snapshot";
+import { MarketDetailsCard } from "./MarketDetailsCard";
 
 export type ItemData = {
   gearId: { name: string; itemCategory?: string };
@@ -51,9 +53,6 @@ export function useItemsData(): Map<string, ItemData> {
   return m;
 }
 
-import type { PriceEntry } from "@/lib/price/snapshot";
-import { MarketDetailsCard } from "./MarketDetailsCard";
-
 interface Props {
   name: string;
   itemType?: string;
@@ -62,21 +61,13 @@ interface Props {
   children: ReactNode;
 }
 
-/**
- * Hover-revealed item card. Renders the existing item-info card and an
- * optional MarketDetailsCard sidecar side-by-side in a flex container.
- */
 export function ItemTooltip({ name, itemType, itemsData, priceEntry, children }: Props) {
   const data = itemsData.get(name);
   const attrs = data?.afterAttributes ?? data?.beforeAttributes ?? "";
   const lines = attrs.split(",").map((s) => s.trim()).filter(Boolean);
-  const [hovering, setHovering] = useState(false);
 
   return (
-    <span
-      className="relative inline-block group/tt"
-      onMouseEnter={() => setHovering(true)}
-    >
+    <span className="relative inline-block group/tt">
       <span className="cursor-help">{children}</span>
       <span
         className="pointer-events-none absolute left-0 top-full z-50 mt-1 flex gap-2 opacity-0 transition-opacity duration-150 group-hover/tt:opacity-100"
@@ -122,9 +113,7 @@ export function ItemTooltip({ name, itemType, itemsData, priceEntry, children }:
             )}
           </span>
         )}
-        {priceEntry && (
-          <MarketDetailsCard entry={priceEntry} name={name} active={hovering} />
-        )}
+        {priceEntry && <MarketDetailsCard entry={priceEntry} />}
       </span>
     </span>
   );
