@@ -18,6 +18,21 @@ describe("parsePriceHr", () => {
     expect(parsePriceHr("1abc")).toBeNull();
     expect(parsePriceHr(undefined)).toBeNull();
   });
+  it("accepts an optional 'HR' suffix (any case)", () => {
+    expect(parsePriceHr("1 HR")).toBe(1);
+    expect(parsePriceHr("0.5 hr")).toBe(0.5);
+    expect(parsePriceHr("2.5HR")).toBe(2.5);
+    expect(parsePriceHr("  3 Hr  ")).toBe(3);
+  });
+  it("accepts European-style comma decimals", () => {
+    expect(parsePriceHr("2,75")).toBe(2.75);
+    expect(parsePriceHr("0,5 hr")).toBe(0.5);
+  });
+  it("rejects multi-currency or noise strings", () => {
+    expect(parsePriceHr("1 hr / 30 wss")).toBeNull();
+    expect(parsePriceHr("45wss")).toBeNull();
+    expect(parsePriceHr("ist / 0.15hr")).toBeNull();
+  });
 });
 
 describe("median", () => {

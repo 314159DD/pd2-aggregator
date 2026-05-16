@@ -1,6 +1,10 @@
+const HR_PATTERN = /^\s*(\d+(?:[.,]\d+)?|[.,]\d+)\s*(?:hr)?\s*$/i;
+
 export function parsePriceHr(raw: string | undefined): number | null {
   if (!raw) return null;
-  const n = Number(raw);
+  const m = raw.match(HR_PATTERN);
+  if (!m) return null;
+  const n = Number(m[1].replace(",", "."));
   if (!Number.isFinite(n) || n <= 0) return null;
   return n;
 }
