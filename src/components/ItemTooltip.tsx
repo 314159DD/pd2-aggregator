@@ -51,70 +51,81 @@ export function useItemsData(): Map<string, ItemData> {
   return m;
 }
 
+import type { PriceEntry } from "@/lib/price/snapshot";
+import { MarketDetailsCard } from "./MarketDetailsCard";
+
 interface Props {
   name: string;
   itemType?: string;
   itemsData: Map<string, ItemData>;
+  priceEntry?: PriceEntry;
   children: ReactNode;
 }
 
 /**
- * Hover-revealed item card. Uses native CSS positioning rather than a
- * portal — keeps the static export simple and avoids a popper library.
+ * Hover-revealed item card. Renders the existing item-info card and an
+ * optional MarketDetailsCard sidecar side-by-side in a flex container.
  */
-export function ItemTooltip({ name, itemType, itemsData, children }: Props) {
+export function ItemTooltip({ name, itemType, itemsData, priceEntry, children }: Props) {
   const data = itemsData.get(name);
   const attrs = data?.afterAttributes ?? data?.beforeAttributes ?? "";
   const lines = attrs.split(",").map((s) => s.trim()).filter(Boolean);
+  const [hovering, setHovering] = useState(false);
 
   return (
-    <span className="relative inline-block group/tt">
+    <span
+      className="relative inline-block group/tt"
+      onMouseEnter={() => setHovering(true)}
+    >
       <span className="cursor-help">{children}</span>
-      {data && (
-        <span
-          className="pointer-events-none absolute left-0 top-full z-50 mt-1 w-72 rounded-sm border border-[#5e4a1f] bg-[#1a0f08] p-3 text-xs shadow-lg opacity-0 transition-opacity duration-150 group-hover/tt:opacity-100"
-          role="tooltip"
-        >
-          <span className="flex items-start gap-3">
-            {data.imageUrl && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={data.imageUrl}
-                alt=""
-                width={48}
-                height={48}
-                loading="lazy"
-                className="shrink-0"
-                style={{ imageRendering: "pixelated" }}
-              />
-            )}
-            <span className="flex-1 min-w-0">
-              <span className="block rarity-unique font-bold truncate">
-                {name}
+      <span
+        className="pointer-events-none absolute left-0 top-full z-50 mt-1 flex gap-2 opacity-0 transition-opacity duration-150 group-hover/tt:opacity-100"
+        role="tooltip"
+      >
+        {data && (
+          <span className="w-72 rounded-sm border border-[#5e4a1f] bg-[#1a0f08] p-3 text-xs shadow-lg">
+            <span className="flex items-start gap-3">
+              {data.imageUrl && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={data.imageUrl}
+                  alt=""
+                  width={48}
+                  height={48}
+                  loading="lazy"
+                  className="shrink-0"
+                  style={{ imageRendering: "pixelated" }}
+                />
+              )}
+              <span className="flex-1 min-w-0">
+                <span className="block rarity-unique font-bold truncate">{name}</span>
+                {(data.itemType || itemType) && (
+                  <span className="block text-muted-foreground">
+                    {data.itemType ?? itemType}
+                  </span>
+                )}
+                {data.requiredLevel && (
+                  <span className="block text-muted-foreground mt-0.5">
+                    {data.requiredLevel}
+                  </span>
+                )}
               </span>
-              {(data.itemType || itemType) && (
-                <span className="block text-muted-foreground">
-                  {data.itemType ?? itemType}
-                </span>
-              )}
-              {data.requiredLevel && (
-                <span className="block text-muted-foreground mt-0.5">
-                  {data.requiredLevel}
-                </span>
-              )}
             </span>
+            {lines.length > 0 && (
+              <span className="block mt-2 space-y-0.5">
+                {lines.map((l, i) => (
+                  <span key={i} className="block rarity-magic leading-snug">
+                    {l}
+                  </span>
+                ))}
+              </span>
+            )}
           </span>
-          {lines.length > 0 && (
-            <span className="block mt-2 space-y-0.5">
-              {lines.map((l, i) => (
-                <span key={i} className="block rarity-magic leading-snug">
-                  {l}
-                </span>
-              ))}
-            </span>
-          )}
-        </span>
-      )}
+        )}
+        {priceEntry && (
+          <MarketDetailsCard entry={priceEntry} name={name} active={hovering} />
+        )}
+      </span>
     </span>
   );
 }
