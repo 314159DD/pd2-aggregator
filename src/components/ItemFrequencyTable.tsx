@@ -1,5 +1,8 @@
 import type { TopItemsBySlot } from "@/lib/shape/topItems";
 import { ItemTooltip, useItemsData } from "./ItemTooltip";
+import { usePriceSnapshot } from "@/lib/price/snapshot";
+import { formatPrice } from "@/lib/price/parse";
+import { MarketLinkButton } from "./MarketLinkButton";
 
 const SLOT_ORDER = [
   "weapon",
@@ -26,6 +29,7 @@ function rarityClass(itemType: string): string {
 
 export function ItemFrequencyTable({ data }: { data: TopItemsBySlot }) {
   const itemsData = useItemsData();
+  const priceData = usePriceSnapshot();
   return (
     <div className="space-y-5">
       {SLOT_ORDER.map((slot, idx) => {
@@ -46,6 +50,8 @@ export function ItemFrequencyTable({ data }: { data: TopItemsBySlot }) {
                     <col style={{ width: "5.5rem" }} />
                     <col style={{ width: "4rem" }} />
                     <col style={{ width: "4rem" }} />
+                    <col style={{ width: "5rem" }} />
+                    <col style={{ width: "1.5rem" }} />
                   </colgroup>
                   <tbody>
                     {items.map((it) => (
@@ -55,6 +61,7 @@ export function ItemFrequencyTable({ data }: { data: TopItemsBySlot }) {
                             name={it.itemName}
                             itemType={it.itemType}
                             itemsData={itemsData}
+                            priceEntry={priceData.get(it.itemName)}
                           >
                             {it.itemName}
                           </ItemTooltip>
@@ -67,6 +74,18 @@ export function ItemFrequencyTable({ data }: { data: TopItemsBySlot }) {
                         </td>
                         <td className="py-1 text-right tabular-nums text-foreground">
                           {it.pct.toFixed(1)}%
+                        </td>
+                        <td className="py-1 text-right tabular-nums text-muted-foreground">
+                          {(() => {
+                            const entry = priceData.get(it.itemName);
+                            return entry ? formatPrice(entry.medianHr) : "";
+                          })()}
+                        </td>
+                        <td className="py-1 text-right">
+                          {(() => {
+                            const entry = priceData.get(it.itemName);
+                            return entry ? <MarketLinkButton entry={entry} name={it.itemName} /> : null;
+                          })()}
                         </td>
                       </tr>
                     ))}

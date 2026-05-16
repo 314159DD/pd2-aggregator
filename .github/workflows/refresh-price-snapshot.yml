@@ -1,0 +1,32 @@
+name: Refresh price snapshot
+
+on:
+  schedule:
+    - cron: "0 3 * * *"  # 03:00 UTC nightly
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+      - run: npm ci
+      - run: npx tsx scripts/build-price-snapshot.ts
+      - name: Commit if changed
+        run: |
+          git config user.name "pd2-aggregator-bot"
+          git config user.email "bot@pd2-aggregator.local"
+          git add public/price-snapshot.json data/unique-ids.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "data: refresh price snapshot"
+            git push
+          fi
