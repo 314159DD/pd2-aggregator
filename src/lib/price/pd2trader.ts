@@ -92,27 +92,40 @@ export const RUNE_NAMES = [
   "Jah", "Cham", "Zod",
 ] as const;
 
+// Waits for all 33 rune /average requests to resolve before publishing the
+// map — partial state would let computeRunewordCost emit a too-low sum that
+// jumps upward as each rune lands, which reads as a UI flicker.
 export function useRunePrices(
   gameMode: "hardcore" | "softcore",
-): Map<string, number> {
-  const [prices, setPrices] = useState<Map<string, number>>(new Map());
+): { prices: Map<string, number>; loaded: boolean } {
+  const [state, setState] = useState<{ prices: Map<string, number>; loaded: boolean }>(
+    { prices: new Map(), loaded: false },
+  );
 
   useEffect(() => {
     let cancelled = false;
-    const next = new Map<string, number>();
-    for (const rune of RUNE_NAMES) {
-      fetchAveragePrice(`${rune} Rune`, gameMode).then((p) => {
-        if (cancelled || !p) return;
-        next.set(rune, p.medianPrice);
-        setPrices(new Map(next));
-      });
-    }
+    setState({ prices: new Map(), loaded: false });
+    Promise.all(
+      RUNE_NAMES.map((rune) =>
+        fetchAveragePrice(`${rune} Rune`, gameMode).then((p) => ({
+          rune,
+          price: p?.medianPrice ?? null,
+        })),
+      ),
+    ).then((results) => {
+      if (cancelled) return;
+      const m = new Map<string, number>();
+      for (const { rune, price } of results) {
+        if (price != null) m.set(rune, price);
+      }
+      setState({ prices: m, loaded: true });
+    });
     return () => {
       cancelled = true;
     };
   }, [gameMode]);
 
-  return prices;
+  return state;
 }
 
 // Hook for batch inline-column lookups. Fires one /average request per name

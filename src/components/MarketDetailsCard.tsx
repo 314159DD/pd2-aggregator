@@ -23,7 +23,7 @@ export function MarketDetailsCard({
   const [status, setStatus] = useState<Status>("idle");
   const [data, setData] = useState<HoverPrice | null>(null);
   const recipes = useRunewordRecipes();
-  const runePrices = useRunePrices(gameMode);
+  const { prices: runePrices, loaded: runesLoaded } = useRunePrices(gameMode);
 
   useEffect(() => {
     if (!active || status !== "idle") return;
@@ -40,7 +40,7 @@ export function MarketDetailsCard({
   const corruptions = data?.corruptions ?? [];
   const topCorr = corruptions.slice(0, 8);
   const recipe = recipes[name];
-  const runeCost = recipe ? computeRunewordCost(recipe, runePrices) : null;
+  const runeCost = recipe && runesLoaded ? computeRunewordCost(recipe, runePrices) : null;
 
   return (
     <span className="block w-80 rounded-sm border border-[#5e4a1f] bg-[#1a0f08] p-3 text-xs">

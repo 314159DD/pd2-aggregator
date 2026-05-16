@@ -37,15 +37,19 @@ export function useRunewordRecipes(): Record<string, string[]> {
   return recipes;
 }
 
+// Low runes (El through Hel-ish) don't have enough volume on pd2trader to
+// produce a price, but the runeword cost should still surface. Treat any
+// rune missing from the price map as 0.01 HR — close to its actual floor
+// value and keeps the total honest for high-rune-dominated recipes.
+const LOW_RUNE_FALLBACK_HR = 0.01;
+
 export function computeRunewordCost(
   recipe: string[],
   runePrices: Map<string, number>,
-): number | null {
+): number {
   let total = 0;
   for (const rune of recipe) {
-    const p = runePrices.get(rune);
-    if (p == null) return null;
-    total += p;
+    total += runePrices.get(rune) ?? LOW_RUNE_FALLBACK_HR;
   }
   return Math.round(total * 100) / 100;
 }
