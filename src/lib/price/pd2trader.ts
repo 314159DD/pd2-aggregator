@@ -85,6 +85,36 @@ export function fetchHoverPrice(itemName: string, gameMode: "hardcore" | "softco
   ]).then(([average, corruptions]) => ({ average, corruptions }));
 }
 
+export const RUNE_NAMES = [
+  "El", "Eld", "Tir", "Nef", "Eth", "Ith", "Tal", "Ral", "Ort", "Thul",
+  "Amn", "Sol", "Shael", "Dol", "Hel", "Io", "Lum", "Ko", "Fal", "Lem",
+  "Pul", "Um", "Mal", "Ist", "Gul", "Vex", "Ohm", "Lo", "Sur", "Ber",
+  "Jah", "Cham", "Zod",
+] as const;
+
+export function useRunePrices(
+  gameMode: "hardcore" | "softcore",
+): Map<string, number> {
+  const [prices, setPrices] = useState<Map<string, number>>(new Map());
+
+  useEffect(() => {
+    let cancelled = false;
+    const next = new Map<string, number>();
+    for (const rune of RUNE_NAMES) {
+      fetchAveragePrice(`${rune} Rune`, gameMode).then((p) => {
+        if (cancelled || !p) return;
+        next.set(rune, p.medianPrice);
+        setPrices(new Map(next));
+      });
+    }
+    return () => {
+      cancelled = true;
+    };
+  }, [gameMode]);
+
+  return prices;
+}
+
 // Hook for batch inline-column lookups. Fires one /average request per name
 // (deduped at module level by fetchAveragePrice), returns a Map keyed by name.
 // Browser caps concurrent requests to the same origin at ~6, so larger tables
