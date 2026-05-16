@@ -14,7 +14,13 @@ const SLOT_ORDER: Slot[] = [
   "ring",
 ];
 
-export function DiffView({ data }: { data: CharacterDiff }) {
+export function DiffView({
+  data,
+  gameMode,
+}: {
+  data: CharacterDiff;
+  gameMode: "hardcore" | "softcore";
+}) {
   const itemsData = useItemsData();
   return (
     <div className="space-y-4">
@@ -69,6 +75,7 @@ export function DiffView({ data }: { data: CharacterDiff }) {
                       <ItemTooltip
                         name={d.poolTopItemName}
                         itemsData={itemsData}
+                        gameMode={gameMode}
                       >
                         {d.poolTopItemName}
                       </ItemTooltip>
@@ -95,6 +102,7 @@ export function DiffView({ data }: { data: CharacterDiff }) {
                         <ItemTooltip
                           name={d.userItemName}
                           itemsData={itemsData}
+                          gameMode={gameMode}
                         >
                           {d.userItemName}
                         </ItemTooltip>
