@@ -43,3 +43,6 @@ next-env.d.ts
 # build-mod-dictionary temp files
 .tmp-pd2-tools/
 mod-ids.txt
+
+# price-snapshot builder audit output
+data/price-snapshot.unmatched.json
