@@ -1,10 +1,19 @@
 import { buildMarketUrl } from "@/lib/price/marketUrl";
-import type { PriceEntry } from "@/lib/price/snapshot";
 
-export function MarketLinkButton({ entry, name }: { entry: PriceEntry; name: string }) {
+export function MarketLinkButton({
+  itemType,
+  name,
+  uniqueId,
+  runewordKey,
+}: {
+  itemType: string;
+  name: string;
+  uniqueId?: number;
+  runewordKey?: string;
+}) {
   return (
     <a
-      href={buildMarketUrl(entry, name)}
+      href={buildMarketUrl({ itemType, name, uniqueId, runewordKey })}
       target="_blank"
       rel="noopener noreferrer"
       title="View on pd2 market"
