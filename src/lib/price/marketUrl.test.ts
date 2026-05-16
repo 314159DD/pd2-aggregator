@@ -31,4 +31,22 @@ describe("buildMarketUrl", () => {
       "https://www.projectdiablo2.com/market?item.quality.name=Set&item.name=Tal+Rasha%27s+Lidless+Eye",
     );
   });
+
+  it("throws when a Unique entry is missing uniqueId", () => {
+    expect(() =>
+      buildMarketUrl(
+        { type: "Unique", medianHr: 0.5, low: 0.3, high: 1, sampleCount: 50 },
+        "Stone of Jordan",
+      ),
+    ).toThrow(/missing uniqueId/);
+  });
+
+  it("throws when a Runeword entry is missing runewordKey", () => {
+    expect(() =>
+      buildMarketUrl(
+        { type: "Runeword", medianHr: 2, low: 1.5, high: 3.5, sampleCount: 50 },
+        "Insight",
+      ),
+    ).toThrow(/missing runewordKey/);
+  });
 });
