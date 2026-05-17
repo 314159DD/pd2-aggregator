@@ -43,8 +43,8 @@ describe("buildPresetsFromSheet", () => {
   it("applies the handicap promotion to a build's tier", () => {
     const { presets } = buildPresetsFromSheet(sheet, mapping, skillClass);
     const hb = presets["Paladin"].find((p) => p.id === "holy-bolt")!;
-    // 520 -> A; handicap 1 promotes 3 sub-tiers -> S
-    expect(hb.tier).toBe("S");
+    // 520 -> A; handicap 1 promotes one sub-tier -> A+
+    expect(hb.tier).toBe("A+");
   });
 
   it("reports builds with no mapping entry", () => {

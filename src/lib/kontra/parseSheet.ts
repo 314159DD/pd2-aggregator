@@ -29,7 +29,7 @@ function splitCsvLine(line: string): string[] {
 }
 
 function handicapFrom(name: string): number {
-  const m = name.match(/\(H Lvl (\d+)\)/i);
+  const m = name.match(/\(H Lvl (-?\d+)\)/i);
   return m ? Number(m[1]) : 0;
 }
 
@@ -59,8 +59,11 @@ export function parseSheet(csv: string): ParsedSheet {
   for (let i = 1; i < lines.length; i++) {
     const cells = splitCsvLine(lines[i]);
     const rawName = (cells[nameCol] ?? "").trim();
-    const mpm = Number(cells[mpmCol]);
-    if (rawName && Number.isFinite(mpm)) {
+    // An empty MPM cell coerces to 0 — only treat rows with a real number as
+    // builds, so the sheet's trailing legend/notes rows are excluded.
+    const mpmRaw = (cells[mpmCol] ?? "").trim();
+    const mpm = Number(mpmRaw);
+    if (rawName && mpmRaw !== "" && Number.isFinite(mpm)) {
       builds.push({
         rawName,
         handicap: handicapFrom(rawName),

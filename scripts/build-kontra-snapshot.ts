@@ -14,7 +14,7 @@ import { buildPresetsFromSheet, type SkillMap } from "../src/lib/kontra/buildSna
 
 const SHEET_ID = "1ipTsARndewEJaREWfcDeuCelKWpCEcFy9nrigp220_Y";
 const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=0`;
-const ROOT = join(import.meta.dirname, "..");
+const ROOT = process.cwd();
 
 /** skill name -> class, derived from data/skill-prereqs.json. */
 async function loadSkillClass(): Promise<Record<string, string>> {

@@ -24,9 +24,9 @@ describe("tierFor", () => {
 });
 
 describe("applyHandicap", () => {
-  it("promotes by 3 sub-tiers per handicap level", () => {
-    expect(applyHandicap("B", 1)).toBe("A"); // idx 7 -> 4
-    expect(applyHandicap("B", 2)).toBe("S"); // idx 7 -> 1
+  it("promotes by one sub-tier per handicap level", () => {
+    expect(applyHandicap("B", 1)).toBe("B+"); // idx 7 -> 6
+    expect(applyHandicap("B", 2)).toBe("A-"); // idx 7 -> 5
   });
 
   it("leaves the tier unchanged when there is no handicap", () => {
@@ -34,14 +34,14 @@ describe("applyHandicap", () => {
   });
 
   it("clamps at S+ and never overflows", () => {
-    expect(applyHandicap("S-", 3)).toBe("S+");
+    expect(applyHandicap("S-", 5)).toBe("S+");
   });
 });
 
 describe("tierForBuild", () => {
   it("looks up the cutoff tier then applies the handicap promotion", () => {
-    // 576.1 -> A (idx 4); handicap 1 promotes 3 steps -> idx 1 -> S
-    expect(tierForBuild(576.1, 1, CUTOFFS)).toBe("S");
+    // 576.1 -> A (idx 4); handicap 1 promotes one sub-tier -> idx 3 -> A+
+    expect(tierForBuild(576.1, 1, CUTOFFS)).toBe("A+");
     // no handicap -> plain cutoff lookup
     expect(tierForBuild(576.1, 0, CUTOFFS)).toBe("A");
   });
