@@ -20,11 +20,12 @@ jobs:
       - run: npm ci
       - run: npx tsx scripts/build-price-snapshot.ts
       - run: npx tsx scripts/build-runeword-runes.ts
+      - run: npx tsx scripts/build-kontra-snapshot.ts
       - name: Commit if changed
         run: |
           git config user.name "pd2-aggregator-bot"
           git config user.email "bot@pd2-aggregator.local"
-          git add public/price-snapshot.json data/unique-ids.json public/runeword-runes.json
+          git add public/price-snapshot.json data/unique-ids.json public/runeword-runes.json data/kontra-builds.json
           if git diff --staged --quiet; then
             echo "No changes to commit."
           else
