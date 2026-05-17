@@ -73,8 +73,8 @@
       ]
     },
     {
-      "id": "hydra",
-      "name": "Hydra",
+      "id": "hydra-2x-dragon-blaze",
+      "name": "Hydra (2x Dragon/Blaze)",
       "tier": "B+",
       "className": "Sorceress",
       "skills": [
@@ -97,8 +97,8 @@
       ]
     },
     {
-      "id": "teleport-thunder-storm",
-      "name": "Teleport Thunder Storm",
+      "id": "teleport-thunder-storm-passive",
+      "name": "Teleport Thunder Storm (Passive)",
       "tier": "B",
       "className": "Sorceress",
       "skills": [
@@ -133,8 +133,8 @@
       ]
     },
     {
-      "id": "meteor",
-      "name": "Meteor",
+      "id": "meteor-blaze-movement",
+      "name": "Meteor (Blaze Movement)",
       "tier": "C-",
       "className": "Sorceress",
       "skills": [
@@ -145,8 +145,8 @@
       ]
     },
     {
-      "id": "passive-sorc",
-      "name": "Passive Sorc",
+      "id": "passive-sorc-fnova-nova-proc-sa",
+      "name": "Passive Sorc (FNova + Nova Proc + SA)",
       "tier": "D",
       "className": "Sorceress",
       "skills": [
@@ -157,8 +157,8 @@
       ]
     },
     {
-      "id": "bear-sorc",
-      "name": "Bear Sorc",
+      "id": "bear-sorc-ce-uldyssian-s-odium",
+      "name": "Bear Sorc (CE - Uldyssian's/Odium)",
       "tier": "D-",
       "className": "Sorceress",
       "skills": [
@@ -169,8 +169,8 @@
       ]
     },
     {
-      "id": "bear-sorc",
-      "name": "Bear Sorc",
+      "id": "bear-sorc-fe-hellslayer-fire-ball-proc",
+      "name": "Bear Sorc (FE - Hellslayer - Fire Ball Proc)",
       "tier": "D-",
       "className": "Sorceress",
       "skills": [
@@ -195,8 +195,8 @@
   ],
   "Paladin": [
     {
-      "id": "holy-shock-sacrifice",
-      "name": "Holy Shock Sacrifice",
+      "id": "holy-shock-sacrifice-native",
+      "name": "Holy Shock Sacrifice (Native)",
       "tier": "S+",
       "className": "Paladin",
       "skills": [
@@ -233,8 +233,8 @@
       ]
     },
     {
-      "id": "holy-freeze-sacrifice",
-      "name": "Holy Freeze Sacrifice",
+      "id": "holy-freeze-sacrifice-native",
+      "name": "Holy Freeze Sacrifice (Native)",
       "tier": "A",
       "className": "Paladin",
       "skills": [
@@ -259,8 +259,8 @@
       ]
     },
     {
-      "id": "holy-fire-sacrifice",
-      "name": "Holy Fire Sacrifice",
+      "id": "holy-fire-sacrifice-native",
+      "name": "Holy Fire Sacrifice (Native)",
       "tier": "A-",
       "className": "Paladin",
       "skills": [
@@ -309,8 +309,8 @@
       ]
     },
     {
-      "id": "holy-fire-charge-items-or-native",
-      "name": "Holy Fire Charge - Items OR Native",
+      "id": "holy-fire-charge-items-or-native-h",
+      "name": "Holy Fire Charge - Items OR Native (H)",
       "tier": "B-",
       "className": "Paladin",
       "skills": [
@@ -322,8 +322,8 @@
       ]
     },
     {
-      "id": "holy-freeze-charge-items-or-native",
-      "name": "Holy Freeze Charge - Items OR Native",
+      "id": "holy-freeze-charge-items-or-native-h",
+      "name": "Holy Freeze Charge - Items OR Native (H)",
       "tier": "B-",
       "className": "Paladin",
       "skills": [
@@ -335,8 +335,8 @@
       ]
     },
     {
-      "id": "holy-shock-charge-items-or-native",
-      "name": "Holy Shock Charge - Items OR Native",
+      "id": "holy-shock-charge-items-or-native-h",
+      "name": "Holy Shock Charge - Items OR Native (H)",
       "tier": "B-",
       "className": "Paladin",
       "skills": [
@@ -361,8 +361,8 @@
       ]
     },
     {
-      "id": "sacrifice-hammer-proc",
-      "name": "Sacrifice Hammer Proc",
+      "id": "sacrifice-hammer-proc-akarat-s",
+      "name": "Sacrifice Hammer Proc (Akarat's)",
       "tier": "B-",
       "className": "Paladin",
       "skills": [
@@ -397,8 +397,8 @@
       ]
     },
     {
-      "id": "physical-charge",
-      "name": "Physical Charge",
+      "id": "physical-charge-2-h",
+      "name": "Physical Charge (2-H)",
       "tier": "C-",
       "className": "Paladin",
       "skills": [
@@ -421,8 +421,8 @@
       ]
     },
     {
-      "id": "vengeance",
-      "name": "Vengeance",
+      "id": "vengeance-kingslayer",
+      "name": "Vengeance (Kingslayer)",
       "tier": "D+",
       "className": "Paladin",
       "skills": [
@@ -433,8 +433,8 @@
       ]
     },
     {
-      "id": "zeal-foh-hb-proc",
-      "name": "Zeal FOH/HB Proc",
+      "id": "zeal-foh-hb-proc-asylum",
+      "name": "Zeal FOH/HB Proc (Asylum)",
       "tier": "D+",
       "className": "Paladin",
       "skills": [
@@ -507,8 +507,8 @@
       ]
     },
     {
-      "id": "fire-enchant-ea",
-      "name": "Fire Enchant - EA",
+      "id": "fire-enchant-ea-demon-mach",
+      "name": "Fire Enchant - EA (Demon Mach)",
       "tier": "A-",
       "className": "Amazon",
       "skills": [
@@ -519,8 +519,8 @@
       ]
     },
     {
-      "id": "multiple-shot",
-      "name": "Multiple Shot",
+      "id": "multiple-shot-wf",
+      "name": "Multiple Shot (WF)",
       "tier": "A-",
       "className": "Amazon",
       "skills": [
@@ -531,8 +531,8 @@
       ]
     },
     {
-      "id": "strafe",
-      "name": "Strafe",
+      "id": "strafe-demon-machine",
+      "name": "Strafe (Demon Machine)",
       "tier": "A-",
       "className": "Amazon",
       "skills": [
@@ -579,8 +579,8 @@
       ]
     },
     {
-      "id": "hybrid-valk-strafe",
-      "name": "Hybrid Valk/Strafe",
+      "id": "hybrid-valk-strafe-ebonbane",
+      "name": "Hybrid Valk/Strafe (Ebonbane)",
       "tier": "B",
       "className": "Amazon",
       "skills": [
@@ -591,8 +591,8 @@
       ]
     },
     {
-      "id": "magic-arrow",
-      "name": "Magic Arrow",
+      "id": "magic-arrow-asylum",
+      "name": "Magic Arrow (Asylum)",
       "tier": "B",
       "className": "Amazon",
       "skills": [
@@ -603,8 +603,8 @@
       ]
     },
     {
-      "id": "holy-fire-exp-arrow",
-      "name": "Holy Fire Exp Arrow",
+      "id": "holy-fire-exp-arrow-demon-m",
+      "name": "Holy Fire Exp Arrow (Demon M)",
       "tier": "C+",
       "className": "Amazon",
       "skills": [
@@ -615,8 +615,8 @@
       ]
     },
     {
-      "id": "bearzon",
-      "name": "Bearzon",
+      "id": "bearzon-uldyssian-s",
+      "name": "Bearzon (Uldyssian's)",
       "tier": "C",
       "className": "Amazon",
       "skills": [
@@ -639,8 +639,8 @@
       ]
     },
     {
-      "id": "crackleshot-strafe",
-      "name": "Crackleshot Strafe",
+      "id": "crackleshot-strafe-lf-lb-proc",
+      "name": "Crackleshot Strafe (LF/LB Proc)",
       "tier": "C",
       "className": "Amazon",
       "skills": [
@@ -651,8 +651,8 @@
       ]
     },
     {
-      "id": "principle-strafe",
-      "name": "Principle Strafe",
+      "id": "principle-strafe-endlesshail",
+      "name": "Principle Strafe (Endlesshail)",
       "tier": "C",
       "className": "Amazon",
       "skills": [
@@ -699,8 +699,8 @@
       ]
     },
     {
-      "id": "pure-decoy-summon",
-      "name": "Pure Decoy Summon",
+      "id": "pure-decoy-summon-loyalty",
+      "name": "Pure Decoy Summon (Loyalty)",
       "tier": "C-",
       "className": "Amazon",
       "skills": [
@@ -735,8 +735,8 @@
       ]
     },
     {
-      "id": "fire-enchant-multi",
-      "name": "Fire Enchant - Multi",
+      "id": "fire-enchant-multi-widow",
+      "name": "Fire Enchant - Multi (Widow)",
       "tier": "D",
       "className": "Amazon",
       "skills": [
@@ -773,8 +773,8 @@
       ]
     },
     {
-      "id": "ele-fire",
-      "name": "Ele Fire",
+      "id": "ele-fire-volcano",
+      "name": "Ele Fire (Volcano)",
       "tier": "S-",
       "className": "Druid",
       "skills": [
@@ -797,8 +797,8 @@
       ]
     },
     {
-      "id": "ele-fire",
-      "name": "Ele Fire",
+      "id": "ele-fire-fissure",
+      "name": "Ele Fire (Fissure)",
       "tier": "B+",
       "className": "Druid",
       "skills": [
@@ -821,8 +821,8 @@
       ]
     },
     {
-      "id": "ele-fire",
-      "name": "Ele Fire",
+      "id": "ele-fire-molten-boulder",
+      "name": "Ele Fire (Molten Boulder)",
       "tier": "B-",
       "className": "Druid",
       "skills": [
@@ -845,8 +845,8 @@
       ]
     },
     {
-      "id": "wind",
-      "name": "Wind",
+      "id": "wind-twister",
+      "name": "Wind (Twister)",
       "tier": "B-",
       "className": "Druid",
       "skills": [
@@ -857,8 +857,8 @@
       ]
     },
     {
-      "id": "wind",
-      "name": "Wind",
+      "id": "wind-tornado",
+      "name": "Wind (Tornado)",
       "tier": "C",
       "className": "Druid",
       "skills": [
@@ -869,8 +869,8 @@
       ]
     },
     {
-      "id": "fire-claws",
-      "name": "Fire Claws",
+      "id": "fire-claws-wolf-bear",
+      "name": "Fire Claws (Wolf/Bear)",
       "tier": "C-",
       "className": "Druid",
       "skills": [
@@ -881,8 +881,8 @@
       ]
     },
     {
-      "id": "summon-druid",
-      "name": "Summon Druid",
+      "id": "summon-druid-4x-bears-only",
+      "name": "Summon Druid (4x Bears Only)",
       "tier": "C-",
       "className": "Druid",
       "skills": [
@@ -905,8 +905,8 @@
       ]
     },
     {
-      "id": "wind-fury",
-      "name": "Wind Fury",
+      "id": "wind-fury-twister-proc",
+      "name": "Wind Fury (Twister Proc)",
       "tier": "D+",
       "className": "Druid",
       "skills": [
@@ -917,8 +917,8 @@
       ]
     },
     {
-      "id": "summon-druid",
-      "name": "Summon Druid",
+      "id": "summon-druid-raven-focus",
+      "name": "Summon Druid (Raven Focus)",
       "tier": "D",
       "className": "Druid",
       "skills": [
@@ -1040,8 +1040,8 @@
       ]
     },
     {
-      "id": "blade-dance",
-      "name": "Blade Dance",
+      "id": "blade-dance-poison",
+      "name": "Blade Dance (Poison)",
       "tier": "B",
       "className": "Assassin",
       "skills": [
@@ -1088,8 +1088,8 @@
       ]
     },
     {
-      "id": "desecrate-death-sentry",
-      "name": "Desecrate Death Sentry",
+      "id": "desecrate-death-sentry-viperfork",
+      "name": "Desecrate Death Sentry (Viperfork)",
       "tier": "C",
       "className": "Assassin",
       "skills": [
@@ -1187,8 +1187,8 @@
       ]
     },
     {
-      "id": "magic-whirlwind",
-      "name": "Magic Whirlwind",
+      "id": "magic-whirlwind-2x-asylum",
+      "name": "Magic Whirlwind (2x Asylum)",
       "tier": "A",
       "className": "Barbarian",
       "skills": [
@@ -1223,8 +1223,8 @@
       ]
     },
     {
-      "id": "fire-leap-attack",
-      "name": "Fire Leap Attack",
+      "id": "fire-leap-attack-rapture",
+      "name": "Fire Leap Attack (Rapture)",
       "tier": "B",
       "className": "Barbarian",
       "skills": [
@@ -1271,8 +1271,8 @@
       ]
     },
     {
-      "id": "fire-whirlwind",
-      "name": "Fire Whirlwind",
+      "id": "fire-whirlwind-2x-flamebellow",
+      "name": "Fire Whirlwind (2x Flamebellow)",
       "tier": "C+",
       "className": "Barbarian",
       "skills": [
@@ -1283,8 +1283,8 @@
       ]
     },
     {
-      "id": "leap-attack",
-      "name": "Leap Attack",
+      "id": "leap-attack-standard",
+      "name": "Leap Attack (Standard)",
       "tier": "C+",
       "className": "Barbarian",
       "skills": [
@@ -1331,8 +1331,8 @@
       ]
     },
     {
-      "id": "war-cry-leap-attack",
-      "name": "War Cry Leap Attack",
+      "id": "war-cry-leap-attack-giant-maimer",
+      "name": "War Cry Leap Attack (Giant Maimer)",
       "tier": "C-",
       "className": "Barbarian",
       "skills": [
@@ -1417,8 +1417,8 @@
       ]
     },
     {
-      "id": "green-goblin-summon",
-      "name": "Green Goblin Summon",
+      "id": "green-goblin-summon-merc-dm",
+      "name": "Green Goblin Summon (Merc DM)",
       "tier": "A-",
       "className": "Necromancer",
       "skills": [
@@ -1477,8 +1477,8 @@
       ]
     },
     {
-      "id": "bone-spear-proc",
-      "name": "Bone Spear Proc",
+      "id": "bone-spear-proc-brand",
+      "name": "Bone Spear Proc (Brand)",
       "tier": "C",
       "className": "Necromancer",
       "skills": [
@@ -1525,8 +1525,8 @@
       ]
     },
     {
-      "id": "pure-phys-revives",
-      "name": "Pure Phys Revives",
+      "id": "pure-phys-revives-etern-st-bl-s",
+      "name": "Pure Phys Revives (Etern + ST) (BL's)",
       "tier": "D+",
       "className": "Necromancer",
       "skills": [
@@ -1537,8 +1537,8 @@
       ]
     },
     {
-      "id": "pure-ele-revives",
-      "name": "Pure Ele Revives",
+      "id": "pure-ele-revives-etern-st-souls",
+      "name": "Pure Ele Revives (Etern + ST) (Souls)",
       "tier": "D-",
       "className": "Necromancer",
       "skills": [
@@ -1549,8 +1549,8 @@
       ]
     },
     {
-      "id": "confuse",
-      "name": "Confuse",
+      "id": "confuse-amp-iron-maiden",
+      "name": "Confuse (+ Amp + Iron Maiden)",
       "tier": "F-",
       "className": "Necromancer",
       "skills": [
