@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-16T19:55:37.806Z",
+  "generatedAt": "2026-05-17T06:27:49.489Z",
   "items": {
     "Abyssal Ward": {
       "type": "Unique",
@@ -28,9 +28,9 @@
     "Aldur's Advance": {
       "type": "Set",
       "medianHr": 0.1,
-      "low": 0,
+      "low": 0.1,
       "high": 0.1,
-      "sampleCount": 2
+      "sampleCount": 1
     },
     "Aldur's Stony Gaze": {
       "type": "Set",
@@ -42,10 +42,10 @@
     "Alma Negra": {
       "type": "Unique",
       "uniqueId": 330,
-      "medianHr": 0.3,
+      "medianHr": 0.2,
       "low": 0.2,
-      "high": 15,
-      "sampleCount": 3
+      "high": 0.3,
+      "sampleCount": 2
     },
     "Andariel's Visage": {
       "type": "Unique",
@@ -53,15 +53,15 @@
       "medianHr": 0.2,
       "low": 0.1,
       "high": 0.5,
-      "sampleCount": 23
+      "sampleCount": 19
     },
     "Annihilus": {
       "type": "Unique",
       "uniqueId": 382,
-      "medianHr": 0.7,
+      "medianHr": 0.5,
       "low": 0.2,
       "high": 0.8,
-      "sampleCount": 17
+      "sampleCount": 23
     },
     "Arachnid Mesh": {
       "type": "Unique",
@@ -69,7 +69,7 @@
       "medianHr": 0.2,
       "low": 0.1,
       "high": 0.5,
-      "sampleCount": 23
+      "sampleCount": 22
     },
     "Arioc's Needle": {
       "type": "Unique",
@@ -93,7 +93,7 @@
       "medianHr": 0.1,
       "low": 0.1,
       "high": 0.1,
-      "sampleCount": 3
+      "sampleCount": 2
     },
     "Arreat's Face": {
       "type": "Unique",
@@ -114,10 +114,10 @@
     "Asylum": {
       "type": "Runeword",
       "runewordKey": "Asylum",
-      "medianHr": 4.3,
+      "medianHr": 4.5,
       "low": 2.5,
       "high": 5,
-      "sampleCount": 4
+      "sampleCount": 3
     },
     "Athena's Wrath": {
       "type": "Unique",
@@ -171,9 +171,9 @@
       "type": "Runeword",
       "runewordKey": "Runeword4",
       "medianHr": 3.5,
-      "low": 2.3,
+      "low": 1.8,
       "high": 10,
-      "sampleCount": 12
+      "sampleCount": 14
     },
     "Blackhand Key": {
       "type": "Unique",
@@ -198,14 +198,6 @@
       "low": 0.2,
       "high": 0.2,
       "sampleCount": 2
-    },
-    "Blade of Ali Baba": {
-      "type": "Unique",
-      "uniqueId": 158,
-      "medianHr": 0.1,
-      "low": 0,
-      "high": 1,
-      "sampleCount": 4
     },
     "Blood Raven's Charge": {
       "type": "Unique",
@@ -237,7 +229,7 @@
       "medianHr": 0.3,
       "low": 0.1,
       "high": 0.8,
-      "sampleCount": 9
+      "sampleCount": 7
     },
     "Bonehew": {
       "type": "Unique",
@@ -252,15 +244,15 @@
       "uniqueId": 352,
       "medianHr": 0.1,
       "low": 0.1,
-      "high": 1,
-      "sampleCount": 4
+      "high": 0.1,
+      "sampleCount": 3
     },
     "Bramble": {
       "type": "Runeword",
       "runewordKey": "Runeword9",
       "medianHr": 1.7,
       "low": 1,
-      "high": 5,
+      "high": 2.3,
       "sampleCount": 5
     },
     "Brand": {
@@ -291,8 +283,8 @@
       "type": "Set",
       "medianHr": 0.3,
       "low": 0.1,
-      "high": 1.5,
-      "sampleCount": 21
+      "high": 1,
+      "sampleCount": 22
     },
     "Bul-Kathos' Tribal Guardian": {
       "type": "Set",
@@ -321,9 +313,9 @@
       "type": "Runeword",
       "runewordKey": "Runeword13",
       "medianHr": 1,
-      "low": 0.5,
+      "low": 0.4,
       "high": 10,
-      "sampleCount": 24
+      "sampleCount": 25
     },
     "Carrion Wind": {
       "type": "Unique",
@@ -352,10 +344,10 @@
     "Chains of Honor": {
       "type": "Runeword",
       "runewordKey": "Runeword14",
-      "medianHr": 3,
+      "medianHr": 3.3,
       "low": 2,
       "high": 5,
-      "sampleCount": 5
+      "sampleCount": 6
     },
     "Chance Guards": {
       "type": "Unique",
@@ -370,8 +362,8 @@
       "runewordKey": "Runeword16",
       "medianHr": 0.5,
       "low": 0.5,
-      "high": 0.5,
-      "sampleCount": 1
+      "high": 3,
+      "sampleCount": 3
     },
     "Chromatic Ire": {
       "type": "Unique",
@@ -386,8 +378,8 @@
       "uniqueId": 473,
       "medianHr": 0.4,
       "low": 0.2,
-      "high": 2,
-      "sampleCount": 11
+      "high": 1.5,
+      "sampleCount": 9
     },
     "Constricting Loop": {
       "type": "Unique",
@@ -407,9 +399,9 @@
     },
     "Cow King's Hooves": {
       "type": "Set",
-      "medianHr": 0.5,
-      "low": 0.5,
-      "high": 0.5,
+      "medianHr": 1,
+      "low": 1,
+      "high": 1,
       "sampleCount": 1
     },
     "Crackleshot": {
@@ -423,10 +415,10 @@
     "Cranium Basher": {
       "type": "Unique",
       "uniqueId": 259,
-      "medianHr": 0.5,
-      "low": 0.3,
+      "medianHr": 2,
+      "low": 2,
       "high": 2,
-      "sampleCount": 3
+      "sampleCount": 1
     },
     "Credendum": {
       "type": "Set",
@@ -438,10 +430,10 @@
     "Crescent Moon": {
       "type": "Runeword",
       "runewordKey": "Runeword17",
-      "medianHr": 0.3,
+      "medianHr": 0.4,
       "low": 0.3,
-      "high": 0.3,
-      "sampleCount": 1
+      "high": 0.5,
+      "sampleCount": 2
     },
     "Crown of Ages": {
       "type": "Unique",
@@ -520,7 +512,7 @@
       "medianHr": 0.4,
       "low": 0.1,
       "high": 1,
-      "sampleCount": 10
+      "sampleCount": 9
     },
     "Death": {
       "type": "Runeword",
@@ -528,15 +520,15 @@
       "medianHr": 0.5,
       "low": 0.5,
       "high": 0.5,
-      "sampleCount": 1
+      "sampleCount": 2
     },
     "Delirium": {
       "type": "Runeword",
       "runewordKey": "Runeword22",
-      "medianHr": 0.6,
+      "medianHr": 0.4,
       "low": 0.2,
       "high": 1,
-      "sampleCount": 2
+      "sampleCount": 3
     },
     "Demon Limb": {
       "type": "Unique",
@@ -607,7 +599,7 @@
       "runewordKey": "Runeword171",
       "medianHr": 3,
       "low": 3,
-      "high": 6,
+      "high": 5,
       "sampleCount": 5
     },
     "Doom's Finger": {
@@ -632,15 +624,15 @@
       "medianHr": 0.2,
       "low": 0.1,
       "high": 0.8,
-      "sampleCount": 27
+      "sampleCount": 25
     },
     "Dragon": {
       "type": "Runeword",
       "runewordKey": "Runeword27",
-      "medianHr": 2.4,
-      "low": 1.5,
+      "medianHr": 2.5,
+      "low": 1,
       "high": 4,
-      "sampleCount": 8
+      "sampleCount": 7
     },
     "Dragonscale": {
       "type": "Unique",
@@ -688,7 +680,7 @@
       "medianHr": 0.2,
       "low": 0,
       "high": 0.8,
-      "sampleCount": 10
+      "sampleCount": 9
     },
     "Embersworn": {
       "type": "Unique",
@@ -703,8 +695,8 @@
       "runewordKey": "Runeword33",
       "medianHr": 4.5,
       "low": 3.5,
-      "high": 6,
-      "sampleCount": 19
+      "high": 8,
+      "sampleCount": 15
     },
     "Enlightenment": {
       "type": "Runeword",
@@ -749,18 +741,18 @@
     "Exile": {
       "type": "Runeword",
       "runewordKey": "Runeword37",
-      "medianHr": 2,
+      "medianHr": 2.5,
       "low": 0.8,
       "high": 5,
-      "sampleCount": 17
+      "sampleCount": 11
     },
     "Faith": {
       "type": "Runeword",
       "runewordKey": "Runeword38",
-      "medianHr": 6,
+      "medianHr": 5,
       "low": 2,
-      "high": 10,
-      "sampleCount": 19
+      "high": 8,
+      "sampleCount": 15
     },
     "Fallen Gardens": {
       "type": "Unique",
@@ -789,10 +781,10 @@
     "Ferocity": {
       "type": "Runeword",
       "runewordKey": "Ferocity",
-      "medianHr": 13,
-      "low": 9,
+      "medianHr": 12.5,
+      "low": 6,
       "high": 25,
-      "sampleCount": 5
+      "sampleCount": 6
     },
     "Firelizard's Talons": {
       "type": "Unique",
@@ -800,7 +792,7 @@
       "medianHr": 0.2,
       "low": 0.1,
       "high": 0.2,
-      "sampleCount": 4
+      "sampleCount": 3
     },
     "Flamebellow": {
       "type": "Unique",
@@ -815,8 +807,8 @@
       "runewordKey": "Runeword40",
       "medianHr": 0.5,
       "low": 0.2,
-      "high": 5,
-      "sampleCount": 14
+      "high": 1.3,
+      "sampleCount": 13
     },
     "Fortitude": {
       "type": "Runeword",
@@ -824,7 +816,7 @@
       "medianHr": 1,
       "low": 0.5,
       "high": 3,
-      "sampleCount": 29
+      "sampleCount": 33
     },
     "Frostburn": {
       "type": "Unique",
@@ -834,21 +826,13 @@
       "high": 0.3,
       "sampleCount": 6
     },
-    "Frostwind": {
-      "type": "Unique",
-      "uniqueId": 366,
-      "medianHr": 3,
-      "low": 3,
-      "high": 3,
-      "sampleCount": 1
-    },
     "Frozen Sorrow": {
       "type": "Unique",
       "uniqueId": 466,
       "medianHr": 0.2,
       "low": 0.1,
       "high": 1,
-      "sampleCount": 10
+      "sampleCount": 8
     },
     "Gargoyle's Bite": {
       "type": "Unique",
@@ -912,7 +896,7 @@
       "medianHr": 0.3,
       "low": 0.1,
       "high": 1,
-      "sampleCount": 14
+      "sampleCount": 13
     },
     "Gimmershred": {
       "type": "Unique",
@@ -960,7 +944,7 @@
       "medianHr": 0.1,
       "low": 0.1,
       "high": 0.1,
-      "sampleCount": 2
+      "sampleCount": 1
     },
     "Gore Rider": {
       "type": "Unique",
@@ -976,7 +960,7 @@
       "medianHr": 0.3,
       "low": 0.2,
       "high": 1.3,
-      "sampleCount": 6
+      "sampleCount": 5
     },
     "Grief": {
       "type": "Runeword",
@@ -997,10 +981,17 @@
     "Grim's Burning Dead": {
       "type": "Unique",
       "uniqueId": 183,
-      "medianHr": 0.2,
+      "medianHr": 0.3,
       "low": 0.2,
       "high": 0.4,
-      "sampleCount": 3
+      "sampleCount": 2
+    },
+    "Griswold's Heart": {
+      "type": "Set",
+      "medianHr": 0.1,
+      "low": 0.1,
+      "high": 0.1,
+      "sampleCount": 1
     },
     "Griswold's Honor": {
       "type": "Set",
@@ -1011,7 +1002,7 @@
     },
     "Griswold's Redemption": {
       "type": "Set",
-      "medianHr": 0.3,
+      "medianHr": 0.2,
       "low": 0.1,
       "high": 0.5,
       "sampleCount": 6
@@ -1021,7 +1012,7 @@
       "medianHr": 0.2,
       "low": 0.1,
       "high": 1.5,
-      "sampleCount": 7
+      "sampleCount": 6
     },
     "Guardian Angel": {
       "type": "Unique",
@@ -1029,7 +1020,7 @@
       "medianHr": 0.2,
       "low": 0.1,
       "high": 1.5,
-      "sampleCount": 12
+      "sampleCount": 11
     },
     "Guillaume's Face": {
       "type": "Set",
@@ -1068,7 +1059,7 @@
       "medianHr": 0.4,
       "low": 0.1,
       "high": 0.5,
-      "sampleCount": 8
+      "sampleCount": 7
     },
     "Headstriker": {
       "type": "Unique",
@@ -1082,17 +1073,17 @@
       "type": "Runeword",
       "runewordKey": "Runeword51",
       "medianHr": 1,
-      "low": 0.3,
+      "low": 0.6,
       "high": 2.5,
-      "sampleCount": 7
+      "sampleCount": 5
     },
     "Heaven's Light": {
       "type": "Unique",
       "uniqueId": 372,
       "medianHr": 0.1,
-      "low": 0,
+      "low": 0.1,
       "high": 0.2,
-      "sampleCount": 3
+      "sampleCount": 2
     },
     "Heavenly Garb": {
       "type": "Unique",
@@ -1101,14 +1092,6 @@
       "low": 0.1,
       "high": 0.3,
       "sampleCount": 2
-    },
-    "Hellmouth": {
-      "type": "Unique",
-      "uniqueId": 237,
-      "medianHr": 0.3,
-      "low": 0.3,
-      "high": 0.3,
-      "sampleCount": 1
     },
     "Hellslayer": {
       "type": "Unique",
@@ -1121,7 +1104,7 @@
     "Herald of Zakarum": {
       "type": "Unique",
       "uniqueId": 286,
-      "medianHr": 0.5,
+      "medianHr": 0.4,
       "low": 0.2,
       "high": 0.5,
       "sampleCount": 7
@@ -1181,17 +1164,17 @@
     },
     "Immortal King's Soul Cage": {
       "type": "Set",
-      "medianHr": 0.1,
+      "medianHr": 0.2,
       "low": 0.1,
       "high": 0.8,
-      "sampleCount": 13
+      "sampleCount": 11
     },
     "Immortal King's Stone Crusher": {
       "type": "Set",
       "medianHr": 0.1,
       "low": 0.1,
       "high": 0.1,
-      "sampleCount": 5
+      "sampleCount": 4
     },
     "Immortal King's Will": {
       "type": "Set",
@@ -1203,10 +1186,10 @@
     "Imperial Palace": {
       "type": "Unique",
       "uniqueId": 453,
-      "medianHr": 0.6,
+      "medianHr": 0.5,
       "low": 0.5,
-      "high": 1,
-      "sampleCount": 4
+      "high": 0.7,
+      "sampleCount": 3
     },
     "Infernostride": {
       "type": "Unique",
@@ -1219,18 +1202,18 @@
     "Infinity": {
       "type": "Runeword",
       "runewordKey": "Runeword60",
-      "medianHr": 6.5,
-      "low": 4,
+      "medianHr": 7,
+      "low": 5,
       "high": 20,
       "sampleCount": 21
     },
     "Innocence": {
       "type": "Runeword",
       "runewordKey": "Runeword61",
-      "medianHr": 7.5,
+      "medianHr": 7.8,
       "low": 4,
       "high": 25,
-      "sampleCount": 21
+      "sampleCount": 20
     },
     "Insight": {
       "type": "Runeword",
@@ -1238,7 +1221,7 @@
       "medianHr": 0.2,
       "low": 0.1,
       "high": 0.3,
-      "sampleCount": 9
+      "sampleCount": 8
     },
     "Jade Talon": {
       "type": "Unique",
@@ -1251,18 +1234,18 @@
     "Jalal's Mane": {
       "type": "Unique",
       "uniqueId": 288,
-      "medianHr": 0.2,
+      "medianHr": 0.1,
       "low": 0.1,
-      "high": 0.5,
-      "sampleCount": 5
+      "high": 0.3,
+      "sampleCount": 4
     },
     "Kadala's Heirloom": {
       "type": "Unique",
       "uniqueId": 353,
-      "medianHr": 3,
-      "low": 1,
+      "medianHr": 4,
+      "low": 3,
       "high": 5,
-      "sampleCount": 3
+      "sampleCount": 2
     },
     "Kalan's Legacy": {
       "type": "Unique",
@@ -1286,15 +1269,15 @@
       "medianHr": 0.2,
       "low": 0.1,
       "high": 0.5,
-      "sampleCount": 25
+      "sampleCount": 23
     },
     "Lacerator": {
       "type": "Unique",
       "uniqueId": 322,
-      "medianHr": 0.1,
+      "medianHr": 0.2,
       "low": 0.1,
       "high": 0.4,
-      "sampleCount": 3
+      "sampleCount": 2
     },
     "Lacquered Plate": {
       "type": "Set",
@@ -1315,9 +1298,9 @@
       "type": "Unique",
       "uniqueId": 236,
       "medianHr": 0.5,
-      "low": 0.2,
+      "low": 0.5,
       "high": 0.8,
-      "sampleCount": 7
+      "sampleCount": 5
     },
     "Leaf": {
       "type": "Runeword",
@@ -1423,10 +1406,10 @@
     "Mara's Kaleidoscope": {
       "type": "Unique",
       "uniqueId": 273,
-      "medianHr": 1.4,
+      "medianHr": 1.5,
       "low": 0.5,
       "high": 3,
-      "sampleCount": 10
+      "sampleCount": 9
     },
     "Marrowwalk": {
       "type": "Unique",
@@ -1442,7 +1425,7 @@
       "medianHr": 0.2,
       "low": 0.1,
       "high": 0.3,
-      "sampleCount": 9
+      "sampleCount": 8
     },
     "Medusa's Gaze": {
       "type": "Unique",
@@ -1450,7 +1433,7 @@
       "medianHr": 0.1,
       "low": 0.1,
       "high": 0.3,
-      "sampleCount": 9
+      "sampleCount": 8
     },
     "Melody": {
       "type": "Runeword",
@@ -1490,15 +1473,15 @@
       "medianHr": 0.5,
       "low": 0.1,
       "high": 1.3,
-      "sampleCount": 9
+      "sampleCount": 8
     },
     "Mist": {
       "type": "Runeword",
       "runewordKey": "Runeword84",
-      "medianHr": 6.5,
+      "medianHr": 6,
       "low": 2.8,
       "high": 8,
-      "sampleCount": 6
+      "sampleCount": 7
     },
     "Na-Krul's Abyss": {
       "type": "Unique",
@@ -1549,7 +1532,7 @@
       "medianHr": 0.3,
       "low": 0.1,
       "high": 0.8,
-      "sampleCount": 18
+      "sampleCount": 17
     },
     "Nethercrux": {
       "type": "Unique",
@@ -1557,7 +1540,7 @@
       "medianHr": 0.2,
       "low": 0.1,
       "high": 0.5,
-      "sampleCount": 7
+      "sampleCount": 6
     },
     "Nightwing's Veil": {
       "type": "Unique",
@@ -1644,7 +1627,7 @@
       "medianHr": 0.3,
       "low": 0.1,
       "high": 1,
-      "sampleCount": 28
+      "sampleCount": 27
     },
     "Outer Void": {
       "type": "Unique",
@@ -1665,10 +1648,10 @@
     "Phoenix": {
       "type": "Runeword",
       "runewordKey": "Runeword103",
-      "medianHr": 3.3,
+      "medianHr": 3.5,
       "low": 1.5,
-      "high": 8,
-      "sampleCount": 16
+      "high": 12,
+      "sampleCount": 17
     },
     "Plague Bearer": {
       "type": "Unique",
@@ -1682,9 +1665,9 @@
       "type": "Runeword",
       "runewordKey": "Runeword106",
       "medianHr": 2,
-      "low": 0.5,
+      "low": 1,
       "high": 7,
-      "sampleCount": 12
+      "sampleCount": 11
     },
     "Pride": {
       "type": "Runeword",
@@ -1748,7 +1731,7 @@
       "medianHr": 0.3,
       "low": 0.1,
       "high": 1.5,
-      "sampleCount": 33
+      "sampleCount": 30
     },
     "Rakescar": {
       "type": "Unique",
@@ -1769,18 +1752,18 @@
     "Raven Frost": {
       "type": "Unique",
       "uniqueId": 276,
-      "medianHr": 0.2,
+      "medianHr": 0.1,
       "low": 0.1,
       "high": 0.3,
-      "sampleCount": 13
+      "sampleCount": 12
     },
     "Ravenlore": {
       "type": "Unique",
       "uniqueId": 351,
-      "medianHr": 0.1,
+      "medianHr": 0.2,
       "low": 0.1,
       "high": 0.3,
-      "sampleCount": 6
+      "sampleCount": 4
     },
     "Razortail": {
       "type": "Unique",
@@ -1827,8 +1810,8 @@
       "uniqueId": 314,
       "medianHr": 0.1,
       "low": 0,
-      "high": 0.2,
-      "sampleCount": 5
+      "high": 0.1,
+      "sampleCount": 4
     },
     "Sacred Totem": {
       "type": "Unique",
@@ -1841,18 +1824,18 @@
     "Sage's Defiance": {
       "type": "Unique",
       "uniqueId": 478,
-      "medianHr": 0.1,
-      "low": 0.1,
+      "medianHr": 0.3,
+      "low": 0.3,
       "high": 0.4,
-      "sampleCount": 5
+      "sampleCount": 2
     },
     "Sandstorm Trek": {
       "type": "Unique",
       "uniqueId": 370,
-      "medianHr": 0.1,
+      "medianHr": 0.2,
       "low": 0.1,
       "high": 3,
-      "sampleCount": 6
+      "sampleCount": 5
     },
     "Saracen's Chance": {
       "type": "Unique",
@@ -1865,10 +1848,10 @@
     "Schaefer's Hammer": {
       "type": "Unique",
       "uniqueId": 258,
-      "medianHr": 0.5,
+      "medianHr": 0.4,
       "low": 0.1,
       "high": 8,
-      "sampleCount": 10
+      "sampleCount": 9
     },
     "Seraph's Hymn": {
       "type": "Unique",
@@ -1921,10 +1904,10 @@
     "Siggard's Staunch": {
       "type": "Unique",
       "uniqueId": 378,
-      "medianHr": 0.4,
+      "medianHr": 0.5,
       "low": 0.2,
       "high": 3,
-      "sampleCount": 18
+      "sampleCount": 17
     },
     "Sigon's Gage": {
       "type": "Set",
@@ -1971,7 +1954,7 @@
       "medianHr": 0.3,
       "low": 0.1,
       "high": 0.8,
-      "sampleCount": 15
+      "sampleCount": 14
     },
     "Snowclash": {
       "type": "Unique",
@@ -1984,10 +1967,10 @@
     "Soul Drainer": {
       "type": "Unique",
       "uniqueId": 313,
-      "medianHr": 0.3,
+      "medianHr": 0.2,
       "low": 0.1,
-      "high": 0.5,
-      "sampleCount": 7
+      "high": 0.4,
+      "sampleCount": 6
     },
     "Spike Thorn": {
       "type": "Unique",
@@ -2048,10 +2031,10 @@
     "Steel Carapace": {
       "type": "Unique",
       "uniqueId": 349,
-      "medianHr": 0.6,
+      "medianHr": 0.5,
       "low": 0.1,
-      "high": 3,
-      "sampleCount": 10
+      "high": 1,
+      "sampleCount": 9
     },
     "Steel Pillar": {
       "type": "Unique",
@@ -2088,18 +2071,18 @@
     "Stone of Jordan": {
       "type": "Unique",
       "uniqueId": 122,
-      "medianHr": 1.5,
+      "medianHr": 1.6,
       "low": 1,
       "high": 2,
-      "sampleCount": 15
+      "sampleCount": 14
     },
     "Stone": {
       "type": "Runeword",
       "runewordKey": "Runeword137",
-      "medianHr": 0.2,
-      "low": 0.1,
+      "medianHr": 0.3,
+      "low": 0.2,
       "high": 0.5,
-      "sampleCount": 3
+      "sampleCount": 2
     },
     "Stoneraven": {
       "type": "Unique",
@@ -2147,7 +2130,7 @@
       "medianHr": 0.2,
       "low": 0.1,
       "high": 0.5,
-      "sampleCount": 8
+      "sampleCount": 7
     },
     "Swordguard": {
       "type": "Unique",
@@ -2162,7 +2145,7 @@
       "medianHr": 0.1,
       "low": 0.1,
       "high": 0.2,
-      "sampleCount": 9
+      "sampleCount": 8
     },
     "Tal Rasha's Fine-Spun Cloth": {
       "type": "Set",
@@ -2183,22 +2166,22 @@
       "medianHr": 0.1,
       "low": 0.1,
       "high": 0.3,
-      "sampleCount": 5
+      "sampleCount": 4
     },
     "Tal Rasha's Lidless Eye": {
       "type": "Set",
       "medianHr": 0.1,
       "low": 0.1,
-      "high": 0.2,
-      "sampleCount": 2
+      "high": 0.1,
+      "sampleCount": 1
     },
     "Templar's Might": {
       "type": "Unique",
       "uniqueId": 367,
-      "medianHr": 3.5,
+      "medianHr": 3.4,
       "low": 2,
       "high": 10,
-      "sampleCount": 12
+      "sampleCount": 11
     },
     "The Abyssal Ward": {
       "type": "Unique",
@@ -2227,9 +2210,9 @@
     "The Aldur's Advance": {
       "type": "Set",
       "medianHr": 0.1,
-      "low": 0,
+      "low": 0.1,
       "high": 0.1,
-      "sampleCount": 2
+      "sampleCount": 1
     },
     "The Aldur's Stony Gaze": {
       "type": "Set",
@@ -2241,10 +2224,10 @@
     "The Alma Negra": {
       "type": "Unique",
       "uniqueId": 330,
-      "medianHr": 0.3,
+      "medianHr": 0.2,
       "low": 0.2,
-      "high": 15,
-      "sampleCount": 3
+      "high": 0.3,
+      "sampleCount": 2
     },
     "The Andariel's Visage": {
       "type": "Unique",
@@ -2252,15 +2235,15 @@
       "medianHr": 0.2,
       "low": 0.1,
       "high": 0.5,
-      "sampleCount": 23
+      "sampleCount": 19
     },
     "The Annihilus": {
       "type": "Unique",
       "uniqueId": 382,
-      "medianHr": 0.7,
+      "medianHr": 0.5,
       "low": 0.2,
       "high": 0.8,
-      "sampleCount": 17
+      "sampleCount": 23
     },
     "The Arachnid Mesh": {
       "type": "Unique",
@@ -2268,7 +2251,7 @@
       "medianHr": 0.2,
       "low": 0.1,
       "high": 0.5,
-      "sampleCount": 23
+      "sampleCount": 22
     },
     "The Arioc's Needle": {
       "type": "Unique",
@@ -2292,7 +2275,7 @@
       "medianHr": 0.1,
       "low": 0.1,
       "high": 0.1,
-      "sampleCount": 3
+      "sampleCount": 2
     },
     "The Arreat's Face": {
       "type": "Unique",
@@ -2313,10 +2296,10 @@
     "The Asylum": {
       "type": "Runeword",
       "runewordKey": "Asylum",
-      "medianHr": 4.3,
+      "medianHr": 4.5,
       "low": 2.5,
       "high": 5,
-      "sampleCount": 4
+      "sampleCount": 3
     },
     "The Athena's Wrath": {
       "type": "Unique",
@@ -2370,9 +2353,9 @@
       "type": "Runeword",
       "runewordKey": "Runeword4",
       "medianHr": 3.5,
-      "low": 2.3,
+      "low": 1.8,
       "high": 10,
-      "sampleCount": 12
+      "sampleCount": 14
     },
     "The Blackhand Key": {
       "type": "Unique",
@@ -2397,14 +2380,6 @@
       "low": 0.2,
       "high": 0.2,
       "sampleCount": 2
-    },
-    "The Blade of Ali Baba": {
-      "type": "Unique",
-      "uniqueId": 158,
-      "medianHr": 0.1,
-      "low": 0,
-      "high": 1,
-      "sampleCount": 4
     },
     "The Blood Raven's Charge": {
       "type": "Unique",
@@ -2436,7 +2411,7 @@
       "medianHr": 0.3,
       "low": 0.1,
       "high": 0.8,
-      "sampleCount": 9
+      "sampleCount": 7
     },
     "The Bonehew": {
       "type": "Unique",
@@ -2451,15 +2426,15 @@
       "uniqueId": 352,
       "medianHr": 0.1,
       "low": 0.1,
-      "high": 1,
-      "sampleCount": 4
+      "high": 0.1,
+      "sampleCount": 3
     },
     "The Bramble": {
       "type": "Runeword",
       "runewordKey": "Runeword9",
       "medianHr": 1.7,
       "low": 1,
-      "high": 5,
+      "high": 2.3,
       "sampleCount": 5
     },
     "The Brand": {
@@ -2490,8 +2465,8 @@
       "type": "Set",
       "medianHr": 0.3,
       "low": 0.1,
-      "high": 1.5,
-      "sampleCount": 21
+      "high": 1,
+      "sampleCount": 22
     },
     "The Bul-Kathos' Tribal Guardian": {
       "type": "Set",
@@ -2520,9 +2495,9 @@
       "type": "Runeword",
       "runewordKey": "Runeword13",
       "medianHr": 1,
-      "low": 0.5,
+      "low": 0.4,
       "high": 10,
-      "sampleCount": 24
+      "sampleCount": 25
     },
     "The Carrion Wind": {
       "type": "Unique",
@@ -2551,10 +2526,10 @@
     "The Chains of Honor": {
       "type": "Runeword",
       "runewordKey": "Runeword14",
-      "medianHr": 3,
+      "medianHr": 3.3,
       "low": 2,
       "high": 5,
-      "sampleCount": 5
+      "sampleCount": 6
     },
     "The Chance Guards": {
       "type": "Unique",
@@ -2569,8 +2544,8 @@
       "runewordKey": "Runeword16",
       "medianHr": 0.5,
       "low": 0.5,
-      "high": 0.5,
-      "sampleCount": 1
+      "high": 3,
+      "sampleCount": 3
     },
     "The Chromatic Ire": {
       "type": "Unique",
@@ -2585,8 +2560,8 @@
       "uniqueId": 473,
       "medianHr": 0.4,
       "low": 0.2,
-      "high": 2,
-      "sampleCount": 11
+      "high": 1.5,
+      "sampleCount": 9
     },
     "The Constricting Loop": {
       "type": "Unique",
@@ -2606,9 +2581,9 @@
     },
     "The Cow King's Hooves": {
       "type": "Set",
-      "medianHr": 0.5,
-      "low": 0.5,
-      "high": 0.5,
+      "medianHr": 1,
+      "low": 1,
+      "high": 1,
       "sampleCount": 1
     },
     "The Crackleshot": {
@@ -2622,10 +2597,10 @@
     "The Cranium Basher": {
       "type": "Unique",
       "uniqueId": 259,
-      "medianHr": 0.5,
-      "low": 0.3,
+      "medianHr": 2,
+      "low": 2,
       "high": 2,
-      "sampleCount": 3
+      "sampleCount": 1
     },
     "The Credendum": {
       "type": "Set",
@@ -2637,10 +2612,10 @@
     "The Crescent Moon": {
       "type": "Runeword",
       "runewordKey": "Runeword17",
-      "medianHr": 0.3,
+      "medianHr": 0.4,
       "low": 0.3,
-      "high": 0.3,
-      "sampleCount": 1
+      "high": 0.5,
+      "sampleCount": 2
     },
     "The Crown of Ages": {
       "type": "Unique",
@@ -2719,7 +2694,7 @@
       "medianHr": 0.4,
       "low": 0.1,
       "high": 1,
-      "sampleCount": 10
+      "sampleCount": 9
     },
     "The Death": {
       "type": "Runeword",
@@ -2727,15 +2702,15 @@
       "medianHr": 0.5,
       "low": 0.5,
       "high": 0.5,
-      "sampleCount": 1
+      "sampleCount": 2
     },
     "The Delirium": {
       "type": "Runeword",
       "runewordKey": "Runeword22",
-      "medianHr": 0.6,
+      "medianHr": 0.4,
       "low": 0.2,
       "high": 1,
-      "sampleCount": 2
+      "sampleCount": 3
     },
     "The Demon Limb": {
       "type": "Unique",
@@ -2806,7 +2781,7 @@
       "runewordKey": "Runeword171",
       "medianHr": 3,
       "low": 3,
-      "high": 6,
+      "high": 5,
       "sampleCount": 5
     },
     "The Doom's Finger": {
@@ -2831,15 +2806,15 @@
       "medianHr": 0.2,
       "low": 0.1,
       "high": 0.8,
-      "sampleCount": 27
+      "sampleCount": 25
     },
     "The Dragon": {
       "type": "Runeword",
       "runewordKey": "Runeword27",
-      "medianHr": 2.4,
-      "low": 1.5,
+      "medianHr": 2.5,
+      "low": 1,
       "high": 4,
-      "sampleCount": 8
+      "sampleCount": 7
     },
     "The Dragonscale": {
       "type": "Unique",
@@ -2887,7 +2862,7 @@
       "medianHr": 0.2,
       "low": 0,
       "high": 0.8,
-      "sampleCount": 10
+      "sampleCount": 9
     },
     "The Embersworn": {
       "type": "Unique",
@@ -2902,8 +2877,8 @@
       "runewordKey": "Runeword33",
       "medianHr": 4.5,
       "low": 3.5,
-      "high": 6,
-      "sampleCount": 19
+      "high": 8,
+      "sampleCount": 15
     },
     "The Enlightenment": {
       "type": "Runeword",
@@ -2948,18 +2923,18 @@
     "The Exile": {
       "type": "Runeword",
       "runewordKey": "Runeword37",
-      "medianHr": 2,
+      "medianHr": 2.5,
       "low": 0.8,
       "high": 5,
-      "sampleCount": 17
+      "sampleCount": 11
     },
     "The Faith": {
       "type": "Runeword",
       "runewordKey": "Runeword38",
-      "medianHr": 6,
+      "medianHr": 5,
       "low": 2,
-      "high": 10,
-      "sampleCount": 19
+      "high": 8,
+      "sampleCount": 15
     },
     "The Fallen Gardens": {
       "type": "Unique",
@@ -2988,10 +2963,10 @@
     "The Ferocity": {
       "type": "Runeword",
       "runewordKey": "Ferocity",
-      "medianHr": 13,
-      "low": 9,
+      "medianHr": 12.5,
+      "low": 6,
       "high": 25,
-      "sampleCount": 5
+      "sampleCount": 6
     },
     "The Firelizard's Talons": {
       "type": "Unique",
@@ -2999,7 +2974,7 @@
       "medianHr": 0.2,
       "low": 0.1,
       "high": 0.2,
-      "sampleCount": 4
+      "sampleCount": 3
     },
     "The Flamebellow": {
       "type": "Unique",
@@ -3014,8 +2989,8 @@
       "runewordKey": "Runeword40",
       "medianHr": 0.5,
       "low": 0.2,
-      "high": 5,
-      "sampleCount": 14
+      "high": 1.3,
+      "sampleCount": 13
     },
     "The Fortitude": {
       "type": "Runeword",
@@ -3023,7 +2998,7 @@
       "medianHr": 1,
       "low": 0.5,
       "high": 3,
-      "sampleCount": 29
+      "sampleCount": 33
     },
     "The Frostburn": {
       "type": "Unique",
@@ -3033,21 +3008,13 @@
       "high": 0.3,
       "sampleCount": 6
     },
-    "The Frostwind": {
-      "type": "Unique",
-      "uniqueId": 366,
-      "medianHr": 3,
-      "low": 3,
-      "high": 3,
-      "sampleCount": 1
-    },
     "The Frozen Sorrow": {
       "type": "Unique",
       "uniqueId": 466,
       "medianHr": 0.2,
       "low": 0.1,
       "high": 1,
-      "sampleCount": 10
+      "sampleCount": 8
     },
     "The Gargoyle's Bite": {
       "type": "Unique",
@@ -3111,7 +3078,7 @@
       "medianHr": 0.3,
       "low": 0.1,
       "high": 1,
-      "sampleCount": 14
+      "sampleCount": 13
     },
     "The Gimmershred": {
       "type": "Unique",
@@ -3159,7 +3126,7 @@
       "medianHr": 0.1,
       "low": 0.1,
       "high": 0.1,
-      "sampleCount": 2
+      "sampleCount": 1
     },
     "The Gore Rider": {
       "type": "Unique",
@@ -3175,7 +3142,7 @@
       "medianHr": 0.3,
       "low": 0.2,
       "high": 1.3,
-      "sampleCount": 6
+      "sampleCount": 5
     },
     "The Grief": {
       "type": "Runeword",
@@ -3196,10 +3163,17 @@
     "The Grim's Burning Dead": {
       "type": "Unique",
       "uniqueId": 183,
-      "medianHr": 0.2,
+      "medianHr": 0.3,
       "low": 0.2,
       "high": 0.4,
-      "sampleCount": 3
+      "sampleCount": 2
+    },
+    "The Griswold's Heart": {
+      "type": "Set",
+      "medianHr": 0.1,
+      "low": 0.1,
+      "high": 0.1,
+      "sampleCount": 1
     },
     "The Griswold's Honor": {
       "type": "Set",
@@ -3210,7 +3184,7 @@
     },
     "The Griswold's Redemption": {
       "type": "Set",
-      "medianHr": 0.3,
+      "medianHr": 0.2,
       "low": 0.1,
       "high": 0.5,
       "sampleCount": 6
@@ -3220,7 +3194,7 @@
       "medianHr": 0.2,
       "low": 0.1,
       "high": 1.5,
-      "sampleCount": 7
+      "sampleCount": 6
     },
     "The Guardian Angel": {
       "type": "Unique",
@@ -3228,7 +3202,7 @@
       "medianHr": 0.2,
       "low": 0.1,
       "high": 1.5,
-      "sampleCount": 12
+      "sampleCount": 11
     },
     "The Guillaume's Face": {
       "type": "Set",
@@ -3267,7 +3241,7 @@
       "medianHr": 0.4,
       "low": 0.1,
       "high": 0.5,
-      "sampleCount": 8
+      "sampleCount": 7
     },
     "The Headstriker": {
       "type": "Unique",
@@ -3281,17 +3255,17 @@
       "type": "Runeword",
       "runewordKey": "Runeword51",
       "medianHr": 1,
-      "low": 0.3,
+      "low": 0.6,
       "high": 2.5,
-      "sampleCount": 7
+      "sampleCount": 5
     },
     "The Heaven's Light": {
       "type": "Unique",
       "uniqueId": 372,
       "medianHr": 0.1,
-      "low": 0,
+      "low": 0.1,
       "high": 0.2,
-      "sampleCount": 3
+      "sampleCount": 2
     },
     "The Heavenly Garb": {
       "type": "Unique",
@@ -3300,14 +3274,6 @@
       "low": 0.1,
       "high": 0.3,
       "sampleCount": 2
-    },
-    "The Hellmouth": {
-      "type": "Unique",
-      "uniqueId": 237,
-      "medianHr": 0.3,
-      "low": 0.3,
-      "high": 0.3,
-      "sampleCount": 1
     },
     "The Hellslayer": {
       "type": "Unique",
@@ -3320,7 +3286,7 @@
     "The Herald of Zakarum": {
       "type": "Unique",
       "uniqueId": 286,
-      "medianHr": 0.5,
+      "medianHr": 0.4,
       "low": 0.2,
       "high": 0.5,
       "sampleCount": 7
@@ -3380,17 +3346,17 @@
     },
     "The Immortal King's Soul Cage": {
       "type": "Set",
-      "medianHr": 0.1,
+      "medianHr": 0.2,
       "low": 0.1,
       "high": 0.8,
-      "sampleCount": 13
+      "sampleCount": 11
     },
     "The Immortal King's Stone Crusher": {
       "type": "Set",
       "medianHr": 0.1,
       "low": 0.1,
       "high": 0.1,
-      "sampleCount": 5
+      "sampleCount": 4
     },
     "The Immortal King's Will": {
       "type": "Set",
@@ -3402,10 +3368,10 @@
     "The Imperial Palace": {
       "type": "Unique",
       "uniqueId": 453,
-      "medianHr": 0.6,
+      "medianHr": 0.5,
       "low": 0.5,
-      "high": 1,
-      "sampleCount": 4
+      "high": 0.7,
+      "sampleCount": 3
     },
     "The Infernostride": {
       "type": "Unique",
@@ -3418,18 +3384,18 @@
     "The Infinity": {
       "type": "Runeword",
       "runewordKey": "Runeword60",
-      "medianHr": 6.5,
-      "low": 4,
+      "medianHr": 7,
+      "low": 5,
       "high": 20,
       "sampleCount": 21
     },
     "The Innocence": {
       "type": "Runeword",
       "runewordKey": "Runeword61",
-      "medianHr": 7.5,
+      "medianHr": 7.8,
       "low": 4,
       "high": 25,
-      "sampleCount": 21
+      "sampleCount": 20
     },
     "The Insight": {
       "type": "Runeword",
@@ -3437,7 +3403,7 @@
       "medianHr": 0.2,
       "low": 0.1,
       "high": 0.3,
-      "sampleCount": 9
+      "sampleCount": 8
     },
     "The Jade Talon": {
       "type": "Unique",
@@ -3450,18 +3416,18 @@
     "The Jalal's Mane": {
       "type": "Unique",
       "uniqueId": 288,
-      "medianHr": 0.2,
+      "medianHr": 0.1,
       "low": 0.1,
-      "high": 0.5,
-      "sampleCount": 5
+      "high": 0.3,
+      "sampleCount": 4
     },
     "The Kadala's Heirloom": {
       "type": "Unique",
       "uniqueId": 353,
-      "medianHr": 3,
-      "low": 1,
+      "medianHr": 4,
+      "low": 3,
       "high": 5,
-      "sampleCount": 3
+      "sampleCount": 2
     },
     "The Kalan's Legacy": {
       "type": "Unique",
@@ -3485,15 +3451,15 @@
       "medianHr": 0.2,
       "low": 0.1,
       "high": 0.5,
-      "sampleCount": 25
+      "sampleCount": 23
     },
     "The Lacerator": {
       "type": "Unique",
       "uniqueId": 322,
-      "medianHr": 0.1,
+      "medianHr": 0.2,
       "low": 0.1,
       "high": 0.4,
-      "sampleCount": 3
+      "sampleCount": 2
     },
     "The Lacquered Plate": {
       "type": "Set",
@@ -3514,9 +3480,9 @@
       "type": "Unique",
       "uniqueId": 236,
       "medianHr": 0.5,
-      "low": 0.2,
+      "low": 0.5,
       "high": 0.8,
-      "sampleCount": 7
+      "sampleCount": 5
     },
     "The Leaf": {
       "type": "Runeword",
@@ -3622,10 +3588,10 @@
     "The Mara's Kaleidoscope": {
       "type": "Unique",
       "uniqueId": 273,
-      "medianHr": 1.4,
+      "medianHr": 1.5,
       "low": 0.5,
       "high": 3,
-      "sampleCount": 10
+      "sampleCount": 9
     },
     "The Marrowwalk": {
       "type": "Unique",
@@ -3641,7 +3607,7 @@
       "medianHr": 0.2,
       "low": 0.1,
       "high": 0.3,
-      "sampleCount": 9
+      "sampleCount": 8
     },
     "The Medusa's Gaze": {
       "type": "Unique",
@@ -3649,7 +3615,7 @@
       "medianHr": 0.1,
       "low": 0.1,
       "high": 0.3,
-      "sampleCount": 9
+      "sampleCount": 8
     },
     "The Melody": {
       "type": "Runeword",
@@ -3689,15 +3655,15 @@
       "medianHr": 0.5,
       "low": 0.1,
       "high": 1.3,
-      "sampleCount": 9
+      "sampleCount": 8
     },
     "The Mist": {
       "type": "Runeword",
       "runewordKey": "Runeword84",
-      "medianHr": 6.5,
+      "medianHr": 6,
       "low": 2.8,
       "high": 8,
-      "sampleCount": 6
+      "sampleCount": 7
     },
     "The Na-Krul's Abyss": {
       "type": "Unique",
@@ -3748,7 +3714,7 @@
       "medianHr": 0.3,
       "low": 0.1,
       "high": 0.8,
-      "sampleCount": 18
+      "sampleCount": 17
     },
     "The Nethercrux": {
       "type": "Unique",
@@ -3756,7 +3722,7 @@
       "medianHr": 0.2,
       "low": 0.1,
       "high": 0.5,
-      "sampleCount": 7
+      "sampleCount": 6
     },
     "The Nightwing's Veil": {
       "type": "Unique",
@@ -3843,7 +3809,7 @@
       "medianHr": 0.3,
       "low": 0.1,
       "high": 1,
-      "sampleCount": 28
+      "sampleCount": 27
     },
     "The Outer Void": {
       "type": "Unique",
@@ -3864,10 +3830,10 @@
     "The Phoenix": {
       "type": "Runeword",
       "runewordKey": "Runeword103",
-      "medianHr": 3.3,
+      "medianHr": 3.5,
       "low": 1.5,
-      "high": 8,
-      "sampleCount": 16
+      "high": 12,
+      "sampleCount": 17
     },
     "The Plague Bearer": {
       "type": "Unique",
@@ -3881,9 +3847,9 @@
       "type": "Runeword",
       "runewordKey": "Runeword106",
       "medianHr": 2,
-      "low": 0.5,
+      "low": 1,
       "high": 7,
-      "sampleCount": 12
+      "sampleCount": 11
     },
     "The Pride": {
       "type": "Runeword",
@@ -3947,7 +3913,7 @@
       "medianHr": 0.3,
       "low": 0.1,
       "high": 1.5,
-      "sampleCount": 33
+      "sampleCount": 30
     },
     "The Rakescar": {
       "type": "Unique",
@@ -3968,18 +3934,18 @@
     "The Raven Frost": {
       "type": "Unique",
       "uniqueId": 276,
-      "medianHr": 0.2,
+      "medianHr": 0.1,
       "low": 0.1,
       "high": 0.3,
-      "sampleCount": 13
+      "sampleCount": 12
     },
     "The Ravenlore": {
       "type": "Unique",
       "uniqueId": 351,
-      "medianHr": 0.1,
+      "medianHr": 0.2,
       "low": 0.1,
       "high": 0.3,
-      "sampleCount": 6
+      "sampleCount": 4
     },
     "The Razortail": {
       "type": "Unique",
@@ -4026,8 +3992,8 @@
       "uniqueId": 314,
       "medianHr": 0.1,
       "low": 0,
-      "high": 0.2,
-      "sampleCount": 5
+      "high": 0.1,
+      "sampleCount": 4
     },
     "The Sacred Totem": {
       "type": "Unique",
@@ -4040,18 +4006,18 @@
     "The Sage's Defiance": {
       "type": "Unique",
       "uniqueId": 478,
-      "medianHr": 0.1,
-      "low": 0.1,
+      "medianHr": 0.3,
+      "low": 0.3,
       "high": 0.4,
-      "sampleCount": 5
+      "sampleCount": 2
     },
     "The Sandstorm Trek": {
       "type": "Unique",
       "uniqueId": 370,
-      "medianHr": 0.1,
+      "medianHr": 0.2,
       "low": 0.1,
       "high": 3,
-      "sampleCount": 6
+      "sampleCount": 5
     },
     "The Saracen's Chance": {
       "type": "Unique",
@@ -4064,10 +4030,10 @@
     "The Schaefer's Hammer": {
       "type": "Unique",
       "uniqueId": 258,
-      "medianHr": 0.5,
+      "medianHr": 0.4,
       "low": 0.1,
       "high": 8,
-      "sampleCount": 10
+      "sampleCount": 9
     },
     "The Seraph's Hymn": {
       "type": "Unique",
@@ -4120,10 +4086,10 @@
     "The Siggard's Staunch": {
       "type": "Unique",
       "uniqueId": 378,
-      "medianHr": 0.4,
+      "medianHr": 0.5,
       "low": 0.2,
       "high": 3,
-      "sampleCount": 18
+      "sampleCount": 17
     },
     "The Sigon's Gage": {
       "type": "Set",
@@ -4170,7 +4136,7 @@
       "medianHr": 0.3,
       "low": 0.1,
       "high": 0.8,
-      "sampleCount": 15
+      "sampleCount": 14
     },
     "The Snowclash": {
       "type": "Unique",
@@ -4183,10 +4149,10 @@
     "The Soul Drainer": {
       "type": "Unique",
       "uniqueId": 313,
-      "medianHr": 0.3,
+      "medianHr": 0.2,
       "low": 0.1,
-      "high": 0.5,
-      "sampleCount": 7
+      "high": 0.4,
+      "sampleCount": 6
     },
     "The Spike Thorn": {
       "type": "Unique",
@@ -4247,10 +4213,10 @@
     "The Steel Carapace": {
       "type": "Unique",
       "uniqueId": 349,
-      "medianHr": 0.6,
+      "medianHr": 0.5,
       "low": 0.1,
-      "high": 3,
-      "sampleCount": 10
+      "high": 1,
+      "sampleCount": 9
     },
     "The Steel Pillar": {
       "type": "Unique",
@@ -4287,18 +4253,18 @@
     "The Stone of Jordan": {
       "type": "Unique",
       "uniqueId": 122,
-      "medianHr": 1.5,
+      "medianHr": 1.6,
       "low": 1,
       "high": 2,
-      "sampleCount": 15
+      "sampleCount": 14
     },
     "The Stone": {
       "type": "Runeword",
       "runewordKey": "Runeword137",
-      "medianHr": 0.2,
-      "low": 0.1,
+      "medianHr": 0.3,
+      "low": 0.2,
       "high": 0.5,
-      "sampleCount": 3
+      "sampleCount": 2
     },
     "The Stoneraven": {
       "type": "Unique",
@@ -4346,7 +4312,7 @@
       "medianHr": 0.2,
       "low": 0.1,
       "high": 0.5,
-      "sampleCount": 8
+      "sampleCount": 7
     },
     "The Swordguard": {
       "type": "Unique",
@@ -4361,7 +4327,7 @@
       "medianHr": 0.1,
       "low": 0.1,
       "high": 0.2,
-      "sampleCount": 9
+      "sampleCount": 8
     },
     "The Tal Rasha's Fine-Spun Cloth": {
       "type": "Set",
@@ -4382,22 +4348,22 @@
       "medianHr": 0.1,
       "low": 0.1,
       "high": 0.3,
-      "sampleCount": 5
+      "sampleCount": 4
     },
     "The Tal Rasha's Lidless Eye": {
       "type": "Set",
       "medianHr": 0.1,
       "low": 0.1,
-      "high": 0.2,
-      "sampleCount": 2
+      "high": 0.1,
+      "sampleCount": 1
     },
     "The Templar's Might": {
       "type": "Unique",
       "uniqueId": 367,
-      "medianHr": 3.5,
+      "medianHr": 3.4,
       "low": 2,
       "high": 10,
-      "sampleCount": 12
+      "sampleCount": 11
     },
     "The Thundergod's Vigor": {
       "type": "Unique",
@@ -4410,10 +4376,10 @@
     "The Thunderstroke": {
       "type": "Unique",
       "uniqueId": 339,
-      "medianHr": 0.2,
-      "low": 0.2,
+      "medianHr": 0.3,
+      "low": 0.3,
       "high": 0.3,
-      "sampleCount": 2
+      "sampleCount": 1
     },
     "The Titan's Grip": {
       "type": "Unique",
@@ -4466,14 +4432,6 @@
       "low": 0.5,
       "high": 1,
       "sampleCount": 2
-    },
-    "The Treads of Cthon": {
-      "type": "Unique",
-      "uniqueId": 109,
-      "medianHr": 0.1,
-      "low": 0.1,
-      "high": 0.1,
-      "sampleCount": 1
     },
     "The True Silver": {
       "type": "Unique",
@@ -4537,7 +4495,7 @@
       "medianHr": 0.5,
       "low": 0.3,
       "high": 0.8,
-      "sampleCount": 8
+      "sampleCount": 7
     },
     "The Venom Grip": {
       "type": "Unique",
@@ -4551,9 +4509,9 @@
       "type": "Runeword",
       "runewordKey": "Runeword154",
       "medianHr": 1,
-      "low": 0.2,
+      "low": 0.5,
       "high": 18,
-      "sampleCount": 5
+      "sampleCount": 7
     },
     "The Verdungo's Hearty Cord": {
       "type": "Unique",
@@ -4566,10 +4524,10 @@
     "The Viperfork": {
       "type": "Unique",
       "uniqueId": 324,
-      "medianHr": 0.1,
+      "medianHr": 0.2,
       "low": 0.1,
       "high": 0.5,
-      "sampleCount": 6
+      "sampleCount": 5
     },
     "The War Traveler": {
       "type": "Unique",
@@ -4577,7 +4535,7 @@
       "medianHr": 0.3,
       "low": 0.1,
       "high": 0.8,
-      "sampleCount": 16
+      "sampleCount": 14
     },
     "The Warlord of Blood": {
       "type": "Unique",
@@ -4601,7 +4559,7 @@
       "medianHr": 0.1,
       "low": 0.1,
       "high": 0.1,
-      "sampleCount": 2
+      "sampleCount": 1
     },
     "The Whispering Mirage": {
       "type": "Unique",
@@ -4609,7 +4567,7 @@
       "medianHr": 0.1,
       "low": 0.1,
       "high": 0.3,
-      "sampleCount": 11
+      "sampleCount": 10
     },
     "The Widowmaker": {
       "type": "Unique",
@@ -4635,21 +4593,13 @@
       "high": 0.3,
       "sampleCount": 4
     },
-    "The Windhammer": {
-      "type": "Unique",
-      "uniqueId": 338,
-      "medianHr": 0.1,
-      "low": 0.1,
-      "high": 0.1,
-      "sampleCount": 1
-    },
     "The Wisp Projector": {
       "type": "Unique",
       "uniqueId": 320,
       "medianHr": 5,
       "low": 4,
       "high": 6,
-      "sampleCount": 8
+      "sampleCount": 5
     },
     "The Wolfhowl": {
       "type": "Unique",
@@ -4673,15 +4623,15 @@
       "medianHr": 0.3,
       "low": 0.2,
       "high": 1,
-      "sampleCount": 9
+      "sampleCount": 8
     },
     "The Wrath": {
       "type": "Runeword",
       "runewordKey": "Runeword168",
-      "medianHr": 2.8,
-      "low": 2.5,
+      "medianHr": 3,
+      "low": 3,
       "high": 3,
-      "sampleCount": 2
+      "sampleCount": 1
     },
     "The Zenith": {
       "type": "Runeword",
@@ -4710,10 +4660,10 @@
     "Thunderstroke": {
       "type": "Unique",
       "uniqueId": 339,
-      "medianHr": 0.2,
-      "low": 0.2,
+      "medianHr": 0.3,
+      "low": 0.3,
       "high": 0.3,
-      "sampleCount": 2
+      "sampleCount": 1
     },
     "Titan's Grip": {
       "type": "Unique",
@@ -4766,14 +4716,6 @@
       "low": 0.5,
       "high": 1,
       "sampleCount": 2
-    },
-    "Treads of Cthon": {
-      "type": "Unique",
-      "uniqueId": 109,
-      "medianHr": 0.1,
-      "low": 0.1,
-      "high": 0.1,
-      "sampleCount": 1
     },
     "True Silver": {
       "type": "Unique",
@@ -4837,7 +4779,7 @@
       "medianHr": 0.5,
       "low": 0.3,
       "high": 0.8,
-      "sampleCount": 8
+      "sampleCount": 7
     },
     "Venom Grip": {
       "type": "Unique",
@@ -4851,9 +4793,9 @@
       "type": "Runeword",
       "runewordKey": "Runeword154",
       "medianHr": 1,
-      "low": 0.2,
+      "low": 0.5,
       "high": 18,
-      "sampleCount": 5
+      "sampleCount": 7
     },
     "Verdungo's Hearty Cord": {
       "type": "Unique",
@@ -4866,10 +4808,10 @@
     "Viperfork": {
       "type": "Unique",
       "uniqueId": 324,
-      "medianHr": 0.1,
+      "medianHr": 0.2,
       "low": 0.1,
       "high": 0.5,
-      "sampleCount": 6
+      "sampleCount": 5
     },
     "War Traveler": {
       "type": "Unique",
@@ -4877,7 +4819,7 @@
       "medianHr": 0.3,
       "low": 0.1,
       "high": 0.8,
-      "sampleCount": 16
+      "sampleCount": 14
     },
     "Warlord of Blood": {
       "type": "Unique",
@@ -4901,7 +4843,7 @@
       "medianHr": 0.1,
       "low": 0.1,
       "high": 0.1,
-      "sampleCount": 2
+      "sampleCount": 1
     },
     "Whispering Mirage": {
       "type": "Unique",
@@ -4909,7 +4851,7 @@
       "medianHr": 0.1,
       "low": 0.1,
       "high": 0.3,
-      "sampleCount": 11
+      "sampleCount": 10
     },
     "Widowmaker": {
       "type": "Unique",
@@ -4935,21 +4877,13 @@
       "high": 0.3,
       "sampleCount": 4
     },
-    "Windhammer": {
-      "type": "Unique",
-      "uniqueId": 338,
-      "medianHr": 0.1,
-      "low": 0.1,
-      "high": 0.1,
-      "sampleCount": 1
-    },
     "Wisp Projector": {
       "type": "Unique",
       "uniqueId": 320,
       "medianHr": 5,
       "low": 4,
       "high": 6,
-      "sampleCount": 8
+      "sampleCount": 5
     },
     "Wolfhowl": {
       "type": "Unique",
@@ -4973,15 +4907,15 @@
       "medianHr": 0.3,
       "low": 0.2,
       "high": 1,
-      "sampleCount": 9
+      "sampleCount": 8
     },
     "Wrath": {
       "type": "Runeword",
       "runewordKey": "Runeword168",
-      "medianHr": 2.8,
-      "low": 2.5,
+      "medianHr": 3,
+      "low": 3,
       "high": 3,
-      "sampleCount": 2
+      "sampleCount": 1
     },
     "Zenith": {
       "type": "Runeword",
