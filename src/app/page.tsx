@@ -261,6 +261,37 @@ export default function Page() {
           on Discord.
         </p>
       )}
+
+      <footer className="text-xs text-muted-foreground italic text-center max-w-2xl mx-auto pt-1">
+        Build &amp; market data thanks to{" "}
+        <a
+          href="https://pd2.tools"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="not-italic underline underline-offset-2 hover:text-[#ffd47a]"
+        >
+          pd2.tools
+        </a>
+        ,{" "}
+        <a
+          href="https://pd2.madebykontra.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="not-italic underline underline-offset-2 hover:text-[#ffd47a]"
+        >
+          pd2.madebykontra.com
+        </a>{" "}
+        and{" "}
+        <a
+          href="https://pd2trader.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="not-italic underline underline-offset-2 hover:text-[#ffd47a]"
+        >
+          pd2trader.com
+        </a>
+        .
+      </footer>
     </main>
   );
 }

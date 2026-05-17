@@ -132,7 +132,7 @@ export function FilterForm({ initial, onSubmit }: Props) {
   // Active: gold gradient bg, near-black text. Inactive: lifted warm-stone bg, bright parchment text.
   const pillBtn = (active: boolean) =>
     active
-      ? "px-3 py-1.5 text-sm rounded-sm font-bold uppercase tracking-wider border border-[#5e4a1f] text-[#0a0604] shadow-[inset_0_1px_0_rgba(255,212,122,0.5),0_0_10px_rgba(201,160,75,0.3)] bg-gradient-to-b from-[#dfb55a] to-[#a07a30] transition"
+      ? "px-3 py-1.5 text-sm rounded-sm font-medium border-2 border-[#5e4a1f] text-[#0a0604] shadow-[inset_0_1px_0_rgba(255,212,122,0.5),0_0_10px_rgba(201,160,75,0.3)] bg-gradient-to-b from-[#dfb55a] to-[#a07a30] transition"
       : "px-3 py-1.5 text-sm rounded-sm border-2 border-[#7a5e29] font-medium text-[#f5e3b5] bg-gradient-to-b from-[#5a3f24] to-[#382514] hover:from-[#6e4f30] hover:to-[#4a3220] hover:border-[#c9a04b] hover:text-[#ffd47a] transition";
 
   return (
