@@ -1,0 +1,1566 @@
+{
+  "Sorceress": [
+    {
+      "id": "nova",
+      "name": "Nova",
+      "tier": "S-",
+      "className": "Sorceress",
+      "skills": [
+        "Nova"
+      ],
+      "sources": [
+        "Nova (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "frost-nova",
+      "name": "Frost Nova",
+      "tier": "A+",
+      "className": "Sorceress",
+      "skills": [
+        "Frost Nova"
+      ],
+      "sources": [
+        "Frost Nova (H Lvl 1) (RT'd)"
+      ]
+    },
+    {
+      "id": "frozen-orb",
+      "name": "Frozen Orb",
+      "tier": "A+",
+      "className": "Sorceress",
+      "skills": [
+        "Frozen Orb"
+      ],
+      "sources": [
+        "Frozen Orb (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "blizzard",
+      "name": "Blizzard",
+      "tier": "A",
+      "className": "Sorceress",
+      "skills": [
+        "Blizzard"
+      ],
+      "sources": [
+        "Blizzard"
+      ]
+    },
+    {
+      "id": "chain-lightning",
+      "name": "Chain Lightning",
+      "tier": "A",
+      "className": "Sorceress",
+      "skills": [
+        "Chain Lightning"
+      ],
+      "sources": [
+        "Chain Lightning (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "ice-barrage",
+      "name": "Ice Barrage",
+      "tier": "A",
+      "className": "Sorceress",
+      "skills": [
+        "Ice Barrage"
+      ],
+      "sources": [
+        "Ice Barrage (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "hydra",
+      "name": "Hydra",
+      "tier": "B+",
+      "className": "Sorceress",
+      "skills": [
+        "Hydra"
+      ],
+      "sources": [
+        "Hydra (2x Dragon/Blaze) (RT'd x2) (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "combustion-fire-ball",
+      "name": "Combustion/Fire Ball",
+      "tier": "B",
+      "className": "Sorceress",
+      "skills": [
+        "Fire Ball"
+      ],
+      "sources": [
+        "Combustion/Fire Ball (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "teleport-thunder-storm",
+      "name": "Teleport Thunder Storm",
+      "tier": "B",
+      "className": "Sorceress",
+      "skills": [
+        "Thunder Storm"
+      ],
+      "sources": [
+        "Teleport Thunder Storm (Passive) (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "charged-bolt",
+      "name": "Charged Bolt",
+      "tier": "B-",
+      "className": "Sorceress",
+      "skills": [
+        "Charged Bolt"
+      ],
+      "sources": [
+        "Charged Bolt (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "inferno",
+      "name": "Inferno",
+      "tier": "C-",
+      "className": "Sorceress",
+      "skills": [
+        "Inferno"
+      ],
+      "sources": [
+        "Inferno"
+      ]
+    },
+    {
+      "id": "meteor",
+      "name": "Meteor",
+      "tier": "C-",
+      "className": "Sorceress",
+      "skills": [
+        "Meteor"
+      ],
+      "sources": [
+        "Meteor (Blaze Movement)"
+      ]
+    },
+    {
+      "id": "passive-sorc",
+      "name": "Passive Sorc",
+      "tier": "D",
+      "className": "Sorceress",
+      "skills": [
+        "Frost Nova"
+      ],
+      "sources": [
+        "Passive Sorc (FNova + Nova Proc + SA)"
+      ]
+    },
+    {
+      "id": "bear-sorc",
+      "name": "Bear Sorc",
+      "tier": "D-",
+      "className": "Sorceress",
+      "skills": [
+        "Cold Enchant"
+      ],
+      "sources": [
+        "Bear Sorc (CE - Uldyssian's/Odium)"
+      ]
+    },
+    {
+      "id": "bear-sorc",
+      "name": "Bear Sorc",
+      "tier": "D-",
+      "className": "Sorceress",
+      "skills": [
+        "Enchant Fire"
+      ],
+      "sources": [
+        "Bear Sorc (FE - Hellslayer - Fire Ball Proc)"
+      ]
+    },
+    {
+      "id": "glacial-spike",
+      "name": "Glacial Spike",
+      "tier": "F+",
+      "className": "Sorceress",
+      "skills": [
+        "Glacial Spike"
+      ],
+      "sources": [
+        "Glacial Spike"
+      ]
+    }
+  ],
+  "Paladin": [
+    {
+      "id": "holy-shock-sacrifice",
+      "name": "Holy Shock Sacrifice",
+      "tier": "S+",
+      "className": "Paladin",
+      "skills": [
+        "Sacrifice",
+        "Holy Shock"
+      ],
+      "sources": [
+        "Holy Shock Sacrifice (Native) (RT'd)"
+      ]
+    },
+    {
+      "id": "physical-sacrifice",
+      "name": "Physical Sacrifice",
+      "tier": "S-",
+      "className": "Paladin",
+      "skills": [
+        "Sacrifice"
+      ],
+      "sources": [
+        "Physical Sacrifice (1-H) (Schaeffer's) (RT'd)",
+        "Physical Sacrifice (2-H) (Leoric's) (RT'd)"
+      ]
+    },
+    {
+      "id": "blessed-hammer",
+      "name": "Blessed Hammer",
+      "tier": "A",
+      "className": "Paladin",
+      "skills": [
+        "Blessed Hammer"
+      ],
+      "sources": [
+        "Blessed Hammer (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "holy-freeze-sacrifice",
+      "name": "Holy Freeze Sacrifice",
+      "tier": "A",
+      "className": "Paladin",
+      "skills": [
+        "Sacrifice",
+        "Holy Freeze"
+      ],
+      "sources": [
+        "Holy Freeze Sacrifice (Native) (RT'd)"
+      ]
+    },
+    {
+      "id": "sanctuary-sacrifice",
+      "name": "Sanctuary Sacrifice",
+      "tier": "A",
+      "className": "Paladin",
+      "skills": [
+        "Sacrifice",
+        "Sanctuary"
+      ],
+      "sources": [
+        "Sanctuary Sacrifice (H Lvl 2) (RT'd)"
+      ]
+    },
+    {
+      "id": "holy-fire-sacrifice",
+      "name": "Holy Fire Sacrifice",
+      "tier": "A-",
+      "className": "Paladin",
+      "skills": [
+        "Sacrifice",
+        "Holy Fire"
+      ],
+      "sources": [
+        "Holy Fire Sacrifice (Native) (RT'd) (H Lvl 2)"
+      ]
+    },
+    {
+      "id": "vengeance",
+      "name": "Vengeance",
+      "tier": "A-",
+      "className": "Paladin",
+      "skills": [
+        "Vengeance"
+      ],
+      "sources": [
+        "Vengeance"
+      ]
+    },
+    {
+      "id": "fist-of-heavens",
+      "name": "Fist of Heavens",
+      "tier": "B+",
+      "className": "Paladin",
+      "skills": [
+        "Fist of the Heavens"
+      ],
+      "sources": [
+        "Fist of Heavens (H Lvl 2) (RT'd)"
+      ]
+    },
+    {
+      "id": "sanctuary-charge",
+      "name": "Sanctuary Charge",
+      "tier": "B+",
+      "className": "Paladin",
+      "skills": [
+        "Charge",
+        "Sanctuary"
+      ],
+      "sources": [
+        "Sanctuary Charge (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "holy-fire-charge-items-or-native",
+      "name": "Holy Fire Charge - Items OR Native",
+      "tier": "B-",
+      "className": "Paladin",
+      "skills": [
+        "Charge",
+        "Holy Fire"
+      ],
+      "sources": [
+        "Holy Fire Charge - Items OR Native (H)"
+      ]
+    },
+    {
+      "id": "holy-freeze-charge-items-or-native",
+      "name": "Holy Freeze Charge - Items OR Native",
+      "tier": "B-",
+      "className": "Paladin",
+      "skills": [
+        "Charge",
+        "Holy Freeze"
+      ],
+      "sources": [
+        "Holy Freeze Charge - Items OR Native (H)"
+      ]
+    },
+    {
+      "id": "holy-shock-charge-items-or-native",
+      "name": "Holy Shock Charge - Items OR Native",
+      "tier": "B-",
+      "className": "Paladin",
+      "skills": [
+        "Charge",
+        "Holy Shock"
+      ],
+      "sources": [
+        "Holy Shock Charge - Items OR Native (H)"
+      ]
+    },
+    {
+      "id": "physical-zeal",
+      "name": "Physical Zeal",
+      "tier": "B-",
+      "className": "Paladin",
+      "skills": [
+        "Zeal"
+      ],
+      "sources": [
+        "Physical Zeal (1-H) (DC/Wraith)",
+        "Physical Zeal (2-H) (Leoric's) (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "sacrifice-hammer-proc",
+      "name": "Sacrifice Hammer Proc",
+      "tier": "B-",
+      "className": "Paladin",
+      "skills": [
+        "Sacrifice"
+      ],
+      "sources": [
+        "Sacrifice Hammer Proc (Akarat's)"
+      ]
+    },
+    {
+      "id": "holy-fire-beardin",
+      "name": "Holy Fire Beardin",
+      "tier": "C",
+      "className": "Paladin",
+      "skills": [
+        "Holy Fire"
+      ],
+      "sources": [
+        "Holy Fire Beardin (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "thorns-sacrifice-items",
+      "name": "Thorns Sacrifice - Items",
+      "tier": "C",
+      "className": "Paladin",
+      "skills": [
+        "Sacrifice"
+      ],
+      "sources": [
+        "Thorns Sacrifice - Items (RT'd)"
+      ]
+    },
+    {
+      "id": "physical-charge",
+      "name": "Physical Charge",
+      "tier": "C-",
+      "className": "Paladin",
+      "skills": [
+        "Charge"
+      ],
+      "sources": [
+        "Physical Charge (2-H)"
+      ]
+    },
+    {
+      "id": "holy-bolt",
+      "name": "Holy Bolt",
+      "tier": "D+",
+      "className": "Paladin",
+      "skills": [
+        "Holy Bolt"
+      ],
+      "sources": [
+        "Holy Bolt (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "vengeance",
+      "name": "Vengeance",
+      "tier": "D+",
+      "className": "Paladin",
+      "skills": [
+        "Vengeance"
+      ],
+      "sources": [
+        "Vengeance (Kingslayer)"
+      ]
+    },
+    {
+      "id": "zeal-foh-hb-proc",
+      "name": "Zeal FOH/HB Proc",
+      "tier": "D+",
+      "className": "Paladin",
+      "skills": [
+        "Zeal"
+      ],
+      "sources": [
+        "Zeal FOH/HB Proc (Asylum)"
+      ]
+    },
+    {
+      "id": "smite",
+      "name": "Smite",
+      "tier": "D",
+      "className": "Paladin",
+      "skills": [
+        "Smite"
+      ],
+      "sources": [
+        "Smite (H Lvl 1)"
+      ]
+    }
+  ],
+  "Amazon": [
+    {
+      "id": "lightning-fury",
+      "name": "Lightning Fury",
+      "tier": "S",
+      "className": "Amazon",
+      "skills": [
+        "Lightning Fury"
+      ],
+      "sources": [
+        "Lightning Fury (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "plague-javelin",
+      "name": "Plague Javelin",
+      "tier": "S",
+      "className": "Amazon",
+      "skills": [
+        "Plague Javelin"
+      ],
+      "sources": [
+        "Plague Javelin"
+      ]
+    },
+    {
+      "id": "cold-arrow",
+      "name": "Cold Arrow",
+      "tier": "A",
+      "className": "Amazon",
+      "skills": [
+        "Cold Arrow"
+      ],
+      "sources": [
+        "Cold Arrow (H Lvl 2)"
+      ]
+    },
+    {
+      "id": "fire-arrow",
+      "name": "Fire Arrow",
+      "tier": "A-",
+      "className": "Amazon",
+      "skills": [
+        "Fire Arrow"
+      ],
+      "sources": [
+        "Fire Arrow (H Lvl 2)"
+      ]
+    },
+    {
+      "id": "fire-enchant-ea",
+      "name": "Fire Enchant - EA",
+      "tier": "A-",
+      "className": "Amazon",
+      "skills": [
+        "Exploding Arrow"
+      ],
+      "sources": [
+        "Fire Enchant - EA (Demon Mach) (H Lvl 2)"
+      ]
+    },
+    {
+      "id": "multiple-shot",
+      "name": "Multiple Shot",
+      "tier": "A-",
+      "className": "Amazon",
+      "skills": [
+        "Multiple Shot"
+      ],
+      "sources": [
+        "Multiple Shot (WF) (H Lvl 2)"
+      ]
+    },
+    {
+      "id": "strafe",
+      "name": "Strafe",
+      "tier": "A-",
+      "className": "Amazon",
+      "skills": [
+        "Strafe"
+      ],
+      "sources": [
+        "Strafe (Demon Machine)"
+      ]
+    },
+    {
+      "id": "exploding-arrow",
+      "name": "Exploding Arrow",
+      "tier": "B+",
+      "className": "Amazon",
+      "skills": [
+        "Exploding Arrow"
+      ],
+      "sources": [
+        "Exploding Arrow (H Lvl 2)"
+      ]
+    },
+    {
+      "id": "fend",
+      "name": "Fend",
+      "tier": "B",
+      "className": "Amazon",
+      "skills": [
+        "Fend"
+      ],
+      "sources": [
+        "Fend (H Lvl 1) (RT'd)"
+      ]
+    },
+    {
+      "id": "freezing-arrow",
+      "name": "Freezing Arrow",
+      "tier": "B",
+      "className": "Amazon",
+      "skills": [
+        "Freezing Arrow"
+      ],
+      "sources": [
+        "Freezing Arrow (H Lvl 2)"
+      ]
+    },
+    {
+      "id": "hybrid-valk-strafe",
+      "name": "Hybrid Valk/Strafe",
+      "tier": "B",
+      "className": "Amazon",
+      "skills": [
+        "Strafe"
+      ],
+      "sources": [
+        "Hybrid Valk/Strafe (Ebonbane) (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "magic-arrow",
+      "name": "Magic Arrow",
+      "tier": "B",
+      "className": "Amazon",
+      "skills": [
+        "Magic Arrow"
+      ],
+      "sources": [
+        "Magic Arrow (H Lvl 2) (Asylum)"
+      ]
+    },
+    {
+      "id": "holy-fire-exp-arrow",
+      "name": "Holy Fire Exp Arrow",
+      "tier": "C+",
+      "className": "Amazon",
+      "skills": [
+        "Exploding Arrow"
+      ],
+      "sources": [
+        "Holy Fire Exp Arrow (Demon M) (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "bearzon",
+      "name": "Bearzon",
+      "tier": "C",
+      "className": "Amazon",
+      "skills": [
+        "Jab"
+      ],
+      "sources": [
+        "Bearzon (Uldyssian's)"
+      ]
+    },
+    {
+      "id": "cold-enchant-multiple-shot",
+      "name": "Cold Enchant - Multiple Shot",
+      "tier": "C",
+      "className": "Amazon",
+      "skills": [
+        "Multiple Shot"
+      ],
+      "sources": [
+        "Cold Enchant - Multiple Shot (H Lvl 2)"
+      ]
+    },
+    {
+      "id": "crackleshot-strafe",
+      "name": "Crackleshot Strafe",
+      "tier": "C",
+      "className": "Amazon",
+      "skills": [
+        "Strafe"
+      ],
+      "sources": [
+        "Crackleshot Strafe (LF/LB Proc)"
+      ]
+    },
+    {
+      "id": "principle-strafe",
+      "name": "Principle Strafe",
+      "tier": "C",
+      "className": "Amazon",
+      "skills": [
+        "Strafe"
+      ],
+      "sources": [
+        "Principle Strafe (Endlesshail)"
+      ]
+    },
+    {
+      "id": "charged-strike",
+      "name": "Charged Strike",
+      "tier": "C-",
+      "className": "Amazon",
+      "skills": [
+        "Charged Strike"
+      ],
+      "sources": [
+        "Charged Strike (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "jab",
+      "name": "Jab",
+      "tier": "C-",
+      "className": "Amazon",
+      "skills": [
+        "Jab"
+      ],
+      "sources": [
+        "Jab (RT'd) (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "lightning-strike",
+      "name": "Lightning Strike",
+      "tier": "C-",
+      "className": "Amazon",
+      "skills": [
+        "Lightning Strike"
+      ],
+      "sources": [
+        "Lightning Strike (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "pure-decoy-summon",
+      "name": "Pure Decoy Summon",
+      "tier": "C-",
+      "className": "Amazon",
+      "skills": [
+        "Decoy"
+      ],
+      "sources": [
+        "Pure Decoy Summon (Loyalty) (H Lvl 2)"
+      ]
+    },
+    {
+      "id": "holy-shock-multishot",
+      "name": "Holy Shock Multishot",
+      "tier": "D+",
+      "className": "Amazon",
+      "skills": [
+        "Multiple Shot"
+      ],
+      "sources": [
+        "Holy Shock Multishot (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "power-strike",
+      "name": "Power Strike",
+      "tier": "D+",
+      "className": "Amazon",
+      "skills": [
+        "Power Strike"
+      ],
+      "sources": [
+        "Power Strike"
+      ]
+    },
+    {
+      "id": "fire-enchant-multi",
+      "name": "Fire Enchant - Multi",
+      "tier": "D",
+      "className": "Amazon",
+      "skills": [
+        "Multiple Shot"
+      ],
+      "sources": [
+        "Fire Enchant - Multi (Widow) (H Lvl 2)"
+      ]
+    }
+  ],
+  "Druid": [
+    {
+      "id": "arctic-blast",
+      "name": "Arctic Blast",
+      "tier": "S",
+      "className": "Druid",
+      "skills": [
+        "Arctic Blast"
+      ],
+      "sources": [
+        "Arctic Blast"
+      ]
+    },
+    {
+      "id": "rabies",
+      "name": "Rabies",
+      "tier": "S",
+      "className": "Druid",
+      "skills": [
+        "Rabies"
+      ],
+      "sources": [
+        "Rabies"
+      ]
+    },
+    {
+      "id": "ele-fire",
+      "name": "Ele Fire",
+      "tier": "S-",
+      "className": "Druid",
+      "skills": [
+        "Volcano"
+      ],
+      "sources": [
+        "Ele Fire (Volcano)"
+      ]
+    },
+    {
+      "id": "poison-creeper",
+      "name": "Poison Creeper",
+      "tier": "A-",
+      "className": "Druid",
+      "skills": [
+        "Poison Creeper"
+      ],
+      "sources": [
+        "Poison Creeper (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "ele-fire",
+      "name": "Ele Fire",
+      "tier": "B+",
+      "className": "Druid",
+      "skills": [
+        "Fissure"
+      ],
+      "sources": [
+        "Ele Fire (Fissure)"
+      ]
+    },
+    {
+      "id": "maul",
+      "name": "Maul",
+      "tier": "B",
+      "className": "Druid",
+      "skills": [
+        "Maul"
+      ],
+      "sources": [
+        "Maul (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "ele-fire",
+      "name": "Ele Fire",
+      "tier": "B-",
+      "className": "Druid",
+      "skills": [
+        "Molten Boulder"
+      ],
+      "sources": [
+        "Ele Fire (Molten Boulder)"
+      ]
+    },
+    {
+      "id": "fury",
+      "name": "Fury",
+      "tier": "B-",
+      "className": "Druid",
+      "skills": [
+        "Fury"
+      ],
+      "sources": [
+        "Fury (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "wind",
+      "name": "Wind",
+      "tier": "B-",
+      "className": "Druid",
+      "skills": [
+        "Twister"
+      ],
+      "sources": [
+        "Wind (Twister) (H Lvl 2)"
+      ]
+    },
+    {
+      "id": "wind",
+      "name": "Wind",
+      "tier": "C",
+      "className": "Druid",
+      "skills": [
+        "Tornado"
+      ],
+      "sources": [
+        "Wind (Tornado) (H Lvl 2)"
+      ]
+    },
+    {
+      "id": "fire-claws",
+      "name": "Fire Claws",
+      "tier": "C-",
+      "className": "Druid",
+      "skills": [
+        "Fire Claws"
+      ],
+      "sources": [
+        "Fire Claws (Wolf/Bear) (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "summon-druid",
+      "name": "Summon Druid",
+      "tier": "C-",
+      "className": "Druid",
+      "skills": [
+        "Summon Grizzly"
+      ],
+      "sources": [
+        "Summon Druid (4x Bears Only) (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "shock-wave",
+      "name": "Shock Wave",
+      "tier": "D+",
+      "className": "Druid",
+      "skills": [
+        "Shock Wave"
+      ],
+      "sources": [
+        "Shock Wave (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "wind-fury",
+      "name": "Wind Fury",
+      "tier": "D+",
+      "className": "Druid",
+      "skills": [
+        "Fury"
+      ],
+      "sources": [
+        "Wind Fury (Twister Proc) (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "summon-druid",
+      "name": "Summon Druid",
+      "tier": "D",
+      "className": "Druid",
+      "skills": [
+        "Summon Ravens"
+      ],
+      "sources": [
+        "Summon Druid (Raven Focus) (H Lvl 1)"
+      ]
+    }
+  ],
+  "Assassin": [
+    {
+      "id": "fists-of-fire",
+      "name": "Fists of Fire",
+      "tier": "S",
+      "className": "Assassin",
+      "skills": [
+        "Fists of Fire"
+      ],
+      "sources": [
+        "Fists of Fire"
+      ]
+    },
+    {
+      "id": "wake-of-fire",
+      "name": "Wake of Fire",
+      "tier": "S",
+      "className": "Assassin",
+      "skills": [
+        "Wake of Fire"
+      ],
+      "sources": [
+        "Wake of Fire (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "cobra-strike",
+      "name": "Cobra Strike",
+      "tier": "S-",
+      "className": "Assassin",
+      "skills": [
+        "Cobra Strike"
+      ],
+      "sources": [
+        "Cobra Strike (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "phoenix-strike",
+      "name": "Phoenix Strike",
+      "tier": "S-",
+      "className": "Assassin",
+      "skills": [
+        "Phoenix Strike"
+      ],
+      "sources": [
+        "Phoenix Strike (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "blade-fury",
+      "name": "Blade Fury",
+      "tier": "A+",
+      "className": "Assassin",
+      "skills": [
+        "Blade Fury"
+      ],
+      "sources": [
+        "Blade Fury (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "blades-of-ice",
+      "name": "Blades of Ice",
+      "tier": "A",
+      "className": "Assassin",
+      "skills": [
+        "Blades of Ice"
+      ],
+      "sources": [
+        "Blades of Ice (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "claws-of-thunder",
+      "name": "Claws of Thunder",
+      "tier": "A",
+      "className": "Assassin",
+      "skills": [
+        "Claws of Thunder"
+      ],
+      "sources": [
+        "Claws of Thunder (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "poison-blade-sentinel",
+      "name": "Poison Blade Sentinel",
+      "tier": "A-",
+      "className": "Assassin",
+      "skills": [
+        "Blade Sentinel",
+        "Venom"
+      ],
+      "sources": [
+        "Poison Blade Sentinel (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "dragon-tail",
+      "name": "Dragon Tail",
+      "tier": "B+",
+      "className": "Assassin",
+      "skills": [
+        "Dragon Tail"
+      ],
+      "sources": [
+        "Dragon Tail (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "blade-dance",
+      "name": "Blade Dance",
+      "tier": "B",
+      "className": "Assassin",
+      "skills": [
+        "Blade Dance"
+      ],
+      "sources": [
+        "Blade Dance (Poison) (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "mind-blast",
+      "name": "Mind Blast",
+      "tier": "B",
+      "className": "Assassin",
+      "skills": [
+        "Mind Blast"
+      ],
+      "sources": [
+        "Mind Blast (H Lvl 2)"
+      ]
+    },
+    {
+      "id": "phys-blade-sentinel",
+      "name": "Phys Blade Sentinel",
+      "tier": "B",
+      "className": "Assassin",
+      "skills": [
+        "Blade Sentinel"
+      ],
+      "sources": [
+        "Phys Blade Sentinel (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "chain-lightning-sen",
+      "name": "Chain Lightning Sen",
+      "tier": "C+",
+      "className": "Assassin",
+      "skills": [
+        "Chain Lightning Sentry"
+      ],
+      "sources": [
+        "Chain Lightning Sen (H Lvl 2)"
+      ]
+    },
+    {
+      "id": "desecrate-death-sentry",
+      "name": "Desecrate Death Sentry",
+      "tier": "C",
+      "className": "Assassin",
+      "skills": [
+        "Death Sentry"
+      ],
+      "sources": [
+        "Desecrate Death Sentry (Viperfork)"
+      ]
+    },
+    {
+      "id": "fire-blast",
+      "name": "Fire Blast",
+      "tier": "C",
+      "className": "Assassin",
+      "skills": [
+        "Fire Blast"
+      ],
+      "sources": [
+        "Fire Blast (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "shock-web",
+      "name": "Shock Web",
+      "tier": "C-",
+      "className": "Assassin",
+      "skills": [
+        "Shock Web"
+      ],
+      "sources": [
+        "Shock Web (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "venom-bow-sin",
+      "name": "Venom Bow Sin",
+      "tier": "C-",
+      "className": "Assassin",
+      "skills": [
+        "Venom"
+      ],
+      "sources": [
+        "Venom Bow Sin"
+      ]
+    },
+    {
+      "id": "tiger-strike",
+      "name": "Tiger Strike",
+      "tier": "D+",
+      "className": "Assassin",
+      "skills": [
+        "Tiger Strike"
+      ],
+      "sources": [
+        "Tiger Strike (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "charged-bolt-sentry",
+      "name": "Charged Bolt Sentry",
+      "tier": "F",
+      "className": "Assassin",
+      "skills": [
+        "Charged Bolt Sentry"
+      ],
+      "sources": [
+        "Charged Bolt Sentry (H Lvl 1)"
+      ]
+    }
+  ],
+  "Barbarian": [
+    {
+      "id": "whirlwind",
+      "name": "Whirlwind",
+      "tier": "S",
+      "className": "Barbarian",
+      "skills": [
+        "Whirlwind"
+      ],
+      "sources": [
+        "2-H WW (Reaper's/Pillar) (RT'd) (H Lvl 1)",
+        "2x 1-H WW (DC+Schaef) (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "double-throw",
+      "name": "Double Throw",
+      "tier": "S-",
+      "className": "Barbarian",
+      "skills": [
+        "Double Throw"
+      ],
+      "sources": [
+        "Double Throw (H Lvl 3) Needs S14 Testing"
+      ]
+    },
+    {
+      "id": "magic-whirlwind",
+      "name": "Magic Whirlwind",
+      "tier": "A",
+      "className": "Barbarian",
+      "skills": [
+        "Whirlwind"
+      ],
+      "sources": [
+        "Magic Whirlwind (2x Asylum)"
+      ]
+    },
+    {
+      "id": "split-throw",
+      "name": "Split Throw",
+      "tier": "A",
+      "className": "Barbarian",
+      "skills": [
+        "Split Throw"
+      ],
+      "sources": [
+        "Split Throw (H Lvl 5) Needs S14 Testing"
+      ]
+    },
+    {
+      "id": "war-cry",
+      "name": "War Cry",
+      "tier": "A",
+      "className": "Barbarian",
+      "skills": [
+        "War Cry"
+      ],
+      "sources": [
+        "War Cry (H Lvl 2) (RT'd)"
+      ]
+    },
+    {
+      "id": "fire-leap-attack",
+      "name": "Fire Leap Attack",
+      "tier": "B",
+      "className": "Barbarian",
+      "skills": [
+        "Leap Attack"
+      ],
+      "sources": [
+        "Fire Leap Attack (Rapture)"
+      ]
+    },
+    {
+      "id": "frenzy",
+      "name": "Frenzy",
+      "tier": "B",
+      "className": "Barbarian",
+      "skills": [
+        "Frenzy"
+      ],
+      "sources": [
+        "Frenzy (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "bear-barb",
+      "name": "Bear Barb",
+      "tier": "B-",
+      "className": "Barbarian",
+      "skills": [
+        "Frenzy"
+      ],
+      "sources": [
+        "Bear Barb (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "berserk",
+      "name": "Berserk",
+      "tier": "B-",
+      "className": "Barbarian",
+      "skills": [
+        "Berserk"
+      ],
+      "sources": [
+        "Berserk (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "fire-whirlwind",
+      "name": "Fire Whirlwind",
+      "tier": "C+",
+      "className": "Barbarian",
+      "skills": [
+        "Whirlwind"
+      ],
+      "sources": [
+        "Fire Whirlwind (2x Flamebellow)"
+      ]
+    },
+    {
+      "id": "leap-attack",
+      "name": "Leap Attack",
+      "tier": "C+",
+      "className": "Barbarian",
+      "skills": [
+        "Leap Attack"
+      ],
+      "sources": [
+        "Leap Attack (Standard)"
+      ]
+    },
+    {
+      "id": "wolf-barb",
+      "name": "Wolf Barb",
+      "tier": "C+",
+      "className": "Barbarian",
+      "skills": [
+        "Frenzy"
+      ],
+      "sources": [
+        "Wolf Barb (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "zeal-barb",
+      "name": "Zeal Barb",
+      "tier": "C",
+      "className": "Barbarian",
+      "skills": [
+        "Frenzy"
+      ],
+      "sources": [
+        "Zeal Barb"
+      ]
+    },
+    {
+      "id": "concentrate",
+      "name": "Concentrate",
+      "tier": "C-",
+      "className": "Barbarian",
+      "skills": [
+        "Concentrate"
+      ],
+      "sources": [
+        "Concentrate"
+      ]
+    },
+    {
+      "id": "war-cry-leap-attack",
+      "name": "War Cry Leap Attack",
+      "tier": "C-",
+      "className": "Barbarian",
+      "skills": [
+        "Leap Attack"
+      ],
+      "sources": [
+        "War Cry Leap Attack (Giant Maimer)"
+      ]
+    }
+  ],
+  "Necromancer": [
+    {
+      "id": "poison-strike",
+      "name": "Poison Strike",
+      "tier": "S+",
+      "className": "Necromancer",
+      "skills": [
+        "Poison Strike"
+      ],
+      "sources": [
+        "Poison Strike (RT'd)"
+      ]
+    },
+    {
+      "id": "poison-nova",
+      "name": "Poison Nova",
+      "tier": "S",
+      "className": "Necromancer",
+      "skills": [
+        "Poison Nova"
+      ],
+      "sources": [
+        "Poison Nova (H Lvl 2)"
+      ]
+    },
+    {
+      "id": "desecrate",
+      "name": "Desecrate",
+      "tier": "S-",
+      "className": "Necromancer",
+      "skills": [
+        "Desecrate"
+      ],
+      "sources": [
+        "Desecrate"
+      ]
+    },
+    {
+      "id": "fire-golems",
+      "name": "Fire Golems",
+      "tier": "A+",
+      "className": "Necromancer",
+      "skills": [
+        "Fire Golem"
+      ],
+      "sources": [
+        "Fire Golems (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "corpse-explosion",
+      "name": "Corpse Explosion",
+      "tier": "A",
+      "className": "Necromancer",
+      "skills": [
+        "Corpse Explosion"
+      ],
+      "sources": [
+        "Corpse Explosion (H Lvl 2)"
+      ]
+    },
+    {
+      "id": "bone-spear",
+      "name": "Bone Spear",
+      "tier": "A-",
+      "className": "Necromancer",
+      "skills": [
+        "Bone Spear"
+      ],
+      "sources": [
+        "Bone Spear (H Lvl 2)"
+      ]
+    },
+    {
+      "id": "green-goblin-summon",
+      "name": "Green Goblin Summon",
+      "tier": "A-",
+      "className": "Necromancer",
+      "skills": [
+        "Raise Skeleton Warrior"
+      ],
+      "sources": [
+        "Green Goblin Summon (Merc DM) (H Lvl 2)"
+      ]
+    },
+    {
+      "id": "teeth",
+      "name": "Teeth",
+      "tier": "B+",
+      "className": "Necromancer",
+      "skills": [
+        "Teeth"
+      ],
+      "sources": [
+        "Teeth (H Lvl 2)"
+      ]
+    },
+    {
+      "id": "dark-pact",
+      "name": "Dark Pact",
+      "tier": "B",
+      "className": "Necromancer",
+      "skills": [
+        "Dark Pact"
+      ],
+      "sources": [
+        "Dark Pact (H Lvl 2)"
+      ]
+    },
+    {
+      "id": "blood-golems",
+      "name": "Blood Golems",
+      "tier": "C+",
+      "className": "Necromancer",
+      "skills": [
+        "Blood Golem"
+      ],
+      "sources": [
+        "Blood Golems (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "bone-wall",
+      "name": "Bone Wall",
+      "tier": "C+",
+      "className": "Necromancer",
+      "skills": [
+        "Bone Wall"
+      ],
+      "sources": [
+        "Bone Wall"
+      ]
+    },
+    {
+      "id": "bone-spear-proc",
+      "name": "Bone Spear Proc",
+      "tier": "C",
+      "className": "Necromancer",
+      "skills": [
+        "Bone Spear"
+      ],
+      "sources": [
+        "Bone Spear Proc (Brand)"
+      ]
+    },
+    {
+      "id": "phys-skele-summon",
+      "name": "Phys Skele Summon",
+      "tier": "C",
+      "className": "Necromancer",
+      "skills": [
+        "Raise Skeleton Warrior"
+      ],
+      "sources": [
+        "Phys Skele Summon (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "ele-summon",
+      "name": "Ele Summon",
+      "tier": "C-",
+      "className": "Necromancer",
+      "skills": [
+        "Raise Skeletal Mage"
+      ],
+      "sources": [
+        "Ele Summon (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "clay-golems",
+      "name": "Clay Golems",
+      "tier": "D+",
+      "className": "Necromancer",
+      "skills": [
+        "Clay Golem"
+      ],
+      "sources": [
+        "Clay Golems (H Lvl 1)"
+      ]
+    },
+    {
+      "id": "pure-phys-revives",
+      "name": "Pure Phys Revives",
+      "tier": "D+",
+      "className": "Necromancer",
+      "skills": [
+        "Revive"
+      ],
+      "sources": [
+        "Pure Phys Revives (Etern + ST) (BL's)"
+      ]
+    },
+    {
+      "id": "pure-ele-revives",
+      "name": "Pure Ele Revives",
+      "tier": "D-",
+      "className": "Necromancer",
+      "skills": [
+        "Revive"
+      ],
+      "sources": [
+        "Pure Ele Revives (Etern + ST) (Souls)"
+      ]
+    },
+    {
+      "id": "confuse",
+      "name": "Confuse",
+      "tier": "F-",
+      "className": "Necromancer",
+      "skills": [
+        "Confuse",
+        "Amplify Damage",
+        "Iron Maiden"
+      ],
+      "sources": [
+        "Confuse (+ Amp + Iron Maiden)"
+      ]
+    }
+  ]
+}

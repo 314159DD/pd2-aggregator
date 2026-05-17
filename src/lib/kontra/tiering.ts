@@ -15,18 +15,16 @@ export function tierFor(normalizedMpm: number, cutoffs: TierCutoff[]): Tier {
 
 /**
  * Builds tested under a handicap ("(H Lvl N)" in the name) post a lower raw
- * MPM than their true strength. The Dark Humility methodology compensates by
- * promoting the build by 3 sub-tiers per handicap level.
- *
- * Independently reimplemented from the algorithm used by
- * JakubKontra/pd2-dh-tierlist (no licence file present in that repo — this is
- * the arithmetic rule reimplemented, not their code).
+ * MPM than their true strength. Per the Dark Humility sheet's own legend
+ * ("H Lvl 1 = +1/3 Tier, Lvl 2 = +2/3 Tier"), each handicap level promotes
+ * the build by one sub-tier (a third of a full letter). Negative levels
+ * demote.
  */
 export function applyHandicap(tier: Tier, handicap: number): Tier {
   if (!handicap) return tier;
   const idx = TIER_ORDER.indexOf(tier);
   if (idx === -1) return tier;
-  const shift = Math.round(handicap * 3);
+  const shift = Math.round(handicap);
   const newIdx = Math.max(0, Math.min(TIER_ORDER.length - 1, idx - shift));
   return TIER_ORDER[newIdx];
 }
