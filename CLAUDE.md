@@ -24,6 +24,7 @@ Next.js 16 static-export app that aggregates Project Diablo 2 ladder builds from
 - `npx tsx scripts/build-item-slots-from-wiki.ts` — extend `data/item-slots.json` with every unique/set/runeword from wiki.projectdiablo2.com (re-run after PD2 patches that add items); snapshot entries always win on conflicts
 - `npx tsx scripts/refresh-validation-fixtures.ts` — refresh `src/lib/validation/fixtures/*.json` (run weekly, on PD2 patches, or when parity tests start looking suspicious)
 - `npx tsx scripts/build-price-snapshot.ts` - rebuild `public/price-snapshot.json` from `api.projectdiablo2.com/market/listing` (auto-refreshed nightly by `.github/workflows/refresh-price-snapshot.yml`)
+- `npx tsx scripts/build-kontra-snapshot.ts` — rebuild `data/kontra-builds.json` (build presets + tier letters) from the Dark Humility tier-list Google Sheet + the curated `data/kontra-build-skills.json` mapping (auto-refreshed nightly by the same workflow)
 
 ## Module boundaries
 - `src/lib/data-loader.ts` is the ONLY module that does network or IndexedDB I/O.
@@ -35,6 +36,7 @@ Next.js 16 static-export app that aggregates Project Diablo 2 ladder builds from
 - Snapshot fallback: `data/snapshot.json` (committed; refreshed manually)
 - Mod dictionary: `data/mod-dictionary.json` (built by `scripts/build-mod-dictionary.ts`)
 - Market prices: `api.projectdiablo2.com/market/listing` via the Vercel Edge proxy at `api/market.ts` (live, hover sidecar) and `public/price-snapshot.json` (nightly snapshot, inline median column)
+- Build tier list: Dark Humility S13 tier-list Google Sheet (`docs.google.com/spreadsheets/d/1ipTsARndewEJaREWfcDeuCelKWpCEcFy9nrigp220_Y`) → `data/kontra-builds.json` (build presets + tiers). `data/kontra-build-skills.json` is the hand-curated build→skills mapping the sheet can't provide.
 
 ## Design doc
 `docs/specs/2026-05-08-pd2-build-affix-aggregator-design.md` (architectural rationale + the mid-impl revision after the API turned out to paginate)

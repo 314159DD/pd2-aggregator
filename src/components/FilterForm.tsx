@@ -9,6 +9,7 @@ import {
   PRESET_MIN_LEVEL,
   isPresetActive,
 } from "@/lib/buildPresets";
+import { tierSquareClass } from "@/lib/kontra/tierStyle";
 
 // Icons mirrored from pd2.tools/icons (218 PD2 skill icons, ~970 KB total).
 // Self-hosted because the wiki's Special:FilePath redirect drops some skills
@@ -234,12 +235,14 @@ export function FilterForm({ initial, onSubmit }: Props) {
               );
               return (
                 <button
-                  key={preset.name}
+                  key={preset.id}
                   type="button"
+                  title={`${preset.name} — Tier ${preset.tier}`}
                   className={
-                    active
-                      ? "px-2.5 py-1 text-xs rounded-sm font-bold uppercase tracking-wider border border-[#5e4a1f] text-[#0a0604] shadow-[inset_0_1px_0_rgba(255,212,122,0.5),0_0_10px_rgba(201,160,75,0.3)] bg-gradient-to-b from-[#dfb55a] to-[#a07a30] transition"
-                      : "px-2.5 py-1 text-xs rounded-sm border border-[#7a5e29] font-medium text-[#f5e3b5] bg-gradient-to-b from-[#5a3f24] to-[#382514] hover:from-[#6e4f30] hover:to-[#4a3220] hover:border-[#c9a04b] hover:text-[#ffd47a] transition"
+                    "flex items-stretch overflow-hidden rounded-sm text-xs transition " +
+                    (active
+                      ? "border border-[#5e4a1f] shadow-[inset_0_1px_0_rgba(255,212,122,0.5),0_0_10px_rgba(201,160,75,0.3)]"
+                      : "border border-[#7a5e29] hover:border-[#c9a04b]")
                   }
                   onClick={() =>
                     setS({
@@ -251,7 +254,24 @@ export function FilterForm({ initial, onSubmit }: Props) {
                     })
                   }
                 >
-                  {preset.name}
+                  <span
+                    className={
+                      "flex items-center justify-center px-1.5 font-bold tracking-tight " +
+                      tierSquareClass(preset.tier)
+                    }
+                  >
+                    {preset.tier}
+                  </span>
+                  <span
+                    className={
+                      "px-2.5 py-1 font-medium tracking-wider " +
+                      (active
+                        ? "text-[#0a0604] bg-gradient-to-b from-[#dfb55a] to-[#a07a30]"
+                        : "text-[#f5e3b5] bg-gradient-to-b from-[#5a3f24] to-[#382514] hover:from-[#6e4f30] hover:to-[#4a3220] hover:text-[#ffd47a]")
+                    }
+                  >
+                    {preset.name}
+                  </span>
                 </button>
               );
             })}

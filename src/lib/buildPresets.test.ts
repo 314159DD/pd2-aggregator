@@ -58,13 +58,32 @@ describe("BUILD_PRESETS data", () => {
   });
 });
 
+describe("BUILD_PRESETS (kontra source)", () => {
+  it("is grouped by class and every preset carries a tier", () => {
+    for (const [cls, presets] of Object.entries(BUILD_PRESETS)) {
+      expect(presets.length).toBeGreaterThan(0);
+      for (const p of presets) {
+        expect(p.tier, `${cls}/${p.name} missing tier`).toBeTruthy();
+        expect(p.skills.length, `${cls}/${p.name} has no skills`).toBeGreaterThan(0);
+        expect(p.className, `${cls}/${p.name} className mismatch`).toBe(cls);
+        expect(p.id, `${cls}/${p.name} missing id`).toBeTruthy();
+      }
+    }
+  });
+
+  it("preset ids are unique within a class", () => {
+    for (const [cls, presets] of Object.entries(BUILD_PRESETS)) {
+      const ids = presets.map((p) => p.id);
+      expect(ids.length, `${cls} has duplicate preset ids`).toBe(new Set(ids).size);
+    }
+  });
+});
+
 describe("isPresetActive", () => {
-  const hammerdin: BuildPreset = {
-    name: "Hammerdin",
+  const hammerdin: Pick<BuildPreset, "skills"> = {
     skills: ["Blessed Hammer"],
   };
-  const auradin: BuildPreset = {
-    name: "Auradin",
+  const auradin: Pick<BuildPreset, "skills"> = {
     skills: ["Holy Fire", "Holy Shock"],
   };
 
