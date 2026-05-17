@@ -55,9 +55,10 @@ const CLASSES = [
 type Props = {
   initial: UiState;
   onSubmit: (s: UiState) => void;
+  onReset: () => void;
 };
 
-export function FilterForm({ initial, onSubmit }: Props) {
+export function FilterForm({ initial, onSubmit, onReset }: Props) {
   const [s, setS] = useState<UiState>(initial);
   const [skillList, setSkillList] = useState<SkillUsageRow[]>([]);
   const [skillsLoading, setSkillsLoading] = useState(false);
@@ -431,12 +432,21 @@ export function FilterForm({ initial, onSubmit }: Props) {
         )}
       </div>
 
-      <Button
-        onClick={() => onSubmit(s)}
-        className="w-full sm:w-auto bg-gradient-to-b from-[#c9a04b] to-[#8a6f2e] text-[#0a0604] hover:from-[#dfb55a] hover:to-[#a08036] font-bold uppercase tracking-widest border border-[#5e4a1f] shadow-[inset_0_1px_0_rgba(255,212,122,0.4),0_2px_6px_rgba(0,0,0,0.5)]"
-      >
-        Generate
-      </Button>
+      <div className="flex flex-wrap items-center gap-3">
+        <Button
+          onClick={() => onSubmit(s)}
+          className="w-full sm:w-auto bg-gradient-to-b from-[#c9a04b] to-[#8a6f2e] text-[#0a0604] hover:from-[#dfb55a] hover:to-[#a08036] font-bold uppercase tracking-widest border border-[#5e4a1f] shadow-[inset_0_1px_0_rgba(255,212,122,0.4),0_2px_6px_rgba(0,0,0,0.5)]"
+        >
+          Generate
+        </Button>
+        <button
+          type="button"
+          onClick={onReset}
+          className="text-xs uppercase tracking-wider text-muted-foreground hover:text-[#ffd47a] underline underline-offset-2 transition"
+        >
+          Reset
+        </button>
+      </div>
     </div>
   );
 }

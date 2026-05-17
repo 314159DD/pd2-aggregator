@@ -20,7 +20,7 @@ const cinzel = Cinzel({
 });
 
 export const metadata: Metadata = {
-  title: "PD2 Build Aggregator",
+  title: "PD2 Meta Info",
   description:
     "Aggregates Project Diablo 2 ladder builds — what items and affixes top players actually wear.",
 };

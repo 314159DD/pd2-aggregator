@@ -103,12 +103,7 @@ export function AffixFrequencyTable({
       {/* Cross-slot summary */}
       {summary.mods.length > 0 && (
         <div className="d2-slot-block" style={{ borderLeftColor: "#c9a04b" }}>
-          <h3 className="d2-sublabel mb-2">
-            All slots combined{" "}
-            <span className="text-muted-foreground/60 normal-case tracking-normal text-[10px] font-normal">
-              (n={summary.totalItems.toLocaleString()} rolled items)
-            </span>
-          </h3>
+          <h3 className="d2-sublabel mb-2">All slots combined</h3>
           <table className="w-full text-sm">
             <thead>
               <tr className="text-[10px] uppercase tracking-widest text-muted-foreground/70">

@@ -286,12 +286,17 @@ function LevelDistributionChart({
         return (
           <div
             key={b.level}
-            className="flex flex-col items-center justify-end flex-1 min-w-4 cursor-default"
+            className="group relative flex flex-col items-center justify-end flex-1 min-w-4 cursor-default"
             style={{ height: "100%" }}
-            title={`L${b.level}: ${b.count.toLocaleString()}`}
           >
+            <span
+              className="absolute left-1/2 -translate-x-1/2 px-1 rounded-sm border border-[#5e4a1f] bg-[#1a0f08] text-[10px] font-semibold tabular-nums text-[#ffd47a] whitespace-nowrap opacity-0 group-hover:opacity-100 transition pointer-events-none z-10"
+              style={{ bottom: h + 18 }}
+            >
+              {b.count.toLocaleString()}
+            </span>
             <div
-              className="w-full max-w-7 rounded-sm bg-[#c9a04b] hover:bg-[#dfb55a] transition"
+              className="w-full max-w-7 rounded-sm bg-[#c9a04b] group-hover:bg-[#dfb55a] transition"
               style={{ height: h }}
             />
             <span className="text-[10px] text-muted-foreground tabular-nums leading-none mt-1">
