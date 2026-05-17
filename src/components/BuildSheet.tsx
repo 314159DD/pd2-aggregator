@@ -161,7 +161,7 @@ function SkillFrequencyClassified({
       {display.length === 0 ? (
         <p className="text-sm text-muted-foreground italic">— no data —</p>
       ) : (
-        <table className="w-full text-sm">
+        <table className="block overflow-x-auto sm:table sm:overflow-visible w-full text-sm">
           <thead>
             <tr className="text-[10px] uppercase tracking-widest text-muted-foreground/70">
               <th className="font-normal text-left pb-1">Skill</th>
@@ -286,7 +286,7 @@ function LevelDistributionChart({
         return (
           <div
             key={b.level}
-            className="group relative flex flex-col items-center justify-end flex-1 min-w-4 cursor-default"
+            className="group relative flex flex-col items-center justify-end flex-1 min-w-2 cursor-default"
             style={{ height: "100%" }}
           >
             <span
@@ -320,7 +320,7 @@ function SkillFrequencyLegacy({
       {rows.length === 0 ? (
         <p className="text-sm text-muted-foreground italic">— no data —</p>
       ) : (
-        <table className="w-full text-sm">
+        <table className="block overflow-x-auto sm:table sm:overflow-visible w-full text-sm">
           <tbody>
             {rows.map((sk, i) => (
               <tr key={sk.name}>

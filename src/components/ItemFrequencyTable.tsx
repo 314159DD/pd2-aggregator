@@ -60,7 +60,7 @@ export function ItemFrequencyTable({
                   — no fixed-quality items mapped —
                 </p>
               ) : (
-                <table className="w-full text-sm">
+                <table className="block overflow-x-auto sm:table sm:overflow-visible w-full text-sm">
                   <colgroup>
                     <col />
                     <col style={{ width: "5.5rem" }} />
