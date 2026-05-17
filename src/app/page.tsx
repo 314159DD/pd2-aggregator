@@ -33,6 +33,8 @@ export default function Page() {
   const [loadingMessage, setLoadingMessage] = useState("Consulting the Horadric Cube…");
   const [diff, setDiff] = useState<CharacterDiff | null>(null);
   const [diffNotFound, setDiffNotFound] = useState(false);
+  // Bumped on reset to remount FilterForm with fresh internal state.
+  const [resetKey, setResetKey] = useState(0);
 
   // Hydrate from URL on mount.
   useEffect(() => {
@@ -40,6 +42,20 @@ export default function Page() {
     setUiState(paramsToUiState(new URLSearchParams(window.location.search)));
     setHydrated(true);
   }, []);
+
+  // Clear all selections and generated output — back to a fresh page load.
+  function handleReset() {
+    setUiState(DEFAULT_UI_STATE);
+    setGuide(null);
+    setError(null);
+    setDiff(null);
+    setDiffNotFound(false);
+    setLoading(false);
+    setResetKey((k) => k + 1);
+    if (typeof window !== "undefined") {
+      window.history.replaceState(null, "", window.location.pathname);
+    }
+  }
 
   async function run(s: UiState) {
     setUiState(s);
@@ -98,7 +114,7 @@ export default function Page() {
   if (!hydrated) {
     return (
       <main className="mx-auto max-w-5xl p-6">
-        <h1 className="d2-title text-3xl sm:text-4xl">PD2 Build Aggregator</h1>
+        <h1 className="d2-title text-3xl sm:text-4xl">PD2 Meta Info</h1>
         <p className="text-sm text-muted-foreground mt-2 italic">Summoning…</p>
       </main>
     );
@@ -107,7 +123,7 @@ export default function Page() {
   return (
     <main className="mx-auto max-w-5xl p-4 sm:p-6 space-y-6">
       <header className="flex items-center justify-between flex-wrap gap-3 border-b border-[#3d2817] pb-3">
-        <h1 className="d2-title text-3xl sm:text-4xl">PD2 Build Aggregator</h1>
+        <h1 className="d2-title text-3xl sm:text-4xl">PD2 Meta Info</h1>
         <div className="flex flex-col items-end gap-1">
           {/* Hand-rolled to match the BMC generator settings (color #c29946,
               black outline) so it blends with the D2 gold theme — beer-mug
@@ -164,7 +180,12 @@ export default function Page() {
         </div>
       </header>
 
-      <FilterForm initial={uiState} onSubmit={run} />
+      <FilterForm
+        key={resetKey}
+        initial={uiState}
+        onSubmit={run}
+        onReset={handleReset}
+      />
 
       {loading && (
         <div className="d2-panel rounded-sm p-4 text-sm text-muted-foreground italic">
@@ -198,60 +219,38 @@ export default function Page() {
       )}
 
       {uiState.mode === "diff" && diff && (
-        <Section
-          title="Diff vs pool"
-          subtitle={`pool n=${guide?.clientAggregates.poolSize.toLocaleString() ?? "?"}`}
-        >
+        <Section title="Diff vs pool">
           <DiffView data={diff} gameMode={uiState.filter.gameMode} />
         </Section>
       )}
 
       {guide && (
         <>
-          <Section
-            title="Average build stats"
-            subtitle={`n=${guide.clientAggregates.poolSize.toLocaleString()}`}
-          >
+          <Section title="Average build stats">
             <div className="space-y-5">
               <AvgStatsPanel rows={guide.clientAggregates.coreStats} />
               <TopAffixAveragesPanel rows={guide.clientAggregates.avgStats} />
             </div>
           </Section>
 
-          <Section
-            title="Top equipped items by slot"
-            subtitle={`n=${guide.itemUsageSampleSize.toLocaleString()}`}
-          >
+          <Section title="Top equipped items by slot">
             <ItemFrequencyTable
               data={guide.topItemsBySlot}
               gameMode={guide.request.filter.gameMode}
             />
           </Section>
 
-          <Section
-            title="Most common affix mods"
-            subtitle={`n=${guide.clientAggregates.poolSize.toLocaleString()} (sample of ${guide.rawSamplePoolSize.toLocaleString()})`}
-          >
+          <Section title="Most common affix mods">
             <AffixFrequencyTable
               data={guide.clientAggregates.affixModsBySlot}
             />
           </Section>
 
-          <Section
-            title="Charm patterns"
-            subtitle={`n=${guide.clientAggregates.poolSize.toLocaleString()}`}
-          >
+          <Section title="Charm patterns">
             <CharmPanel data={guide.clientAggregates.charms} />
           </Section>
 
-          <Section
-            title="Build sheet"
-            subtitle={`n=${(
-              guide.clientAggregates.skillUsage
-                ? guide.clientAggregates.poolSize
-                : guide.skillUsageSampleSize
-            ).toLocaleString()}`}
-          >
+          <Section title="Build sheet">
             <BuildSheet
               data={guide.buildSheet}
               skillUsage={guide.clientAggregates.skillUsage}
