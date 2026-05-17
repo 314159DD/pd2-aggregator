@@ -74,7 +74,7 @@ function ModList({ mods }: { mods: CharmModEntry[] }) {
     return <p className="text-sm text-muted-foreground italic">— no data —</p>;
   }
   return (
-    <table className="w-full text-sm">
+    <table className="block overflow-x-auto sm:table sm:overflow-visible w-full text-sm">
       <thead>
         <tr className="text-[10px] uppercase tracking-widest text-muted-foreground/70">
           <th className="font-normal text-left pb-1">Mod</th>

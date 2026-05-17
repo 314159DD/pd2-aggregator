@@ -104,7 +104,7 @@ export function AffixFrequencyTable({
       {summary.mods.length > 0 && (
         <div className="d2-slot-block" style={{ borderLeftColor: "#c9a04b" }}>
           <h3 className="d2-sublabel mb-2">All slots combined</h3>
-          <table className="w-full text-sm">
+          <table className="block overflow-x-auto sm:table sm:overflow-visible w-full text-sm">
             <thead>
               <tr className="text-[10px] uppercase tracking-widest text-muted-foreground/70">
                 <th className="font-normal text-left pb-1">Mod</th>
@@ -171,7 +171,7 @@ export function AffixFrequencyTable({
 
 function SlotTable({ mods }: { mods: AffixMod[] }) {
   return (
-    <table className="w-full text-sm">
+    <table className="block overflow-x-auto sm:table sm:overflow-visible w-full text-sm">
       <thead>
         <tr className="text-[10px] uppercase tracking-widest text-muted-foreground/70">
           <th className="font-normal text-left pb-1">Mod</th>
