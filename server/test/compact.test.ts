@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { toCompact, enrichRaw } from '../src/core/compact';
+import { toCompact, enrichRaw, InvalidCharacterPayload } from '../src/core/compact';
 import { calculateTotalSkills } from '../src/core/vendor/skill-calculator';
 import ladder from './fixtures/character-ladder.json';
 import nonLadder from './fixtures/character-nonladder.json';
@@ -105,6 +105,32 @@ describe('toCompact', () => {
     const out = toCompact({ character: fx.character, items: [] } as any);
     expect(out.items).toEqual([]);
     expect(out.mercDescription).toBeNull();
+  });
+});
+
+describe('unusual payloads', () => {
+  it('items null', () => {
+    const raw = { ...structuredClone(fx), items: null };
+    const out = toCompact(raw);
+    expect(out.items.every((i) => i.owner === 'merc')).toBe(true);
+    expect(() => enrichRaw(raw, 'A')).not.toThrow();
+  });
+  it('character.skills null', () => {
+    const raw = structuredClone(fx);
+    raw.character.skills = null;
+    expect(toCompact(raw).skills).toEqual([]);
+    expect((enrichRaw(raw, 'A') as any).realSkills).toBeDefined();
+  });
+  it('item without properties', () => {
+    const raw = structuredClone(fx);
+    for (const i of raw.items) delete i.properties;
+    const out = toCompact(raw);
+    expect(out.skills.length).toBeGreaterThan(0);
+    expect(() => enrichRaw(raw, 'A')).not.toThrow();
+  });
+  it('missing character', () => {
+    expect(() => toCompact({ items: [] } as any)).toThrow(InvalidCharacterPayload);
+    expect(() => toCompact({ character: null, items: [] } as any)).toThrow(InvalidCharacterPayload);
   });
 });
 

@@ -32,6 +32,27 @@ export type CompactCharacter = {
   mercDescription: string | null;
 };
 
+export class InvalidCharacterPayload extends Error {
+  constructor(message = 'Character payload has no character') {
+    super(message);
+    this.name = 'InvalidCharacterPayload';
+  }
+}
+
+function safeRealSkills(r: CharacterResponse): ReturnType<typeof calculateTotalSkills> {
+  try {
+    const ch = r.character;
+    const safe = {
+      ...r,
+      items: r.items ?? [],
+      character: ch ? { ...ch, skills: ch.skills ?? [] } : ch,
+    } as CharacterResponse;
+    return calculateTotalSkills(safe);
+  } catch {
+    return [];
+  }
+}
+
 const CHARM_TYPES = new Set(['Small Charm', 'Medium Charm', 'Large Charm']);
 
 function isCharm(item: IItem): boolean {
@@ -64,8 +85,9 @@ function toCompactItem(item: IItem, owner: 'player' | 'merc'): CompactItem | nul
 
 export function toCompact(raw: CharacterApiResponse, accountHint?: string): CompactCharacter {
   const r = raw as unknown as CharacterResponse & { account?: string | null; guild?: string | null };
-  const ch = r.character!;
-  const real = calculateTotalSkills(r);
+  const ch = r.character;
+  if (!ch) throw new InvalidCharacterPayload();
+  const real = safeRealSkills(r);
   const realByName = new Map(real.map((s) => [s.skill, s.level]));
   const items: CompactItem[] = [];
   for (const it of r.items ?? []) {
@@ -104,7 +126,7 @@ export function enrichRaw(raw: CharacterApiResponse, accountName: string): objec
   return {
     ...raw,
     accountName,
-    realSkills: calculateTotalSkills(raw as unknown as CharacterResponse),
+    realSkills: safeRealSkills(raw as unknown as CharacterResponse),
     lastUpdated: Date.now(),
   };
 }
