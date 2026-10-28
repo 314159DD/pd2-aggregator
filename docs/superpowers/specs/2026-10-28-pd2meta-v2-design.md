@@ -23,7 +23,7 @@ Success: on pd2meta.info a player can browse the current season the way pd2.tool
 5. One-time archive import of Seasons 11 to 13 from `api.pd2.tools` while it still serves them.
 
 **Non-goals (v1)**
-- Market / price tools beyond what pd2meta already shows (future, see section 10).
+- Market tools beyond item prices for gear value, budget and shopping list (future, see section 10).
 - Damage calculator, economy pages, corrupted zone tracker, leaderboards page (ladder page is a future candidate).
 - User accounts, logins, saved builds, writes of any kind to PD2.
 - Non-ladder characters, characters under level 80.
@@ -65,24 +65,29 @@ Consequences for this build:
 
 ## 4. What we are replicating
 
-### 4.1 Builds tab (parity with pd2.tools/builds)
+### 4.1 Builds tab (pd2trader.com/builds feature set, which is a superset of pd2.tools/builds)
 
-Reference implementation (MIT, `coleestrin/pd2-tools`, read `upstream/main` in `../pd2-tools-fork`): `web/src/pages/Builds.tsx`, `web/src/components/builds/*`, `web/src/hooks/useCharacterFilters.ts`, `useCharacterData.ts`, `api/src/routes/characters.ts`, `api/src/database/postgres/index.ts` (`buildFilterCTE` ~L784, `analyze*Usage` ~L1065 to 1253).
+Owner decision 2026-10-28: the Builds tab matches what pd2trader.com/builds offers (screenshots taken headless 2026-10-28, see Appendix A). We rebuild the features in our own code and our own look; pd2trader's web code is closed source and its branding and art are not ours to copy. The pd2.tools implementation (MIT, `coleestrin/pd2-tools`, read `upstream/main` in `../pd2-tools-fork`: `web/src/pages/Builds.tsx`, `web/src/components/builds/*`, `api/src/routes/characters.ts`, `api/src/database/postgres/index.ts` `buildFilterCTE` ~L784 and `analyze*Usage` ~L1065 to 1253) is the reference for filter semantics and SQL.
 
 Must have:
-- **Toolbar:** season select, Softcore/Hardcore, level range 80 to 99 (slider), client-side search over the cards, "Found N characters", reset filters.
-- **Cards** (each row toggles a filter, selected rows highlighted, sorted by % desc, % is of the filtered pool):
-  - Classes (7, with icons).
-  - Items: uniques, sets, runewords on the character. Excludes Hellfire Torch, Annihilus, Call to Arms, Lidless Wall, Crescent Moon (pd2.tools behaviour; we keep it).
-  - Skills: % of characters with 20+ hard points.
-  - Merc type: raw description mapped to "A1 Vigor" style labels (13 mappings in pd2.tools `MercTypeCard`).
+- **Header line:** season name, mode, character count, one-sentence explainer.
+- **Toolbar:** season select (current + archive seasons), Softcore/Hardcore segmented, level presets 80+ / 85+ / 90+ / 95+ / 99.
+- **Class share:** a segmented bar across the full width plus one tile per class (icon, %, count), click to filter; "All classes N".
+- **Gear budget:** slider from 0 to "Any" that filters characters by total gear value in HR (needs prices, see 4.4).
+- **Side cards** (each: search box, count of distinct entries, top 8 with "Show all N", % bar behind the row, click toggles a filter, % is of the filtered pool):
+  - Skills (% with 20+ hard points).
+  - Items (uniques, sets, runewords; quality colour on the name). pd2.tools excluded Torch, Anni, CTA, Lidless; pd2trader does not. We do not exclude. *(my call)*
+  - Mercenary (type; pd2trader groups Act 2 as "Defensive Auras" / "Offensive Auras" plus Fire Arrow, Cold Arrow, Might Merc, Unknown; builder picks a grouping that maps every raw description).
   - Merc items.
-- **Filter semantics:** classes OR, items AND, skills AND (each `{name, minLevel}`, default 20), merc types OR, merc items AND, plus season, mode, level range.
-- **Character table:** name, level + class icon, life, mana, top skills by real level. Paginated server side, 40 per page. Rows link to the character page with prev/next navigation through the current result list.
+- **Shopping list:** the 10 items most worn by the filtered pool, with % worn, live median price in HR, market link, and the sum ("Σ 1.63 HR").
+- **Character table:** character name + class, level, life, top 3 skills (icons), key gear (item icons), gear value in HR. Server-side sort on level, life, gear value; 25 per page with Prev / Next and "Page X of Y".
+- **Row expand (inline preview):** skills with hard and total levels as bars, worn gear with per-item prices, stats (life, mana, str, dex, vit, ene), merc type and merc gear icons, "Full character" link.
+- **Filter semantics:** classes OR, items AND, skills AND (each `{name, minLevel}`, default 20), merc types OR, merc items AND, plus season, mode, min level, gear budget.
 - **URL state:** every filter in the query string, shareable.
-- **Character page:** header (name, mode, season, account link, link to projectdiablo2.com, last updated, refresh button), equipment grid with player/merc toggle, skills (hard / with +skills), stats (defensive, attributes, resists, absorb, speed, procs, leech; pd2.tools `utils/character-stats.ts`), level history chart from our own snapshots. No damage calculator.
+- **Character page:** header (name, class, level, mode, season, account link, link to projectdiablo2.com, last updated, refresh button), equipment grid with player/merc toggle and item tooltips, skills (hard / with +skills), stats (defensive, attributes, resists, absorb, speed, procs, leech; pd2.tools `utils/character-stats.ts`), gear value, level history chart from our own history rows. No damage calculator.
 - **Account page:** all tracked characters of an account for the season.
 - **"Add account"** request: queues an account for priority ingest (rate-limited per IP).
+- **Build share history** (pd2trader has `/api/builds/meta/history`, hourly class and top item shares): we store a daily aggregate per season and mode, and show class share over time on the Builds tab. *(my call: daily, not hourly)*
 
 ### 4.2 Meta tab (today's pd2meta)
 
@@ -100,6 +105,10 @@ Changes from today:
 - No client worker / raw pool download; Meta calls aggregate endpoints.
 - Results update as filters change (debounced); no "Generate" button needed. *(my call)*
 
+### 4.4 Prices (needed in v1 now)
+
+Gear value, gear budget and the shopping list need item prices, so a price source moves into v1. Our own: the collector polls `market/listing` (ladder, both modes) inside the same 1 req/s budget, and an hourly job computes per-item median ask price in HR over the last 7 days (reuse `scripts/build-price-snapshot.ts` parsing in `src/lib/price/parse.ts`; free-text prices that do not parse are dropped). Unpriced items show "n/a". Rune prices feed runeword cost. pd2trader's API (with a registered key, server side only) is a later option, not a dependency. *(my call)*
+
 ### 4.3 Shared shell
 
 - Header with the two tabs, **Builds** left, **Meta** right, plus season and mode switch shared by both tabs.
@@ -115,7 +124,7 @@ api.projectdiablo2.com
    VPS, Docker        VPS, Docker      VPS, Docker, HTTPS via api.pd2meta.info
 ```
 
-**Hosting (my call, flag if wrong):** the existing VPS (76.13.140.109), three containers (collector, read API, Postgres) in one compose project, HTTPS reverse proxy (Caddy) on `api.pd2meta.info`. The collector has to run nonstop, so it cannot live on Vercel. The site stays on Vercel. No new spend.
+**Hosting (my call, flag if wrong):** the existing VPS (76.13.140.109), three containers (collector, read API, Postgres) in one compose project, HTTPS via the host's existing nginx (it already terminates 80/443 for the other projects) on `api.pd2meta.info`. Checked 2026-10-28: 18 GB disk free, 3.4 GB RAM available; pd2meta.info itself is on Vercel, not on the VPS. The collector has to run nonstop, so it cannot live on Vercel. The site stays on Vercel. No new spend.
 
 **Language:** TypeScript/Node for collector and API, so pd2-tools code (MIT) ports directly: `jobs/character-scraper.ts`, `utils/parser.ts`, `utils/skill-calculator.ts`, `utils/character-stats.ts`, the profanity filter. Keep the MIT notice and credit pd2-tools / Cole Estrin in the repo and the site footer.
 
@@ -175,7 +184,7 @@ Application here (my call, flag if wrong):
 
 1. **Pipeline:** collector + Postgres + read API (pd2.tools-compatible endpoints) on the VPS, S14 data flowing, `/health` green. Exit: S14 characters > 5,000 and growing; Builds endpoints return the same shapes as pd2.tools.
 1b. **Stopgap (owner decision):** point today's pd2meta at our `/characters` endpoint (one base URL change plus the stats endpoints) and redeploy, so pd2meta.info shows S14 within days. This temporarily keeps the raw pool download (accepted exception to the anti-goal until phase 3 replaces it).
-2. **Builds tab:** shell with tabs, Builds page, character page, account page, on the new API. Exit: parity checklist in 4.1 ticked.
+2. **Builds tab:** shell with tabs, price job (4.4), Builds page, character page, account page, on the new API. Exit: checklist in 4.1 ticked.
 3. **Meta tab:** move pd2meta onto the Meta endpoints, server-side aggregation, drop the raw pool. Exit: the 7 validation fixtures still pass (re-captured against our API), every 4.2 feature works.
 4. **Look + launch:** LEXADIS look across both tabs, footer credits, deploy, point pd2meta.info at it.
 5. **Archive import** S11 to S13.
@@ -202,9 +211,14 @@ Application here (my call, flag if wrong):
 - The site is Builds + Meta; market later.
 - Two tabs at the top: Builds (classic pd2.tools way) left, Meta (our tool) right.
 - Spec goes to subagents for the build.
+- Builds tab copies the pd2trader.com/builds feature set (4.1), with our own code and look.
 - Ship the stopgap (phase 1b) so pd2meta shows S14 quickly; the clean Meta rebuild follows Builds.
 - PD2 team asked on their Discord (2026-10-28): our collector is fine as long as usage stays respectful. That means the 1 req/s ceiling and peak-hour pause in 5.1 stay on.
 
 ## 12. Left to the builder
 
 Exact DDL and indexes, queue implementation, cache technology, compose layout, component structure, chart library, test framework details, how to compress `raw`, pagination of the archive import, and whether Next.js stays static export (character pages by query param) or uses dynamic routes on Vercel.
+
+## Appendix A. Reference screenshots
+
+Headless captures of pd2trader.com/builds (2026-10-28), full page and with one character row expanded, are in the session scratchpad; recapture with Playwright if needed (`https://pd2trader.com/builds`, click a character name). Their data endpoints, for reference only: `/api/builds/usage`, `/api/builds/characters?page&pageSize&sort&dir`, `/api/builds/shopping-list`, `/api/builds/characters/{name}`, `/api/builds/meta/history`.
