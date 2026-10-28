@@ -73,4 +73,23 @@ describe('RateLimiter', () => {
     ).rejects.toThrow('x');
     await expect(l.schedule(async () => 5)).resolves.toBe(5);
   });
+
+  it('starts task N+1 only after task N settles', async () => {
+    const c = fake();
+    const l = mk(c);
+    const events: string[] = [];
+    let release!: () => void;
+    const gate = new Promise<void>((r) => (release = r));
+    const p1 = l.schedule(async () => {
+      events.push('start1');
+      await gate;
+      events.push('end1');
+    });
+    const p2 = l.schedule(async () => void events.push('start2'));
+    await new Promise((r) => setTimeout(r, 20));
+    expect(events).toEqual(['start1']);
+    release();
+    await Promise.all([p1, p2]);
+    expect(events).toEqual(['start1', 'end1', 'start2']);
+  });
 });

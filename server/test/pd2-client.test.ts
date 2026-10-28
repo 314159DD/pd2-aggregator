@@ -71,4 +71,53 @@ describe('Pd2Client', () => {
     await client.character('x'); // backoff reset
     expect(sleeps[1]).toBe(1000);
   });
+
+  it('account 404 -> empty account, counts as success', async () => {
+    let status = 500;
+    const { client, sleeps } = setup(() => new Response('', { status }));
+    await client.online().catch(() => {});
+    status = 404;
+    expect(await client.account('gone')).toEqual({ characters: [], details: [] });
+    await client.account('gone');
+    expect(sleeps[1]).toBe(1000);
+  });
+  it('account defaults missing details', async () => {
+    const { client } = setup(() => json({ characters: ['a'] }));
+    expect(await client.account('x')).toEqual({ characters: ['a'], details: [] });
+  });
+  it('odd 200 bodies -> retryable UpstreamError and failure reported', async () => {
+    let body: unknown = {};
+    const { client, sleeps } = setup(() => json(body));
+    for (const call of [
+      () => client.ladder(),
+      () => client.account('x'),
+      () => client.listings({ limit: 1, skip: 0, sortBumpedDesc: false }),
+    ]) {
+      const e = await call().catch((x) => x);
+      expect(e).toBeInstanceOf(UpstreamError);
+      expect(e.retryable).toBe(true);
+    }
+    body = null;
+    const e = await client.online().catch((x) => x);
+    expect(e).toBeInstanceOf(UpstreamError);
+    expect(e.retryable).toBe(true);
+    body = [];
+    await client.online();
+    expect(sleeps.at(-1)).toBeGreaterThan(1000); // backoff was active
+  });
+  it('timeout/abort -> retryable UpstreamError', async () => {
+    const limiter = new RateLimiter({
+      minIntervalMs: 0, pauseStartHour: 12, pauseEndHour: 14,
+      now: () => Date.parse('2026-10-28T22:00:00Z'), sleep: async () => {},
+    });
+    const fetchImpl = ((_u: string, init: any) =>
+      new Promise((_res, rej) => {
+        init.signal.addEventListener('abort', () => rej(init.signal.reason));
+      })) as unknown as typeof fetch;
+    const client = new Pd2Client(limiter, fetchImpl, 'https://x.test', { timeoutMs: 20 });
+    const e = await client.online().catch((x) => x);
+    expect(e).toBeInstanceOf(UpstreamError);
+    expect(e.retryable).toBe(true);
+    expect(e.status).toBeNull();
+  });
 });
