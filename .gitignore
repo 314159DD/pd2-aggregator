@@ -46,3 +46,9 @@ mod-ids.txt
 
 # price-snapshot builder audit output
 data/price-snapshot.unmatched.json
+
+# server package
+server/.pgtest/
+server/node_modules/
+server/dist/
+!server/.env.example
