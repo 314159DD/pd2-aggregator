@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import type { Pool } from 'pg';
 import { freshDb } from './helpers/db';
 import { toCompact, enrichRaw } from '../src/core/compact';
@@ -7,8 +7,8 @@ import ladder from './fixtures/character-ladder.json';
 
 const fx = ladder as any;
 let pool: Pool;
-beforeAll(async () => { pool = await freshDb(); });
-afterAll(async () => { await pool.end(); });
+beforeEach(async () => { pool = await freshDb(); });
+afterEach(async () => { await pool.end(); });
 
 describe('characters repo', () => {
   it('upserts, dedupes history, and round-trips raw', async () => {
@@ -45,8 +45,31 @@ describe('characters repo', () => {
 
   it('writes history again after 24h', async () => {
     const c = toCompact(fx, 'MC-MEEKS');
-    c.experience += 1;
+    await upsertCharacter(pool, 14, c, {}, new Date('2026-10-29T10:00:00Z'));
     const r = await upsertCharacter(pool, 14, c, {}, new Date('2026-10-31T10:00:00Z'));
     expect(r.historyWritten).toBe(true); // same experience as last row, but older than 24h
+  });
+
+  it('replaces children on re-upsert', async () => {
+    const c = toCompact(fx, 'MC-MEEKS');
+    expect(c.items.length).toBeGreaterThan(1);
+    expect(c.skills.length).toBeGreaterThan(1);
+    const a = await upsertCharacter(pool, 14, { ...c, mercDescription: 'Merc' }, {}, new Date('2026-10-29T10:00:00Z'));
+    expect((await pool.query('select count(*)::int n from character_merc')).rows[0].n).toBe(1);
+    const smaller = { ...c, items: c.items.slice(0, 1), skills: c.skills.slice(0, 1), mercDescription: null };
+    const b = await upsertCharacter(pool, 14, smaller, {}, new Date('2026-10-29T11:00:00Z'));
+    expect(b.id).toBe(a.id);
+    expect((await pool.query('select count(*)::int n from character_items')).rows[0].n).toBe(1);
+    expect((await pool.query('select count(*)::int n from character_skills')).rows[0].n).toBe(1);
+    expect((await pool.query('select count(*)::int n from character_merc')).rows[0].n).toBe(0);
+  });
+
+  it('dedupes duplicate skills keeping the highest hardLevel', async () => {
+    const c = toCompact(fx, 'MC-MEEKS');
+    const s = c.skills[0];
+    const dup = { ...c, skills: [{ ...s, hardLevel: 3 }, { ...s, hardLevel: 9 }, { ...s, hardLevel: 5 }] };
+    const r = await upsertCharacter(pool, 14, dup, {}, new Date('2026-10-29T10:00:00Z'));
+    const rows = (await pool.query('select hard_level from character_skills where character_id = $1', [r.id])).rows;
+    expect(rows).toEqual([{ hard_level: 9 }]);
   });
 });
