@@ -4,7 +4,7 @@
   "private": true,
   "type": "commonjs",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && node scripts/copy-migrations.js",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "collector": "node dist/collector/main.js",

@@ -52,3 +52,4 @@ server/.pgtest/
 server/node_modules/
 server/dist/
 !server/.env.example
+server/.pgdev/
