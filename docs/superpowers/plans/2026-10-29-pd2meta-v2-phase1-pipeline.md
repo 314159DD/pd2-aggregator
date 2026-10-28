@@ -6,7 +6,7 @@
 
 **Architecture:** One Node/TypeScript package `server/` in this repo with two entrypoints: `collector` (single process, one global rate limiter shared by character discovery, character ingest and market polling) and `api` (Express). Both talk to one Postgres 17. Deployed on the VPS 76.13.140.109 as a compose project in `/opt/pd2meta`, HTTPS through the host nginx. The existing Next app at the repo root only changes its API base URL.
 
-**Tech Stack:** Node 22, TypeScript 5, Express 4, `pg` 8, `lru-cache` 11, `@2toad/profanity` 3, vitest 4, Postgres 17 (Docker on VPS; native `C:\pg17` port 55432 for local tests, no Docker locally), nginx + certbot on the host.
+**Tech Stack:** Node 22, TypeScript 5, Express 4, `pg` 8, `lru-cache` 11, `@2toad/profanity` 3, vitest 4, Postgres 17 (Docker on VPS; `embedded-postgres` for local tests, no Docker locally), nginx + certbot on the host.
 
 **Spec:** `docs/superpowers/specs/2026-10-28-pd2meta-v2-design.md` (sections 3, 5, 8 phase 1 and 1b). Later phases get their own plans.
 
