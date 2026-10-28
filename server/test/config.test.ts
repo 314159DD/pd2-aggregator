@@ -31,6 +31,12 @@ describe('loadConfig', () => {
     expect(c.corsOrigins).toEqual(['https://a.test', 'https://b.test']);
   });
 
+  it('reads pause hours from PD2_PAUSE_* vars', () => {
+    const c = loadConfig({ DATABASE_URL: 'x', PD2_PAUSE_START_HOUR: '3', PD2_PAUSE_END_HOUR: '5' });
+    expect(c.pauseStartHour).toBe(3);
+    expect(c.pauseEndHour).toBe(5);
+  });
+
   it('throws without DATABASE_URL', () => {
     expect(() => loadConfig({})).toThrow(/DATABASE_URL/);
   });
