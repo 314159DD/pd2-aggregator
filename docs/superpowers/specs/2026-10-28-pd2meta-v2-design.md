@@ -109,6 +109,10 @@ Changes from today:
 
 Gear value, gear budget and the shopping list need item prices, so a price source moves into v1. Our own: the collector polls `market/listing` (ladder, both modes) inside the same 1 req/s budget, and an hourly job computes per-item median ask price in HR over the last 7 days (reuse `scripts/build-price-snapshot.ts` parsing in `src/lib/price/parse.ts`; free-text prices that do not parse are dropped). Unpriced items show "n/a". Rune prices feed runeword cost. pd2trader's API (with a registered key, server side only) is a later option, not a dependency. *(my call)*
 
+Measured 2026-10-28: `market/listing` returns at most 250 per page, ~170k open listings, and about 250 listings are created or bumped every 90 s. So: one request every 60 to 90 s sorted by `bumped_at` desc keeps us current (~1,000 requests/day), plus a full sweep (~680 requests, ~11 min) every 6 h to notice listings that disappeared. A listing that disappears without being bumped away counts as a likely sale; store it with its last price so the price job can prefer likely-sold prices over asking prices once enough samples exist. Store listings compactly (item name, quality, base, runeword key, corrupted flag, ladder/hardcore, parsed price HR, first seen, last seen), not the full item JSON.
+
+Gear value of a character = sum of the median prices of its equipped items that have a price (plus merc items: builder's call, show it separately). Items without a price add 0 and the UI marks the value as partial.
+
 ### 4.3 Shared shell
 
 - Header with the two tabs, **Builds** left, **Meta** right, plus season and mode switch shared by both tabs.
