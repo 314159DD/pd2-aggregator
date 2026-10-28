@@ -12,7 +12,14 @@ export async function upsertCharacter(
   now: Date = new Date(),
 ): Promise<{ id: number; historyWritten: boolean }> {
   const raw = gzipSync(JSON.stringify(enrichedRaw));
+  const skillMap = new Map<string, { skill: string; hardLevel: number; realLevel: number | null }>();
+  for (const sk of c.skills) {
+    const prev = skillMap.get(sk.skill);
+    if (!prev || sk.hardLevel > prev.hardLevel) skillMap.set(sk.skill, sk);
+  }
+  const skills = [...skillMap.values()];
   const client = await pool.connect();
+  let destroy = false;
   try {
     await client.query('begin');
     const up = await client.query(
@@ -35,11 +42,11 @@ export async function upsertCharacter(
     await client.query('delete from character_items where character_id = $1', [id]);
     await client.query('delete from character_merc where character_id = $1', [id]);
 
-    if (c.skills.length) {
+    if (skills.length) {
       await client.query(
         `insert into character_skills (character_id, skill, hard_level, real_level)
          select $1, * from unnest($2::text[], $3::int[], $4::int[])`,
-        [id, c.skills.map((s) => s.skill), c.skills.map((s) => s.hardLevel), c.skills.map((s) => s.realLevel)],
+        [id, skills.map((s) => s.skill), skills.map((s) => s.hardLevel), skills.map((s) => s.realLevel)],
       );
     }
     if (c.items.length) {
@@ -78,10 +85,14 @@ export async function upsertCharacter(
     await client.query('commit');
     return { id, historyWritten };
   } catch (e) {
-    await client.query('rollback');
+    try {
+      await client.query('rollback');
+    } catch {
+      destroy = true;
+    }
     throw e;
   } finally {
-    client.release();
+    client.release(destroy);
   }
 }
 
