@@ -1,0 +1,79 @@
+{
+ "account": "classic_89",
+ "characters": [
+  "bnec_cls",
+  "betryl_classic",
+  "alli_pal",
+  "zzt_cls",
+  "frstt_z",
+  "bb_cls"
+ ],
+ "details": [
+  {
+   "account": "classic_89",
+   "class": 2,
+   "class_name": "Necromancer",
+   "created_date": 1764353327,
+   "guild": null,
+   "hardcore": false,
+   "ladder": false,
+   "level": 93,
+   "name": "bnec_cls"
+  },
+  {
+   "account": "classic_89",
+   "class": 2,
+   "class_name": "Necromancer",
+   "created_date": 1777050411,
+   "guild": null,
+   "hardcore": false,
+   "ladder": false,
+   "level": 91,
+   "name": "betryl_classic"
+  },
+  {
+   "account": "classic_89",
+   "class": 3,
+   "class_name": "Paladin",
+   "created_date": 1792786502,
+   "guild": null,
+   "hardcore": false,
+   "ladder": true,
+   "level": 89,
+   "name": "Alli_pal"
+  },
+  {
+   "account": "classic_89",
+   "class": 1,
+   "class_name": "Sorceress",
+   "created_date": 1765552772,
+   "guild": null,
+   "hardcore": false,
+   "ladder": false,
+   "level": 79,
+   "name": "zzt_cls"
+  },
+  {
+   "account": "classic_89",
+   "class": 0,
+   "class_name": "Amazon",
+   "created_date": 1793004512,
+   "guild": null,
+   "hardcore": false,
+   "ladder": true,
+   "level": 13,
+   "name": "Frstt_z"
+  },
+  {
+   "account": "classic_89",
+   "class": 4,
+   "class_name": "Barbarian",
+   "created_date": 1777654235,
+   "guild": null,
+   "hardcore": false,
+   "ladder": false,
+   "level": 1,
+   "name": "bb_cls"
+  }
+ ]
+}
