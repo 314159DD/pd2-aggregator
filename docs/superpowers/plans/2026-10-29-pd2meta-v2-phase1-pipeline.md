@@ -6,7 +6,7 @@
 
 **Architecture:** One Node/TypeScript package `server/` in this repo with two entrypoints: `collector` (single process, one global rate limiter shared by character discovery, character ingest and market polling) and `api` (Express). Both talk to one Postgres 17. Deployed on the VPS 76.13.140.109 as a compose project in `/opt/pd2meta`, HTTPS through the host nginx. The existing Next app at the repo root only changes its API base URL.
 
-**Tech Stack:** Node 22, TypeScript 5, Express 4, `pg` 8, `lru-cache` 11, `@2toad/profanity` 3, vitest 4, Postgres 17 (Docker on VPS; native `C:\pg17` port 55432 for local tests), nginx + certbot on the host.
+**Tech Stack:** Node 22, TypeScript 5, Express 4, `pg` 8, `lru-cache` 11, `@2toad/profanity` 3, vitest 4, Postgres 17 (Docker on VPS; native `C:\pg17` port 55432 for local tests, no Docker locally), nginx + certbot on the host.
 
 **Spec:** `docs/superpowers/specs/2026-10-28-pd2meta-v2-design.md` (sections 3, 5, 8 phase 1 and 1b). Later phases get their own plans.
 
@@ -75,14 +75,14 @@ deploy/
   RUNBOOK.md
 ```
 
-Local test database: start native Postgres with `C:\pg17\bin\pg_ctl.exe -D C:\pg17\data -l C:\pg17\log.txt start` (trust auth, port 55432), then `C:\pg17\bin\createdb.exe -h localhost -p 55432 -U postgres pd2meta_test`. Tests read `TEST_DATABASE_URL=postgres://postgres@localhost:55432/pd2meta_test`.
+Local test database: there is no local Postgres and no Docker on the dev machine. Tests start a real Postgres 17 through the npm package `embedded-postgres` (dev dependency, pin a 17.x version) in a vitest `globalSetup` (`server/test/global-setup.ts`): data dir `server/.pgtest` (gitignored), port 55433, user `postgres` / password `postgres`, creates database `pd2meta_test`, sets `process.env.TEST_DATABASE_URL=postgres://postgres:postgres@127.0.0.1:55433/pd2meta_test`, stops it in teardown. The live smoke run in Task 5 uses the same instance started by a tiny script `server/scripts/dev-db.ts`.
 
 ---
 
 ### Task 1: Server package, config, schema and test DB harness
 
 **Files:**
-- Create: `server/package.json`, `server/tsconfig.json`, `server/vitest.config.ts`, `server/.env.example`, `server/src/config.ts`, `server/src/db/pool.ts`, `server/src/db/migrate.ts`, `server/src/db/migrations/001_init.sql`, `server/test/helpers/db.ts`
+- Create: `server/package.json`, `server/tsconfig.json`, `server/vitest.config.ts`, `server/test/global-setup.ts`, `server/scripts/dev-db.ts`, `server/.env.example`, `server/src/config.ts`, `server/src/db/pool.ts`, `server/src/db/migrate.ts`, `server/src/db/migrations/001_init.sql`, `server/test/helpers/db.ts`
 - Test: `server/test/migrate.test.ts`, `server/test/config.test.ts`
 
 **Interfaces:**
@@ -150,7 +150,7 @@ insert into collector_status (id) values (1);
 insert into collector_control (id) values (1);
 ```
 
-- [ ] **Step 1:** Create `server/package.json` (name `pd2meta-server`, `"type": "commonjs"`, scripts `build: tsc`, `test: vitest run`, `typecheck: tsc --noEmit`, `collector: node dist/collector/main.js`, `api: node dist/api/main.js`), deps `express@4 pg@8 lru-cache@11 @2toad/profanity@3 cors@2 compression@1`, dev deps `typescript@5 vitest@4 @types/express@4 @types/pg @types/node@22 @types/cors @types/compression supertest @types/supertest tsx`. `tsconfig.json`: `target ES2022`, `module commonjs`, `outDir dist`, `rootDir src`, `strict true`, `esModuleInterop true`, `resolveJsonModule true`. `vitest.config.ts`: `test.fileParallelism: false` (shared test DB). Run `npm install` in `server/`.
+- [ ] **Step 1:** Create `server/package.json` (name `pd2meta-server`, `"type": "commonjs"`, scripts `build: tsc`, `test: vitest run`, `typecheck: tsc --noEmit`, `collector: node dist/collector/main.js`, `api: node dist/api/main.js`), deps `express@4 pg@8 lru-cache@11 @2toad/profanity@3 cors@2 compression@1`, dev deps `typescript@5 vitest@4 @types/express@4 @types/pg @types/node@22 @types/cors @types/compression supertest @types/supertest tsx`. `tsconfig.json`: `target ES2022`, `module commonjs`, `outDir dist`, `rootDir src`, `strict true`, `esModuleInterop true`, `resolveJsonModule true`. `vitest.config.ts`: `test.fileParallelism: false` (shared test DB), `test.globalSetup: ['test/global-setup.ts']`, `testTimeout: 30000`. Add `embedded-postgres` to dev deps and `.pgtest/` to `.gitignore`. Run `npm install` in `server/`.
 - [ ] **Step 2: Write failing tests.** `config.test.ts`: `loadConfig({DATABASE_URL:'postgres://x'})` returns `currentSeason 14`, `pd2MinIntervalMs 1000`, `collectorEnabled true`; `loadConfig({DATABASE_URL:'x', COLLECTOR_ENABLED:'false'}).collectorEnabled === false`; missing `DATABASE_URL` throws `/DATABASE_URL/`. `migrate.test.ts`: on `freshDb()`, `migrate` a second time returns `[]`; `select count(*) from collector_control` is 1.
 - [ ] **Step 3:** Run `npx vitest run test/config.test.ts test/migrate.test.ts` in `server/`. Expected: FAIL (modules missing).
 - [ ] **Step 4:** Implement `config.ts`, `pool.ts`, `migrate.ts` (reads `src/db/migrations/*.sql` sorted, each in a transaction), `001_init.sql`, `test/helpers/db.ts`. Add `server/.env.example` listing every Config env var with defaults.
@@ -248,7 +248,7 @@ insert into collector_control (id) values (1);
 - [ ] **Step 2:** Run `npx vitest run test/collector.test.ts`. Expected: FAIL.
 - [ ] **Step 3:** Implement. `main.ts` wires config, pool, `migrate`, limiter, client, loops; SIGTERM stops loops and ends the pool.
 - [ ] **Step 4:** Run. Expected: PASS.
-- [ ] **Step 5: Smoke run (live, short).** With local DB: `DATABASE_URL=$TEST_DATABASE_URL PD2_MIN_INTERVAL_MS=1000 npx tsx src/collector/main.ts` for 3 minutes, then `select count(*) from characters` > 0 (unless in the pause window; then set `PD2_PAUSE_START_HOUR=0 PD2_PAUSE_END_HOUR=0` for the smoke run only) and `collector_status.stats->>'requestsTotal'` <= 190.
+- [ ] **Step 5: Smoke run (live, short).** Start `npx tsx scripts/dev-db.ts` in the background (prints its URL), then: `DATABASE_URL=<that url> PD2_MIN_INTERVAL_MS=1000 npx tsx src/collector/main.ts` for 3 minutes, then `select count(*) from characters` > 0 (unless in the pause window; then set `PD2_PAUSE_START_HOUR=0 PD2_PAUSE_END_HOUR=0` for the smoke run only) and `collector_status.stats->>'requestsTotal'` <= 190.
 - [ ] **Step 6: Commit** `feat(server): collector with ladder/online discovery, ingest, heartbeat`.
 
 ---
