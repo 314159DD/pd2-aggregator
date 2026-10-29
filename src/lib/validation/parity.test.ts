@@ -30,6 +30,8 @@ const FIXTURES: Fixture[] = [
 
 const SLOTS = itemSlots as Record<string, string>;
 const COVERAGE_FLOOR = 0.95;
+// Unique charms have no equipment slot by design, so they are not slot items.
+const UNIQUE_CHARM_NAMES = new Set(["Hellfire Torch", "Annihilus", "Gheed's Fortune"]);
 
 describe("parity of captured API responses per canonical build", () => {
   for (const f of FIXTURES) {
@@ -44,8 +46,9 @@ describe("parity of captured API responses per canonical build", () => {
       });
 
       it(`item-slot coverage >= ${COVERAGE_FLOOR * 100}%`, () => {
-        const missing = f.itemUsage.filter((r) => !SLOTS[r.item]);
-        const coverage = (f.itemUsage.length - missing.length) / f.itemUsage.length;
+        const slotItems = f.itemUsage.filter((r) => !UNIQUE_CHARM_NAMES.has(r.item));
+        const missing = slotItems.filter((r) => !SLOTS[r.item]);
+        const coverage = (slotItems.length - missing.length) / slotItems.length;
         expect(
           coverage,
           `${f._meta.build}: missing examples: ${missing.slice(0, 10).map((r) => `${r.itemType}: ${r.item}`).join(", ")}`,
