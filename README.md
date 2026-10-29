@@ -5,7 +5,7 @@ Builds and gear meta for Project Diablo 2 ladder characters. Two tabs:
 - **Builds**: browse ladder characters by class and skills, with usage cards, gear value in HR, a shopping list, character and account pages.
 - **Meta**: for one cohort (class, skills, minimum level, mode) the most worn items per slot with own prices, affix frequencies, charm patterns, average stats, a build sheet and a diff against one character.
 
-Live at **https://pd2-aggregator.vercel.app**.
+Live at **https://www.pd2meta.info** (pd2-aggregator.vercel.app redirects there).
 
 ## Architecture
 

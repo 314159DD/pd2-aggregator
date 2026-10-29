@@ -1,6 +1,6 @@
 # PD2 Build Affix Aggregator
 
-Next.js 16 static-export app that aggregates Project Diablo 2 ladder builds from the pd2.tools public API and produces filterable build guides. Live at https://pd2-aggregator.vercel.app.
+Next.js 16 static-export app that aggregates Project Diablo 2 ladder builds from its own ladder collector (API at api.pd2meta.info, `server/`) and produces filterable build guides. Live at https://www.pd2meta.info (pd2-aggregator.vercel.app redirects there).
 
 **Status:** v2 in progress (spec `docs/superpowers/specs/2026-10-28-pd2meta-v2-design.md`). Sprint 4.1 (own pipeline + S14 stopgap) and Sprint 4.2 (Builds tab: prices, gear value, usage cards, shopping list, character table, character and account pages, LEXADIS shell) merged 2026-10-29. Next: phase 3 (server-side Meta endpoints + Meta tab on them), then phase 4 (Meta restyle + launch), phase 5 (archive S11-S13 + parity test).
 

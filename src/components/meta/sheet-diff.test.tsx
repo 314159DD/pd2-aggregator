@@ -167,9 +167,9 @@ describe("DiffCard", () => {
   });
 
   it("masks a profane character name", () => {
-    render(<DiffCard diff={diff({ characterName: "fuckyou" })} state={state} />);
-    expect(screen.queryByText(/fuckyou/)).toBeNull();
-    expect(screen.getByText(/f\*{6} · Level 95/)).toBeTruthy();
+    render(<DiffCard diff={diff({ characterName: "FuckYou" })} state={state} />);
+    expect(screen.queryByText(/FuckYou/)).toBeNull();
+    expect(screen.getByText(/F\*{6} · Level 95/)).toBeTruthy();
   });
 
   it("notes when the character was found in the other game mode", () => {

@@ -150,7 +150,7 @@ export function MetaView() {
           !failed && <div className="skelett h-56 rounded-[var(--radius-panel)]" />
         ) : (
           <>
-            {!failed && <CohortLine meta={meta} state={state} />}
+            {!failed && <CohortLine meta={meta} state={state} stale={loading} />}
             {diff && diff.failed && (
               <Card className="p-5 text-sm text-ink-soft" role="status">
                 Could not load the comparison.
