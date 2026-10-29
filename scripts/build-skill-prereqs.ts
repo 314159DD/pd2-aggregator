@@ -128,7 +128,7 @@ function parseClassPage(html: string): ClassSkills {
     //   - self-descriptive lines like "Gains +3 Absorb per Energy" (no colon)
     //   - changelog blocks like "Fire blast synergies increased from 9% to 12%"
     //     (no "per Level")
-    let receivesBonusesFrom: string[] = [];
+    const receivesBonusesFrom: string[] = [];
     const bonusMatch = section.match(
       /<b>[^<]*receives bonuses from:<\/b>[\s\S]*?<ul>([\s\S]*?)<\/ul>/i,
     );

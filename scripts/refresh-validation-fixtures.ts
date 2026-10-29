@@ -68,7 +68,7 @@ function urlsFor(b: CanonicalBuild): Record<string, string> {
   return urls;
 }
 
-async function getJson(url: string): Promise<any> {
+async function getJson(url: string): Promise<any> {  // eslint-disable-line @typescript-eslint/no-explicit-any
   const r = await fetch(url);
   if (!r.ok) throw new Error(`${r.status} ${r.statusText} for ${url}`);
   return r.json();
