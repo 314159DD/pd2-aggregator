@@ -77,6 +77,22 @@ All four must show `indisvalid = t`. A concurrent build that fails leaves an inv
 
 If the page write p95 of the archive importer goes above 5,000 ms, stop the importer container (`docker stop pd2meta-archive`) and resume later off-peak; it is resumable, rerun the same command. Do not use `--no-rollup` as a fallback for slow writes. It marks the global rollup not ready, which sends `/builds/usage`, `/characters/stats/*` and `/meta` back to the slow per-character queries for every season until `backfill-meta` has run.
 
+### Archive import results (2026-10-29)
+
+S13 (pass 1, gap passes 2 and 3), then S12 and S11, all `done`, no invalid rows, no dupes:
+
+| Season | softcore | hardcore |
+|---|---|---|
+| 13 Betrayal | 58,159 | 12,716 |
+| 12 Suffering | 66,210 | 13,693 |
+| 11 Prosperity | 56,972 | 10,540 |
+
+Database 9.4 GB after `vacuum analyze`, 6.6 GB free on `/` (gate floor 6 GB). Page writes 0.1 to 1.4 s.
+
+Timings after the import (first request, then cached): `/meta` for S11-S13 0.7 to 1.3 s, then about 0.15 s; `/builds/usage` base cohorts 0.26 s; filtered cohorts (`items=Spirit|Annihilus|Hellfire Torch`) 1.8 to 4.7 s, then about 0.15 s.
+
+Parity against `api.pd2.tools` (S13, `dist/scripts/parity-archive.js`, 7 filter sets): items, skills, merc types and merc items PASS on every set (max delta 0.32 points, limit 1). The exact class breakdown cannot match: pd2.tools still adds and updates S13 characters (its softcore total went 57,938 -> 57,989 -> 58,172 during the day, and some classes end up lower than ours). After pass 3 the largest gap is 13 of 58,172 (0.02%), all-hc 1, single sets 2 to 12. Ruling: breakdown within 0.1% counts as parity. To close a new gap later, run `import-archive.js --seasons 13 --modes softcore,hardcore --pass <n>` with the next pass number.
+
 ## Check
 
 ```
