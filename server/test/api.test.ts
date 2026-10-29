@@ -4,7 +4,7 @@ import type { Pool } from 'pg';
 import type { Express } from 'express';
 import { freshDb } from './helpers/db';
 import { toCompact, enrichRaw } from '../src/core/compact';
-import { upsertCharacter } from '../src/db/characters-repo';
+import { upsertCharacter, backfillAccount } from '../src/db/characters-repo';
 import { loadConfig } from '../src/config';
 import { createApp } from '../src/api/app';
 import { parseFilter } from '../src/api/filters';
@@ -181,6 +181,21 @@ describe('stats routes', () => {
     expect(spy.mock.calls.length).toBe(calls2);
     expect(calls2).toBe(calls + 1);
     spy.mockRestore();
+  });
+
+  it('exposes the stored account as accountName when raw has none', async () => {
+    const raw = structuredClone(fx);
+    raw.character.name = 'NoAcctChar';
+    raw.character.level = 99;
+    const c = toCompact(raw);
+    expect(c.account).toBeNull();
+    await upsertCharacter(pool, 99, c, enrichRaw(raw, ''));
+    await backfillAccount(pool, 99, 'BackfilledAcc', ['noacctchar']);
+    const r = await request(app).get('/api/v1/characters?season=99&minLevel=99&maxLevel=99&gameMode=softcore');
+    const row = r.body.characters.find((x: any) => x.character.name === 'NoAcctChar');
+    expect(row.accountName).toBe('BackfilledAcc');
+    const a = await request(app).get('/api/v1/characters/accounts/backfilledacc?season=99');
+    expect(a.body.characters[0].accountName).toBe('BackfilledAcc');
   });
 
   it('ignores unknown query params for the cache key', async () => {

@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import type { Pool } from 'pg';
 import { freshDb } from './helpers/db';
 import { toCompact, enrichRaw } from '../src/core/compact';
-import { upsertCharacter, getLastIngest, readRaw } from '../src/db/characters-repo';
+import { upsertCharacter, getLastIngest, readRaw, backfillAccount } from '../src/db/characters-repo';
 import ladder from './fixtures/character-ladder.json';
 
 const fx = ladder as any;
@@ -41,6 +41,20 @@ describe('characters repo', () => {
     const m = await getLastIngest(pool, 14, [c.name.toLowerCase(), 'nobody']);
     expect([...m.keys()]).toEqual([c.name.toLowerCase()]);
     expect(m.get(c.name.toLowerCase())!.experience).toBe(c2.experience);
+  });
+
+  it('keeps a stored account on re-upsert without one, and backfills null accounts', async () => {
+    const c = toCompact(fx, 'MC-MEEKS');
+    await upsertCharacter(pool, 14, c, enrichRaw(fx, 'MC-MEEKS'));
+    await upsertCharacter(pool, 14, { ...c, account: null }, enrichRaw(fx, ''));
+    expect((await pool.query('select account from characters')).rows[0].account).toBe('MC-MEEKS');
+
+    await pool.query('update characters set account = null');
+    expect(await backfillAccount(pool, 14, 'Acc1', [c.name.toUpperCase(), 'nobody'])).toBe(1);
+    expect((await pool.query('select account from characters')).rows[0].account).toBe('Acc1');
+    expect(await backfillAccount(pool, 14, 'Other', [c.name])).toBe(0);
+    expect(await backfillAccount(pool, 15, 'Other', [c.name])).toBe(0);
+    expect(await backfillAccount(pool, 14, 'Other', [])).toBe(0);
   });
 
   it('writes history again after 24h', async () => {

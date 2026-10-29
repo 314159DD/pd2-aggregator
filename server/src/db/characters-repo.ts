@@ -27,7 +27,7 @@ export async function upsertCharacter(
          (season, mode, name, account, class, level, experience, life, mana, attributes, guild, is_dead, raw, last_ingested_at)
        values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
        on conflict (season, mode, name) do update set
-         account = excluded.account, class = excluded.class, level = excluded.level,
+         account = coalesce(excluded.account, characters.account), class = excluded.class, level = excluded.level,
          experience = excluded.experience, life = excluded.life, mana = excluded.mana,
          attributes = excluded.attributes, guild = excluded.guild, is_dead = excluded.is_dead,
          raw = excluded.raw, last_ingested_at = excluded.last_ingested_at
@@ -116,4 +116,22 @@ export async function getLastIngest(
 
 export function readRaw(row: { raw: Buffer }): unknown {
   return JSON.parse(gunzipSync(row.raw).toString('utf8'));
+}
+
+/** Like readRaw, but fills an empty accountName from the stored account column. */
+export function readRawWithAccount(row: { raw: Buffer; account?: string | null }): unknown {
+  const raw = readRaw(row) as Record<string, unknown> | null;
+  if (raw && typeof raw === 'object' && !raw.accountName && row.account) raw.accountName = row.account;
+  return raw;
+}
+
+/** Sets the account on already-stored characters that do not have one yet. */
+export async function backfillAccount(pool: Pool, season: number, account: string, names: string[]): Promise<number> {
+  if (!names.length) return 0;
+  const r = await pool.query(
+    `update characters set account = $1
+     where season = $2 and lower(name) = any($3::text[]) and account is null`,
+    [account, season, names.map((n) => n.toLowerCase())],
+  );
+  return r.rowCount ?? 0;
 }
