@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterAll } from 'vitest';
+import { describe, it, expect, beforeEach, afterAll, vi } from 'vitest';
 import type { Pool } from 'pg';
 import { freshDb } from './helpers/db';
 import fixture from './fixtures/pd2tools-page.json';
@@ -6,11 +6,12 @@ import { RateLimiter } from '../src/upstream/rate-limiter';
 import {
   archivePageUrl,
   fetchArchivePage,
+  defaultHttpGet,
   toArchiveCompact,
   ArchiveFetchError,
   type HttpGet,
 } from '../src/archive/pd2tools';
-import { importArchive, projectGate, type ImportDeps, type ImportOptions } from '../src/archive/import';
+import { importArchive, projectGate, ARCHIVE_IMPORT_LOCK_KEY, type ImportDeps, type ImportOptions } from '../src/archive/import';
 import { writeArchivePage } from '../src/archive/write';
 import { metaRollupState, rebuildMetaRollup } from '../src/db/meta-rollup';
 
@@ -237,6 +238,17 @@ describe('projectGate', () => {
   });
 });
 
+describe('defaultHttpGet', () => {
+  it('sends the user agent and a timeout signal', async () => {
+    const spy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('{}'));
+    await defaultHttpGet('https://example.test/x');
+    const init = spy.mock.calls[0][1] as RequestInit;
+    expect(init.signal).toBeInstanceOf(AbortSignal);
+    expect((init.headers as Record<string, string>)['User-Agent']).toContain('pd2meta.info');
+    spy.mockRestore();
+  });
+});
+
 describe('importArchive', () => {
   const chars = (n: number, prefix = 'C') => Array.from({ length: n }, (_, i) => mk(`${prefix}${i}`));
 
@@ -249,7 +261,7 @@ describe('importArchive', () => {
     const p = await progress();
     expect(p).toMatchObject({ done: true, next_page: 4, received: 120, inserted: 120 });
     expect(d.lines).toHaveLength(3);
-    expect(d.lines[0]).toMatch(/^archive s13 softcore pass1 p1\/3 \+50 existing 0 below 0 invalid 0 write \d+ms$/);
+    expect(d.lines[0]).toMatch(/^archive s13 softcore pass1 p1\/3 \+50 existing 0 below 0 invalid 0 dupes 0 write \d+ms$/);
     expect(await importArchive(d, opts())).toBe('done');
     expect(up.urls).toHaveLength(3);
   });
@@ -272,9 +284,8 @@ describe('importArchive', () => {
     const http: HttpGet = async (url) => {
       const page = Number(new URL(url).searchParams.get('page'));
       const characters = page === 1 ? first : second;
-      return { status: 200, json: async () => ({ total: 118, breakdown: {}, characters }) };
+      return { status: 200, json: async () => ({ total: 70, breakdown: {}, characters }) };
     };
-    // Page 2 has 20 rows (<50), so the chunk ends there.
     await importArchive(deps(http), opts());
     expect(await count()).toBe(68);
     const p = await progress();
@@ -286,10 +297,12 @@ describe('importArchive', () => {
   it('writes a name repeated within one page once', async () => {
     const page = [...chars(3), mk('C0'), mk('C1')];
     const up = upstream(page);
-    await importArchive(deps(up.http), opts());
+    const d = deps(up.http);
+    await importArchive(d, opts());
     expect(await count()).toBe(3);
     expect(await count('character_items')).toBeGreaterThan(0);
-    expect((await progress()).received).toBe(5);
+    expect(await progress()).toMatchObject({ received: 5, inserted: 3, dupes: 2, existing: 0 });
+    expect(d.lines[0]).toContain('dupes 2');
   });
 
   it('counts below_min and invalid without aborting the page', async () => {
@@ -394,5 +407,97 @@ describe('importArchive', () => {
     });
     expect(w).toEqual({ inserted: 0, existing: 1 });
     expect(await dump()).toEqual(before);
+  });
+  it('does not refuse a pass 2 over an already imported set because of a tight gate', async () => {
+    const all = chars(120);
+    await importArchive(deps(upstream(all).http), opts());
+    const tight = deps(upstream(all).http, { freeDiskBytes: () => 6 * GB + 1_000_000 });
+    expect(await importArchive(tight, opts({ pass: 2 }))).toBe('done');
+    expect(await count()).toBe(120);
+    expect(await progress()).toBeDefined();
+    const p2 = (await pool.query('select * from archive_import_progress where pass = 2')).rows[0];
+    expect(p2).toMatchObject({ received: 120, inserted: 0, existing: 120, done: true });
+    // The same tight gate does stop a pass 1 over new rows.
+    const fresh = deps(upstream(chars(120, 'Z')).http, { freeDiskBytes: () => 6 * GB + 1_000_000 });
+    expect(await importArchive(fresh, opts({ seasons: [12], pass: 1 }))).toBe('gate');
+  });
+
+  it('checks --max-pages before each fetch, also at a chunk boundary', async () => {
+    const none = upstream(chars(60));
+    expect(await importArchive(deps(none.http), opts({ maxPages: 0 }))).toBe('max-pages');
+    expect(none.urls).toHaveLength(0);
+    // Two full pages end the softcore chunk exactly at the cap; hardcore must not be fetched.
+    const hundred = chars(100);
+    const http: HttpGet = async (url) => {
+      const u = new URL(url);
+      const page = Number(u.searchParams.get('page'));
+      return { status: 200, json: async () => ({ total: 100, breakdown: {}, characters: hundred.slice((page - 1) * 50, page * 50) }) };
+    };
+    const urls: string[] = [];
+    const counting: HttpGet = async (u) => (urls.push(u), http(u));
+    expect(await importArchive(deps(counting), opts({ modes: ['softcore', 'hardcore'], maxPages: 2 }))).toBe('max-pages');
+    expect(urls).toHaveLength(2);
+    expect(await count()).toBe(100);
+  });
+
+  it('refetches a short page before the total once instead of ending the chunk', async () => {
+    const all = chars(120);
+    const urls: string[] = [];
+    let shortServed = false;
+    const http: HttpGet = async (url) => {
+      urls.push(url);
+      const page = Number(new URL(url).searchParams.get('page'));
+      let characters = all.slice((page - 1) * 50, page * 50);
+      if (page === 1 && !shortServed) {
+        shortServed = true;
+        characters = characters.slice(0, 30);
+      }
+      return { status: 200, json: async () => ({ total: 120, breakdown: {}, characters }) };
+    };
+    const d = deps(http);
+    expect(await importArchive(d, opts())).toBe('done');
+    expect(urls).toHaveLength(4);
+    expect(await count()).toBe(120);
+    expect(d.lines.some((l) => l.startsWith('warning:') && l.includes('p1'))).toBe(true);
+  });
+
+  it('keeps going when a short page stays short and ends on an empty page', async () => {
+    const all = chars(120);
+    const http: HttpGet = async (url) => {
+      const page = Number(new URL(url).searchParams.get('page'));
+      const characters = page === 1 ? all.slice(0, 30) : page === 2 ? all.slice(50, 100) : [];
+      return { status: 200, json: async () => ({ total: 120, breakdown: {}, characters }) };
+    };
+    const d = deps(http);
+    expect(await importArchive(d, opts())).toBe('done');
+    expect(await count()).toBe(80);
+    expect(await progress()).toMatchObject({ done: true, received: 80 });
+    expect(d.lines.filter((l) => l.startsWith('warning:')).length).toBe(2);
+  });
+
+  it('counts a character that throws while mapping as invalid and keeps the page', async () => {
+    const page = [mk('Fine'), mk('Boom', (x) => (x.items = {})), mk('Fine2')];
+    const d = deps(upstream(page).http);
+    await importArchive(d, opts());
+    expect(await count()).toBe(2);
+    expect(await progress()).toMatchObject({ invalid: 1, inserted: 2, received: 3 });
+    expect(d.lines.some((l) => l.startsWith('warning:') && l.includes('invalid'))).toBe(true);
+  });
+
+  it('refuses to run while another importer holds the lock', async () => {
+    const other = await pool.connect();
+    try {
+      await other.query('select pg_advisory_lock($1)', [ARCHIVE_IMPORT_LOCK_KEY]);
+      const up = upstream(chars(3));
+      await expect(importArchive(deps(up.http), opts())).rejects.toThrow(/already running/);
+      expect(up.urls).toHaveLength(0);
+    } finally {
+      await other.query('select pg_advisory_unlock($1)', [ARCHIVE_IMPORT_LOCK_KEY]);
+      other.release();
+    }
+    // And releases its own lock afterwards.
+    const up = upstream(chars(3));
+    await importArchive(deps(up.http), opts());
+    await importArchive(deps(up.http), opts({ pass: 2 }));
   });
 });

@@ -9,7 +9,8 @@ import { RateLimiter } from '../upstream/rate-limiter';
  * Imports ended seasons from api.pd2.tools into characters (source 'archive'). Resumable: rerun the
  * same command to continue. Exit codes: 0 done (or --max-pages reached), 3 disk/DB gate tripped, 1 error.
  *   npx tsx src/scripts/import-archive.ts [--seasons 13,12,11] [--modes softcore,hardcore] [--pass 1]
- *     [--no-rollup] [--min-free-gb 6] [--max-db-gb 12] [--max-pages N]
+ *     [--no-rollup] [--min-free-gb 6] [--max-db-gb 12] [--max-pages N] [--data-path /]
+ * --data-path is the filesystem whose free space the gate measures: point it at the Postgres volume mount.
  */
 function arg(name: string): string | undefined {
   const i = process.argv.indexOf(`--${name}`);
@@ -39,6 +40,9 @@ async function main(): Promise<number> {
     maxDbGb: num('max-db-gb', 12),
     maxPages: arg('max-pages') === undefined ? undefined : num('max-pages', 0),
   };
+  const dataPath = arg('data-path') ?? '/';
+  statfsSync(dataPath); // fail early on a bad path
+  console.log(`archive import: measuring free disk at ${dataPath}`);
   const pool = new Pool({ connectionString: cfg.databaseUrl, options: '-c jit=off' });
   // Its own limiter for api.pd2.tools only, no peak-hour pause (pause hours 0, 0).
   const limiter = new RateLimiter({ minIntervalMs: 1000, pauseStartHour: 0, pauseEndHour: 0 });
@@ -51,7 +55,7 @@ async function main(): Promise<number> {
         currentSeason: cfg.currentSeason,
         minLevel: cfg.minLevel,
         freeDiskBytes: () => {
-          const s = statfsSync('/');
+          const s = statfsSync(dataPath);
           return Number(s.bavail) * Number(s.bsize);
         },
         log: (l) => console.log(l),

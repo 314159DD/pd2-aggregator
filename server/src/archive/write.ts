@@ -5,7 +5,7 @@ import { dedupeSkills, replaceItems } from '../db/characters-repo';
 import { addMetaRollupFacts, lockMetaRollup } from '../db/meta-rollup';
 
 export type ArchiveRow = { compact: CompactCharacter; raw: object; lastUpdated: Date };
-export type PageCounts = { received: number; inserted: number; existing: number; belowMin: number; invalid: number };
+export type PageCounts = { received: number; inserted: number; existing: number; belowMin: number; invalid: number; dupes?: number };
 
 export type ArchivePage = {
   season: number;
@@ -63,8 +63,8 @@ export async function writeArchivePage(pool: Pool, p: ArchivePage): Promise<{ in
     const existing = rows.length - inserted;
     await client.query(
       `insert into archive_import_progress
-         (season, mode, pass, next_page, upstream_total, received, inserted, existing, below_min, invalid, done, updated_at)
-       values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11, now())
+         (season, mode, pass, next_page, upstream_total, received, inserted, existing, below_min, invalid, dupes, done, updated_at)
+       values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12, now())
        on conflict (season, mode, pass) do update set
          next_page = excluded.next_page, upstream_total = excluded.upstream_total,
          received = archive_import_progress.received + excluded.received,
@@ -72,9 +72,10 @@ export async function writeArchivePage(pool: Pool, p: ArchivePage): Promise<{ in
          existing = archive_import_progress.existing + excluded.existing,
          below_min = archive_import_progress.below_min + excluded.below_min,
          invalid = archive_import_progress.invalid + excluded.invalid,
+         dupes = archive_import_progress.dupes + excluded.dupes,
          done = excluded.done, updated_at = now()`,
       [p.season, p.mode, p.pass, p.page + 1, p.upstreamTotal, p.counts.received, inserted, existing,
-        p.counts.belowMin, p.counts.invalid, p.done],
+        p.counts.belowMin, p.counts.invalid, p.counts.dupes ?? 0, p.done],
     );
     await client.query('commit');
     return { inserted, existing };

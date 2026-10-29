@@ -20,8 +20,11 @@ export class ArchiveFetchError extends Error {
   }
 }
 
+export const FETCH_TIMEOUT_MS = 30_000;
+
+/** The signal covers the headers and the body read; an abort surfaces as a retryable error. */
 export const defaultHttpGet: HttpGet = (url) =>
-  fetch(url, { headers: { 'User-Agent': USER_AGENT, Accept: 'application/json' } });
+  fetch(url, { headers: { 'User-Agent': USER_AGENT, Accept: 'application/json' }, signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) });
 
 export function archivePageUrl(season: number, mode: 'softcore' | 'hardcore', page: number, pageSize = 50): string {
   return `${PD2TOOLS_BASE}/characters?season=${season}&gameMode=${mode}&page=${page}&pageSize=${pageSize}`;
