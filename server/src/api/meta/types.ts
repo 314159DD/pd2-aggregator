@@ -124,3 +124,26 @@ export type MetaCohort = {
   mercenary: MercSummary;
   pricesComputedAt: string | null;
 };
+
+export type SlotDiff = {
+  slot: MetaSlot;
+  poolTopItemName: string | null;
+  userItemName: string | null;
+  userItemQuality: string | null;
+  userMatchesPoolTop: boolean;
+  /** pct is 0..1 */
+  poolTopAffixMods: Array<{ modName: string; displayLabel: string; pct: number; userHas: boolean }>;
+};
+
+export type CharacterDiff = {
+  characterName: string;
+  accountName: string | null;
+  characterLevel: number;
+  className: string;
+  mode: 'softcore' | 'hardcore';
+  /** null when either side has no mercenary type */
+  mercTypeMatchesPool: boolean | null;
+  poolMercType: string | null;
+  userMercType: string | null;
+  slots: Record<MetaSlot, SlotDiff>;
+};
