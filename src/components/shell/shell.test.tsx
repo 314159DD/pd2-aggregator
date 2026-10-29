@@ -92,6 +92,16 @@ describe("TabNav Meta link", () => {
   });
 });
 
+describe("TabNav season carry", () => {
+  it("keeps gameMode and season across tabs", () => {
+    pathname = "/builds";
+    search = "gameMode=hardcore&season=13&page=2";
+    render(<SiteHeader />);
+    expect(screen.getByRole("link", { name: "Meta" })).toHaveAttribute("href", "/?gameMode=hardcore&season=13");
+    expect(screen.getByRole("link", { name: "Builds" })).toHaveAttribute("href", "/builds?gameMode=hardcore&season=13");
+  });
+});
+
 describe("ScopeSwitch", () => {
   it("falls back to the current season for an unknown ?season", async () => {
     pathname = "/builds";
@@ -103,13 +113,13 @@ describe("ScopeSwitch", () => {
 });
 
 describe("ThemeToggle", () => {
-  it("flips dark to light and stores the choice", () => {
+  it("flips dark to light and stores the choice", async () => {
     document.documentElement.dataset.mode = "dark";
     render(<ThemeToggle />);
     fireEvent.click(screen.getByRole("button", { name: "Switch to light mode" }));
     expect(document.documentElement.dataset.mode).toBe("light");
     expect(localStorage.getItem("pd2meta-theme")).toBe("light");
-    expect(screen.getByRole("button", { name: "Switch to dark mode" })).toBeInTheDocument();
+    expect(await screen.findByRole("button", { name: "Switch to dark mode" })).toBeInTheDocument();
   });
 });
 
