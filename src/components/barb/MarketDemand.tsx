@@ -90,7 +90,7 @@ export function MarketDemand({ s, r }: { s: GoldInputs; r: GoldResult }) {
               );
             })}
           </div>
-          <ul className="mt-4 list-disc space-y-1 pl-[18px] text-xs leading-relaxed text-muted-ink">
+          <ul className="mt-4 list-disc space-y-1.5 pl-[18px] text-sm leading-relaxed text-muted-ink">
             <li>A listing that disappears was not always sold, it can also be deleted or expired. Bulk sellers who sell through one listing show up as quantity drops, which are counted too.</li>
             <li>These numbers only cover the trade website. In-game trades are not visible, so treat the absorption figure as a broad lower bound, not an exact limit.</li>
           </ul>
