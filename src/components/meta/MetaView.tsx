@@ -9,9 +9,13 @@ import type { SeasonsResponse } from "@/lib/builds/types";
 import { getMeta, getMetaDiff } from "@/lib/meta/api";
 import { metaApiParams, parseMetaState, serializeMetaState, type MetaUpdate } from "@/lib/meta/state";
 import type { CharacterDiff, MetaCohort } from "@/lib/meta/types";
+import { AffixCard } from "./AffixCard";
+import { AvgStatsCard } from "./AvgStatsCard";
+import { CharmsCard } from "./CharmsCard";
 import { CohortLine } from "./CohortLine";
 import { MetaFilters } from "./MetaFilters";
 import { MetaHeader } from "./MetaHeader";
+import { TopItemsCard } from "./TopItemsCard";
 
 export function MetaSkeleton() {
   return (
@@ -150,7 +154,12 @@ export function MetaView() {
                 {diff.failed ? "Could not load the comparison." : `No character or account named ${state.char} found.`}
               </Card>
             )}
-            <div data-testid="meta-grid" className="grid gap-5 lg:grid-cols-12" />
+            <div data-testid="meta-grid" className="grid gap-5 lg:grid-cols-12">
+              <AvgStatsCard core={meta.coreStats} avg={meta.avgStats} />
+              <TopItemsCard data={meta.topItemsBySlot} gameMode={state.gameMode} />
+              <AffixCard data={meta.affixModsBySlot} />
+              <CharmsCard data={meta.charms} />
+            </div>
           </>
         )}
       </div>
