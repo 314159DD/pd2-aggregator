@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 
 let pathname = "/builds";
 let search = "gameMode=hardcore";
@@ -10,7 +10,6 @@ vi.mock("next/navigation", () => ({
 }));
 
 import { SiteHeader } from "./SiteHeader";
-import { ThemeToggle } from "./ThemeToggle";
 import { Freshness } from "./Freshness";
 import { SiteFooter } from "./SiteFooter";
 
@@ -36,8 +35,16 @@ beforeEach(() => mockFetch(new Date(Date.now() - 3 * 60_000).toISOString()));
 afterEach(() => {
   search = "gameMode=hardcore";
   vi.unstubAllGlobals();
-  delete document.documentElement.dataset.mode;
-  localStorage.clear();
+});
+
+describe("SiteHeader look", () => {
+  it("shows the D2 title, the beer button and no theme toggle", () => {
+    pathname = "/";
+    render(<SiteHeader />);
+    expect(screen.getByRole("link", { name: "PD2 Meta Info" })).toHaveAttribute("href", "/");
+    expect(screen.getByRole("link", { name: "Buy me a beer" })).toHaveAttribute("href", "https://www.buymeacoffee.com/SteenC");
+    expect(screen.queryByRole("button", { name: /light mode|dark mode/i })).toBeNull();
+  });
 });
 
 describe("SiteHeader", () => {
@@ -112,29 +119,20 @@ describe("ScopeSwitch", () => {
   });
 });
 
-describe("ThemeToggle", () => {
-  it("flips dark to light and stores the choice", async () => {
-    document.documentElement.dataset.mode = "dark";
-    render(<ThemeToggle />);
-    fireEvent.click(screen.getByRole("button", { name: "Switch to light mode" }));
-    expect(document.documentElement.dataset.mode).toBe("light");
-    expect(localStorage.getItem("pd2meta-theme")).toBe("light");
-    expect(await screen.findByRole("button", { name: "Switch to dark mode" })).toBeInTheDocument();
-  });
-});
-
 describe("Freshness", () => {
   it("shows the stale state when the heartbeat is 20 minutes old", async () => {
     mockFetch(new Date(Date.now() - 20 * 60_000).toISOString());
     const { container } = render(<Freshness />);
-    expect(await screen.findByText(/updated 20m ago/)).toBeInTheDocument();
+    expect(await screen.findByText(/stale/i)).toBeInTheDocument();
+    expect(screen.getByText(/20m ago/)).toBeInTheDocument();
     expect(container.querySelector("[data-stale]")).not.toBeNull();
-    expect(screen.getByText("2,906")).toBeInTheDocument();
+    expect(container.querySelector("[title='2,906 characters']")).not.toBeNull();
   });
 
   it("is not stale after 3 minutes", async () => {
     const { container } = render(<Freshness />);
-    expect(await screen.findByText(/updated 3m ago/)).toBeInTheDocument();
+    expect(await screen.findByText(/live/i)).toBeInTheDocument();
+    expect(screen.getByText(/3m ago/)).toBeInTheDocument();
     expect(container.querySelector("[data-stale]")).toBeNull();
     await act(async () => {});
   });

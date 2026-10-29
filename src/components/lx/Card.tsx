@@ -1,7 +1,7 @@
 import type { ElementType, HTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
 
-/** Regular glass card, 22px radius, 24px padding. */
+/** Stone-bevel panel, small radius, 24px padding. */
 export function Card({
   as,
   className,

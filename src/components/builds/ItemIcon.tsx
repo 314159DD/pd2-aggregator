@@ -18,17 +18,17 @@ type Props = {
 };
 
 /** Skill icon with the same first-letter fallback as ItemIcon. */
-export function SkillIcon({ name }: { name: string }) {
+export function SkillIcon({ name, size = 28 }: { name: string; size?: number }) {
   const [failed, setFailed] = useState(false);
   return (
-    <span className="well inline-flex size-7 shrink-0 items-center justify-center overflow-hidden rounded-lg">
+    <span className="inline-flex shrink-0 items-center justify-center overflow-hidden rounded-sm" style={{ width: size, height: size }}>
       {failed ? (
         <span aria-hidden className="font-mono text-xs text-ink-soft">
           {name.charAt(0)}
         </span>
       ) : (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={skillIconUrl(name)} alt="" loading="lazy" onError={() => setFailed(true)} className="max-h-full max-w-full object-contain" />
+        <img src={skillIconUrl(name)} alt="" loading="lazy" onError={() => setFailed(true)} className="max-h-full max-w-full object-contain [image-rendering:pixelated]" />
       )}
     </span>
   );

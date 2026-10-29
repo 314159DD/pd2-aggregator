@@ -17,7 +17,7 @@ function ago(ms: number): string {
   return min >= 60 ? `${Math.floor(min / 60)}h ago` : `${min}m ago`;
 }
 
-/** Dot plus "updated 3m ago · 2,906 characters" from /stats; warn colour after 10 minutes. */
+/** Old header line: "● LIVE · 3M AGO" from /stats; gold dot and "STALE" after 10 minutes. */
 export function Freshness() {
   const [stats, setStats] = useState<Stats | null>(null);
   const [now, setNow] = useState(() => Date.now());
@@ -45,16 +45,13 @@ export function Freshness() {
   return (
     <p
       data-stale={stale ? "" : undefined}
-      className={cn(
-        "hidden items-center gap-2 text-xs md:inline-flex",
-        stale ? "text-warn" : "text-muted-ink",
-      )}
+      title={`${nf.format(total)} characters`}
+      className="text-xs tracking-widest text-muted-ink uppercase tabular-nums"
     >
-      <span aria-hidden className={cn("size-1.5 rounded-full", stale ? "bg-warn" : "bg-ok")} />
-      <span>
-        updated {ago(age)} <span aria-hidden>·</span>{" "}
-        <span className="font-mono tabular-nums">{nf.format(total)}</span> characters
-      </span>
+      <span aria-hidden className={cn(stale ? "rarity-unique" : "rarity-set")}>
+        ●
+      </span>{" "}
+      {stale ? "stale" : "live"} <span aria-hidden>·</span> {ago(age)}
     </p>
   );
 }

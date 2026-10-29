@@ -1,8 +1,7 @@
 /* ==================================================================
-   LEXADIS look and feel layer for the new PD2 Meta shell and Builds pages.
-   Tokens and utilities copied from the package (5-produkt-v2/src/app/globals.css);
-   the look only, no brand. Everything is scoped to .lx so the Meta tool keeps its D2 look.
-   Dark is the default, light via :root[data-mode="light"] (set before paint in layout.tsx).
+   D2 look for the whole site. The old PD2 Meta palette (dark only, no light mode)
+   behind the .lx token names, so Meta, Builds, character and account pages share it.
+   Colours, shadows and radii come from the old globals (commit 54dc64e).
    ================================================================== */
 
 @theme static {
@@ -15,65 +14,63 @@
 .lx {
   color-scheme: dark;
   color: var(--ink);
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
 
-  /* Base tones (dark) */
-  --paper: #0b0d12;
-  --surface: #1a1e27;
-  --ink: #eef0f4;
-  --ink-soft: #b4bac6;
-  --muted-ink: #8e95a3;
-  --line: rgba(255, 255, 255, 0.08);
-  --line-strong: rgba(255, 255, 255, 0.14);
-  --well: rgba(255, 255, 255, 0.06);
-  --edge: rgba(255, 255, 255, 0.16);
-  --edge-soft: rgba(255, 255, 255, 0.06);
+  /* D2 palette (dark only) */
+  --paper: #0a0604;
+  --surface: #160d07;
+  --ink: #e8d4a4;
+  --ink-soft: #b9a67c;
+  --muted-ink: #8a7a5e;
+  --line: #3d2817;
+  --line-strong: #5e4a1f;
+  --well: #1f130b;
+  --edge: rgba(201, 160, 75, 0.15);
+  --edge-soft: rgba(0, 0, 0, 0.6);
   --shadow-c: #000000;
-  --silver: #3a4150;
+  --silver: #3d2817;
 
-  /* One accent */
-  --brand: #2b3a8c;
-  --glow: #8fa2ff;
-  --accent-text: var(--glow);
+  /* One accent: D2 gold */
+  --brand: #c9a04b;
+  --glow: #c9a04b;
+  --accent-text: #c9a04b;
+  --accent-hi: #ffd47a;
 
   /* State colours */
-  --ok: #6fcf9e;
-  --warn: #f0b26b;
-  --danger: #ff8f78;
-  --ok-bg: rgba(111, 207, 158, 0.12);
-  --warn-bg: rgba(240, 178, 107, 0.12);
-  --danger-bg: rgba(255, 143, 120, 0.12);
+  --ok: #00b800;
+  --warn: #ff8c00;
+  --danger: #ff6464;
+  --ok-bg: rgba(0, 184, 0, 0.12);
+  --warn-bg: rgba(255, 140, 0, 0.12);
+  --danger-bg: rgba(165, 42, 42, 0.25);
 
-  --ambient-glow: 23%;
-  --ambient-mitte: 9%;
-  --ambient-brand: 13%;
-  --ambient-silver: 41%;
+  /* Form: small radius, stone bevel */
+  --radius: 0.25rem;
+  --radius-chip: 0.25rem;
+  --radius-box: 0.25rem;
+  --radius-panel: 0.25rem;
+  --radius-sheet: 0.25rem;
 
-  /* Form */
-  --radius: 0.75rem;
-  --radius-chip: 0.5rem;
-  --radius-box: 1rem;
-  --radius-panel: 1.375rem;
-  --radius-sheet: 1.75rem;
-
-  /* Shadows */
+  /* Stone-bevel shadows (the old .d2-panel) */
   --shadow-lift:
-    inset 0 1px 0 var(--edge), inset 0 0 0 1px var(--edge-soft),
-    0 1px 1px color-mix(in oklab, var(--shadow-c) 4%, transparent),
-    0 10px 30px -12px color-mix(in oklab, var(--shadow-c) 16%, transparent),
-    0 30px 70px -30px color-mix(in oklab, var(--brand) 22%, transparent);
+    inset 0 1px 0 rgba(201, 160, 75, 0.15), inset 0 -1px 0 rgba(0, 0, 0, 0.6),
+    0 2px 8px rgba(0, 0, 0, 0.6);
   --shadow-float:
-    inset 0 1px 0 var(--edge), inset 0 0 0 1px var(--edge-soft),
-    0 2px 4px color-mix(in oklab, var(--shadow-c) 5%, transparent),
-    0 24px 60px -16px color-mix(in oklab, var(--shadow-c) 24%, transparent),
-    0 40px 90px -40px color-mix(in oklab, var(--brand) 36%, transparent);
-  --shadow-well:
-    inset 0 1px 2px color-mix(in oklab, var(--shadow-c) 9%, transparent),
-    inset 0 0 0 1px color-mix(in oklab, var(--ink) 5%, transparent);
-  --shadow-press:
-    0 1px 2px color-mix(in oklab, var(--shadow-c) 20%, transparent),
-    0 8px 20px -8px color-mix(in oklab, var(--shadow-c) 40%, transparent);
+    inset 0 1px 0 rgba(201, 160, 75, 0.15), inset 0 -1px 0 rgba(0, 0, 0, 0.6),
+    0 6px 18px rgba(0, 0, 0, 0.7);
+  --shadow-well: inset 0 2px 6px rgba(0, 0, 0, 0.6);
+  --shadow-press: inset 0 1px 0 rgba(255, 212, 122, 0.4), 0 2px 6px rgba(0, 0, 0, 0.5);
+
+  /* Panel and control fills (old stone and brown buttons) */
+  --panel-fill: linear-gradient(180deg, #1f1409 0%, #110a06 100%);
+  --btn-fill: linear-gradient(180deg, #5a3f24 0%, #382514 100%);
+  --btn-fill-hover: linear-gradient(180deg, #6e4f30 0%, #4a3220 100%);
+  --gold-fill: linear-gradient(180deg, #dfb55a 0%, #a07a30 100%);
+  --gold-rim: #5e4a1f;
+  --btn-rim: #7a5e29;
+  --btn-ink: #f5e3b5;
+  --gold-glow: inset 0 1px 0 rgba(255, 212, 122, 0.5), 0 0 10px rgba(201, 160, 75, 0.3);
 
   /* Motion: springs, durations, distances */
   --feder-glatt: linear(0, 0.093, 0.269, 0.447, 0.599, 0.717, 0.804, 0.866, 0.91, 0.94, 0.96, 0.974, 0.983, 0.989, 0.993, 0.995, 0.997, 0.998, 0.999, 1);
@@ -95,33 +92,6 @@
   --versatz-zeile: 30ms;
 }
 
-:root[data-mode="light"] .lx {
-  color-scheme: light;
-  --paper: #f5f6f8;
-  --surface: #fcfcfd;
-  --ink: #0e1116;
-  --ink-soft: #4a5160;
-  --muted-ink: #5e6573;
-  --line: rgba(14, 17, 22, 0.08);
-  --line-strong: rgba(14, 17, 22, 0.14);
-  --well: rgba(14, 17, 22, 0.055);
-  --edge: rgba(255, 255, 255, 0.9);
-  --edge-soft: rgba(255, 255, 255, 0.4);
-  --shadow-c: #0e1116;
-  --silver: #c9ced8;
-  --accent-text: var(--brand);
-  --ok: #2f7a55;
-  --warn: #8f5512;
-  --danger: #a8452f;
-  --ok-bg: rgba(47, 122, 85, 0.1);
-  --warn-bg: rgba(143, 85, 18, 0.1);
-  --danger-bg: rgba(168, 69, 47, 0.1);
-  --ambient-glow: 42%;
-  --ambient-mitte: 16%;
-  --ambient-brand: 24%;
-  --ambient-silver: 75%;
-}
-
 /* Reduce motion: distances and springs drop out, fades stay */
 @media (prefers-reduced-motion: reduce) {
   .lx {
@@ -131,19 +101,18 @@
   }
 }
 
-/* Headings in the LEXADIS layer use Geist; the Meta tool keeps its own heading face. */
 .lx :is(h1, h2, h3, h4) {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--font-cinzel), serif;
+  letter-spacing: 0.02em;
 }
 
-/* The product's body background: paper with four radial lights, fixed */
+/* The old page background: warm radial stage, fixed */
 .lx-stage {
-  background-color: var(--paper);
+  background-color: #050302;
   background-image:
-    radial-gradient(55% 60% at 4% 0%, color-mix(in oklab, var(--glow) var(--ambient-glow), transparent), transparent 70%),
-    radial-gradient(45% 50% at 100% 8%, color-mix(in oklab, var(--silver) var(--ambient-silver), transparent), transparent 70%),
-    radial-gradient(40% 45% at 55% 60%, color-mix(in oklab, var(--glow) var(--ambient-mitte), transparent), transparent 72%),
-    radial-gradient(60% 55% at 85% 105%, color-mix(in oklab, var(--brand) var(--ambient-brand), transparent), transparent 72%);
+    radial-gradient(circle at 20% 10%, rgba(201, 160, 75, 0.04) 0%, transparent 40%),
+    radial-gradient(circle at 80% 90%, rgba(138, 26, 26, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at top, #1a0f08 0%, #0a0604 60%, #050302 100%);
   background-attachment: fixed;
   background-repeat: no-repeat;
 }
@@ -165,15 +134,16 @@
   --color-warn: var(--warn);
   --color-danger: var(--danger);
 
-  /* D2 quality colours: data colours only (names, icon rims, tooltips) */
-  --color-q-unique: color-mix(in oklab, #a08f5d var(--q-mix, 100%), var(--ink));
-  --color-q-set: color-mix(in oklab, #00b800 var(--q-mix, 100%), var(--ink));
-  --color-q-runeword: color-mix(in oklab, #ffff64 var(--q-mix, 100%), var(--ink));
-  --color-q-rare: color-mix(in oklab, #ffff64 var(--q-mix, 100%), var(--ink));
-  --color-q-magic: color-mix(in oklab, #6b6bff var(--q-mix, 100%), var(--ink));
-  --color-q-crafted: color-mix(in oklab, #ff8000 var(--q-mix, 100%), var(--ink));
+  --color-accent-hi: var(--accent-hi);
+
+  /* D2 item rarity colours (canonical, from the old globals) */
+  --color-q-unique: #a08f5d;
+  --color-q-set: #00b800;
+  --color-q-runeword: #ff8c00;
+  --color-q-rare: #ffff64;
+  --color-q-magic: #6b6bff;
+  --color-q-crafted: #ff8000;
 }
-:root[data-mode="light"] .lx { --q-mix: 62%; }
 
 @property --rand-l {
   syntax: "<length>";
@@ -200,30 +170,30 @@
   100% { --rand-l: 28px; --rand-r: 0px; }
 }
 @utility mat-thin {
-  background: color-mix(in oklab, var(--surface) 50%, transparent);
-  backdrop-filter: blur(28px) saturate(170%);
+  background: var(--panel-fill);
+  border: 1px solid var(--line);
   box-shadow: var(--shadow-lift);
 }
 @utility mat-regular {
-  background: color-mix(in oklab, var(--surface) 64%, transparent);
-  backdrop-filter: blur(28px) saturate(170%);
+  background: var(--panel-fill);
+  border: 1px solid var(--line);
   box-shadow: var(--shadow-lift);
 }
 @utility mat-thick {
-  background: color-mix(in oklab, var(--surface) 86%, transparent);
-  backdrop-filter: blur(28px) saturate(170%);
+  background: var(--panel-fill);
+  border: 1px solid var(--line);
   box-shadow: var(--shadow-lift);
 }
 @utility mat-float {
-  background: color-mix(in oklab, var(--surface) 86%, transparent);
-  backdrop-filter: blur(28px) saturate(170%);
+  background: var(--panel-fill);
+  border: 1px solid var(--line);
   box-shadow: var(--shadow-float);
 }
 @utility mat-chrome {
-  color: #eef0f4;
-  background: color-mix(in oklab, #0e1116 78%, transparent);
-  backdrop-filter: blur(28px) saturate(170%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), inset 0 0 0 1px rgba(255, 255, 255, 0.06), 0 24px 60px -16px rgba(0, 0, 0, 0.45);
+  color: var(--ink);
+  background: #1a0f08;
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
 }
 @utility well {
   background: var(--well);
@@ -241,20 +211,12 @@
   }
 }
 @utility sheen {
-  position: relative;
-  overflow: hidden;
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 55%);
-    pointer-events: none;
-  }
+  box-shadow: var(--shadow-press);
 }
 @utility karte {
   border-radius: var(--radius-panel);
-  background: color-mix(in oklab, var(--surface) 64%, transparent);
-  backdrop-filter: blur(28px) saturate(170%);
+  background: var(--panel-fill);
+  border: 1px solid var(--line);
   box-shadow: var(--shadow-lift);
 }
 @utility zeile {
@@ -264,29 +226,29 @@
   &:hover { background: var(--well); }
 }
 @utility feld {
-  min-height: 2.5rem;
+  min-height: 2.25rem;
   border-radius: var(--radius);
-  border: 0;
-  padding: 0.5rem 0.875rem;
+  border: 2px solid var(--btn-rim);
+  padding: 0.375rem 0.75rem;
   font-size: 0.9375rem;
-  color: var(--ink);
-  background: var(--well);
+  color: var(--btn-ink);
+  background: var(--btn-fill);
   box-shadow: var(--shadow-well);
   outline: none;
-  transition: box-shadow var(--dauer-kurz) var(--ease-arrive);
-  &::placeholder { color: var(--muted-ink); }
-  &:focus-visible { box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--accent-text); }
-  &[aria-invalid="true"] { box-shadow: inset 0 0 0 1.5px var(--danger); }
+  transition: border-color var(--dauer-kurz) var(--ease-arrive);
+  &::placeholder { color: color-mix(in oklab, #a08560 70%, transparent); }
+  &:focus-visible { border-color: var(--accent-text); }
+  &[aria-invalid="true"] { border-color: var(--danger); }
   &:disabled { opacity: 0.5; cursor: not-allowed; }
 }
 @utility tabelle {
   width: 100%;
   font-size: 0.875rem;
   border-collapse: collapse;
-  & th { height: 2.5rem; padding: 0 0.75rem; text-align: left; font-size: 0.75rem; font-weight: 500; color: var(--muted-ink); white-space: nowrap; }
-  & td { padding: 0.75rem; border-top: 1px solid var(--line); }
+  & th { height: 2rem; padding: 0 0.75rem; text-align: left; font-family: var(--font-cinzel), serif; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted-ink); white-space: nowrap; }
+  & td { padding: 0.5rem 0.75rem; border-top: 1px dashed color-mix(in oklab, var(--line) 50%, transparent); }
   & tbody tr { transition: background-color var(--dauer-kurz) var(--ease-arrive); }
-  & tbody tr:hover { background: color-mix(in oklab, var(--brand) 5%, transparent); }
+  & tbody tr:hover { background: rgba(201, 160, 75, 0.04); }
 }
 @utility drueckbar {
   transition-property: scale, background-color, box-shadow, color;
@@ -303,7 +265,7 @@
   transition-duration: var(--dauer-kurz), var(--dauer-feder), var(--dauer-kurz);
   transition-timing-function: var(--ease-arrive), var(--feder-zackig), var(--ease-arrive);
   @media (hover: hover) {
-    &:hover { translate: 0 var(--hub-hover); box-shadow: var(--shadow-lift), 0 14px 28px -16px color-mix(in oklab, var(--shadow-c) 38%, transparent); }
+    &:hover { translate: 0 var(--hub-hover); border-color: var(--line-strong); }
   }
   &:active { scale: max(0.985, var(--skala-druck)); transition-duration: var(--dauer-kurz), var(--dauer-druck), var(--dauer-kurz); }
 }
@@ -411,58 +373,160 @@
   .mat-float,
   .karte {
     background: var(--surface) !important;
-    backdrop-filter: none !important;
   }
   .mat-chrome {
-    background: #0e1116 !important;
-    backdrop-filter: none !important;
+    background: #1a0f08 !important;
   }
 }
 
-/* Gear budget slider: well track, glow fill, 22px knob with a spring on press */
+/* Slider: dark track, gold fill, white knob with gold rim (the old min-level slider) */
 .lx-range {
   --fill: 0%;
   appearance: none;
   display: block;
   width: 100%;
-  height: 22px;
+  height: 18px;
   background: transparent;
   cursor: pointer;
   outline: none;
 }
 .lx-range::-webkit-slider-runnable-track {
-  height: 8px;
+  height: 4px;
   border-radius: 999px;
-  background: linear-gradient(90deg, color-mix(in oklab, var(--glow) 60%, transparent) var(--fill), var(--well) var(--fill));
-  box-shadow: var(--shadow-well);
+  background: linear-gradient(90deg, var(--accent-text) var(--fill), var(--well) var(--fill));
 }
 .lx-range::-moz-range-track {
-  height: 8px;
+  height: 4px;
   border-radius: 999px;
-  background: linear-gradient(90deg, color-mix(in oklab, var(--glow) 60%, transparent) var(--fill), var(--well) var(--fill));
-  box-shadow: var(--shadow-well);
+  background: linear-gradient(90deg, var(--accent-text) var(--fill), var(--well) var(--fill));
 }
 .lx-range::-webkit-slider-thumb {
   appearance: none;
-  width: 22px;
-  height: 22px;
-  margin-top: -7px;
-  border: 0;
+  width: 12px;
+  height: 12px;
+  margin-top: -4px;
+  border: 1px solid var(--accent-text);
   border-radius: 999px;
-  background: var(--ink);
-  box-shadow: inset 0 1px 0 var(--edge), 0 1px 2px color-mix(in oklab, var(--shadow-c) 20%, transparent), 0 4px 10px -4px color-mix(in oklab, var(--shadow-c) 40%, transparent);
-  transition: scale var(--dauer-feder) var(--feder-zackig);
+  background: #fff;
 }
 .lx-range::-moz-range-thumb {
-  width: 22px;
-  height: 22px;
-  border: 0;
+  width: 12px;
+  height: 12px;
+  border: 1px solid var(--accent-text);
   border-radius: 999px;
-  background: var(--ink);
-  box-shadow: inset 0 1px 0 var(--edge), 0 1px 2px color-mix(in oklab, var(--shadow-c) 20%, transparent), 0 4px 10px -4px color-mix(in oklab, var(--shadow-c) 40%, transparent);
-  transition: scale var(--dauer-feder) var(--feder-zackig);
+  background: #fff;
 }
-.lx-range:active::-webkit-slider-thumb { scale: 1.12; }
-.lx-range:active::-moz-range-thumb { scale: 1.12; }
 .lx-range:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--accent-text); outline-offset: 2px; }
 .lx-range:focus-visible::-moz-range-thumb { outline: 2px solid var(--accent-text); outline-offset: 2px; }
+
+/* ==================================================================
+   D2 utilities from the old globals.css (commit 54dc64e)
+   ================================================================== */
+
+/* Carved gold heading look for the page title. */
+.d2-title {
+  font-family: var(--font-cinzel), serif;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: linear-gradient(180deg, #f5d480 0%, #c9a04b 50%, #8a6f2e 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* Stone-bevel look for cards and form blocks. */
+.d2-panel {
+  background: linear-gradient(180deg, #1f1409 0%, #110a06 100%);
+  border: 1px solid #3d2817;
+  box-shadow:
+    inset 0 1px 0 rgba(201, 160, 75, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.6),
+    0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.d2-table { border-collapse: collapse; }
+.d2-table thead th {
+  border-bottom: 1px solid #3d2817;
+  color: #8a7a5e;
+  font-family: var(--font-cinzel), serif;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+}
+.d2-table tbody tr { border-bottom: 1px dashed rgba(61, 40, 23, 0.5); }
+.d2-table tbody tr:hover { background: rgba(201, 160, 75, 0.04); }
+
+/* Item rarity colour helpers. */
+.rarity-unique { color: #a08f5d; }
+.rarity-set { color: #00b800; }
+.rarity-runeword { color: #ff8c00; }
+.rarity-rare { color: #ffff64; }
+.rarity-magic { color: #6b6bff; }
+.rarity-crafted { color: #ff8000; }
+.rarity-normal { color: #e8d4a4; }
+.rarity-superior { color: #ffffff; }
+
+/* Sub-section label inside panels: uppercase tracked body face, not Cinzel. */
+.d2-sublabel {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #c9a04b;
+}
+
+/* Thin gold gradient rule between slot blocks. */
+.d2-rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, #5e4a1f 20%, #c9a04b 50%, #5e4a1f 80%, transparent 100%);
+  border: 0;
+}
+
+/* Slot block: left-edge gold accent. */
+.d2-slot-block {
+  border-left: 2px solid #3d2817;
+  padding-left: 0.875rem;
+  transition: border-color 200ms ease;
+}
+.d2-slot-block:hover { border-left-color: #c9a04b; }
+
+/* Buttons and chips: warm stone fill, gold rim; active is the gold gradient. */
+.d2-btn {
+  border: 2px solid var(--btn-rim);
+  border-radius: var(--radius);
+  background: var(--btn-fill);
+  color: var(--btn-ink);
+  font-weight: 500;
+  transition: background 150ms ease, border-color 150ms ease, color 150ms ease;
+}
+.d2-btn:hover:not(:disabled) {
+  background: var(--btn-fill-hover);
+  border-color: var(--accent-text);
+  color: var(--accent-hi);
+}
+.d2-btn[aria-pressed="true"],
+.d2-btn[data-active] {
+  background: var(--gold-fill);
+  border-color: var(--gold-rim);
+  color: var(--paper);
+  box-shadow: var(--gold-glow);
+}
+.d2-btn[aria-pressed="true"]:hover:not(:disabled),
+.d2-btn[data-active]:hover:not(:disabled) {
+  background: var(--gold-fill);
+  color: var(--paper);
+}
+.d2-btn-gold {
+  border: 1px solid var(--gold-rim);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, #c9a04b 0%, #8a6f2e 100%);
+  color: var(--paper);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  box-shadow: inset 0 1px 0 rgba(255, 212, 122, 0.4), 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+.d2-btn-gold:hover:not(:disabled) { background: linear-gradient(180deg, #dfb55a 0%, #a08036 100%); }

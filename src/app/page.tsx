@@ -3,7 +3,7 @@ import { MetaSkeleton, MetaView } from "@/components/meta/MetaView";
 
 export default function Page() {
   return (
-    <main className="lx lx-stage min-h-screen flex-1 px-3 pt-4 pb-16 sm:px-5">
+    <main className="lx flex-1 px-4 pt-6 pb-8 sm:px-6">
       <Suspense fallback={<MetaSkeleton />}>
         <MetaView />
       </Suspense>

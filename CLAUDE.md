@@ -8,7 +8,7 @@ Next.js 16 static-export app that aggregates Project Diablo 2 ladder builds from
 
 ## Stack
 - Next.js 16 App Router, static export (`output: 'export'`)
-- TypeScript, Tailwind 4, LEXADIS look (`src/app/lx.css`, `src/components/lx/`)
+- TypeScript, Tailwind 4, original Diablo 2 look (owner ruling, sprint 4.5: dark only, Cinzel headings, gold on brown; tokens in `src/app/lx.css`, shared primitives in `src/components/lx/`). Not the workspace LEXADIS look.
 - vitest for unit tests
 - No IndexedDB: the web holds no data cache; the server (`server/`) aggregates and caches
 
