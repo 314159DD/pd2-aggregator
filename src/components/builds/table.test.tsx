@@ -130,6 +130,60 @@ describe("CharacterTable", () => {
     expect(within(r).queryByText("Full character ›")).toBeNull();
   });
 
+  it("ignores a stale preview response after another row was opened", async () => {
+    const resolvers: Record<string, (r: Response) => void> = {};
+    vi.stubGlobal("fetch", vi.fn((url: string) => {
+      const name = decodeURIComponent(url.split("/builds/characters/")[1].split("?")[0]);
+      return new Promise<Response>((res) => { resolvers[name] = res; });
+    }));
+    render(<CharacterTable page={page()} state={DEFAULT_BUILDS_STATE} onChange={() => {}} />);
+    const rows = screen.getAllByRole("row", { expanded: false });
+    fireEvent.click(rows[0]);
+    fireEvent.click(rows[1]);
+    await waitFor(() => expect(Object.keys(resolvers)).toContain("Hero1"));
+    resolvers.Hero0(new Response(JSON.stringify({ ...preview("Hero0"), life: 1111 })));
+    resolvers.Hero1(new Response(JSON.stringify({ ...preview("Hero1"), life: 2222 })));
+    expect(await screen.findByText("2,222")).toBeTruthy();
+    expect(screen.queryByText("1,111")).toBeNull();
+  });
+
+  it("does not fetch again when a cached row is reopened", async () => {
+    const fetchMock = vi.fn(async () => new Response(JSON.stringify(preview("Hero0"))));
+    vi.stubGlobal("fetch", fetchMock);
+    render(<CharacterTable page={page()} state={DEFAULT_BUILDS_STATE} onChange={() => {}} />);
+    const r = screen.getAllByRole("row")[1];
+    fireEvent.click(r);
+    await screen.findByText("Full character ›");
+    fireEvent.click(r);
+    await waitFor(() => expect(r.getAttribute("aria-expanded")).toBe("false"));
+    fireEvent.click(r);
+    expect(await screen.findByText("Full character ›")).toBeTruthy();
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+  });
+
+  it("opens a row with Space", async () => {
+    vi.stubGlobal("fetch", vi.fn(async () => new Response(JSON.stringify(preview("Hero0")))));
+    render(<CharacterTable page={page()} state={DEFAULT_BUILDS_STATE} onChange={() => {}} />);
+    const r = screen.getAllByRole("row")[1];
+    fireEvent.keyDown(r, { key: " " });
+    expect(r.getAttribute("aria-expanded")).toBe("true");
+    expect(await screen.findByText("Full character ›")).toBeTruthy();
+  });
+
+  it("scales skill bars on one shared maximum", async () => {
+    const p = { ...preview("Hero0"), skills: [{ name: "Blessed Hammer", hardLevel: 20, realLevel: 34 }, { name: "Vigor", hardLevel: 20, realLevel: 20 }] };
+    vi.stubGlobal("fetch", vi.fn(async () => new Response(JSON.stringify(p))));
+    render(<CharacterTable page={page()} state={DEFAULT_BUILDS_STATE} onChange={() => {}} />);
+    fireEvent.click(screen.getAllByRole("row")[1]);
+    await screen.findByText("Full character ›");
+    const w = screen.getAllByTestId("skill-bar").map((b) => {
+      const [hard, bonus] = Array.from(b.children) as HTMLElement[];
+      return parseFloat(hard.style.width) + parseFloat(bonus.style.width);
+    });
+    expect(w[0]).toBeGreaterThan(w[1]);
+    expect(w[0]).toBeCloseTo(100);
+  });
+
   it("shows the empty state", () => {
     render(<CharacterTable page={page({ total: 0, page: 1, pages: 1, characters: [] })} state={DEFAULT_BUILDS_STATE} onChange={() => {}} />);
     expect(screen.getByText("No characters match these filters.")).toBeTruthy();

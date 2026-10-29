@@ -15,13 +15,12 @@ type Status = { name: string; preview: CharacterPreview | null; failed: boolean 
 
 const MAX_BAR = 20;
 
-function SkillBar({ hard, real }: { hard: number; real: number }) {
-  const max = Math.max(MAX_BAR, real);
+function SkillBar({ hard, real, max }: { hard: number; real: number; max: number }) {
   const hardPct = Math.min(100, (hard / max) * 100);
   const bonusPct = Math.min(100 - hardPct, (Math.max(0, real - hard) / max) * 100);
   return (
-    <div className="flex h-1.5 w-full overflow-hidden rounded-full bg-well" aria-hidden>
-      <div className="h-full" style={{ width: `${hardPct}%`, background: "var(--glow)" }} />
+    <div className="flex h-1.5 w-full overflow-hidden rounded-full bg-well" aria-hidden data-testid="skill-bar">
+      <div data-testid="skill-hard" className="h-full" style={{ width: `${hardPct}%`, background: "var(--glow)" }} />
       <div className="h-full" style={{ width: `${bonusPct}%`, background: "color-mix(in oklab, var(--glow) 40%, transparent)" }} />
     </div>
   );
@@ -31,9 +30,9 @@ function ItemLine({ item }: { item: PreviewItem }) {
   return (
     <li className="flex min-w-0 items-center gap-2.5">
       <ItemIcon item={item} />
-      <span title={item.name} className={`min-w-0 flex-1 truncate text-sm ${qualityClass(item.itemType)}`}>
-        {item.name}
-        {item.isSwitch && <span className="ml-1.5 text-xs text-ink-soft">switch</span>}
+      <span className="flex min-w-0 flex-1 items-baseline gap-1.5">
+        <span title={item.name} className={`min-w-0 truncate text-sm ${qualityClass(item.itemType)}`}>{item.name}</span>
+        {item.isSwitch && <span className="shrink-0 text-xs text-ink-soft">switch</span>}
       </span>
       {item.medianHr !== null && (
         <span className="shrink-0 rounded-full bg-well px-2 py-0.5 font-mono text-xs text-ink tabular-nums">
@@ -101,6 +100,7 @@ export function RowPreview({ name, scope, cache }: { name: string; scope: Scope;
   }
 
   const p = status.preview;
+  const maxSkill = Math.max(MAX_BAR, ...p.skills.slice(0, 10).map((s) => s.realLevel ?? s.hardLevel));
   const gear = p.gear.filter((g) => !g.isCharm);
   const stats: Array<[string, number | null]> = [
     ["Life", p.life],
@@ -123,7 +123,7 @@ export function RowPreview({ name, scope, cache }: { name: string; scope: Scope;
                   <SkillIcon name={s.name} />
                   <div className="flex min-w-0 flex-1 flex-col gap-1">
                     <span title={s.name} className="truncate text-sm text-ink">{s.name}</span>
-                    <SkillBar hard={s.hardLevel} real={real} />
+                    <SkillBar hard={s.hardLevel} real={real} max={maxSkill} />
                   </div>
                   <span className="shrink-0 font-mono text-sm text-ink tabular-nums">
                     {real}
