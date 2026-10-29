@@ -89,7 +89,10 @@ function ItemCell({
       className={cn("relative", className)}
       style={style}
       onPointerEnter={(e) => e.pointerType === "mouse" && setOpen(true)}
-      onPointerLeave={(e) => e.pointerType === "mouse" && setOpen(false)}
+      onPointerLeave={(e) => {
+        pointer.current = null; // a press that left the cell without a click
+        if (e.pointerType === "mouse") setOpen(false);
+      }}
     >
       <button
         type="button"
@@ -97,7 +100,11 @@ function ItemCell({
         aria-label={label ? `${label}: ${item.name}` : item.name}
         onPointerDown={(e) => (pointer.current = e.pointerType)}
         onFocus={() => pointer.current === null && setOpen(true)}
-        onBlur={() => setOpen(false)}
+        onPointerCancel={() => (pointer.current = null)}
+        onBlur={() => {
+          pointer.current = null;
+          setOpen(false);
+        }}
         onClick={() => {
           // A mouse click keeps the tooltip the hover opened; a tap or key press toggles it.
           setOpen((o) => pointer.current === "mouse" || !o);

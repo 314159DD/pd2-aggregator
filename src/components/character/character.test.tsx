@@ -125,6 +125,12 @@ describe("refresh", () => {
   });
 });
 
+// jsdom has no PointerEvent, so pointerType is set by hand.
+const typed = <E extends Event>(e: E, pointerType: string): E => {
+  Object.defineProperty(e, "pointerType", { value: pointerType });
+  return e;
+};
+
 describe("equipment", () => {
   const items = ladder.items as unknown as RawItem[];
   const merc = ladder.mercenary.items as unknown as RawItem[];
@@ -190,6 +196,34 @@ describe("equipment", () => {
     expect(screen.getByRole("tooltip")).toBeTruthy();
     fireEvent.pointerDown(document.body);
     expect(screen.queryByRole("tooltip")).toBeNull();
+  });
+  it("touch tap opens, a second tap closes", () => {
+    render(<EquipmentGrid items={items} mercItems={merc} prices={prices} />);
+    const cell = screen.getByRole("button", { name: "Helm: Nightwing's Veil" });
+    const tap = () => {
+      fireEvent(cell, typed(createEvent.pointerDown(cell), "touch"));
+      fireEvent.click(cell);
+    };
+    tap();
+    expect(screen.getByRole("tooltip")).toBeTruthy();
+    tap();
+    expect(screen.queryByRole("tooltip")).toBeNull();
+  });
+  it("mouse hover opens and closes without a click", () => {
+    render(<EquipmentGrid items={items} mercItems={merc} prices={prices} />);
+    const cell = screen.getByRole("button", { name: "Helm: Nightwing's Veil" });
+    fireEvent(cell, typed(createEvent.pointerOver(cell), "mouse"));
+    expect(screen.getByRole("tooltip")).toBeTruthy();
+    fireEvent(cell, typed(createEvent.pointerOut(cell), "mouse"));
+    expect(screen.queryByRole("tooltip")).toBeNull();
+  });
+  it("a cancelled touch press does not block keyboard focus", () => {
+    render(<EquipmentGrid items={items} mercItems={merc} prices={prices} />);
+    const cell = screen.getByRole("button", { name: "Helm: Nightwing's Veil" });
+    fireEvent(cell, typed(createEvent.pointerDown(cell), "touch"));
+    fireEvent(cell, typed(createEvent.pointerCancel(cell), "touch"));
+    act(() => cell.focus());
+    expect(screen.getByRole("tooltip")).toBeTruthy();
   });
   it("merc view has no amulet or ring wells", () => {
     render(<EquipmentGrid items={items} mercItems={merc} prices={prices} />);
