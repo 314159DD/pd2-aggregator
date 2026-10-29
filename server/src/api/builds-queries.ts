@@ -1,9 +1,10 @@
 import type { Pool } from 'pg';
 import { SEASON_NAMES, type Config } from '../config';
 import { mercTypeOf } from '../core/merc-types';
-import { filterCte } from './filter-sql';
+import { getPriceMap, type ItemPrice } from '../db/prices-repo';
 import type { CharacterFilter } from './filters';
-import { CLASSES } from './queries';
+import { withResolvedScope } from './meta/rollup';
+import { CLASSES, classCounts, itemUsageRows, mercTypeUsage, seasonTotal, skillUsage } from './queries';
 
 export type UsageEntry = { name: string; count: number; pct: number };
 export type ItemUsageEntry = UsageEntry & {
@@ -26,84 +27,59 @@ const pct = (n: number, total: number): number => (total > 0 ? Math.round((n / t
 const byCountThenName = (a: { count: number; name: string }, b: { count: number; name: string }) =>
   b.count - a.count || (a.name < b.name ? -1 : a.name > b.name ? 1 : 0);
 
-async function itemEntries(pool: Pool, f: CharacterFilter, owner: 'player' | 'merc'): Promise<Omit<ItemUsageEntry, 'pct'>[]> {
-  const { sql, params } = filterCte(f);
-  const n = params.length;
-  const r = await pool.query(
-    `${sql}
-     select t.name, t.item_type, count(distinct t.character_id)::int as n, min(t.inv_code) as inv_code, p.median_hr
-     from (
-       select i.character_id, i.name, i.inv_code,
-              case when i.is_runeword then 'Runeword' else i.quality end as item_type
-       from character_items i join filtered on filtered.id = i.character_id
-       where i.owner = $${n + 1} and (i.is_runeword or i.quality in ('Unique','Set'))
-     ) t
-     left join item_prices p on p.mode = $${n + 2} and p.item_name = t.name and p.item_type = t.item_type and not $${n + 3}::boolean
-     group by t.name, t.item_type, p.median_hr`,
-    [...params, owner, f.mode, f.archive === true],
-  );
-  return r.rows.map((x) => ({
-    name: x.name as string,
-    count: x.n as number,
-    itemType: x.item_type as ItemUsageEntry['itemType'],
-    invCode: (x.inv_code as string | null) ?? null,
-    medianHr: x.median_hr === null ? null : Number(x.median_hr),
-  }));
-}
-
-export async function buildsUsage(pool: Pool, f: CharacterFilter): Promise<BuildsUsage> {
-  const own = filterCte(f);
-  const noClass = filterCte({ ...f, classes: [] });
-  const [seasonTotalR, totalR, breakdownR, skillsR, mercTypesR, playerItems, merc] = await Promise.all([
-    pool.query(`select count(*)::int as n from characters where season = $1 and mode = $2 and level >= 80`, [f.season, f.mode]),
-    pool.query(`${own.sql} select count(*)::int as n from filtered`, own.params),
-    pool.query(
-      `${noClass.sql} select c.class, count(*)::int as n from characters c join filtered on filtered.id = c.id group by c.class`,
-      noClass.params,
-    ),
-    pool.query(
-      `${own.sql} select s.skill as name, count(distinct s.character_id)::int as n
-       from character_skills s join filtered on filtered.id = s.character_id
-       where s.hard_level >= 20 group by s.skill`,
-      own.params,
-    ),
-    pool.query(
-      `${own.sql} select m.description, count(distinct m.character_id)::int as n
-       from character_merc m join filtered on filtered.id = m.character_id group by m.description`,
-      own.params,
-    ),
-    itemEntries(pool, f, 'player'),
-    itemEntries(pool, f, 'merc'),
+/**
+ * Base cohorts (no item, skill, merc or gear filter) read meta_rollup through the shared usage
+ * functions of ./queries, filtered cohorts run the per-character queries. Item prices come from
+ * item_prices, none for an archive season.
+ */
+export async function buildsUsage(pool: Pool, cohort: CharacterFilter): Promise<BuildsUsage> {
+  // One rollup scope lookup per cohort, shared by every query below.
+  const f = withResolvedScope(pool, cohort);
+  const all = withResolvedScope(pool, { ...cohort, classes: [] });
+  const [seasonTotalN, own, classes, skills, mercTypes, playerItems, mercItems, prices] = await Promise.all([
+    seasonTotal(pool, f.season, f.mode),
+    classCounts(pool, f),
+    classCounts(pool, all),
+    skillUsage(pool, f),
+    mercTypeUsage(pool, f),
+    itemUsageRows(pool, f, 'player'),
+    itemUsageRows(pool, f, 'merc'),
+    f.archive === true ? Promise.resolve(new Map<string, ItemPrice>()) : getPriceMap(pool, f.mode),
   ]);
-  const total: number = totalR.rows[0].n;
+  const total = own.reduce((sum, r) => sum + r.n, 0);
   const withPct = <T extends { count: number }>(e: T): T & { pct: number } => ({ ...e, pct: pct(e.count, total) });
+  const itemEntry = (x: (typeof playerItems)[number]): Omit<ItemUsageEntry, 'pct'> => ({
+    name: x.item,
+    count: x.numOccurrences,
+    itemType: x.itemType as ItemUsageEntry['itemType'],
+    invCode: x.invCode,
+    medianHr: prices.get(`${x.itemType}|${x.item}`)?.medianHr ?? null,
+  });
 
   const breakdown: Record<string, number> = Object.fromEntries(CLASSES.map((c) => [c, 0]));
-  let all = 0;
-  for (const r of breakdownR.rows) {
-    all += r.n;
+  let everyone = 0;
+  for (const r of classes) {
+    everyone += r.n;
     if (r.class in breakdown) breakdown[r.class] = r.n;
   }
-  breakdown.total = all;
+  breakdown.total = everyone;
 
   const merged = new Map<string, { name: string; count: number; act: number | null }>();
-  for (const r of mercTypesR.rows) {
-    const t = mercTypeOf(r.description);
+  for (const r of mercTypes) {
+    const t = mercTypeOf(r.mercType);
     const e = merged.get(t.name);
-    if (e) e.count += r.n;
-    else merged.set(t.name, { name: t.name, count: r.n, act: t.act });
+    if (e) e.count += r.numOccurrences;
+    else merged.set(t.name, { name: t.name, count: r.numOccurrences, act: t.act });
   }
 
   return {
-    seasonTotal: seasonTotalR.rows[0].n,
+    seasonTotal: seasonTotalN,
     total,
     breakdown,
-    skills: skillsR.rows
-      .map((x) => withPct({ name: x.name as string, count: x.n as number }))
-      .sort(byCountThenName),
-    items: playerItems.map(withPct).sort(byCountThenName),
+    skills: skills.map((x) => withPct({ name: x.name, count: x.numOccurrences })).sort(byCountThenName),
+    items: playerItems.map(itemEntry).map(withPct).sort(byCountThenName),
     mercTypes: [...merged.values()].map(withPct).sort(byCountThenName),
-    mercItems: merc.map(withPct).sort(byCountThenName),
+    mercItems: mercItems.map(itemEntry).map(withPct).sort(byCountThenName),
   };
 }
 

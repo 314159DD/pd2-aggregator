@@ -4,8 +4,7 @@ import { mercTypeOf } from '../../core/merc-types';
 import { getPriceMap, getRunePrices, type ItemPrice } from '../../db/prices-repo';
 import { filterCte } from '../filter-sql';
 import type { CharacterFilter } from '../filters';
-import { mercTypeUsage, pct, skillUsage, type MercTypeUsageRow, type SkillUsageRow } from '../queries';
-import { rollupPoolSizeSql, rollupScope } from './rollup';
+import { itemUsageRows, mercTypeUsage, skillUsage } from '../queries';
 import type { MercSummary, MetaSlot, SkillFrequencyRow, TopItem } from './types';
 
 export type UsageRow = { item: string; itemType: string; numOccurrences: number; totalSample: number; pct: number };
@@ -28,52 +27,6 @@ export function shapeTopItemsBySlot(rows: UsageRow[], limit = 8): Record<MetaSlo
     out[s] = out[s].slice(0, limit);
   }
   return out;
-}
-
-/** Same semantics as the phase-1 item usage query, plus one inventory code per item. */
-export async function itemUsageRows(
-  pool: Pool,
-  f: CharacterFilter,
-  owner: 'player' | 'merc',
-): Promise<Array<UsageRow & { invCode: string | null }>> {
-  const scope = await rollupScope(pool, f);
-  let rows: Array<{ item: string; item_type: string; n: number; inv_code: string | null; total: number }>;
-  if (scope) {
-    // item_<owner> facts: one per character and item, k3 = that character's min inv code.
-    const r = await pool.query(
-      `select r.k1 as item, r.k2 as item_type, sum(r.n)::int as n, min(r.k3) as inv_code,
-              ${rollupPoolSizeSql(scope.where)} as total
-       from meta_rollup r where ${scope.where} and r.kind = $${scope.params.length + 1}
-       group by r.k1, r.k2
-       order by n desc, r.k1`,
-      [...scope.params, `item_${owner}`],
-    );
-    rows = r.rows;
-  } else {
-    const { sql, params } = filterCte(f);
-    const r = await pool.query(
-      `${sql}
-       select i.name as item,
-              case when i.is_runeword then 'Runeword' else i.quality end as item_type,
-              count(distinct i.character_id)::int as n,
-              min(i.inv_code) as inv_code,
-              (select count(*) from filtered)::int as total
-       from character_items i join filtered on filtered.id = i.character_id
-       where i.owner = $${params.length + 1} and (i.is_runeword or i.quality in ('Unique','Set'))
-       group by i.name, item_type
-       order by n desc, i.name`,
-      [...params, owner],
-    );
-    rows = r.rows;
-  }
-  return rows.map((x) => ({
-    item: x.item,
-    itemType: x.item_type,
-    numOccurrences: x.n,
-    totalSample: x.total,
-    pct: x.total > 0 ? Math.round((x.n / x.total) * 10000) / 100 : 0,
-    invCode: x.inv_code ?? null,
-  }));
 }
 
 export async function topItemsBySlot(pool: Pool, f: CharacterFilter): Promise<Record<MetaSlot, TopItem[]>> {
@@ -116,41 +69,8 @@ export async function topItemsBySlot(pool: Pool, f: CharacterFilter): Promise<Re
   return out;
 }
 
-/** Characters per value of a one-per-character fact kind ('merc', 'skill20'), as mercTypeUsage/skillUsage report them. */
-async function countPerKey(pool: Pool, where: string, params: unknown[], kind: string) {
-  const r = await pool.query(
-    `select r.k1 as name, sum(r.n)::int as n, ${rollupPoolSizeSql(where)} as total
-     from meta_rollup r where ${where} and r.kind = $${params.length + 1}
-     group by r.k1 order by n desc, r.k1`,
-    [...params, kind],
-  );
-  return r.rows.map((x) => ({ name: String(x.name), n: Number(x.n), total: Number(x.total) }));
-}
-
-async function mercTypes(pool: Pool, f: CharacterFilter): Promise<MercTypeUsageRow[]> {
-  const scope = await rollupScope(pool, f);
-  if (!scope) return mercTypeUsage(pool, f);
-  return (await countPerKey(pool, scope.where, scope.params, 'merc')).map((x) => ({
-    mercType: x.name,
-    numOccurrences: x.n,
-    totalSample: x.total,
-    pct: pct(x.n, x.total),
-  }));
-}
-
-async function skillsAtTwenty(pool: Pool, f: CharacterFilter): Promise<SkillUsageRow[]> {
-  const scope = await rollupScope(pool, f);
-  if (!scope) return skillUsage(pool, f);
-  return (await countPerKey(pool, scope.where, scope.params, 'skill20')).map((x) => ({
-    name: x.name,
-    numOccurrences: x.n,
-    totalSample: x.total,
-    pct: pct(x.n, x.total),
-  }));
-}
-
 export async function mercSummary(pool: Pool, f: CharacterFilter): Promise<MercSummary> {
-  const [types, rows] = await Promise.all([mercTypes(pool, f), itemUsageRows(pool, f, 'merc')]);
+  const [types, rows] = await Promise.all([mercTypeUsage(pool, f), itemUsageRows(pool, f, 'merc')]);
   const typeFrequency = types
     .map((t) => ({
       mercType: t.mercType,
@@ -174,7 +94,7 @@ export async function mercSummary(pool: Pool, f: CharacterFilter): Promise<MercS
 }
 
 export async function skillFrequency(pool: Pool, f: CharacterFilter): Promise<SkillFrequencyRow[]> {
-  const rows = await skillsAtTwenty(pool, f);
+  const rows = await skillUsage(pool, f);
   return rows
     .slice()
     .sort((a, b) => b.pct - a.pct || (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
