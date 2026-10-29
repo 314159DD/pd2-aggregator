@@ -19,7 +19,7 @@ const MAX_BYTES = 200000;
 
 async function main(): Promise<void> {
   const cfg = loadConfig(process.env);
-  const pool = createPool(cfg.databaseUrl);
+  const pool = createPool(cfg.databaseUrl, 'api');
   try {
     const cohorts: Array<{ label: string; query: Record<string, string> }> = [];
     for (const gameMode of ['softcore', 'hardcore']) {

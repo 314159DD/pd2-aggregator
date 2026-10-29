@@ -49,11 +49,15 @@ docker compose -p pd2meta exec -T api node dist/scripts/backfill-items.js
 Migration 005 creates `meta_rollup` empty and marks it not ready, so `/meta` keeps the old per-character queries until the rollup is built. Right after the server deploy:
 
 ```
+docker compose -p pd2meta exec -T db psql -U pd2meta -d pd2meta -c "update collector_control set paused = true"
 docker compose -p pd2meta exec -T api node dist/scripts/backfill-meta.js
+docker compose -p pd2meta exec -T db psql -U pd2meta -d pd2meta -c "update collector_control set paused = false"
 docker compose -p pd2meta restart api   # drops meta results cached while the rollup was not ready
 ```
 
-The rebuild runs in one transaction and holds the rollup lock, so the collector's writes wait until it commits (about 30 to 60 s at 6k characters). It is idempotent; run it again whenever the rollup is in doubt.
+The rebuild runs in one transaction and holds the rollup lock (about 30 to 60 s at 6k characters); a running collector's upserts would wait on it and fail on their 15 s statement timeout, so `backfill-meta` refuses to start unless the collector is paused (`--force` overrides). It is idempotent.
+
+Run it again (same steps) after any deploy that changes the meta fact code (`src/db/meta-rollup.ts`, the static prereq/slot data): the api then logs `meta rollup fingerprint mismatch, run backfill-meta` once and serves `/meta` from the per-character queries until the rebuild.
 
 ## Check
 

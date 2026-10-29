@@ -5,7 +5,7 @@ import { createApp } from './app';
 
 async function main(): Promise<void> {
   const cfg = loadConfig(process.env);
-  const pool = createPool(cfg.databaseUrl);
+  const pool = createPool(cfg.databaseUrl, 'api');
   await migrate(pool);
   const app = createApp({ pool, cfg });
   app.listen(cfg.apiPort, () => console.log(`${new Date().toISOString()} INFO api listening on ${cfg.apiPort}`));

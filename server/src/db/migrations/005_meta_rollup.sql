@@ -17,12 +17,16 @@ create table meta_rollup (
   total numeric,
   entries int not null,
   constraint meta_rollup_key unique nulls not distinct (season, mode, class, level, kind, k1, k2, k3, val)
-);
+) with (fillfactor = 80); -- room for HOT updates: upserts change n/total/entries in place
 -- Cohort reads: one kind of one season and mode over a level range, optionally some classes.
 create index meta_rollup_cohort on meta_rollup (season, mode, kind, level, class);
 
 -- ready = the rollup reflects every stored character. On an empty database it is trivially
 -- complete; on a populated one it stays false until scripts/backfill-meta.ts has rebuilt it,
 -- and /meta keeps using the per-character queries until then.
-create table meta_rollup_status (id int primary key default 1 check (id = 1), ready boolean not null);
+-- fingerprint = META_FACTS_FINGERPRINT of the code that built it (null: nothing written yet);
+-- /meta ignores a rollup stamped by other fact code until the next backfill-meta.
+create table meta_rollup_status (
+  id int primary key default 1 check (id = 1), ready boolean not null, fingerprint text
+);
 insert into meta_rollup_status (id, ready) select 1, not exists (select 1 from characters);

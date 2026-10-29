@@ -1,7 +1,7 @@
 import { Pool } from 'pg';
 import { toCompact } from '../core/compact';
 import { readRaw, replaceItems } from '../db/characters-repo';
-import { withMetaRollup } from '../db/meta-rollup';
+import { lockMetaRollup, withMetaRollup } from '../db/meta-rollup';
 import type { CharacterApiResponse } from '../core/vendor/types';
 
 /**
@@ -26,6 +26,7 @@ export async function backfillItems(pool: Pool, season: number, batchSize = 200)
     let destroy = false;
     try {
       await client.query('begin');
+      await lockMetaRollup(client); // before the row locks below, as in upsertCharacter
       for (const id of ids) {
         await client.query('savepoint row_sp');
         try {
