@@ -19,6 +19,7 @@ export type HeaderInfo = {
   gearValueHr: number | null;
   gearPartial: boolean;
   mercValueHr: number | null;
+  archive: boolean;
 };
 
 type Notice = { text: string; tone: "ok" | "bad" } | null;
@@ -104,10 +105,12 @@ export function CharacterHeader({ info }: { info: HeaderInfo }) {
           )}
         </div>
         <div className="flex items-center gap-3">
-          <span className="text-xs text-muted-ink">Updated {formatAgo(info.lastIngestedAt)}</span>
-          <Button size="sm" variant="secondary" onClick={refresh} disabled={!info.account || busy} title={info.account ? undefined : "Account unknown"}>
-            Refresh
-          </Button>
+          <span className="text-xs text-muted-ink">{info.archive ? "Archived season" : `Updated ${formatAgo(info.lastIngestedAt)}`}</span>
+          {!info.archive && (
+            <Button size="sm" variant="secondary" onClick={refresh} disabled={!info.account || busy} title={info.account ? undefined : "Account unknown"}>
+              Refresh
+            </Button>
+          )}
         </div>
         <p role="status" className={`min-h-4 text-xs ${notice?.tone === "bad" ? "text-danger" : "text-ink-soft"}`}>
           {notice?.text}

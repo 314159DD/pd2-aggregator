@@ -19,6 +19,7 @@ import {
   toggleSkill,
   type BuildsState,
 } from "@/lib/builds/url-state";
+import { isArchiveSeason } from "@/lib/builds/scope";
 import { AddAccount } from "./AddAccount";
 import { ActiveFilters } from "./ActiveFilters";
 import { BuildsHeader } from "./BuildsHeader";
@@ -56,19 +57,23 @@ export function BuildsView() {
   const [lastData, setLastData] = useState<Data | null>(null);
   const [retry, setRetry] = useState(0);
   const [history, setHistory] = useState<BuildShareHistory | null>(null);
-  const [seasons, setSeasons] = useState<SeasonsResponse | null>(null);
 
   const update = useCallback(
     (next: BuildsState) => router.replace(`/builds?${serializeBuildsState(next).toString()}`, { scroll: false }),
     [router],
   );
 
+  const [seasons, setSeasons] = useState<SeasonsResponse | null>(null);
+  const archive = isArchiveSeason(state.season, seasons);
+
   // Usage and character page for the current filters; the last result stays on screen meanwhile.
-  const apiKey = toApiParams(state).toString();
+  // Archive seasons have no prices, so the budget is not sent.
+  const apiState = useMemo(() => (archive ? { ...state, maxGearHr: null } : state), [archive, state]);
+  const apiKey = toApiParams(apiState).toString();
   useEffect(() => {
     const ac = new AbortController();
     const t = setTimeout(() => {
-      Promise.all([getUsage(state, ac.signal), getBuildCharacters(state, ac.signal)])
+      Promise.all([getUsage(apiState, ac.signal), getBuildCharacters(apiState, ac.signal)])
         .then(([usage, characters]) => {
           setResult({ key: apiKey, data: { usage, characters }, failed: false });
           setLastData({ usage, characters });
@@ -122,7 +127,7 @@ export function BuildsView() {
 
         <Card className="flex flex-wrap items-center gap-x-4 gap-y-3 p-5">
           <Toolbar minLevel={state.minLevel} onLevel={(l) => update(setLevel(state, l))} />
-          <ActiveFilters state={state} onChange={update} />
+          <ActiveFilters state={state} onChange={update} archive={archive} />
         </Card>
 
         {failed && (
@@ -152,7 +157,7 @@ export function BuildsView() {
 
               <div className="grid gap-5 lg:grid-cols-12">
                 <div className="flex min-w-0 flex-col gap-5 lg:col-span-4">
-                  <GearBudget value={state.maxGearHr} onChange={(v) => update(setBudget(state, v))} />
+                  {!archive && <GearBudget value={state.maxGearHr} onChange={(v) => update(setBudget(state, v))} />}
                   <UsageCard
                     title="Skills"
                     entries={data.usage.skills}
@@ -182,8 +187,8 @@ export function BuildsView() {
                   />
                 </div>
                 <div className="flex min-w-0 flex-col gap-5 lg:col-span-8">
-                  <ShoppingList items={data.usage.items} />
-                  <CharacterTable page={data.characters} state={state} onChange={update} />
+                  <ShoppingList items={data.usage.items} archive={archive} />
+                  <CharacterTable page={data.characters} state={state} onChange={update} archive={archive} />
                   <section className="mat-thick flex flex-col gap-3 rounded-[var(--radius-panel)] p-5" aria-label="Add account">
                     <div>
                       <h2 className="text-sm font-semibold text-ink">Add account</h2>
