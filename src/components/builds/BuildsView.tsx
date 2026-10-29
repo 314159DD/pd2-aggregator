@@ -21,6 +21,7 @@ import {
 } from "@/lib/builds/url-state";
 import { ActiveFilters } from "./ActiveFilters";
 import { BuildsHeader } from "./BuildsHeader";
+import { CharacterTable } from "./CharacterTable";
 import { ClassShare } from "./ClassShare";
 import { GearBudget } from "./GearBudget";
 import { ItemIcon, SkillIcon } from "./ItemIcon";
@@ -181,7 +182,7 @@ export function BuildsView() {
                 </div>
                 <div className="flex min-w-0 flex-col gap-5 lg:col-span-8">
                   <ShoppingList items={data.usage.items} />
-                  {/* Task 11: CharacterTable (data.characters) */}
+                  <CharacterTable page={data.characters} state={state} onChange={update} />
                 </div>
               </div>
             </>
