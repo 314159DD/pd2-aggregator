@@ -8,6 +8,7 @@ import { addPriorityAccount } from '../db/status-repo';
 import { parseFilter } from './filters';
 import * as q from './queries';
 
+const VERCEL_PREVIEW_RE = /^https:\/\/pd2-aggregator-[a-z0-9-]+\.vercel\.app$/;
 const ACCOUNT_RE = /^[a-zA-Z0-9_-]{1,50}$/;
 const QUEUE_LIMIT = 5;
 const QUEUE_WINDOW_MS = 60 * 60 * 1000;
@@ -40,7 +41,11 @@ export function createApp(deps: { pool: Pool; cfg: Config }): express.Express {
   const { pool, cfg } = deps;
   const app = express();
   app.set('trust proxy', 1);
-  app.use(cors({ origin: cfg.corsOrigins }));
+  app.use(
+    cors({
+      origin: (origin, cb) => cb(null, !origin || cfg.corsOrigins.includes(origin) || VERCEL_PREVIEW_RE.test(origin) ? (origin ?? true) : false),
+    }),
+  );
   app.use(compression());
   app.use(express.json({ limit: '4kb' }));
 

@@ -198,6 +198,17 @@ describe('stats routes', () => {
     expect(a.body.characters[0].accountName).toBe('BackfilledAcc');
   });
 
+  it('allows configured and Vercel preview origins only', async () => {
+    const ok = await request(app).get('/api/v1/health').set('Origin', 'https://pd2-aggregator-git-x-abc.vercel.app');
+    expect(ok.headers['access-control-allow-origin']).toBe('https://pd2-aggregator-git-x-abc.vercel.app');
+    const cfgd = await request(app).get('/api/v1/health').set('Origin', 'https://www.pd2meta.info');
+    expect(cfgd.headers['access-control-allow-origin']).toBe('https://www.pd2meta.info');
+    const bad = await request(app).get('/api/v1/health').set('Origin', 'https://evil.vercel.app');
+    expect(bad.headers['access-control-allow-origin']).toBeUndefined();
+    const bad2 = await request(app).get('/api/v1/health').set('Origin', 'https://pd2-aggregator-x.vercel.app.evil.com');
+    expect(bad2.headers['access-control-allow-origin']).toBeUndefined();
+  });
+
   it('ignores unknown query params for the cache key', async () => {
     await request(app).get('/api/v1/characters/stats/item-usage?minLevel=83');
     const spy = vi.spyOn(pool, 'query');
