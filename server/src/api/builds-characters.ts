@@ -46,7 +46,8 @@ export async function buildsCharacters(
   f: CharacterFilter,
   opts: { sort: string; dir: string; page: number },
 ): Promise<BuildsCharactersPage> {
-  const sort: SortKey = Object.hasOwn(SORT_COLUMNS, opts.sort) ? (opts.sort as SortKey) : 'level';
+  let sort: SortKey = Object.hasOwn(SORT_COLUMNS, opts.sort) ? (opts.sort as SortKey) : 'level';
+  if (f.archive && sort === 'gear') sort = 'level'; // archive rows carry no gear value
   const dir: 'asc' | 'desc' = opts.dir === 'asc' ? 'asc' : 'desc';
   const parsed = Number(opts.page);
   const page = Number.isFinite(parsed) ? Math.min(100000, Math.max(1, Math.trunc(parsed))) : 1;
@@ -123,8 +124,8 @@ export async function buildsCharacters(
         .sort((a, b) => a.rank - b.rank)
         .slice(0, 8)
         .map(({ rank: _rank, ...g }) => g),
-      gearValueHr: num(x.gear_value_hr),
-      gearValuePartial: x.gear_value_partial,
+      gearValueHr: f.archive ? null : num(x.gear_value_hr),
+      gearValuePartial: f.archive ? false : x.gear_value_partial,
     })),
   };
 }
