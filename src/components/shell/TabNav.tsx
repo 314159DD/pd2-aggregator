@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -14,13 +15,11 @@ function activeTab(pathname: string): "builds" | "meta" | null {
   return null;
 }
 
-export function TabNav() {
+function TabNavView({ query }: { query: string }) {
   const active = activeTab(usePathname() ?? "/");
-  const mode = useSearchParams()?.get("gameMode");
-  const q = mode === "hardcore" || mode === "softcore" ? `?gameMode=${mode}` : "";
   const tabs = [
-    { id: "builds", label: "Builds", href: `/builds${q}` },
-    { id: "meta", label: "Meta", href: `/${q}` },
+    { id: "builds", label: "Builds", href: `/builds${query}` },
+    { id: "meta", label: "Meta", href: `/${query}` },
   ] as const;
 
   return (
@@ -41,5 +40,19 @@ export function TabNav() {
         );
       })}
     </nav>
+  );
+}
+
+function TabNavWithMode() {
+  const mode = useSearchParams()?.get("gameMode");
+  return <TabNavView query={mode === "hardcore" || mode === "softcore" ? `?gameMode=${mode}` : ""} />;
+}
+
+/** Only the gameMode carry-over reads the URL; the tabs themselves prerender (same markup as fallback). */
+export function TabNav() {
+  return (
+    <Suspense fallback={<TabNavView query="" />}>
+      <TabNavWithMode />
+    </Suspense>
   );
 }

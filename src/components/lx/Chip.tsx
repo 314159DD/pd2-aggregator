@@ -5,10 +5,12 @@ import { cn } from "@/lib/utils";
 export function Chip({
   children,
   onRemove,
+  removeLabel,
   className,
 }: {
   children: ReactNode;
   onRemove?: () => void;
+  removeLabel?: string;
   className?: string;
 }) {
   return (
@@ -22,7 +24,7 @@ export function Chip({
       {onRemove && (
         <button
           type="button"
-          aria-label="Remove"
+          aria-label={removeLabel ?? "Remove"}
           onClick={onRemove}
           className="-mr-1 inline-flex size-4 items-center justify-center rounded-full text-muted-ink outline-none hover:text-ink focus-visible:outline-2 focus-visible:outline-accent-text"
         >
