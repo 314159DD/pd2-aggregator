@@ -6,3 +6,5 @@ export * from "./mercenary";
 export * from "./skills";
 export * from "./responses";
 export * from "./services";
+export * from "./stats";
+export * from "./damage";

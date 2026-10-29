@@ -140,3 +140,26 @@ export async function getPrices(
     })),
   };
 }
+
+export type ItemPrice = { medianHr: number; samples: number; source: 'sold' | 'ask' };
+
+/** Prices for the given item names in one query. Names without a price are absent from the map. */
+export async function getPricesFor(
+  pool: Pool,
+  mode: 'softcore' | 'hardcore',
+  names: string[],
+): Promise<Map<string, ItemPrice>> {
+  const out = new Map<string, ItemPrice>();
+  if (!names.length) return out;
+  const r = await pool.query(
+    `select item_name, median_hr, samples, source from item_prices
+     where mode = $1 and item_name = any($2::text[])
+     order by samples desc`,
+    [mode, names],
+  );
+  for (const x of r.rows) {
+    if (out.has(x.item_name)) continue;
+    out.set(x.item_name, { medianHr: Number(x.median_hr), samples: Number(x.samples), source: x.source });
+  }
+  return out;
+}

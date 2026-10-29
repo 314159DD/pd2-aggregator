@@ -8,3 +8,10 @@ fs.mkdirSync(to, { recursive: true });
 for (const f of fs.readdirSync(from)) {
   if (f.endsWith('.sql')) fs.copyFileSync(path.join(from, f), path.join(to, f));
 }
+
+// Vendored game data read at runtime by the character stats parser.
+fs.cpSync(
+  path.join(__dirname, '..', 'src', 'core', 'vendor', 'game-data'),
+  path.join(__dirname, '..', 'dist', 'core', 'vendor', 'game-data'),
+  { recursive: true },
+);
