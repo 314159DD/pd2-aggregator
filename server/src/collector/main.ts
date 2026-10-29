@@ -179,7 +179,7 @@ async function main(): Promise<void> {
       everyMs: HOUR,
       run: async () => {
         const r = await runPriceJob({ pool, cfg });
-        log('info', `price job: ${r.priced} items priced, ${r.characters} characters updated`);
+        log('info', `price job: ${r.priced} items priced, ${r.charactersChanged} characters changed`);
       },
     },
     {

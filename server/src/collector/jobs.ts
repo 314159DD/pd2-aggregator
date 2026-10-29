@@ -6,8 +6,8 @@ import { computeItemPrices, recomputeGearValues } from '../db/prices-repo';
 export async function runPriceJob(
   deps: { pool: Pool; cfg: Pick<Config, 'currentSeason'> },
   now: Date = new Date(),
-): Promise<{ priced: number; characters: number }> {
+): Promise<{ priced: number; charactersChanged: number }> {
   const { priced } = await computeItemPrices(deps.pool, now);
-  const characters = await recomputeGearValues(deps.pool, { season: deps.cfg.currentSeason });
-  return { priced, characters };
+  const charactersChanged = await recomputeGearValues(deps.pool, { season: deps.cfg.currentSeason });
+  return { priced, charactersChanged };
 }

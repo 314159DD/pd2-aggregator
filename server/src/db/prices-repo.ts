@@ -63,41 +63,61 @@ export async function computeItemPrices(pool: Pool, now: Date = new Date()): Pro
   }
 }
 
-/** Recomputes gear value columns for the characters in scope from current item_prices. */
+export const GEAR_BATCH_IDS = 5000;
+
+/**
+ * Recomputes gear value columns for the characters in scope from current item_prices.
+ * Season scope runs in id-range batches (one short statement each). Only rows whose values
+ * change are written; returns the number of changed rows.
+ */
 export async function recomputeGearValues(
   db: Pool | PoolClient,
   scope: { season: number } | { characterIds: number[] },
 ): Promise<number> {
-  const [where, param] = 'season' in scope
-    ? ['c.season = $1', scope.season]
-    : ['c.id = any($1::bigint[])', scope.characterIds];
-  const r = await db.query(
-    `with w as (
-       select c.id, i.owner, p.median_hr
-       from characters c
-       join character_items i on i.character_id = c.id
-       left join item_prices p on p.mode = c.mode and p.item_name = i.name
-         and p.item_type = case when i.is_runeword then 'Runeword' else i.quality end
-       where ${where}
-         and (i.is_runeword or i.quality in ('Unique','Set'))
-         and (i.slot is not null or i.is_charm)
-     ), a as (
-       select id,
-              coalesce(sum(median_hr) filter (where owner = 'player'), 0) as v,
-              coalesce(bool_or(median_hr is null) filter (where owner = 'player'), false) as partial,
-              case when count(*) filter (where owner = 'merc') = 0 then null
-                   else coalesce(sum(median_hr) filter (where owner = 'merc'), 0) end as mv
-       from w group by id
-     )
-     update characters c
-        set gear_value_hr = coalesce(a.v, 0),
-            gear_value_partial = coalesce(a.partial, false),
-            merc_gear_value_hr = a.mv
-       from characters c0 left join a on a.id = c0.id
-      where c0.id = c.id and ${where}`,
-    [param],
-  );
-  return r.rowCount ?? 0;
+  const run = async (where: string, params: unknown[]): Promise<number> => {
+    const r = await db.query(
+      `with t as (
+         select c.id, c.mode from characters c where ${where}
+       ), w as (
+         select t.id, i.owner, p.median_hr
+         from t
+         join character_items i on i.character_id = t.id
+         left join item_prices p on p.mode = t.mode and p.item_name = i.name
+           and p.item_type = case when i.is_runeword then 'Runeword' else i.quality end
+         where (i.is_runeword or i.quality in ('Unique','Set'))
+           and (i.slot is not null or i.is_charm)
+       ), a as (
+         select id,
+                coalesce(sum(median_hr) filter (where owner = 'player'), 0) as v,
+                coalesce(bool_or(median_hr is null) filter (where owner = 'player'), false) as partial,
+                case when count(*) filter (where owner = 'merc') = 0 then null
+                     else coalesce(sum(median_hr) filter (where owner = 'merc'), 0) end as mv
+         from w group by id
+       ), n as (
+         select t.id, coalesce(a.v, 0) as v, coalesce(a.partial, false) as partial, a.mv
+         from t left join a on a.id = t.id
+       )
+       update characters c
+          set gear_value_hr = n.v, gear_value_partial = n.partial, merc_gear_value_hr = n.mv
+         from n
+        where n.id = c.id
+          and (c.gear_value_hr, c.gear_value_partial, c.merc_gear_value_hr)
+              is distinct from (n.v, n.partial, n.mv)`,
+      params,
+    );
+    return r.rowCount ?? 0;
+  };
+
+  if ('characterIds' in scope) {
+    return scope.characterIds.length ? run('c.id = any($1::bigint[])', [scope.characterIds]) : 0;
+  }
+  const range = (await db.query('select min(id) as lo, max(id) as hi from characters where season = $1', [scope.season])).rows[0];
+  if (range.lo === null) return 0;
+  let changed = 0;
+  for (let lo = Number(range.lo); lo <= Number(range.hi); lo += GEAR_BATCH_IDS) {
+    changed += await run('c.season = $1 and c.id >= $2 and c.id < $3', [scope.season, lo, lo + GEAR_BATCH_IDS]);
+  }
+  return changed;
 }
 
 export async function getPrices(
