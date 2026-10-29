@@ -18,7 +18,7 @@ function activeTab(pathname: string): "builds" | "meta" | null {
 function TabNavView({ query, search }: { query: string; search: string }) {
   const pathname = usePathname() ?? "/";
   const active = activeTab(pathname);
-  // Builds defaults to softcore while Meta defaults to hardcore, so the Meta link from /builds* always names the mode.
+  // Both tabs default to softcore; the Meta link from /builds* still names the mode explicitly.
   const metaQuery = active === "builds" ? (query || "?gameMode=softcore") : query;
   // On Meta itself the link keeps the whole URL state (class, level, skills, mode, char).
   const tabs = [
@@ -47,13 +47,23 @@ function TabNavView({ query, search }: { query: string; search: string }) {
   );
 }
 
+/** gameMode and season are the only params that make sense on both tabs. */
+function carry(mode: string | null | undefined, season: string | null | undefined): string {
+  const p = new URLSearchParams();
+  if (mode === "hardcore" || mode === "softcore") p.set("gameMode", mode);
+  if (season && /^\d+$/.test(season)) p.set("season", season);
+  const q = p.toString();
+  return q ? `?${q}` : "";
+}
+
 function TabNavWithMode() {
   const params = useSearchParams();
   const mode = params?.get("gameMode");
+  const season = params?.get("season");
   const raw = params?.toString() ?? "";
   return (
     <TabNavView
-      query={mode === "hardcore" || mode === "softcore" ? `?gameMode=${mode}` : ""}
+      query={carry(mode, season)}
       search={raw ? `?${raw}` : ""}
     />
   );

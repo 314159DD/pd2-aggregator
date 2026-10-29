@@ -1,11 +1,12 @@
 import type { Pool, PoolClient } from 'pg';
+import { RUNE_ITEM_NAMES } from '../core/static-data';
 
 export const PRICE_WINDOW_DAYS = 7;
 export const MIN_SOLD_SAMPLES = 5;
 export const MIN_SAMPLES = 3;
 
 export type PriceRow = {
-  itemType: 'Unique' | 'Set' | 'Runeword';
+  itemType: 'Unique' | 'Set' | 'Runeword' | 'Rune';
   name: string;
   medianHr: number;
   samples: number;
@@ -22,13 +23,17 @@ export async function computeItemPrices(pool: Pool, now: Date = new Date()): Pro
     const r = await client.query(
       `with base as (
          select is_hardcore,
-                case when runeword_key is not null then 'Runeword' else quality end as item_type,
-                item_name, price_hr,
+                case when runeword_key is not null then 'Runeword'
+                     when base_name = any($5::text[]) and coalesce(quality,'') not in ('Unique','Set') then 'Rune'
+                     else quality end as item_type,
+                case when runeword_key is null and base_name = any($5::text[])
+                          and coalesce(quality,'') not in ('Unique','Set') then base_name
+                     else item_name end as item_name, price_hr,
                 (gone_at is not null and miss_count >= 2
                   and gone_at >= $1::timestamptz - make_interval(days => $2)) as sold,
                 (gone_at is null and last_seen_at >= $1::timestamptz - make_interval(days => $2)) as open
          from market_listings
-         where is_ladder and not is_corrupted and price_hr is not null and item_name is not null
+         where is_ladder and not is_corrupted and price_hr is not null
        ), agg as (
          select is_hardcore, item_type, item_name,
                 count(*) filter (where sold) as sold_n,
@@ -36,7 +41,7 @@ export async function computeItemPrices(pool: Pool, now: Date = new Date()): Pro
                 percentile_cont(0.5) within group (order by price_hr) filter (where sold) as sold_med,
                 percentile_cont(0.5) within group (order by price_hr) filter (where open) as open_med
          from base
-         where item_type in ('Unique','Set','Runeword')
+         where item_name is not null and item_type in ('Unique','Set','Runeword','Rune')
          group by is_hardcore, item_type, item_name
        )
        insert into item_prices (mode, item_type, item_name, median_hr, samples, source, computed_at)
@@ -47,7 +52,7 @@ export async function computeItemPrices(pool: Pool, now: Date = new Date()): Pro
               $1
        from agg
        where sold_n >= $3 or open_n >= $4`,
-      [now, PRICE_WINDOW_DAYS, MIN_SOLD_SAMPLES, MIN_SAMPLES],
+      [now, PRICE_WINDOW_DAYS, MIN_SOLD_SAMPLES, MIN_SAMPLES, RUNE_ITEM_NAMES],
     );
     if ((r.rowCount ?? 0) === 0) {
       // Nothing to price (e.g. market data wiped): roll back the delete and keep the old set.
@@ -159,7 +164,7 @@ export async function getPricesFor(
   if (!names.length) return out;
   const r = await pool.query(
     `select item_name, median_hr, samples, source from item_prices
-     where mode = $1 and item_name = any($2::text[])
+     where mode = $1 and item_type in ('Unique','Set','Runeword') and item_name = any($2::text[])
      order by samples desc`,
     [mode, names],
   );
@@ -168,4 +173,28 @@ export async function getPricesFor(
     out.set(x.item_name, { medianHr: Number(x.median_hr), samples: Number(x.samples), source: x.source });
   }
   return out;
+}
+
+/** Rune prices keyed by short rune name ('Ber'), value median_hr. */
+export async function getRunePrices(pool: Pool, mode: 'softcore' | 'hardcore'): Promise<Map<string, number>> {
+  const r = await pool.query(
+    "select item_name, median_hr from item_prices where mode = $1 and item_type = 'Rune'",
+    [mode],
+  );
+  return new Map(r.rows.map((x) => [String(x.item_name).replace(/ Rune$/, ''), Number(x.median_hr)]));
+}
+
+/** Unique/Set/Runeword prices in one query, keyed `${itemType}|${name}`. */
+export async function getPriceMap(pool: Pool, mode: 'softcore' | 'hardcore'): Promise<Map<string, ItemPrice>> {
+  const r = await pool.query(
+    `select item_type, item_name, median_hr, samples, source from item_prices
+     where mode = $1 and item_type in ('Unique','Set','Runeword')`,
+    [mode],
+  );
+  return new Map(
+    r.rows.map((x) => [
+      `${x.item_type}|${x.item_name}`,
+      { medianHr: Number(x.median_hr), samples: Number(x.samples), source: x.source as 'sold' | 'ask' },
+    ]),
+  );
 }

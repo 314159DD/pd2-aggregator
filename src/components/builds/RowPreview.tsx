@@ -57,14 +57,12 @@ function Column({ title, caption, children }: { title: string; caption?: string;
 
 /** Inline preview of one character: skills, gear, stats and mercenary. Fetched once per mount unless cached. */
 export function RowPreview({ name, scope, cache }: { name: string; scope: Scope; cache?: PreviewCache }) {
-  const [status, setStatus] = useState<Status>(null);
+  const [fetched, setStatus] = useState<Status>(null);
   const { season, gameMode } = scope;
+  const isCached = cache?.has(name) ?? false;
 
   useEffect(() => {
-    if (cache?.has(name)) {
-      setStatus({ name, preview: cache.get(name) ?? null, failed: cache.get(name) == null });
-      return;
-    }
+    if (isCached) return;
     const ac = new AbortController();
     getPreview(name, { season, gameMode }, ac.signal)
       .then((p) => {
@@ -77,7 +75,10 @@ export function RowPreview({ name, scope, cache }: { name: string; scope: Scope;
         setStatus({ name, preview: null, failed: true });
       });
     return () => ac.abort();
-  }, [name, season, gameMode, cache]);
+  }, [name, season, gameMode, cache, isCached]);
+
+  // A cached preview is derived during render; the effect only fetches when there is none.
+  const status: Status = isCached ? { name, preview: cache?.get(name) ?? null, failed: cache?.get(name) == null } : fetched;
 
   const done = status !== null && status.name === name;
   const href = `/builds/character?name=${encodeURIComponent(name)}${season === null ? "" : `&season=${season}`}&gameMode=${gameMode}`;

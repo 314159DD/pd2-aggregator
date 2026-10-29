@@ -8,12 +8,12 @@ import { cn } from "@/lib/utils";
 import { ItemTip, itemInvCode, itemType, type RawItem } from "./ItemTip";
 
 const RIM: Record<string, string> = {
-  Unique: "var(--rarity-unique)",
-  Set: "var(--rarity-set)",
-  Runeword: "var(--rarity-rare)",
-  Rare: "var(--rarity-rare)",
-  Magic: "var(--rarity-magic)",
-  Crafted: "var(--rarity-crafted)",
+  Unique: "var(--color-q-unique)",
+  Set: "var(--color-q-set)",
+  Runeword: "var(--color-q-runeword)",
+  Rare: "var(--color-q-rare)",
+  Magic: "var(--color-q-magic)",
+  Crafted: "var(--color-q-crafted)",
 };
 
 // Paper doll: [slot, column, row] on a 3 x 4 grid.

@@ -12,6 +12,7 @@ vi.mock("next/navigation", () => ({
 import { SiteHeader } from "./SiteHeader";
 import { ThemeToggle } from "./ThemeToggle";
 import { Freshness } from "./Freshness";
+import { SiteFooter } from "./SiteFooter";
 
 function mockFetch(heartbeatAt: string) {
   vi.stubGlobal(
@@ -50,10 +51,17 @@ describe("SiteHeader", () => {
     expect(await screen.findByRole("option", { name: "Alliance (S14) · current" })).toBeInTheDocument();
   });
 
-  it("on / marks Meta current and renders no mode segment", () => {
+  it("on / marks Meta current and shows season select and mode segment", () => {
     pathname = "/";
     render(<SiteHeader />);
     expect(screen.getByRole("link", { name: "Meta" })).toHaveAttribute("aria-current", "page");
+    expect(screen.getByRole("group", { name: "Game mode" })).toBeInTheDocument();
+    expect(screen.getByRole("combobox", { name: "Season" })).toBeInTheDocument();
+  });
+
+  it("on /builds/character renders no season select or mode segment", () => {
+    pathname = "/builds/character";
+    render(<SiteHeader />);
     expect(screen.queryByRole("group", { name: "Game mode" })).toBeNull();
     expect(screen.queryByRole("combobox", { name: "Season" })).toBeNull();
   });
@@ -84,6 +92,16 @@ describe("TabNav Meta link", () => {
   });
 });
 
+describe("TabNav season carry", () => {
+  it("keeps gameMode and season across tabs", () => {
+    pathname = "/builds";
+    search = "gameMode=hardcore&season=13&page=2";
+    render(<SiteHeader />);
+    expect(screen.getByRole("link", { name: "Meta" })).toHaveAttribute("href", "/?gameMode=hardcore&season=13");
+    expect(screen.getByRole("link", { name: "Builds" })).toHaveAttribute("href", "/builds?gameMode=hardcore&season=13");
+  });
+});
+
 describe("ScopeSwitch", () => {
   it("falls back to the current season for an unknown ?season", async () => {
     pathname = "/builds";
@@ -95,13 +113,13 @@ describe("ScopeSwitch", () => {
 });
 
 describe("ThemeToggle", () => {
-  it("flips dark to light and stores the choice", () => {
+  it("flips dark to light and stores the choice", async () => {
     document.documentElement.dataset.mode = "dark";
     render(<ThemeToggle />);
     fireEvent.click(screen.getByRole("button", { name: "Switch to light mode" }));
     expect(document.documentElement.dataset.mode).toBe("light");
     expect(localStorage.getItem("pd2meta-theme")).toBe("light");
-    expect(screen.getByRole("button", { name: "Switch to dark mode" })).toBeInTheDocument();
+    expect(await screen.findByRole("button", { name: "Switch to dark mode" })).toBeInTheDocument();
   });
 });
 
@@ -119,5 +137,13 @@ describe("Freshness", () => {
     expect(await screen.findByText(/updated 3m ago/)).toBeInTheDocument();
     expect(container.querySelector("[data-stale]")).toBeNull();
     await act(async () => {});
+  });
+});
+
+describe("SiteFooter", () => {
+  it("renders the disclaimer and the pd2.tools credit link", () => {
+    render(<SiteFooter />);
+    expect(screen.getByText("Not affiliated with Project Diablo 2.")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /pd2\.tools/ })).toHaveAttribute("href", "https://github.com/coleestrin/pd2-tools");
   });
 });

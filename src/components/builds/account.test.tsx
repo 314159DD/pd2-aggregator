@@ -20,14 +20,14 @@ afterEach(() => vi.unstubAllGlobals());
 describe("AccountView", () => {
   it("lists characters with raw-name links and masked labels", async () => {
     search = "name=Acc1&season=14";
-    vi.stubGlobal("fetch", vi.fn(async () => new Response(JSON.stringify({ total: 2, characters: [ch("shitlord", true), ch("Hero")] }))));
+    vi.stubGlobal("fetch", vi.fn(async () => new Response(JSON.stringify({ total: 2, characters: [ch("ShitLord", true), ch("Hero")] }))));
     render(<AccountView />);
     await waitFor(() => expect(screen.getAllByRole("link", { name: /Level 95 Paladin/ })).toHaveLength(2));
     const links = screen.getAllByRole("link", { name: /Level 95 Paladin/ });
-    expect(links[0].getAttribute("href")).toBe("/builds/character?name=shitlord&season=14&gameMode=hardcore");
+    expect(links[0].getAttribute("href")).toBe("/builds/character?name=ShitLord&season=14&gameMode=hardcore");
     expect(links[1].getAttribute("href")).toBe("/builds/character?name=Hero&season=14&gameMode=softcore");
-    expect(screen.queryByText("shitlord")).toBeNull();
-    expect(screen.getByText("s*******")).toBeTruthy();
+    expect(screen.queryByText("ShitLord")).toBeNull();
+    expect(screen.getByText("S*******")).toBeTruthy();
     expect(screen.getByText("Hardcore")).toBeTruthy();
     expect(screen.getByText("2 characters this season")).toBeTruthy();
     expect(screen.getAllByText("Updated 3h ago").length).toBe(2);
