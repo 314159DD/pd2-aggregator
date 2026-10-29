@@ -47,10 +47,10 @@ export function AffixCard({ data }: { data: Record<MetaSlot, AffixSlot> }) {
                       <thead>
                         <tr>
                           <th scope="col">Affix</th>
-                          <th scope="col" className="text-right">Count</th>
-                          <th scope="col" className="text-right">Share</th>
-                          <th scope="col" className="text-right">Median</th>
-                          <th scope="col" className="text-right">P75</th>
+                          <th scope="col" className="text-right!">Count</th>
+                          <th scope="col" className="text-right!">Share</th>
+                          <th scope="col" className="text-right!">Median</th>
+                          <th scope="col" className="text-right!">P75</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -79,8 +79,8 @@ export function AffixCard({ data }: { data: Record<MetaSlot, AffixSlot> }) {
             <thead>
               <tr>
                 <th scope="col">Affix</th>
-                <th scope="col" className="text-right">Count</th>
-                <th scope="col" className="text-right">% of items</th>
+                <th scope="col" className="text-right!">Count</th>
+                <th scope="col" className="text-right!">% of items</th>
               </tr>
             </thead>
             <tbody>
