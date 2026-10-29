@@ -162,7 +162,7 @@ export type BuildShareHistory = {
 export type PricesResponse = {
   computedAt: string | null;
   items: Array<{
-    itemType: "Unique" | "Set" | "Runeword";
+    itemType: "Unique" | "Set" | "Runeword" | "Rune";
     name: string;
     medianHr: number;
     samples: number;
