@@ -1,0 +1,70 @@
+name: pd2meta
+
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: pd2meta
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set in .env}
+      POSTGRES_DB: pd2meta
+    command: ["postgres", "-c", "shared_buffers=256MB"]
+    volumes:
+      - pd2meta_pg:/var/lib/postgresql/data
+    mem_limit: 768m
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pd2meta -d pd2meta"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  collector:
+    build: ../server
+    image: pd2meta-server
+    restart: unless-stopped
+    command: ["node", "dist/collector/main.js"]
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://pd2meta:${POSTGRES_PASSWORD}@db:5432/pd2meta
+    depends_on:
+      db:
+        condition: service_healthy
+    mem_limit: 384m
+    init: true
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  api:
+    image: pd2meta-server
+    restart: unless-stopped
+    command: ["node", "dist/api/main.js"]
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://pd2meta:${POSTGRES_PASSWORD}@db:5432/pd2meta
+      API_PORT: "8080"
+      NODE_OPTIONS: "--max-old-space-size=384"
+    ports:
+      - "127.0.0.1:8096:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+      collector:
+        condition: service_started
+    mem_limit: 512m
+    init: true
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  pd2meta_pg:
