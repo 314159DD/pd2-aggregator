@@ -7,6 +7,7 @@ import type { Config } from '../config';
 import { addPriorityAccount } from '../db/status-repo';
 import { parseFilter, type CharacterFilter } from './filters';
 import { getPrices } from '../db/prices-repo';
+import { getDemand } from '../db/demand-repo';
 import * as bq from './builds-queries';
 import { buildsCharacters, characterPreview } from './builds-characters';
 import { characterDetail, characterHistory } from './character-detail';
@@ -29,7 +30,7 @@ const wrap =
 
 const KEY_PARAMS = [
   'season', 'gameMode', 'minLevel', 'maxLevel', 'classes', 'items', 'skills',
-  'mercTypes', 'mercItems', 'maxGearHr', 'page', 'pageSize', 'sort', 'dir',
+  'mercTypes', 'mercItems', 'maxGearHr', 'page', 'pageSize', 'sort', 'dir', 'days',
 ] as const;
 const LIST_PARAMS = new Set(['classes', 'items', 'mercTypes', 'mercItems']);
 
@@ -226,6 +227,16 @@ export function createApp(deps: { pool: Pool; cfg: Config }): express.Express {
   );
   api.get('/builds/history', cached((req) => bq.buildShareHistory(pool, filterOf(req).season, filterOf(req).mode)));
   api.get('/prices', cached((req) => getPrices(pool, filterOf(req).mode)));
+  api.get(
+    '/market/demand',
+    cached((req) => {
+      const raw = Array.isArray(req.query.items) ? req.query.items[0] : req.query.items;
+      const names = [...new Set(String(raw ?? '').split(',').map((x) => x.trim()).filter(Boolean))].slice(0, 10);
+      const d = Math.floor(Number(Array.isArray(req.query.days) ? req.query.days[0] : req.query.days));
+      const days = Number.isFinite(d) ? Math.min(30, Math.max(1, d)) : 7;
+      return getDemand(pool, filterOf(req).mode, names, days);
+    }),
+  );
 
   const hits = new Map<string, number[]>();
   api.post(
