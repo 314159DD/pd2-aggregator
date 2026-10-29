@@ -4,8 +4,6 @@ import { Suspense } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { GleitMarker } from "@/components/lx/gleit-marker";
-import { SEGMENT_AN, SEGMENT_EINTRAG } from "@/components/lx/Segment";
 
 /** Builds is active on /builds*, Meta on / and /meta. */
 function activeTab(pathname: string): "builds" | "meta" | null {
@@ -27,8 +25,7 @@ function TabNavView({ query, search }: { query: string; search: string }) {
   ] as const;
 
   return (
-    <nav aria-label="Sections" data-slot="segment" className="well inline-flex gap-0.5 rounded-full p-1">
-      <GleitMarker ziel='[data-slot="segment-eintrag"][aria-current="page"]' className={cn("rounded-full", SEGMENT_AN)} />
+    <nav aria-label="Sections" className="flex gap-1">
       {tabs.map((t) => {
         const on = active === t.id;
         return (
@@ -36,8 +33,10 @@ function TabNavView({ query, search }: { query: string; search: string }) {
             key={t.id}
             href={t.href}
             aria-current={on ? "page" : undefined}
-            data-slot="segment-eintrag"
-            className={cn(SEGMENT_EINTRAG, on && SEGMENT_AN)}
+            className={cn(
+              "border-b-2 px-3 py-1.5 text-sm tracking-wider uppercase transition outline-none focus-visible:outline-2 focus-visible:outline-accent-text",
+              on ? "rarity-unique border-[#c9a04b] font-semibold" : "border-transparent text-muted-ink hover:text-[#a08f5d]",
+            )}
           >
             {t.label}
           </Link>

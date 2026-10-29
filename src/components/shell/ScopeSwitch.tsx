@@ -39,7 +39,7 @@ export function ScopeSwitch() {
         aria-label="Season"
         value={String(selected)}
         onChange={(e) => setScope({ season: Number(e.target.value) })}
-        className="feld h-8 min-h-8 cursor-pointer rounded-full py-0 pr-3 pl-3.5 text-[13px] font-medium"
+        className="feld h-9 min-h-9 cursor-pointer py-0 pr-3 pl-3 text-sm"
       >
         {(data?.seasons ?? []).map((s) => (
           <option key={s.season} value={s.season}>
