@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { act, fireEvent, render, screen, within } from "@testing-library/react";
+import { act, createEvent, fireEvent, render, screen, within } from "@testing-library/react";
 import ladder from "../../../server/test/fixtures/character-ladder.json";
 
 let search = "name=MC-MEEKS&season=14&gameMode=softcore";
@@ -153,12 +153,50 @@ describe("equipment", () => {
     expect(screen.getByRole("button", { name: "Helm: Sage's Defiance" })).toBeTruthy();
     expect(screen.queryByAltText("Nightwing's Veil")).toBeNull();
   });
-  it("lists charms below, unique first", () => {
+  it("lists charms below, unique and set first", () => {
     render(<EquipmentGrid items={items} mercItems={merc} prices={prices} />);
     expect(screen.getByText("Charms")).toBeTruthy();
-    const names = screen.getAllByRole("button").map((b) => b.getAttribute("aria-label") ?? "");
-    const charms = names.slice(names.indexOf("Hellfire Torch"));
-    expect(charms[0]).toBe("Hellfire Torch");
+    const strip = screen.getByText("Charms").parentElement!;
+    const labels = within(strip).getAllByRole("button").map((b) => b.getAttribute("aria-label")!);
+    const kind = (n: string) => items.find((i) => i.name === n)!.quality!.name ?? "";
+    const special = labels.filter((n) => ["Unique", "Set"].includes(kind(n)));
+    expect(special.length).toBeGreaterThan(0);
+    expect(labels.length).toBeGreaterThan(special.length);
+    const firstPlain = labels.findIndex((n) => !["Unique", "Set"].includes(kind(n)));
+    expect(labels.slice(0, firstPlain).length).toBe(special.length);
+  });
+  it("click keeps the tooltip open, a second click and Escape close it", () => {
+    render(<EquipmentGrid items={items} mercItems={merc} prices={prices} />);
+    const cell = screen.getByRole("button", { name: "Helm: Nightwing's Veil" });
+    fireEvent.click(cell);
+    expect(screen.getByRole("tooltip")).toBeTruthy();
+    fireEvent.click(cell);
+    expect(screen.queryByRole("tooltip")).toBeNull();
+    fireEvent.click(cell);
+    fireEvent.keyDown(cell, { key: "Escape" });
+    expect(screen.queryByRole("tooltip")).toBeNull();
+  });
+  it("a mouse click after hover leaves the tooltip open; outside pointerdown closes", () => {
+    render(<EquipmentGrid items={items} mercItems={merc} prices={prices} />);
+    const cell = screen.getByRole("button", { name: "Helm: Nightwing's Veil" });
+    // jsdom has no PointerEvent, so pointerType is set by hand.
+    const enter = createEvent.pointerEnter(cell.parentElement!);
+    Object.defineProperty(enter, "pointerType", { value: "mouse" });
+    fireEvent(cell.parentElement!, enter);
+    const down = createEvent.pointerDown(cell);
+    Object.defineProperty(down, "pointerType", { value: "mouse" });
+    fireEvent(cell, down);
+    fireEvent.click(cell);
+    expect(screen.getByRole("tooltip")).toBeTruthy();
+    fireEvent.pointerDown(document.body);
+    expect(screen.queryByRole("tooltip")).toBeNull();
+  });
+  it("merc view has no amulet or ring wells", () => {
+    render(<EquipmentGrid items={items} mercItems={merc} prices={prices} />);
+    expect(screen.getByRole("button", { name: /^Amulet:/ })).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "Merc" }));
+    expect(screen.queryByRole("button", { name: /^Amulet:/ })).toBeNull();
+    expect(screen.queryByText("Right Ring")).toBeNull();
   });
 });
 

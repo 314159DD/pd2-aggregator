@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState, type CSSProperties } from "react";
+import { useEffect, useId, useRef, useState, type CSSProperties } from "react";
 import { Segment } from "@/components/lx/Segment";
 import { itemArtUrl } from "@/lib/builds/item-art";
 import type { ItemPrice } from "@/lib/builds/types";
@@ -70,16 +70,39 @@ function ItemCell({
 }) {
   const [open, setOpen] = useState(false);
   const id = useId();
+  const root = useRef<HTMLDivElement>(null);
+  const pointer = useRef<string | null>(null);
+
+  // Tap or click outside closes.
+  useEffect(() => {
+    if (!open) return;
+    const away = (e: PointerEvent) => {
+      if (root.current && !root.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("pointerdown", away);
+    return () => document.removeEventListener("pointerdown", away);
+  }, [open]);
   const rim = RIM[itemType(item)] ?? "var(--line-strong)";
   return (
-    <div className={cn("relative", className)} style={style} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+    <div
+      ref={root}
+      className={cn("relative", className)}
+      style={style}
+      onPointerEnter={(e) => e.pointerType === "mouse" && setOpen(true)}
+      onPointerLeave={(e) => e.pointerType === "mouse" && setOpen(false)}
+    >
       <button
         type="button"
         aria-describedby={open ? id : undefined}
         aria-label={label ? `${label}: ${item.name}` : item.name}
-        onFocus={() => setOpen(true)}
+        onPointerDown={(e) => (pointer.current = e.pointerType)}
+        onFocus={() => pointer.current === null && setOpen(true)}
         onBlur={() => setOpen(false)}
-        onClick={() => setOpen((o) => !o)}
+        onClick={() => {
+          // A mouse click keeps the tooltip the hover opened; a tap or key press toggles it.
+          setOpen((o) => pointer.current === "mouse" || !o);
+          pointer.current = null;
+        }}
         onKeyDown={(e) => e.key === "Escape" && setOpen(false)}
         className="well flex size-full items-center justify-center rounded-[14px] p-1.5 outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-text"
         style={{ boxShadow: `var(--shadow-well), inset 0 0 0 1px color-mix(in oklab, ${rim} 45%, transparent)` }}
@@ -101,6 +124,8 @@ function ItemCell({
     </div>
   );
 }
+
+const MERC_HIDDEN = new Set(["Amulet", "Right Ring", "Left Ring"]);
 
 const equipped = (items: RawItem[], slot: string) =>
   items.find((i) => i.location?.zone === "Equipped" && i.location.equipment === slot);
@@ -139,14 +164,14 @@ export function EquipmentGrid({
         ]}
       />
       <div className="mx-auto grid w-full max-w-[26rem] grid-cols-3 gap-2.5" style={{ gridAutoRows: "5.25rem" }}>
-        {SLOTS.map(([slot, col, row]) => {
+        {SLOTS.filter(([slot]) => who === "player" || !MERC_HIDDEN.has(slot)).map(([slot, col, row]) => {
           const item = equipped(list, slot);
           const pos = { gridColumn: col, gridRow: row };
           const align = col === 1 ? "left" : col === 3 ? "right" : "center";
           return item ? (
-            <ItemCell key={slot} item={item} price={prices[item.name]} label={slot} align={align} style={pos} />
+            <ItemCell key={`${who}:${slot}`} item={item} price={prices[item.name]} label={slot} align={align} style={pos} />
           ) : (
-            <div key={slot} style={pos} className="well flex items-end rounded-[14px] p-2 opacity-60">
+            <div key={`${who}:${slot}`} style={pos} className="well flex items-end rounded-[14px] p-2 opacity-60">
               <span className="text-[11px] text-muted-ink">{slot}</span>
             </div>
           );
