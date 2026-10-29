@@ -11,7 +11,7 @@ import { setSort, type BuildsSort, type BuildsState } from "@/lib/builds/url-sta
 import { ItemIcon, SkillIcon } from "./ItemIcon";
 import { RowPreview, type PreviewCache } from "./RowPreview";
 
-type Props = { page: BuildsCharactersPage; state: BuildsState; onChange: (next: BuildsState) => void };
+type Props = { page: BuildsCharactersPage; state: BuildsState; onChange: (next: BuildsState) => void; archive?: boolean };
 
 const COLS = 7;
 const MAX_GEAR_ICONS = 6;
@@ -34,8 +34,9 @@ function SortHeader({ label, col, page, onSort }: { label: string; col: BuildsSo
   );
 }
 
-function Row({ c, open, onToggle, previewId, scope, cache }: {
+function Row({ c, open, onToggle, previewId, scope, cache, archive }: {
   c: BuildRow;
+  archive: boolean;
   open: boolean;
   onToggle: () => void;
   previewId: string;
@@ -101,15 +102,17 @@ function Row({ c, open, onToggle, previewId, scope, cache }: {
             {c.keyGear.length === 0 && <span className="text-ink-soft">-</span>}
           </div>
         </td>
-        <td className="min-w-[5rem] text-right font-mono whitespace-nowrap text-ink tabular-nums">
-          {c.gearValueHr === null ? "-" : `${formatHr(c.gearValueHr)}${c.gearValuePartial ? "+" : ""}`}
-        </td>
+        {!archive && (
+          <td className="min-w-[5rem] text-right font-mono whitespace-nowrap text-ink tabular-nums">
+            {c.gearValueHr === null ? "-" : `${formatHr(c.gearValueHr)}${c.gearValuePartial ? "+" : ""}`}
+          </td>
+        )}
         <td className="text-ink-soft">
           <span aria-hidden className="aufklapp-pfeil inline-block">›</span>
         </td>
       </tr>
       <tr>
-        <td colSpan={COLS} id={previewId} className="min-w-0 overflow-hidden p-0! border-t-0!">
+        <td colSpan={archive ? COLS - 1 : COLS} id={previewId} className="min-w-0 overflow-hidden p-0! border-t-0!">
           <div className="aufklapp-inhalt" data-offen={open ? "" : undefined}>
             <div>{open && <RowPreview name={c.name} scope={scope} cache={cache} />}</div>
           </div>
@@ -119,7 +122,7 @@ function Row({ c, open, onToggle, previewId, scope, cache }: {
   );
 }
 
-export function CharacterTable({ page, state, onChange }: Props) {
+export function CharacterTable({ page, state, onChange, archive = false }: Props) {
   const top = useRef<HTMLDivElement>(null);
   const [openName, setOpenName] = useState<string | null>(null);
   const { season, gameMode } = state;
@@ -166,7 +169,7 @@ export function CharacterTable({ page, state, onChange }: Props) {
               <col className="w-[5rem]" />
               <col className="w-[8rem]" />
               <col className="w-[14rem]" />
-              <col className="w-[6rem]" />
+              {!archive && <col className="w-[6rem]" />}
               <col className="w-[2rem]" />
             </colgroup>
             <thead>
@@ -176,7 +179,7 @@ export function CharacterTable({ page, state, onChange }: Props) {
                 <SortHeader label="Life" col="life" page={page} onSort={(c) => onChange(setSort(state, c))} />
                 <th scope="col">Top skills</th>
                 <th scope="col">Key gear</th>
-                <SortHeader label="Gear HR" col="gear" page={page} onSort={(c) => onChange(setSort(state, c))} />
+                {!archive && <SortHeader label="Gear HR" col="gear" page={page} onSort={(c) => onChange(setSort(state, c))} />}
                 <th scope="col"><span className="sr-only">Preview</span></th>
               </tr>
             </thead>
@@ -189,6 +192,7 @@ export function CharacterTable({ page, state, onChange }: Props) {
                 previewId={`preview-${i}`}
                 scope={scope}
                 cache={cache}
+                archive={archive}
               />
             ))}
           </table>

@@ -271,6 +271,26 @@ export async function withMetaRollup(
 }
 
 /**
+ * Adds the facts of characters `ids` to the rollup in one statement. The caller holds
+ * lockMetaRollup, and the characters must have no facts in the rollup yet (just inserted):
+ * their facts are summed into the existing groups, with no old facts to subtract.
+ */
+export async function addMetaRollupFacts(client: PoolClient, ids: number[]): Promise<void> {
+  if (!ids.length) return;
+  await client.query(
+    `${GROUPED_SQL}
+     insert into meta_rollup (${GROUP_COLS}, n, total, entries)
+     select ${GROUP_COLS}, n, total, entries from d order by ${GROUP_COLS}
+     on conflict on constraint meta_rollup_key do update set
+       n = meta_rollup.n + excluded.n,
+       total = meta_rollup.total + excluded.total,
+       entries = meta_rollup.entries + excluded.entries`,
+    [ids, ...factParams()],
+  );
+  await client.query('update meta_rollup_status set fingerprint = $1 where fingerprint is null', [META_FACTS_FINGERPRINT]);
+}
+
+/**
  * Rebuilds meta_rollup from all stored characters in one transaction and marks it ready with the
  * current fingerprint. Characters are expanded one (season, mode, class) at a time: each batch owns
  * its rollup rows, so the rebuild only inserts and the statement memory stays bounded.

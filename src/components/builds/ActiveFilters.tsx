@@ -18,9 +18,11 @@ import { budgetLabel } from "./GearBudget";
 export function ActiveFilters({
   state,
   onChange,
+  archive = false,
 }: {
   state: BuildsState;
   onChange: (next: BuildsState) => void;
+  archive?: boolean;
 }) {
   const chips: Array<{ key: string; label: string; next: BuildsState }> = [
     ...state.classes.map((c) => ({
@@ -48,7 +50,7 @@ export function ActiveFilters({
       label: `Merc item: ${m}`,
       next: toggleMercItem(state, m),
     })),
-    ...(state.maxGearHr !== null
+    ...(state.maxGearHr !== null && !archive
       ? [
           {
             key: "b",

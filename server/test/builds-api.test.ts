@@ -113,13 +113,15 @@ describe('GET /builds/usage', () => {
   });
 
   it('maxGearHr limits by gear value; negative means no budget', async () => {
+    // The budget only applies to the live season, so this check runs with season 15 as the current one.
+    const live = createApp({ pool, cfg: loadConfig({ DATABASE_URL: 'postgres://x', CURRENT_SEASON: String(OTHER) } as any) });
     const q = `season=${OTHER}`;
-    expect((await request(app).get(`${api}/builds/usage?${q}`)).body.total).toBe(2);
-    const zero = await request(app).get(`${api}/builds/usage?${q}&maxGearHr=0`);
+    expect((await request(live).get(`${api}/builds/usage?${q}`)).body.total).toBe(2);
+    const zero = await request(live).get(`${api}/builds/usage?${q}&maxGearHr=0`);
     expect(zero.body.total).toBe(1);
-    const neg = await request(app).get(`${api}/builds/usage?${q}&maxGearHr=-1`);
+    const neg = await request(live).get(`${api}/builds/usage?${q}&maxGearHr=-1`);
     expect(neg.body.total).toBe(2);
-    const chars = await request(app).get(`${api}/characters?${q}&maxGearHr=0`);
+    const chars = await request(live).get(`${api}/characters?${q}&maxGearHr=0`);
     expect(chars.body.characters[0].character.name).toBe('NakedOne');
   });
 
