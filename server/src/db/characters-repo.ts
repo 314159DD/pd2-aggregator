@@ -1,6 +1,7 @@
 import { gunzipSync, gzipSync } from 'node:zlib';
 import type { Pool, PoolClient } from 'pg';
 import type { CompactCharacter, CompactItem } from '../core/compact';
+import { recomputeGearValues } from './prices-repo';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
@@ -66,6 +67,7 @@ export async function upsertCharacter(
       );
     }
     await replaceItems(client, id, c.items);
+    await recomputeGearValues(client, { characterIds: [id] });
     if (c.mercDescription !== null) {
       await client.query('insert into character_merc (character_id, description) values ($1, $2)', [id, c.mercDescription]);
     }
