@@ -32,10 +32,10 @@ export function ShoppingList({ items }: { items: ItemUsageEntry[] }) {
           {top.map((i) => (
             <li key={i.name} className="flex min-w-0 items-center gap-2.5">
               <ItemIcon item={i} />
-              <span className={`min-w-0 flex-1 truncate text-sm ${qualityClass(i.itemType)}`}>{i.name}</span>
+              <span title={i.name} className={`min-w-0 flex-1 truncate text-sm ${qualityClass(i.itemType)}`}>{i.name}</span>
               <Bar pct={i.pct} className="w-10 shrink-0" />
               <span className="w-9 shrink-0 text-right font-mono text-xs text-ink-soft tabular-nums">{formatPct(i.pct)}</span>
-              <span className="w-[4.5rem] shrink-0 rounded-full bg-well px-2 py-0.5 text-center font-mono text-xs text-ink tabular-nums">
+              <span className="min-w-[4.5rem] shrink-0 rounded-full bg-well px-2 py-0.5 text-center font-mono text-xs text-ink tabular-nums">
                 {i.medianHr === null ? "n/a" : `${formatHr(i.medianHr)} HR`}
               </span>
               {i.medianHr !== null && (

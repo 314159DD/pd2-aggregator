@@ -1,5 +1,14 @@
 import { describe, expect, it, vi } from "vitest";
+
 import { fireEvent, render, screen } from "@testing-library/react";
+let search = "";
+vi.mock("next/navigation", () => ({
+  usePathname: () => "/builds",
+  useSearchParams: () => new URLSearchParams(search),
+  useRouter: () => ({ replace: vi.fn(), push: vi.fn() }),
+}));
+
+import { BuildsView } from "./BuildsView";
 import { UsageCard } from "./UsageCard";
 import { ShoppingList } from "./ShoppingList";
 import type { ItemUsageEntry } from "@/lib/builds/types";
@@ -67,5 +76,35 @@ describe("ShoppingList", () => {
     render(<ShoppingList items={[]} />);
     expect(screen.getByText("No items match these filters.")).toBeTruthy();
     expect(screen.getByText("Σ 0.00 HR")).toBeTruthy();
+  });
+});
+
+describe("Usage wiring", () => {
+  it("Skills card marks the rows named in state.skills", async () => {
+    search = "skills=" + encodeURIComponent(JSON.stringify([{ name: "Smite", minLevel: 20 }]));
+    const usage = {
+      seasonTotal: 10, total: 10,
+      breakdown: { Amazon: 0, Assassin: 0, Barbarian: 0, Druid: 0, Necromancer: 0, Paladin: 10, Sorceress: 0, total: 10 },
+      skills: [{ name: "Blessed Hammer", count: 5, pct: 50 }, { name: "Smite", count: 3, pct: 30 }],
+      items: [], mercTypes: [], mercItems: [],
+    };
+    vi.stubGlobal("fetch", vi.fn(async (url: string) => {
+      const u = String(url);
+      const body = u.includes("/builds/usage") ? usage
+        : u.includes("/builds/characters") ? { total: 0, page: 1, pageSize: 25, pages: 1, sort: "level", dir: "desc", characters: [] }
+        : u.includes("/builds/history") ? { days: [] }
+        : { current: 14, seasons: [] };
+      return { ok: true, status: 200, json: async () => body };
+    }));
+    render(<BuildsView />);
+    expect((await screen.findByRole("button", { name: /^Smite/ })).getAttribute("aria-pressed")).toBe("true");
+    expect(screen.getByRole("button", { name: /^Blessed Hammer/ }).getAttribute("aria-pressed")).toBe("false");
+    vi.unstubAllGlobals();
+  });
+
+  it("a merc card search without hits shows No matches", () => {
+    render(<UsageCard title="Merc items" entries={[item("Insight")]} selected={[]} onToggle={() => {}} />);
+    fireEvent.change(screen.getByPlaceholderText("Search 1 merc items..."), { target: { value: "xyz" } });
+    expect(screen.getByText("No matches")).toBeTruthy();
   });
 });

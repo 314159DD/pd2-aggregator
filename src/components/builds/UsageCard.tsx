@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-import { Bar } from "@/components/lx/Bar";
 import { Button } from "@/components/lx/Button";
 import { Card } from "@/components/lx/Card";
 import { SearchField } from "@/components/lx/SearchField";
@@ -59,7 +58,11 @@ export function UsageCard<E extends Entry>({ title, entries, selected, onToggle,
                   className="drueckbar relative flex min-h-9 w-full items-center gap-2.5 overflow-hidden rounded-xl px-2.5 py-1 text-left text-sm outline-none hover:bg-well focus-visible:outline-2 focus-visible:outline-accent-text"
                   style={on ? { boxShadow: "inset 2px 0 0 var(--accent-text)" } : undefined}
                 >
-                  <Bar pct={e.pct} className="pointer-events-none absolute inset-0 h-full rounded-none bg-transparent" />
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute inset-y-0 left-0"
+                    style={{ width: `${Number.isFinite(e.pct) ? Math.min(100, Math.max(0, e.pct)) : 0}%`, background: "color-mix(in oklab, var(--glow) 18%, transparent)" }}
+                  />
                   {icon && <span className="relative shrink-0">{icon(e)}</span>}
                   <span className="relative flex min-w-0 flex-1 flex-col">
                     <span className={`truncate ${itemType ? qualityClass(itemType) : "text-ink"}`}>{e.name}</span>
