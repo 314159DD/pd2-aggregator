@@ -11,7 +11,7 @@ export function readScope(p: URLSearchParams): Scope {
   const n = raw !== null && /^\d+$/.test(raw) ? Number(raw) : NaN;
   return {
     season: Number.isSafeInteger(n) && n > 0 ? n : null,
-    gameMode: p.get("gameMode") === "hardcore" ? "hardcore" : "softcore",
+    gameMode: p.get("gameMode")?.toLowerCase() === "hardcore" ? "hardcore" : "softcore",
   };
 }
 

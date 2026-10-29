@@ -50,10 +50,17 @@ describe("SiteHeader", () => {
     expect(await screen.findByRole("option", { name: "Alliance (S14) · current" })).toBeInTheDocument();
   });
 
-  it("on / marks Meta current and renders no mode segment", () => {
+  it("on / marks Meta current and shows season select and mode segment", () => {
     pathname = "/";
     render(<SiteHeader />);
     expect(screen.getByRole("link", { name: "Meta" })).toHaveAttribute("aria-current", "page");
+    expect(screen.getByRole("group", { name: "Game mode" })).toBeInTheDocument();
+    expect(screen.getByRole("combobox", { name: "Season" })).toBeInTheDocument();
+  });
+
+  it("on /builds/character renders no season select or mode segment", () => {
+    pathname = "/builds/character";
+    render(<SiteHeader />);
     expect(screen.queryByRole("group", { name: "Game mode" })).toBeNull();
     expect(screen.queryByRole("combobox", { name: "Season" })).toBeNull();
   });
