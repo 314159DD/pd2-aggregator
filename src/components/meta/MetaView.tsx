@@ -12,7 +12,9 @@ import type { CharacterDiff, MetaCohort } from "@/lib/meta/types";
 import { AffixCard } from "./AffixCard";
 import { AvgStatsCard } from "./AvgStatsCard";
 import { CharmsCard } from "./CharmsCard";
+import { BuildSheetCard } from "./BuildSheetCard";
 import { CohortLine } from "./CohortLine";
+import { DiffCard } from "./DiffCard";
 import { MetaFilters } from "./MetaFilters";
 import { MetaHeader } from "./MetaHeader";
 import { TopItemsCard } from "./TopItemsCard";
@@ -149,16 +151,20 @@ export function MetaView() {
         ) : (
           <>
             {!failed && <CohortLine meta={meta} state={state} />}
-            {diff && (diff.failed || diff.diff === null) && (
+            {diff && diff.failed && (
               <Card className="p-5 text-sm text-ink-soft" role="status">
-                {diff.failed ? "Could not load the comparison." : `No character or account named ${state.char} found.`}
+                Could not load the comparison.
               </Card>
+            )}
+            {diff && !diff.failed && (
+              <DiffCard diff={diff.diff} notFoundName={state.char} state={state} season={meta.season} pool={meta.topItemsBySlot} />
             )}
             <div data-testid="meta-grid" className="grid gap-5 lg:grid-cols-12">
               <AvgStatsCard core={meta.coreStats} avg={meta.avgStats} />
               <TopItemsCard data={meta.topItemsBySlot} gameMode={state.gameMode} />
               <AffixCard data={meta.affixModsBySlot} />
               <CharmsCard data={meta.charms} />
+              <BuildSheetCard meta={meta} />
             </div>
           </>
         )}
