@@ -1,3 +1,4 @@
+import type { UiState } from "@/lib/url-state";
 export type BuildsSort = "level" | "life" | "gear";
 export type BuildsSkill = { name: string; minLevel: number };
 export type BuildsState = {
@@ -167,4 +168,20 @@ export function metaHref(s: BuildsState): string {
   p.set("minLevel", String(s.minLevel));
   if (s.skills.length) p.set("skills", JSON.stringify(s.skills));
   return `/?${p.toString()}`;
+}
+
+/** Link from the Meta page to /builds with the same class, skills and mode; minLevel snaps down to a preset. */
+export function buildsHrefFromMeta(ui: UiState): string {
+  const lvl = ui.filter.minLevel ?? 80;
+  const minLevel = ([...LEVEL_PRESETS].reverse().find((x) => x <= lvl) ?? 80) as BuildsState["minLevel"];
+  const cls = ui.filter.className;
+  const next: BuildsState = {
+    ...DEFAULT_BUILDS_STATE,
+    gameMode: ui.filter.gameMode === "hardcore" ? "hardcore" : "softcore",
+    minLevel,
+    classes: cls && (CLASS_NAMES as readonly string[]).includes(cls) ? [cls] : [],
+    skills: ui.skills,
+  };
+  const q = serializeBuildsState(next).toString();
+  return q ? `/builds?${q}` : "/builds";
 }
