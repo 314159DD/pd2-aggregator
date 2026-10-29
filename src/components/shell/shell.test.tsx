@@ -2,9 +2,10 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { act, fireEvent, render, screen } from "@testing-library/react";
 
 let pathname = "/builds";
+let search = "gameMode=hardcore";
 vi.mock("next/navigation", () => ({
   usePathname: () => pathname,
-  useSearchParams: () => new URLSearchParams("gameMode=hardcore"),
+  useSearchParams: () => new URLSearchParams(search),
   useRouter: () => ({ replace: vi.fn(), push: vi.fn() }),
 }));
 
@@ -32,6 +33,7 @@ function mockFetch(heartbeatAt: string) {
 
 beforeEach(() => mockFetch(new Date(Date.now() - 3 * 60_000).toISOString()));
 afterEach(() => {
+  search = "gameMode=hardcore";
   vi.unstubAllGlobals();
   delete document.documentElement.dataset.mode;
   localStorage.clear();
@@ -62,6 +64,33 @@ describe("SiteHeader", () => {
     expect(screen.getByRole("link", { name: "Meta" })).toHaveAttribute("aria-current", "page");
     expect(screen.getByRole("link", { name: "Builds" })).toHaveAttribute("href", "/builds?gameMode=hardcore");
     expect(screen.getByRole("link", { name: "Meta" })).toHaveAttribute("href", "/?gameMode=hardcore");
+  });
+});
+
+describe("TabNav Meta link", () => {
+  it("on /builds without gameMode names softcore", () => {
+    pathname = "/builds";
+    search = "";
+    render(<SiteHeader />);
+    expect(screen.getByRole("link", { name: "Meta" })).toHaveAttribute("href", "/?gameMode=softcore");
+  });
+
+  it("on Meta keeps the whole URL state", () => {
+    pathname = "/";
+    search = "className=Paladin&minLevel=90&gameMode=softcore&char=Foo";
+    render(<SiteHeader />);
+    expect(screen.getByRole("link", { name: "Meta" })).toHaveAttribute("href", "/?className=Paladin&minLevel=90&gameMode=softcore&char=Foo");
+    expect(screen.getByRole("link", { name: "Builds" })).toHaveAttribute("href", "/builds?gameMode=softcore");
+  });
+});
+
+describe("ScopeSwitch", () => {
+  it("falls back to the current season for an unknown ?season", async () => {
+    pathname = "/builds";
+    search = "season=99";
+    render(<SiteHeader />);
+    await screen.findByRole("option", { name: "Alliance (S14) · current" });
+    expect(screen.getByRole("combobox", { name: "Season" })).toHaveValue("14");
   });
 });
 

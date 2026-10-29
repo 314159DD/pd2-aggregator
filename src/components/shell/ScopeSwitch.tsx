@@ -30,7 +30,8 @@ export function ScopeSwitch() {
     };
   }, []);
 
-  const selected = scope.season ?? data?.current ?? "";
+  const known = (n: number | null | undefined) => n != null && (data?.seasons ?? []).some((s) => s.season === n);
+  const selected = known(scope.season) ? scope.season! : data?.current ?? "";
 
   return (
     <div className="flex flex-wrap items-center gap-2">

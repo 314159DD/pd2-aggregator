@@ -77,6 +77,20 @@ describe("CharacterTable", () => {
     expect(screen.getByRole("columnheader", { name: /Life/ }).getAttribute("aria-sort")).toBe("descending");
   });
 
+  it("shows Page out of range with a way back when the page is past the end", () => {
+    const onChange = vi.fn();
+    render(<CharacterTable page={page({ total: 40, page: 9, pages: 2, characters: [] })} state={{ ...DEFAULT_BUILDS_STATE, page: 9 }} onChange={onChange} />);
+    expect(screen.getByText("Page out of range")).toBeTruthy();
+    expect(screen.queryByText("No characters match these filters.")).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: "Go to page 1" }));
+    expect(onChange).toHaveBeenCalledWith(expect.objectContaining({ page: 1 }));
+  });
+
+  it("keeps the empty message when nothing matches at all", () => {
+    render(<CharacterTable page={page({ total: 0, page: 1, pages: 0, characters: [] })} state={DEFAULT_BUILDS_STATE} onChange={() => {}} />);
+    expect(screen.getByText("No characters match these filters.")).toBeTruthy();
+  });
+
   it("pages with Prev and Next", () => {
     const onChange = vi.fn();
     const { rerender } = render(<CharacterTable page={page({ page: 2, pages: 3 })} state={{ ...DEFAULT_BUILDS_STATE, page: 2 }} onChange={onChange} />);

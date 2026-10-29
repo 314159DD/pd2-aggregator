@@ -15,11 +15,15 @@ function activeTab(pathname: string): "builds" | "meta" | null {
   return null;
 }
 
-function TabNavView({ query }: { query: string }) {
-  const active = activeTab(usePathname() ?? "/");
+function TabNavView({ query, search }: { query: string; search: string }) {
+  const pathname = usePathname() ?? "/";
+  const active = activeTab(pathname);
+  // Builds defaults to softcore while Meta defaults to hardcore, so the Meta link from /builds* always names the mode.
+  const metaQuery = active === "builds" ? (query || "?gameMode=softcore") : query;
+  // On Meta itself the link keeps the whole URL state (class, level, skills, mode, char).
   const tabs = [
     { id: "builds", label: "Builds", href: `/builds${query}` },
-    { id: "meta", label: "Meta", href: `/${query}` },
+    { id: "meta", label: "Meta", href: `/${active === "meta" ? search : metaQuery}` },
   ] as const;
 
   return (
@@ -44,14 +48,21 @@ function TabNavView({ query }: { query: string }) {
 }
 
 function TabNavWithMode() {
-  const mode = useSearchParams()?.get("gameMode");
-  return <TabNavView query={mode === "hardcore" || mode === "softcore" ? `?gameMode=${mode}` : ""} />;
+  const params = useSearchParams();
+  const mode = params?.get("gameMode");
+  const raw = params?.toString() ?? "";
+  return (
+    <TabNavView
+      query={mode === "hardcore" || mode === "softcore" ? `?gameMode=${mode}` : ""}
+      search={raw ? `?${raw}` : ""}
+    />
+  );
 }
 
 /** Only the gameMode carry-over reads the URL; the tabs themselves prerender (same markup as fallback). */
 export function TabNav() {
   return (
-    <Suspense fallback={<TabNavView query="" />}>
+    <Suspense fallback={<TabNavView query="" search="" />}>
       <TabNavWithMode />
     </Suspense>
   );
