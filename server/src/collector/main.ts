@@ -17,7 +17,7 @@ import { ladderNames, planFromAccount, planFromLadder } from './discovery';
 import { ingestOne } from './ingest';
 import { CharQueue } from './queue';
 import { fullSweep, pollIncremental } from './market-poller';
-import { runPriceJob } from './jobs';
+import { runBuildShareJob, runPriceJob } from './jobs';
 
 const MIN = 60_000;
 const HOUR = 60 * MIN;
@@ -180,6 +180,14 @@ async function main(): Promise<void> {
       run: async () => {
         const r = await runPriceJob({ pool, cfg });
         log('info', `price job: ${r.priced} items priced, ${r.charactersChanged} characters changed`);
+      },
+    },
+    {
+      name: 'build-share',
+      everyMs: 6 * HOUR,
+      run: async () => {
+        const n = await runBuildShareJob({ pool, cfg });
+        log('info', `build-share job: ${n} rows`);
       },
     },
     {
