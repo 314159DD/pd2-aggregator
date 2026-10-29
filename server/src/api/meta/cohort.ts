@@ -4,6 +4,7 @@ import type { CharacterFilter } from '../filters';
 import { affixModsBySlot } from './affixes';
 import { charmsAggregate } from './charms';
 import { levelDistribution, mercSummary, skillFrequency, topItemsBySlot } from './items';
+import { withResolvedScope } from './rollup';
 import { skillUsage } from './skills';
 import { avgStats, coreStats, poolSizes } from './stats';
 import type { MetaCohort } from './types';
@@ -50,8 +51,10 @@ export function limitedPool(pool: Pool, limit = META_QUERY_CONCURRENCY): Pool {
   return view;
 }
 
-export async function metaCohort(rawPool: Pool, f: CharacterFilter): Promise<MetaCohort> {
+export async function metaCohort(rawPool: Pool, cohort: CharacterFilter): Promise<MetaCohort> {
   const pool = limitedPool(rawPool);
+  // One rollup scope lookup per request, shared by every aggregate below.
+  const f = withResolvedScope(pool, cohort);
   const className = f.classes.length === 1 ? f.classes[0] : null;
   const [sizes, core, avg, items, affixes, skillFreq, levels, merc, usage, prices] = await Promise.all([
     poolSizes(pool, f),

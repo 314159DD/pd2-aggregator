@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll, vi } from 'vitest';
 import type { Pool } from 'pg';
 import { DEFAULT_TEST_DATABASE_URL, freshDb } from './helpers/db';
 import { createPool } from '../src/db/pool';
@@ -7,7 +7,8 @@ import type { CharacterFilter } from '../src/api/filters';
 import { metaCohort } from '../src/api/meta/cohort';
 import { skillUsage } from '../src/api/meta/skills';
 import { MOD_DICTIONARY } from '../src/core/static-data';
-import { metaRollupReady, rebuildMetaRollup } from '../src/db/meta-rollup';
+import { META_FACTS_FINGERPRINT, metaRollupState, rebuildMetaRollup } from '../src/db/meta-rollup';
+import { rollupScope } from '../src/api/meta/rollup';
 import { upsertCharacter } from '../src/db/characters-repo';
 import { backfillItems } from '../src/scripts/backfill-items';
 import { enrichRaw, toCompact } from '../src/core/compact';
@@ -95,7 +96,8 @@ describe('meta rollup maintenance', () => {
   });
 
   it('is ready on a fresh database and stays equal to a rebuild through upserts, class/level changes and backfill', async () => {
-    expect(await metaRollupReady(pool)).toBe(true);
+    expect(await metaRollupState(pool)).toBe('ok');
+    expect((await pool.query('select fingerprint from meta_rollup_status')).rows[0].fingerprint).toBeNull();
     const items = [
       { name: 'Shako', quality: 'Unique', slot: 'Helm', mods: [['maxhp', 30], ['item_allskills', 2]] as Array<[string, number]> },
       { quality: 'Rare', slot: 'Left Ring', mods: [['maxhp', 20], ['item_fastercastrate', 10]] as Array<[string, number]> },
@@ -113,21 +115,63 @@ describe('meta rollup maintenance', () => {
     ]);
     const incremental = await rollupRows(pool);
     expect(incremental.every((r) => Number(r.entries) > 0)).toBe(true);
+    // the first write stamped the fingerprint of the code that wrote it
+    expect((await pool.query('select fingerprint from meta_rollup_status')).rows[0].fingerprint).toBe(META_FACTS_FINGERPRINT);
     await rebuildMetaRollup(pool);
     expect(await rollupRows(pool)).toEqual(incremental);
   });
 
   it('a populated database starts not ready until the rebuild', async () => {
     await pool.query("update meta_rollup_status set ready = false");
-    expect(await metaRollupReady(pool)).toBe(false);
+    expect(await metaRollupState(pool)).toBe('not-ready');
     expect(await rebuildMetaRollup(pool)).toBe(2);
-    expect(await metaRollupReady(pool)).toBe(true);
+    expect(await metaRollupState(pool)).toBe('ok');
+  });
+
+  it('re-ingesting an unchanged character writes no rollup rows, a one-mod change only its keys', async () => {
+    const xmins = async () => (await pool.query('select xmin::text as x from meta_rollup')).rows.map((r) => r.x).sort();
+    const before = await xmins();
+    await seed(pool, [mkChar({ name: 'B', className: 'Sorceress', level: 86 })]);
+    expect(await xmins()).toEqual(before);
+    const ring = (v: number) => [{ quality: 'Rare', slot: 'Left Ring', mods: [['maxhp', v]] as Array<[string, number]> }];
+    await seed(pool, [mkChar({ name: 'B', className: 'Sorceress', level: 86, items: ring(20) })]);
+    const mid = await xmins();
+    await seed(pool, [mkChar({ name: 'B', className: 'Sorceress', level: 86, items: ring(21) })]);
+    const after = await xmins();
+    const changed = after.filter((x) => !mid.includes(x)).length;
+    // avg maxhp (x2 level rows) + affix maxhp 20 -> 21 (old key removed, new key added, x2)
+    expect(changed).toBeGreaterThan(0);
+    expect(changed).toBeLessThanOrEqual(6);
+    const incremental = await rollupRows(pool);
+    await rebuildMetaRollup(pool);
+    expect(await rollupRows(pool)).toEqual(incremental);
+  });
+
+  it('a rollup stamped by other fact code is not read until the rebuild, and says so once', async () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const f = { ...F, minLevel: 1 };
+    expect(await rollupScope(pool, f)).not.toBeNull();
+    await pool.query("update meta_rollup_status set fingerprint = 'other-code'");
+    expect(await metaRollupState(pool)).toBe('stale');
+    expect(await rollupScope(pool, f)).toBeNull();
+    expect(await rollupScope(pool, f)).toBeNull();
+    expect(warn.mock.calls.filter((c) => String(c[0]).includes('meta rollup fingerprint mismatch, run backfill-meta'))).toHaveLength(1);
+    await rebuildMetaRollup(pool);
+    expect(await rollupScope(pool, f)).not.toBeNull();
+    warn.mockRestore();
+  });
+
+  it('non-finite and non-numeric mod values count 0 instead of failing the write', async () => {
+    const odd = (v: string) => ({ quality: 'Rare', slot: 'Helm', mods: [['maxhp', v as unknown as number], ['strength', 5]] as Array<[string, number]> });
+    await seed(pool, [mkChar({ name: 'Odd', className: 'Druid', items: [odd('NaN'), { ...odd('Infinity'), slot: 'Armor' }, { ...odd('x'), slot: 'Gloves' }] })]);
+    const r = await pool.query("select total::text from meta_rollup where kind = 'avg' and k1 = 'maxhp' and class = 'Druid' and level = 0");
+    expect(r.rows).toEqual([{ total: '0' }]);
   });
 
   it('backfill-items keeps the rollup in step', async () => {
     const real = toCompact(fx, 'ACC');
     await upsertCharacter(pool, 14, real, enrichRaw(fx, 'ACC'));
-    await pool.query("delete from characters where name in ('A', 'B')");
+    await pool.query('delete from characters where name <> $1', [real.name]);
     await rebuildMetaRollup(pool);
     const full = await rollupRows(pool);
     await pool.query('delete from character_items');
@@ -155,7 +199,7 @@ describe('meta rollup scale', () => {
     await seedSynthetic(pool, 5000, Object.keys(MOD_DICTIONARY));
     await rebuildMetaRollup(pool);
     await pool.query('analyze');
-    api = createPool(process.env.TEST_DATABASE_URL ?? DEFAULT_TEST_DATABASE_URL); // the api's session settings
+    api = createPool(process.env.TEST_DATABASE_URL ?? DEFAULT_TEST_DATABASE_URL, 'api'); // the api's session settings
   }, 600000);
   afterAll(async () => {
     await api.end();
@@ -163,13 +207,24 @@ describe('meta rollup scale', () => {
   });
 
   // 5,000 characters x 35 items x ~5.5 mods (about the production shape per character, 0.8x its
-  // character count). See task-7b-report.md for how this bound maps to 50k characters on the VPS.
-  it('computes an all-classes cohort of 5,000 characters in under 400 ms', async () => {
+  // character count). The rollup path must be taken; the time bound is generous (measured ~120 ms
+  // here, the per-character path takes ~1.8 s). See task-7b-report.md for the 50k projection.
+  it('answers an all-classes cohort of 5,000 characters from the rollup', async () => {
     await metaCohort(api, F); // buffers, as the api warm-up does
+    const sqls: string[] = [];
+    const orig = api.query.bind(api) as (...a: unknown[]) => unknown;
+    const spy = vi.spyOn(api, 'query').mockImplementation(((...args: unknown[]) => {
+      sqls.push(String(args[0]));
+      return orig(...args);
+    }) as never);
     const t0 = performance.now();
     const out = await metaCohort(api, F);
     const ms = performance.now() - t0;
+    spy.mockRestore();
     expect(out.poolSize).toBe(3500);
-    expect(ms, `metaCohort took ${Math.round(ms)} ms`).toBeLessThan(400);
+    expect(sqls.filter((q) => q.includes('from meta_rollup r')).length).toBeGreaterThanOrEqual(8);
+    expect(sqls.filter((q) => q.includes('jsonb_array_elements'))).toEqual([]);
+    expect(sqls.filter((q) => q.includes('meta_rollup_status'))).toHaveLength(1); // scope resolved once
+    expect(ms, `metaCohort took ${Math.round(ms)} ms`).toBeLessThan(1500);
   }, 60000);
 });

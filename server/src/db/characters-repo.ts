@@ -1,7 +1,7 @@
 import { gunzipSync, gzipSync } from 'node:zlib';
 import type { Pool, PoolClient } from 'pg';
 import type { CompactCharacter, CompactItem } from '../core/compact';
-import { withMetaRollup } from './meta-rollup';
+import { lockMetaRollup, withMetaRollup } from './meta-rollup';
 import { recomputeGearValues } from './prices-repo';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -41,6 +41,8 @@ export async function upsertCharacter(
   let destroy = false;
   try {
     await client.query('begin');
+    // Rollup lock first, then everything else: the previous row is read under it.
+    await lockMetaRollup(client);
     const prev = await client.query('select id from characters where season = $1 and mode = $2 and name = $3', [
       season,
       c.mode,

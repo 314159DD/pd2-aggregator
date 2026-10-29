@@ -2,6 +2,7 @@ import type { Pool } from 'pg';
 import { MOD_DICTIONARY } from '../../core/static-data';
 import { filterCte } from '../filter-sql';
 import type { CharacterFilter } from '../filters';
+import { UNIQUE_CHARMS } from '../../db/meta-rollup';
 import { rollupScope } from './rollup';
 import type { CharmModEntry, CharmsAggregate } from './types';
 
@@ -97,7 +98,7 @@ async function charmRowsScan(pool: Pool, f: CharacterFilter): Promise<CharmRow[]
      left join lateral jsonb_array_elements(case when jsonb_typeof(c.mods) = 'array' then c.mods else '[]'::jsonb end) m
        on c.cat in ('gc', 'sc') and jsonb_typeof(m->'name') = 'string'
      group by grouping sets ((c.cat, m->>'name'), (c.cat))`,
-    [...params, 'Annihilus', 'Hellfire Torch', "Gheed's Fortune", 'Large Charm', ['Small Charm', 'Medium Charm']],
+    [...params, UNIQUE_CHARMS.annihilus, UNIQUE_CHARMS.torch, UNIQUE_CHARMS.gheeds, 'Large Charm', ['Small Charm', 'Medium Charm']],
   );
   return r.rows;
 }
