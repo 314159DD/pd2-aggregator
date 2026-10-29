@@ -50,9 +50,13 @@ export async function markAccountChecked(pool: Pool, account: string, now: Date)
   );
 }
 
-export async function takePriorityAccounts(pool: Pool): Promise<string[]> {
-  const r = await pool.query('delete from priority_accounts returning account');
+export async function listPriorityAccounts(pool: Pool): Promise<string[]> {
+  const r = await pool.query('select account from priority_accounts order by requested_at');
   return r.rows.map((row) => String(row.account));
+}
+
+export async function removePriorityAccount(pool: Pool, account: string): Promise<void> {
+  await pool.query('delete from priority_accounts where account = $1', [account]);
 }
 
 export async function addPriorityAccount(pool: Pool, account: string, ip: string | null): Promise<void> {

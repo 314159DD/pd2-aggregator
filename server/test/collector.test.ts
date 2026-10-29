@@ -4,7 +4,7 @@ import { freshDb } from './helpers/db';
 import { CharQueue } from '../src/collector/queue';
 import { planFromAccount, planFromLadder } from '../src/collector/discovery';
 import { ingestOne } from '../src/collector/ingest';
-import { accountsDue, markAccountChecked, takePriorityAccounts, addPriorityAccount } from '../src/db/status-repo';
+import { accountsDue, markAccountChecked, listPriorityAccounts, removePriorityAccount, addPriorityAccount } from '../src/db/status-repo';
 import { UpstreamError } from '../src/upstream/pd2-client';
 import account from './fixtures/account.json';
 import ladder from './fixtures/ladder.json';
@@ -21,11 +21,24 @@ describe('CharQueue', () => {
     expect(q.push({ name: 'b', priority: 1 })).toBe(true);
     expect(q.push({ name: 'c', priority: 0 })).toBe(true);
     expect(q.push({ name: 'D', priority: 1 })).toBe(true);
-    expect(q.push({ name: 'A', priority: 0 })).toBe(false);
+    expect(q.push({ name: 'B', priority: 1 })).toBe(false);
+    expect(q.push({ name: 'C', priority: 2 })).toBe(false);
     expect(q.size).toBe(4);
     expect([q.shift()?.name, q.shift()?.name, q.shift()?.name, q.shift()?.name]).toEqual(['c', 'b', 'D', 'a']);
     expect(q.shift()).toBeUndefined();
     expect(q.push({ name: 'a', priority: 0 })).toBe(true);
+  });
+
+  it('promotes a queued name to a more urgent lane and keeps/fills account', () => {
+    const q = new CharQueue();
+    q.push({ name: 'x', priority: 2 });
+    q.push({ name: 'y', priority: 1 });
+    expect(q.push({ name: 'X', account: 'acc', priority: 0 })).toBe(true);
+    expect(q.push({ name: 'x', priority: 2 })).toBe(false);
+    expect(q.size).toBe(2);
+    expect(q.shift()).toMatchObject({ name: 'X', account: 'acc', priority: 0 });
+    expect(q.shift()?.name).toBe('y');
+    expect(q.shift()).toBeUndefined();
   });
 });
 
@@ -54,8 +67,10 @@ describe('planning', () => {
       ['same', { lastIngestedAt: hoursAgo(7), experience: 100 }],
       ['changedfresh', { lastIngestedAt: hoursAgo(1), experience: 100 }],
     ]);
-    expect(planFromLadder(l, last, now)).toEqual(['Changed', 'New', 'hcnew']);
-    expect(planFromLadder(ladder as any, new Map(), now).length).toBeGreaterThan(0);
+    expect(planFromLadder(l, last, now, { minLevel: 80 })).toEqual(['Changed', 'New', 'hcnew']);
+    l.softcore.overall.push({ ...e('Low', 5), level: 79 });
+    expect(planFromLadder(l, last, now, { minLevel: 80 })).not.toContain('Low');
+    expect(planFromLadder(ladder as any, new Map(), now, { minLevel: 80 }).length).toBeGreaterThan(0);
   });
 });
 
@@ -71,6 +86,7 @@ describe('db-backed', () => {
     expect(await ingestOne(mk(charNonLadder), { name: 'x', priority: 1 })).toBe('skipped');
     expect(await ingestOne(mk(null), { name: 'x', priority: 1 })).toBe('skipped');
     expect(await ingestOne(mk({ character: null }), { name: 'x', priority: 1 })).toBe('skipped');
+    expect(await ingestOne(mk({}), { name: 'x', priority: 1 })).toBe('skipped');
     expect((await pool.query('select count(*)::int n from characters')).rows[0].n).toBe(0);
     expect(await ingestOne(mk(charLadder), { name: 'x', account: 'ACC', priority: 1 })).toBe('ingested');
     const r = await pool.query('select account from characters');
@@ -94,13 +110,16 @@ describe('db-backed', () => {
     expect(q.size).toBe(0);
   });
 
-  it('accountsDue excludes recently checked; priority accounts are taken once', async () => {
+  it('accountsDue excludes recently checked; priority accounts stay until removed', async () => {
     await markAccountChecked(pool, 'recent', hoursAgo(1));
     await markAccountChecked(pool, 'old', hoursAgo(30));
     expect(await accountsDue(pool, ['recent', 'old', 'never'], now)).toEqual(['old', 'never']);
     await addPriorityAccount(pool, 'p1', '1.2.3.4');
     await addPriorityAccount(pool, 'p1', null);
-    expect(await takePriorityAccounts(pool)).toEqual(['p1']);
-    expect(await takePriorityAccounts(pool)).toEqual([]);
+    expect(await accountsDue(pool, ['recent', 'old'], now, 0)).toEqual(['recent', 'old']);
+    expect(await listPriorityAccounts(pool)).toEqual(['p1']);
+    expect(await listPriorityAccounts(pool)).toEqual(['p1']);
+    await removePriorityAccount(pool, 'p1');
+    expect(await listPriorityAccounts(pool)).toEqual([]);
   });
 });

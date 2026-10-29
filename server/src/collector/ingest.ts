@@ -18,19 +18,25 @@ export type IngestResult = 'ingested' | 'skipped' | 'failed';
 
 const MAX_ATTEMPTS = 2;
 
+function skip(item: QueueItem, reason: string): IngestResult {
+  console.debug(`ingest skip ${item.name}: ${reason}`);
+  return 'skipped';
+}
+
 export async function ingestOne(deps: IngestDeps, item: QueueItem): Promise<IngestResult> {
   const { pool, client, queue, cfg } = deps;
   try {
     const raw = await client.character(item.name);
-    if (!raw) return 'skipped';
+    if (!raw) return skip(item, 'no character (404)');
     let compact;
     try {
       compact = toCompact(raw, item.account);
     } catch (e) {
-      if (e instanceof InvalidCharacterPayload) return 'skipped';
+      if (e instanceof InvalidCharacterPayload) return skip(item, 'invalid payload');
       throw e;
     }
-    if (!compact.isLadder || compact.level < cfg.minLevel) return 'skipped';
+    if (!compact.isLadder) return skip(item, 'not ladder');
+    if (compact.level < cfg.minLevel) return skip(item, `level ${compact.level} below ${cfg.minLevel}`);
     await upsertCharacter(
       pool,
       cfg.currentSeason,

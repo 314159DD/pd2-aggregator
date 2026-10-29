@@ -22,15 +22,20 @@ export function planFromAccount(
     .map((d) => d.name);
 }
 
-/** Ladder names never ingested, or whose experience changed and were last ingested over 6 h ago. */
-export function planFromLadder(ladder: LadderResponse, lastIngest: LastIngest, now: Date): string[] {
+/** Ladder entries (level >= minLevel) never ingested, or whose experience changed and were last ingested over 6 h ago. */
+export function planFromLadder(
+  ladder: LadderResponse,
+  lastIngest: LastIngest,
+  now: Date,
+  cfg: Pick<Config, 'minLevel'>,
+): string[] {
   const cutoff = now.getTime() - 6 * HOUR_MS;
   const out = new Map<string, string>();
   for (const mode of [ladder.softcore, ladder.hardcore]) {
     for (const list of Object.values(mode ?? {})) {
       for (const e of list ?? []) {
         const key = e.name.toLowerCase();
-        if (out.has(key)) continue;
+        if (out.has(key) || e.level < cfg.minLevel) continue;
         const last = lastIngest.get(key);
         if (!last || (last.experience !== e.experience && last.lastIngestedAt.getTime() < cutoff)) {
           out.set(key, e.name);
