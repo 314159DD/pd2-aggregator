@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { getSkillUsage, type SkillUsageRow } from "@/lib/api";
 import type { UiState } from "@/lib/url-state";
+import { buildsHrefFromMeta } from "@/lib/builds/url-state";
 import {
   BUILD_PRESETS,
   PRESET_MIN_LEVEL,
@@ -446,6 +447,12 @@ export function FilterForm({ initial, onSubmit, onReset }: Props) {
         >
           Reset
         </button>
+        <a
+          href={buildsHrefFromMeta(s)}
+          className="text-xs uppercase tracking-wider text-muted-foreground hover:text-[#ffd47a] underline underline-offset-2 transition"
+        >
+          See characters
+        </a>
       </div>
     </div>
   );
