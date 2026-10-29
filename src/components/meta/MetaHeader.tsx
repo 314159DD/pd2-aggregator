@@ -18,7 +18,7 @@ export function MetaHeader({
       </p>
       <p className="mt-2 max-w-2xl text-sm text-muted-ink">
         What the characters of one build actually wear: the uniques per slot, the affixes on their rares, their charms, skills and mercs,
-        across every matching level 80+ ladder character.
+        across every matching level {minLevel}+ ladder character.
       </p>
     </header>
   );

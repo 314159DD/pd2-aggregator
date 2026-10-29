@@ -3,10 +3,11 @@ import { act, cleanup, fireEvent, render, screen } from "@testing-library/react"
 
 let search = "";
 const listeners = new Set<() => void>();
-const replace = vi.fn((url: string) => {
+const applyUrl = (url: string) => {
   search = url.split("?")[1] ?? "";
   listeners.forEach((l) => l());
-});
+};
+const replace = vi.fn(applyUrl);
 vi.mock("next/navigation", async () => {
   const React = await import("react");
   return {
@@ -43,12 +44,14 @@ const SKILL_ROWS = ["Blessed Hammer", "Concentration", "Vigor"].map((name, i) =>
 
 let metaCalls: string[] = [];
 let diffCalls: string[] = [];
+let metaSignals: AbortSignal[] = [];
+let skillFails = false;
 let metaImpl: (url: string) => Promise<unknown>;
 
 function mockApi() {
   vi.stubGlobal(
     "fetch",
-    vi.fn(async (url: string) => {
+    vi.fn(async (url: string, init?: RequestInit) => {
       const u = String(url);
       let body: unknown;
       if (u.includes("/meta/diff?")) {
@@ -56,8 +59,12 @@ function mockApi() {
         body = { diff: { slots: [] } };
       } else if (u.includes("/meta?")) {
         metaCalls.push(u);
+        if (init?.signal) metaSignals.push(init.signal);
         body = await metaImpl(u);
-      } else if (u.includes("skill-usage")) body = SKILL_ROWS;
+      } else if (u.includes("skill-usage")) {
+        if (skillFails) throw new Error("skills down");
+        body = SKILL_ROWS;
+      }
       else if (u.includes("/builds/seasons")) body = { current: 14, seasons: [{ season: 14, name: "Alliance", current: true }] };
       else body = {};
       return { ok: true, status: 200, json: async () => body };
@@ -71,10 +78,13 @@ const advance = (ms: number) => act(async () => void (await vi.advanceTimersByTi
 beforeEach(() => {
   vi.useFakeTimers();
   search = "className=Paladin&gameMode=hardcore&minLevel=85";
-  replace.mockClear();
+  replace.mockReset();
+  replace.mockImplementation(applyUrl);
   listeners.clear();
   metaCalls = [];
   diffCalls = [];
+  metaSignals = [];
+  skillFails = false;
   metaImpl = async () => cohort(1234);
   mockApi();
 });
@@ -85,6 +95,71 @@ afterEach(() => {
 });
 
 describe("Meta frame", () => {
+  it("follows the selected min level in the explainer", async () => {
+    search = "className=Paladin&minLevel=90";
+    render(<MetaView />);
+    await advance(400);
+    expect(screen.getByText(/every matching level 90\+ ladder character/)).toBeTruthy();
+  });
+
+  it("keeps both skills when two toggles land before the URL re-renders", async () => {
+    render(<MetaView />);
+    await advance(600);
+    replace.mockImplementation(() => {}); // the URL does not change between the clicks
+    fireEvent.click(screen.getByRole("button", { name: /^Blessed Hammer [0-9]+%$/ }));
+    fireEvent.click(screen.getByRole("button", { name: /^Vigor [0-9]+%$/ }));
+    const url = decodeURIComponent(String(replace.mock.calls.at(-1)?.[0]).replace(/\+/g, " "));
+    expect(url).toContain("Blessed Hammer");
+    expect(url).toContain("Vigor");
+  });
+
+  it("aborts a superseded cohort request", async () => {
+    metaImpl = () => new Promise(() => {});
+    render(<MetaView />);
+    await advance(350);
+    expect(metaSignals).toHaveLength(1);
+    expect(metaSignals[0].aborted).toBe(false);
+    act(() => replace("/?className=Paladin&gameMode=hardcore&minLevel=90"));
+    await advance(350);
+    expect(metaSignals).toHaveLength(2);
+    expect(metaSignals[0].aborted).toBe(true);
+    expect(metaSignals[1].aborted).toBe(false);
+  });
+
+  it("submits the diff name with Enter", async () => {
+    search = "className=Paladin&mode=diff";
+    render(<MetaView />);
+    await advance(400);
+    const input = screen.getByLabelText("Character or account name");
+    fireEvent.change(input, { target: { value: "Bar" } });
+    fireEvent.submit(input.closest("form")!);
+    expect(String(replace.mock.calls.at(-1)?.[0])).toContain("char=Bar");
+  });
+
+  it("hides the cohort line next to the retry alert", async () => {
+    render(<MetaView />);
+    await advance(400);
+    expect(screen.getByTestId("cohort-count")).toBeTruthy();
+    metaImpl = async () => {
+      throw new Error("boom");
+    };
+    act(() => replace("/?className=Paladin&gameMode=hardcore&minLevel=90"));
+    await advance(400);
+    expect(screen.getByText("Could not load the meta.")).toBeTruthy();
+    expect(screen.queryByTestId("cohort-count")).toBeNull();
+  });
+
+  it("shows a retry when the skill list fails", async () => {
+    skillFails = true;
+    render(<MetaView />);
+    await advance(600);
+    expect(screen.getByText("Could not load the skills.")).toBeTruthy();
+    skillFails = false;
+    fireEvent.click(screen.getAllByRole("button", { name: "Retry" }).at(-1)!);
+    await advance(400);
+    expect(screen.getByRole("button", { name: /^Vigor [0-9]+%$/ })).toBeTruthy();
+  });
+
   it("requests /meta once after 300 ms", async () => {
     render(<MetaView />);
     await advance(299);

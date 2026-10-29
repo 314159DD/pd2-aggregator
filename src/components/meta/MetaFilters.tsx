@@ -8,7 +8,7 @@ import { Segment } from "@/components/lx/Segment";
 import { BUILD_PRESETS, PRESET_MIN_LEVEL, isPresetActive } from "@/lib/buildPresets";
 import { classIconUrl } from "@/lib/builds/item-art";
 import { CLASS_NAMES } from "@/lib/builds/url-state";
-import type { MetaState } from "@/lib/meta/state";
+import type { MetaState, MetaUpdate } from "@/lib/meta/state";
 import { SkillPicker } from "./SkillPicker";
 
 const RING = { boxShadow: "inset 0 0 0 1.5px var(--accent-text)" } as const;
@@ -79,7 +79,7 @@ function MinLevel({ value, onCommit }: { value: number; onCommit: (v: number) =>
   );
 }
 
-export function MetaFilters({ state, onChange }: { state: MetaState; onChange: (next: MetaState) => void }) {
+export function MetaFilters({ state, onChange }: { state: MetaState; onChange: MetaUpdate }) {
   const presets = BUILD_PRESETS[state.className] ?? [];
   const names = state.skills.map((s) => s.name);
   return (
@@ -89,13 +89,13 @@ export function MetaFilters({ state, onChange }: { state: MetaState; onChange: (
           className="self-start"
           ariaLabel="View"
           value={state.mode}
-          onChange={(v) => onChange({ ...state, mode: v === "diff" ? "diff" : "guide" })}
+          onChange={(v) => onChange((s) => ({ ...s, mode: v === "diff" ? "diff" : "guide" }))}
           items={[
             { value: "guide", label: "Build guide" },
             { value: "diff", label: "Diff my character" },
           ]}
         />
-        {state.mode === "diff" && <DiffSearch key={state.char} initial={state.char} onCommit={(char) => onChange({ ...state, char })} />}
+        {state.mode === "diff" && <DiffSearch key={state.char} initial={state.char} onCommit={(char) => onChange((s) => ({ ...s, char }))} />}
       </div>
 
       <div className="flex flex-col gap-2">
@@ -106,7 +106,7 @@ export function MetaFilters({ state, onChange }: { state: MetaState; onChange: (
               key={c}
               type="button"
               aria-pressed={state.className === c}
-              onClick={() => state.className !== c && onChange({ ...state, className: c, skills: [] })}
+              onClick={() => state.className !== c && onChange((s) => (s.className === c ? s : { ...s, className: c, skills: [] }))}
               className={buttonClass("secondary", "sm", "gap-2 pl-1.5")}
               style={state.className === c ? RING : undefined}
             >
@@ -129,7 +129,7 @@ export function MetaFilters({ state, onChange }: { state: MetaState; onChange: (
                   key={p.id}
                   type="button"
                   aria-pressed={on}
-                  onClick={() => onChange({ ...state, skills: on ? [] : p.skills.map((name) => ({ name, minLevel: PRESET_MIN_LEVEL })) })}
+                  onClick={() => onChange((s) => ({ ...s, skills: on ? [] : p.skills.map((name) => ({ name, minLevel: PRESET_MIN_LEVEL })) }))}
                   className={buttonClass("secondary", "sm", "h-[30px] gap-2 pl-1")}
                   style={on ? RING : undefined}
                 >
@@ -147,7 +147,7 @@ export function MetaFilters({ state, onChange }: { state: MetaState; onChange: (
         </div>
       )}
 
-      <MinLevel value={state.minLevel} onCommit={(minLevel) => onChange({ ...state, minLevel })} />
+      <MinLevel value={state.minLevel} onCommit={(minLevel) => onChange((s) => ({ ...s, minLevel }))} />
 
       <SkillPicker state={state} onChange={onChange} />
     </Card>

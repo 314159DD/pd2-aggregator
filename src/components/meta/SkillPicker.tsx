@@ -8,7 +8,7 @@ import { SearchField } from "@/components/lx/SearchField";
 import { SkillIcon } from "@/components/builds/ItemIcon";
 import { getSkillUsage, type SkillUsageRow } from "@/lib/api";
 import { formatCount, formatPct } from "@/lib/builds/format";
-import type { MetaState } from "@/lib/meta/state";
+import type { MetaState, MetaUpdate } from "@/lib/meta/state";
 
 const TOP = 12;
 const DEFAULT_POINTS = 20;
@@ -37,10 +37,12 @@ function Points({ name, value, onCommit }: { name: string; value: number; onComm
   );
 }
 
-export function SkillPicker({ state, onChange }: { state: MetaState; onChange: (next: MetaState) => void }) {
+export function SkillPicker({ state, onChange }: { state: MetaState; onChange: MetaUpdate }) {
   const [query, setQuery] = useState("");
   const [all, setAll] = useState(false);
-  const [rows, setRows] = useState<{ key: string; rows: SkillUsageRow[] } | null>(null);
+  const [rows, setRows] = useState<SkillUsageRow[] | null>(null);
+  const [failed, setFailed] = useState(false);
+  const [retry, setRetry] = useState(0);
 
   const { gameMode, className, minLevel, skills } = state;
   const key = `${gameMode}|${className}|${minLevel}|${skills.map((s) => s.name).join(",")}`;
@@ -48,8 +50,12 @@ export function SkillPicker({ state, onChange }: { state: MetaState; onChange: (
     const ac = new AbortController();
     const t = setTimeout(() => {
       getSkillUsage({ gameMode, className, minLevel }, skills, ac.signal)
-        .then((r) => !ac.signal.aborted && setRows({ key, rows: r }))
-        .catch(() => {});
+        .then((r) => {
+          if (ac.signal.aborted) return;
+          setRows(r);
+          setFailed(false);
+        })
+        .catch(() => !ac.signal.aborted && setFailed(true));
     }, 150);
     return () => {
       clearTimeout(t);
@@ -57,21 +63,21 @@ export function SkillPicker({ state, onChange }: { state: MetaState; onChange: (
     };
     // `key` is the identity of gameMode, className, minLevel and the skill names.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key]);
+  }, [key, retry]);
 
-  const data = rows?.rows ?? [];
+  const data = rows ?? [];
   const q = query.trim().toLowerCase();
   const matches = q ? data.filter((r) => r.name.toLowerCase().includes(q)) : data;
   const shown = all || q ? matches : matches.slice(0, TOP);
   const selected = new Set(skills.map((s) => s.name));
 
   const toggle = (name: string) =>
-    onChange({
-      ...state,
-      skills: selected.has(name) ? skills.filter((s) => s.name !== name) : [...skills, { name, minLevel: DEFAULT_POINTS }],
-    });
+    onChange((s) => ({
+      ...s,
+      skills: s.skills.some((k) => k.name === name) ? s.skills.filter((k) => k.name !== name) : [...s.skills, { name, minLevel: DEFAULT_POINTS }],
+    }));
   const setPoints = (name: string, n: number) =>
-    onChange({ ...state, skills: skills.map((s) => (s.name === name ? { ...s, minLevel: n } : s)) });
+    onChange((s) => ({ ...s, skills: s.skills.map((k) => (k.name === name ? { ...k, minLevel: n } : k)) }));
 
   return (
     <div className="flex flex-col gap-3">
@@ -89,14 +95,29 @@ export function SkillPicker({ state, onChange }: { state: MetaState; onChange: (
               </span>
             </Chip>
           ))}
-          <Button variant="ghost" size="sm" onClick={() => onChange({ ...state, skills: [] })}>
+          <Button variant="ghost" size="sm" onClick={() => onChange((s) => ({ ...s, skills: [] }))}>
             Clear skills
           </Button>
         </div>
       )}
       <SearchField type="search" placeholder="Search skills..." aria-label="Search skills" value={query} onChange={(e) => setQuery(e.target.value)} />
+      {failed && (
+        <div role="alert" className="flex items-center gap-3 self-start rounded-full bg-[var(--danger-bg)] py-1.5 pr-1.5 pl-4 text-sm text-danger">
+          <span>Could not load the skills.</span>
+          <Button
+            size="sm"
+            variant="secondary"
+            onClick={() => {
+              setFailed(false);
+              setRetry((n) => n + 1);
+            }}
+          >
+            Retry
+          </Button>
+        </div>
+      )}
       {!rows ? (
-        <div className="skelett h-24 rounded-[var(--radius-box)]" />
+        !failed && <div className="skelett h-24 rounded-[var(--radius-box)]" />
       ) : shown.length === 0 ? (
         <p className="py-3 text-center text-sm text-ink-soft">No matches</p>
       ) : (
