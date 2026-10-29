@@ -3,26 +3,45 @@ import { toCompact } from '../core/compact';
 import { readRaw, replaceItems } from '../db/characters-repo';
 import type { CharacterApiResponse } from '../core/vendor/types';
 
-/** Rewrites character_items from stored raw for one season. Leaves last_ingested_at and history alone. */
+/**
+ * Rewrites character_items from stored raw for one season. Leaves last_ingested_at and history alone.
+ * Each row is locked (serialises with upsertCharacter) and guarded by a savepoint, so a bad row is
+ * logged and skipped instead of aborting the run. Returns the number of characters backfilled.
+ */
 export async function backfillItems(pool: Pool, season: number, batchSize = 200): Promise<number> {
   let lastId = 0;
   let count = 0;
+  let skipped = 0;
   for (;;) {
-    const rows = (
-      await pool.query(
-        'select id, raw, account from characters where season = $1 and id > $2 order by id limit $3',
-        [season, lastId, batchSize],
-      )
-    ).rows;
-    if (!rows.length) break;
+    const ids = (
+      await pool.query('select id from characters where season = $1 and id > $2 order by id limit $3', [
+        season,
+        lastId,
+        batchSize,
+      ])
+    ).rows.map((r) => Number(r.id));
+    if (!ids.length) break;
     const client = await pool.connect();
     let destroy = false;
     try {
       await client.query('begin');
-      for (const row of rows) {
-        const c = toCompact(readRaw(row) as CharacterApiResponse);
-        await replaceItems(client, Number(row.id), c.items);
-        count++;
+      for (const id of ids) {
+        await client.query('savepoint row_sp');
+        try {
+          const locked = await client.query('select raw from characters where id = $1 for update', [id]);
+          if (!locked.rows.length) {
+            await client.query('release savepoint row_sp');
+            continue;
+          }
+          const c = toCompact(readRaw(locked.rows[0]) as CharacterApiResponse);
+          await replaceItems(client, id, c.items);
+          await client.query('release savepoint row_sp');
+          count++;
+        } catch (e) {
+          await client.query('rollback to savepoint row_sp');
+          skipped++;
+          console.error(`backfill-items: skipped character ${id}: ${(e as Error).message}`);
+        }
       }
       await client.query('commit');
     } catch (e) {
@@ -35,8 +54,9 @@ export async function backfillItems(pool: Pool, season: number, batchSize = 200)
     } finally {
       client.release(destroy);
     }
-    lastId = Number(rows[rows.length - 1].id);
+    lastId = ids[ids.length - 1];
   }
+  if (skipped) console.error(`backfill-items: ${skipped} characters skipped`);
   return count;
 }
 
