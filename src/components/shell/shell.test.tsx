@@ -12,6 +12,7 @@ vi.mock("next/navigation", () => ({
 import { SiteHeader } from "./SiteHeader";
 import { ThemeToggle } from "./ThemeToggle";
 import { Freshness } from "./Freshness";
+import { SiteFooter } from "./SiteFooter";
 
 function mockFetch(heartbeatAt: string) {
   vi.stubGlobal(
@@ -126,5 +127,13 @@ describe("Freshness", () => {
     expect(await screen.findByText(/updated 3m ago/)).toBeInTheDocument();
     expect(container.querySelector("[data-stale]")).toBeNull();
     await act(async () => {});
+  });
+});
+
+describe("SiteFooter", () => {
+  it("renders the disclaimer and the pd2.tools credit link", () => {
+    render(<SiteFooter />);
+    expect(screen.getByText("Not affiliated with Project Diablo 2.")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /pd2\.tools/ })).toHaveAttribute("href", "https://github.com/coleestrin/pd2-tools");
   });
 });
