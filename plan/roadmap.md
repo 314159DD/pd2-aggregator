@@ -158,6 +158,9 @@ GET /meta and /meta/diff with a per-class/level rollup (p95 ~130-180 ms), own ru
 ### Sprint 4.4 - Archive S11-S13 + parity (DONE 2026-10-29)
 Resumable importer from api.pd2.tools (1 req/s, disk gate, gap passes), archive seasons in the season picker (no prices, no gear budget, past-season note), /builds/usage and stats on meta_rollup plus covering indexes. 214k archive characters, DB 9.4 GB. Parity vs pd2.tools S13: usage shares all within 0.32 points, class breakdown within 0.02% (upstream still moving). Plan: docs/superpowers/plans/2026-10-29-pd2meta-v2-phase5-archive.md
 
+### Sprint 4.5 - Original D2 look back (DONE 2026-10-29)
+Owner ruling: the LEXADIS restyle broke the site's identity. Dark brown/gold D2 theme site wide (Cinzel, rarity colours, beer button), Meta page back to the old layout and components fed by /meta, light mode removed, /barb calculator merged.
+
 ### Next
 All v2 phases done. Candidates from spec section 10: ladder page, online players chart, trending builds, market.
 

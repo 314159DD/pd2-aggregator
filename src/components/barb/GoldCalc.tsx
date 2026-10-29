@@ -160,7 +160,7 @@ export function GoldCalc() {
           <div className="mb-5 flex flex-wrap items-baseline gap-3.5">
             <span className={cn("text-5xl leading-none font-medium tracking-[-0.03em]", MONO)}>{fx(r.wss, 1)}</span>
             <span className="text-[15px] text-ink-soft">WSS per hour</span>
-            <Chip className={cn("bg-[color-mix(in_oklab,var(--brand)_14%,transparent)] text-accent-text", MONO)}>
+            <Chip className={MONO}>
               {fx(r.wss / s.hr, 2)} HR / h
             </Chip>
           </div>
@@ -206,7 +206,7 @@ export function GoldCalc() {
                       <td>
                         <div className="flex items-center gap-2 font-medium whitespace-nowrap">
                           {x.name}
-                          {isBest && <Chip className="h-6 bg-ok-bg text-ok">Best</Chip>}
+                          {isBest && <Chip className="h-6 bg-none bg-ok-bg text-ok">Best</Chip>}
                         </div>
                         <div className="text-xs text-muted-ink">{x.note} → {x.wss} WSS</div>
                       </td>
