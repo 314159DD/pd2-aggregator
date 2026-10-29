@@ -11,6 +11,8 @@ import * as bq from './builds-queries';
 import { buildsCharacters, characterPreview } from './builds-characters';
 import { characterDetail, characterHistory } from './character-detail';
 import * as q from './queries';
+import * as meta from './meta/cohort';
+import { metaFilter } from './meta/cohort';
 
 const VERCEL_PREVIEW_RE = /^https:\/\/pd2-aggregator-[a-z0-9-]+\.vercel\.app$/;
 const ACCOUNT_RE = /^[a-zA-Z0-9_-]{1,50}$/;
@@ -25,21 +27,25 @@ const wrap =
 
 const KEY_PARAMS = [
   'season', 'gameMode', 'minLevel', 'maxLevel', 'classes', 'items', 'skills',
-  'mercTypes', 'mercItems', 'maxGearHr', 'page', 'pageSize', 'sort', 'dir',
+  'mercTypes', 'mercItems', 'maxGearHr', 'page', 'pageSize', 'sort', 'dir', 'char',
 ] as const;
 const LIST_PARAMS = new Set(['classes', 'items', 'mercTypes', 'mercItems']);
 
 /** Built from known params only, so unknown query noise (`?_=123`) cannot bypass or flood the cache. */
-function cacheKey(req: Request): string {
+export function cacheKeyFrom(path: string, query: Record<string, unknown>): string {
   const params = new URLSearchParams();
   for (const k of KEY_PARAMS) {
-    const raw = req.query[k];
+    const raw = query[k];
     const v = Array.isArray(raw) ? raw[0] : raw;
     if (typeof v !== 'string' || v === '') continue;
     params.set(k, LIST_PARAMS.has(k) ? v.split(',').map((x) => x.trim()).filter(Boolean).sort().join(',') : v.trim());
   }
-  return `${req.path}?${params.toString()}`;
+  return `${path}?${params.toString()}`;
 }
+
+const cacheKey = (req: Request): string => cacheKeyFrom(req.path, req.query);
+
+const WARM_MIN_LEVEL = 80;
 
 export function createApp(deps: { pool: Pool; cfg: Config }): express.Express {
   const { pool, cfg } = deps;
@@ -71,6 +77,23 @@ export function createApp(deps: { pool: Pool; cfg: Config }): express.Express {
 
   const api = express.Router();
   const filterOf = (req: Request) => parseFilter(req.query, cfg);
+
+  api.get('/meta', cached((req) => meta.metaCohort(pool, metaFilter(filterOf(req)))));
+
+  /** Computes the Meta cohort of every mode x (all classes + each class) one at a time and stores it under the key a real request has. */
+  app.locals.warmMeta = async (): Promise<number> => {
+    let n = 0;
+    for (const gameMode of ['softcore', 'hardcore']) {
+      for (const classes of ['', ...q.CLASSES]) {
+        const query: Record<string, string> = { gameMode, minLevel: String(WARM_MIN_LEVEL) };
+        if (classes) query.classes = classes;
+        const body = JSON.stringify(await meta.metaCohort(pool, metaFilter(parseFilter(query, cfg))));
+        cache.set(cacheKeyFrom('/meta', classes ? { gameMode, classes } : { gameMode }), body);
+        n++;
+      }
+    }
+    return n;
+  };
 
   api.get(
     '/characters',
