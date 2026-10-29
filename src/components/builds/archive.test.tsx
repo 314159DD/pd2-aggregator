@@ -198,7 +198,7 @@ describe("character", () => {
 });
 
 describe("meta view", () => {
-  it("states that prices are missing and shows n/a for items", async () => {
+  it("states that prices are missing and prints no price for items", async () => {
     search = "className=Paladin&season=13";
     const cohort = {
       season: 13,
@@ -223,6 +223,7 @@ describe("meta view", () => {
     );
     render(<MetaView />);
     expect(await screen.findByText("Past season: item prices and rune costs are not available.")).toBeTruthy();
-    await waitFor(() => expect(screen.getAllByText("n/a").length).toBeGreaterThan(0));
+    await waitFor(() => expect(screen.getAllByText("Griffon's Eye").length).toBeGreaterThan(0));
+    expect(screen.queryByText(/HR$/)).toBeNull();
   });
 });

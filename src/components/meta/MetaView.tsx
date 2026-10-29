@@ -2,34 +2,27 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Button } from "@/components/lx/Button";
-import { Card } from "@/components/lx/Card";
 import { getSeasons } from "@/lib/builds/api";
+import { isArchiveSeason } from "@/lib/builds/scope";
 import type { SeasonsResponse } from "@/lib/builds/types";
 import { getMeta, getMetaDiff } from "@/lib/meta/api";
 import { metaApiParams, parseMetaState, serializeMetaState, type MetaUpdate } from "@/lib/meta/state";
 import type { CharacterDiff, MetaCohort } from "@/lib/meta/types";
-import { AffixCard } from "./AffixCard";
-import { AvgStatsCard } from "./AvgStatsCard";
-import { CharmsCard } from "./CharmsCard";
-import { BuildSheetCard } from "./BuildSheetCard";
-import { CohortLine } from "./CohortLine";
-import { DiffCard } from "./DiffCard";
-import { isArchiveSeason } from "@/lib/builds/scope";
-import { MetaFilters } from "./MetaFilters";
-import { MetaHeader } from "./MetaHeader";
-import { TopItemsCard } from "./TopItemsCard";
+import { AffixFrequencyTable } from "./AffixFrequencyTable";
+import { AvgStatsPanel } from "./AvgStatsPanel";
+import { BuildSheet } from "./BuildSheet";
+import { CharmPanel } from "./CharmPanel";
+import { DiffView } from "./DiffView";
+import { FilterForm } from "./FilterForm";
+import { ItemFrequencyTable } from "./ItemFrequencyTable";
+import { MatchBanner } from "./MatchBanner";
+import { Section } from "./Section";
+import { TopAffixAveragesPanel } from "./TopAffixAveragesPanel";
 
 export function MetaSkeleton() {
   return (
-    <div className="mx-auto flex w-full max-w-7xl flex-col gap-5" aria-busy="true">
-      <div className="skelett h-36 rounded-[var(--radius-panel)]" />
-      <div className="skelett h-64 rounded-[var(--radius-panel)]" />
-      <div className="skelett h-10 rounded-full" />
-      <div className="grid gap-5 lg:grid-cols-12">
-        <div className="skelett h-72 rounded-[var(--radius-panel)] lg:col-span-6" />
-        <div className="skelett h-72 rounded-[var(--radius-panel)] lg:col-span-6" />
-      </div>
+    <div className="mx-auto w-full max-w-[61rem] space-y-6" aria-busy="true">
+      <div className="d2-panel rounded-sm p-4 text-sm text-muted-ink italic">Consulting the Horadric Cube…</div>
     </div>
   );
 }
@@ -125,51 +118,66 @@ export function MetaView() {
   const seasonLabel = seasonNumber === null || !seasonName ? null : `${seasonName} (S${seasonNumber})`;
 
   return (
-    <div className="mx-auto flex w-full max-w-7xl flex-col gap-5" aria-busy={loading}>
-      <div className="kaskade-karten flex flex-col gap-5">
-        <MetaHeader archive={isArchiveSeason(seasonNumber, seasons)} seasonLabel={seasonLabel} className={state.className} minLevel={state.minLevel} gameMode={state.gameMode} />
+    <div className="mx-auto w-full max-w-[61rem] space-y-6" aria-busy={loading}>
+      <FilterForm state={state} onChange={update} />
 
-        <MetaFilters state={state} onChange={update} />
+      {failed && (
+        <div role="alert" className="d2-panel rounded-sm p-4 text-sm border-[#a52a2a]/60 text-[#ff6464] flex flex-wrap items-center gap-3">
+          <span>Could not load the meta.</span>
+          <button
+            type="button"
+            className="d2-btn px-3 py-1 text-xs"
+            onClick={() => {
+              setResult(null);
+              setRetry((n) => n + 1);
+            }}
+          >
+            Retry
+          </button>
+        </div>
+      )}
 
-        {failed && (
-          <div role="alert" className="flex items-center gap-3 self-start rounded-full bg-[var(--danger-bg)] py-1.5 pr-1.5 pl-4 text-sm text-danger">
-            <span>Could not load the meta.</span>
-            <Button
-              size="sm"
-              variant="secondary"
-              onClick={() => {
-                setResult(null);
-                setRetry((n) => n + 1);
-              }}
-            >
-              Retry
-            </Button>
-          </div>
-        )}
-
-        {!meta ? (
-          !failed && <div className="skelett h-56 rounded-[var(--radius-panel)]" />
-        ) : (
-          <>
-            {!failed && <CohortLine meta={meta} state={state} stale={loading} />}
-            {diff && diff.failed && (
-              <Card className="p-5 text-sm text-ink-soft" role="status">
-                Could not load the comparison.
-              </Card>
-            )}
-            {diff && !diff.failed && (
-              <DiffCard diff={diff.diff} notFoundName={state.char} state={state} season={meta.season} pool={meta.topItemsBySlot} />
-            )}
-            <div data-testid="meta-grid" className="grid gap-5 lg:grid-cols-12">
-              <AvgStatsCard core={meta.coreStats} avg={meta.avgStats} />
-              <TopItemsCard data={meta.topItemsBySlot} gameMode={state.gameMode} />
-              <AffixCard data={meta.affixModsBySlot} />
-              <CharmsCard data={meta.charms} />
-              <BuildSheetCard meta={meta} />
-            </div>
-          </>
-        )}
-      </div>
+      {!meta
+        ? !failed && <div className="d2-panel rounded-sm p-4 text-sm text-muted-ink italic">Consulting the Horadric Cube…</div>
+        : !failed && (
+            <>
+              <MatchBanner
+                meta={meta}
+                state={state}
+                seasonLabel={seasonLabel}
+                archive={isArchiveSeason(seasonNumber, seasons)}
+                stale={loading}
+              />
+              {diff && diff.failed && (
+                <div className="d2-panel rounded-sm p-4 text-sm" role="status">
+                  Could not load the comparison.
+                </div>
+              )}
+              {diff && !diff.failed && (
+                <Section title="Diff vs pool">
+                  <DiffView diff={diff.diff} notFoundName={state.char} state={state} season={meta.season} pool={meta.topItemsBySlot} />
+                </Section>
+              )}
+              <Section title="Average build stats">
+                <div className="space-y-5">
+                  <AvgStatsPanel rows={meta.coreStats} />
+                  <TopAffixAveragesPanel rows={meta.avgStats} />
+                </div>
+              </Section>
+              <Section title="Top equipped items by slot">
+                <ItemFrequencyTable data={meta.topItemsBySlot} gameMode={state.gameMode} />
+              </Section>
+              <Section title="Most common affix mods">
+                <AffixFrequencyTable data={meta.affixModsBySlot} />
+              </Section>
+              <Section title="Charm patterns">
+                <CharmPanel data={meta.charms} />
+              </Section>
+              <Section title="Build sheet">
+                <BuildSheet meta={meta} />
+              </Section>
+            </>
+          )}
     </div>
   );
 }

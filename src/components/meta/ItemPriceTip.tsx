@@ -65,7 +65,7 @@ export function ItemPriceTip({
       {attrs.length > 0 && (
         <ul className="flex flex-col gap-0.5">
           {attrs.map((a, i) => (
-            <li key={i}>{a}</li>
+            <li key={i} className="text-q-magic">{a}</li>
           ))}
         </ul>
       )}
@@ -97,7 +97,7 @@ export function ItemPriceTip({
       onMouseLeave={hide}
       onFocus={show}
       onBlur={hide}
-      className="min-w-0 rounded-sm outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-text"
+      className="relative inline-block min-w-0 rounded-sm outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-text"
     >
       {children}
       {open &&
@@ -107,7 +107,7 @@ export function ItemPriceTip({
             id={id}
             role="tooltip"
             style={{ position: "fixed", top: pos.top, left: pos.left }}
-            className="lx mat-chrome pointer-events-none z-50 rounded-2xl px-3.5 py-3 text-xs"
+            className="lx mat-chrome pointer-events-none z-50 rounded-sm p-3 text-xs"
           >
             {content}
           </div>,

@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 
 let search = "";
 const listeners = new Set<() => void>();
@@ -94,23 +94,32 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-describe("Meta frame", () => {
-  it("follows the selected min level in the explainer", async () => {
-    search = "className=Paladin&minLevel=90";
-    render(<MetaView />);
-    await advance(400);
-    expect(screen.getByText(/every matching level 90\+ ladder character/)).toBeTruthy();
-  });
+const generate = () => fireEvent.click(screen.getByRole("button", { name: "Generate" }));
+const lastUrl = () => String(replace.mock.calls.at(-1)?.[0]);
+const skillButton = (name: string) => screen.getByRole("button", { name: new RegExp(`^${name} ?[0-9]+%$`) });
 
-  it("keeps both skills when two toggles land before the URL re-renders", async () => {
+describe("Meta page", () => {
+  it("shows the old filter panel with Generate and Reset", async () => {
     render(<MetaView />);
     await advance(600);
-    replace.mockImplementation(() => {}); // the URL does not change between the clicks
-    fireEvent.click(screen.getByRole("button", { name: /^Blessed Hammer [0-9]+%$/ }));
-    fireEvent.click(screen.getByRole("button", { name: /^Vigor [0-9]+%$/ }));
-    const url = decodeURIComponent(String(replace.mock.calls.at(-1)?.[0]).replace(/\+/g, " "));
-    expect(url).toContain("Blessed Hammer");
-    expect(url).toContain("Vigor");
+    expect(screen.getByRole("button", { name: "Generate" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: "Reset" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: "Build a guide" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: "Diff my character" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: "Hardcore" }).getAttribute("aria-pressed")).toBe("true");
+    expect(screen.getByRole("button", { name: "Paladin" }).getAttribute("aria-pressed")).toBe("true");
+    expect(screen.getByText(/Min character level/)).toBeTruthy();
+  });
+
+  it("changes nothing until Generate, then keeps both skills", async () => {
+    render(<MetaView />);
+    await advance(600);
+    fireEvent.click(skillButton("Blessed Hammer"));
+    fireEvent.click(skillButton("Vigor"));
+    expect(replace).not.toHaveBeenCalled();
+    generate();
+    expect(decodeURIComponent(lastUrl().replace(/\+/g, " "))).toContain("Blessed Hammer");
+    expect(decodeURIComponent(lastUrl().replace(/\+/g, " "))).toContain("Vigor");
   });
 
   it("aborts a superseded cohort request", async () => {
@@ -126,17 +135,17 @@ describe("Meta frame", () => {
     expect(metaSignals[1].aborted).toBe(false);
   });
 
-  it("submits the diff name with Enter", async () => {
+  it("applies the diff name with Generate", async () => {
     search = "className=Paladin&mode=diff";
     render(<MetaView />);
     await advance(400);
     const input = screen.getByLabelText("Character or account name");
     fireEvent.change(input, { target: { value: "Bar" } });
     fireEvent.submit(input.closest("form")!);
-    expect(String(replace.mock.calls.at(-1)?.[0])).toContain("char=Bar");
+    expect(lastUrl()).toContain("char=Bar");
   });
 
-  it("hides the cohort line next to the retry alert", async () => {
+  it("hides the count card next to the retry alert", async () => {
     render(<MetaView />);
     await advance(400);
     expect(screen.getByTestId("cohort-count")).toBeTruthy();
@@ -155,12 +164,12 @@ describe("Meta frame", () => {
     await advance(600);
     expect(screen.getByText("Could not load the skills.")).toBeTruthy();
     skillFails = false;
-    fireEvent.click(screen.getAllByRole("button", { name: "Retry" }).at(-1)!);
+    fireEvent.click(screen.getByRole("button", { name: "Retry skills" }));
     await advance(400);
-    expect(screen.getByRole("button", { name: /^Vigor [0-9]+%$/ })).toBeTruthy();
+    expect(skillButton("Vigor")).toBeTruthy();
   });
 
-  it("requests /meta once after 300 ms", async () => {
+  it("requests /meta once after 300 ms and prints the old Characters found card", async () => {
     render(<MetaView />);
     await advance(299);
     expect(metaCalls).toHaveLength(0);
@@ -169,19 +178,23 @@ describe("Meta frame", () => {
     expect(metaCalls[0]).toContain("classes=Paladin");
     expect(metaCalls[0]).toContain("minLevel=85");
     expect(metaCalls[0]).toContain("gameMode=hardcore");
-    expect(screen.getByTestId("cohort-count").textContent).toBe("1,234 characters match");
+    expect(screen.getByText("Characters found")).toBeTruthy();
+    expect(screen.getByTestId("cohort-count").textContent).toBe("1,234");
+    expect(screen.getByText(/level ≥ 85/)).toBeTruthy();
     expect(screen.getByText(/Prices updated 3m ago/)).toBeTruthy();
   });
 
-  it("collapses three skill clicks within 300 ms into one request", async () => {
+  it("sends no request for skill clicks until Generate", async () => {
     render(<MetaView />);
-    await advance(400);
-    await advance(200); // skill list loaded
+    await advance(600);
     metaCalls = [];
     for (const n of ["Blessed Hammer", "Concentration", "Vigor"]) {
-      fireEvent.click(screen.getByRole("button", { name: new RegExp(`^${n} [0-9]+%$`) }));
+      fireEvent.click(skillButton(n));
       await advance(50);
     }
+    await advance(400);
+    expect(metaCalls).toHaveLength(0);
+    generate();
     await advance(400);
     expect(metaCalls).toHaveLength(1);
     expect(metaCalls[0]).toContain("Vigor");
@@ -194,57 +207,60 @@ describe("Meta frame", () => {
     await advance(350);
     act(() => replace("/?className=Paladin&gameMode=hardcore&minLevel=90"));
     await advance(350);
-    expect(screen.getByTestId("cohort-count").textContent).toBe("222 characters match");
+    expect(screen.getByTestId("cohort-count").textContent).toBe("222");
     await act(async () => releaseSlow(cohort(111)));
     await flush();
-    expect(screen.getByTestId("cohort-count").textContent).toBe("222 characters match");
+    expect(screen.getByTestId("cohort-count").textContent).toBe("222");
   });
 
-  it("switches class and clears skills", async () => {
+  it("switches class and clears skills on Generate", async () => {
     search = 'className=Paladin&skills=[{"name":"Vigor","minLevel":20}]';
     render(<MetaView />);
-    await advance(400);
-    fireEvent.click(screen.getByRole("button", { name: /Sorceress/ }));
-    const url = String(replace.mock.calls.at(-1)?.[0]);
-    expect(url).toContain("className=Sorceress");
-    expect(url).not.toContain("skills");
+    await advance(600);
+    fireEvent.click(screen.getByRole("button", { name: "Sorceress" }));
+    expect(replace).not.toHaveBeenCalled();
+    generate();
+    expect(lastUrl()).toContain("className=Sorceress");
+    expect(lastUrl()).not.toContain("skills");
   });
 
-  it("clicking an active preset clears the skills", async () => {
+  it("a preset fills the skills and clicking it again clears them", async () => {
     render(<MetaView />);
-    await advance(400);
-    const preset = screen.getAllByRole("button", { pressed: false }).find((b) => b.querySelector(".well") && /^[A-Z]/.test(b.textContent ?? "") && !/Paladin|Sorceress/.test(b.textContent ?? ""));
-    expect(preset).toBeTruthy();
-    fireEvent.click(preset!);
-    expect(String(replace.mock.calls.at(-1)?.[0])).toContain("skills=");
-    const active = screen.getAllByRole("button", { pressed: true }).find((b) => b.querySelector(".well"));
-    expect(active).toBeTruthy();
-    fireEvent.click(active!);
-    expect(String(replace.mock.calls.at(-1)?.[0])).not.toContain("skills");
+    await advance(600);
+    const presets = within(screen.getByRole("group", { name: "Presets" }));
+    const first = presets.getAllByRole("button")[0];
+    expect(first.getAttribute("aria-pressed")).toBe("false");
+    fireEvent.click(first);
+    expect(first.getAttribute("aria-pressed")).toBe("true");
+    generate();
+    expect(lastUrl()).toContain("skills=");
+    fireEvent.click(first);
+    expect(first.getAttribute("aria-pressed")).toBe("false");
+    generate();
+    expect(lastUrl()).not.toContain("skills");
   });
 
-  it("commits the min level 250 ms after the range changes", async () => {
+  it("applies the min level with Generate", async () => {
     render(<MetaView />);
     await advance(400);
     const range = screen.getByRole("slider");
     expect(range.getAttribute("aria-valuetext")).toBe("Level 85+");
     fireEvent.change(range, { target: { value: "90" } });
     expect(range.getAttribute("aria-valuetext")).toBe("Level 90+");
-    await advance(200);
     expect(replace).not.toHaveBeenCalled();
-    await advance(100);
-    expect(String(replace.mock.calls.at(-1)?.[0])).toContain("minLevel=90");
+    generate();
+    expect(lastUrl()).toContain("minLevel=90");
   });
 
-  it("diff mode requests /meta/diff only after Compare", async () => {
+  it("diff mode requests /meta/diff after Generate", async () => {
     search = "className=Paladin&mode=diff";
     render(<MetaView />);
     await advance(400);
     fireEvent.change(screen.getByLabelText("Character or account name"), { target: { value: "Foo" } });
     await advance(400);
     expect(diffCalls).toHaveLength(0);
-    fireEvent.click(screen.getByRole("button", { name: "Compare" }));
-    expect(String(replace.mock.calls.at(-1)?.[0])).toContain("char=Foo");
+    generate();
+    expect(lastUrl()).toContain("char=Foo");
     await advance(400);
     await advance(10);
     expect(diffCalls).toHaveLength(1);
@@ -256,26 +272,30 @@ describe("Meta frame", () => {
     await advance(400);
     expect(screen.getByTestId("cohort-count").textContent).toContain("of 5,678 Paladins");
     expect(screen.getByRole("link", { name: /See characters/ }).getAttribute("href")).toContain("classes=Paladin");
-    expect(screen.getByRole("button", { name: "Clear skills" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: "Remove Vigor" })).toBeTruthy();
   });
 
-  it("has no Generate button and no mode control in the body", async () => {
+  it("game mode buttons apply at once and Reset returns to the defaults", async () => {
+    search = "className=Sorceress&gameMode=hardcore&minLevel=90&season=13";
     render(<MetaView />);
     await advance(400);
-    expect(screen.queryByRole("button", { name: /Generate/ })).toBeNull();
-    expect(screen.queryByRole("button", { name: "Hardcore" })).toBeNull();
-    expect(screen.queryByRole("button", { name: "Softcore" })).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: "Softcore" }));
+    expect(lastUrl()).toContain("gameMode=softcore");
+    fireEvent.click(screen.getByRole("button", { name: "Reset" }));
+    expect(lastUrl()).toContain("className=Paladin");
+    expect(lastUrl()).toContain("season=13");
+    expect(lastUrl()).not.toContain("minLevel");
   });
 
   it("shows the zero state", async () => {
     metaImpl = async () => cohort(0);
     render(<MetaView />);
     await advance(400);
-    expect(screen.getByTestId("cohort-count").textContent).toBe("0 characters match");
-    expect(screen.getByText("Try fewer skills or a lower level.")).toBeTruthy();
+    expect(screen.getByTestId("cohort-count").textContent).toBe("0");
+    expect(screen.getByText(/No characters match/)).toBeTruthy();
   });
 
-  it("shows a retry capsule when the request fails", async () => {
+  it("shows a retry when the request fails", async () => {
     metaImpl = async () => {
       throw new Error("boom");
     };
@@ -285,7 +305,7 @@ describe("Meta frame", () => {
     metaImpl = async () => cohort(5);
     fireEvent.click(screen.getByRole("button", { name: "Retry" }));
     await advance(400);
-    expect(screen.getByTestId("cohort-count").textContent).toBe("5 characters match");
+    expect(screen.getByTestId("cohort-count").textContent).toBe("5");
   });
 
   it("renders an old link with skills=notjson", async () => {
