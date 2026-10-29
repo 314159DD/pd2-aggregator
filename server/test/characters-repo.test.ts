@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import type { Pool } from 'pg';
 import { freshDb } from './helpers/db';
 import { toCompact, enrichRaw } from '../src/core/compact';
@@ -104,5 +104,28 @@ describe('characters repo', () => {
     expect(await count()).toBe(before);
     expect((await pool.query('select last_ingested_at from characters')).rows[0].last_ingested_at).toEqual(ingest);
     expect((await pool.query('select count(*)::int n from character_history')).rows[0].n).toBe(hist);
+  });
+  it('backfillItems skips a corrupt row and still backfills the others', async () => {
+    const c = toCompact(fx, 'MC-MEEKS');
+    const t0 = new Date('2026-10-29T10:00:00Z');
+    await upsertCharacter(pool, 14, c, enrichRaw(fx, 'MC-MEEKS'), t0);
+    await upsertCharacter(pool, 14, { ...c, name: 'Other' }, enrichRaw(fx, 'MC-MEEKS'), t0);
+    await upsertCharacter(pool, 14, { ...c, name: 'Broken' }, enrichRaw(fx, 'MC-MEEKS'), t0);
+    await pool.query("update characters set raw = $1 where name = 'Broken'", [Buffer.from([1, 2, 3])]);
+    await pool.query('update character_items set inv_code = null');
+    const errSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    expect(await backfillItems(pool, 14, 2)).toBe(2);
+    expect(errSpy).toHaveBeenCalled();
+    errSpy.mockRestore();
+    const rows = (
+      await pool.query(
+        `select ch.name, count(i.inv_code)::int n from characters ch
+         left join character_items i on i.character_id = ch.id group by ch.name`,
+      )
+    ).rows;
+    const by = Object.fromEntries(rows.map((r) => [r.name, r.n]));
+    expect(by['Broken']).toBe(0);
+    expect(by['Other']).toBeGreaterThan(0);
+    expect(by[c.name]).toBeGreaterThan(0);
   });
 });
