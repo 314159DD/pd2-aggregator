@@ -140,3 +140,27 @@ export async function seasons(pool: Pool, cfg: Config): Promise<SeasonsResult> {
       })),
   };
 }
+
+export type BuildShareDay = { day: string; total: number; classes: Record<string, number> };
+
+/** Last 90 days of level 80+ class counts, oldest first. */
+export async function buildShareHistory(pool: Pool, season: number, mode: 'softcore' | 'hardcore'): Promise<{ days: BuildShareDay[] }> {
+  const r = await pool.query(
+    `select to_char(day, 'YYYY-MM-DD') as day, class, characters
+     from build_share_daily
+     where season = $1 and mode = $2 and day > (select max(day) from build_share_daily where season = $1 and mode = $2) - 90
+     order by day asc`,
+    [season, mode],
+  );
+  const days = new Map<string, BuildShareDay>();
+  for (const x of r.rows) {
+    let d = days.get(x.day);
+    if (!d) {
+      d = { day: x.day, total: 0, classes: Object.fromEntries(CLASSES.map((c) => [c, 0])) };
+      days.set(x.day, d);
+    }
+    d.classes[x.class] = x.characters;
+    d.total += x.characters;
+  }
+  return { days: [...days.values()] };
+}

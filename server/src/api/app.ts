@@ -147,6 +147,7 @@ export function createApp(deps: { pool: Pool; cfg: Config }): express.Express {
       res.type('application/json').send(body);
     }),
   );
+  api.get('/builds/history', cached((req) => bq.buildShareHistory(pool, filterOf(req).season, filterOf(req).mode)));
   api.get('/prices', cached((req) => getPrices(pool, filterOf(req).mode)));
 
   const hits = new Map<string, number[]>();
