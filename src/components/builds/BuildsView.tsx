@@ -23,11 +23,10 @@ import { ActiveFilters } from "./ActiveFilters";
 import { BuildsHeader } from "./BuildsHeader";
 import { ClassShare } from "./ClassShare";
 import { GearBudget } from "./GearBudget";
-import { ItemIcon } from "./ItemIcon";
+import { ItemIcon, SkillIcon } from "./ItemIcon";
 import { ShoppingList } from "./ShoppingList";
 import { Toolbar } from "./Toolbar";
 import { UsageCard } from "./UsageCard";
-import { skillIconUrl } from "@/lib/builds/item-art";
 
 type Data = { usage: BuildsUsage; characters: BuildsCharactersPage };
 
@@ -157,10 +156,7 @@ export function BuildsView() {
                     entries={data.usage.skills}
                     selected={state.skills.map((k) => k.name)}
                     onToggle={(n) => update(toggleSkill(state, n))}
-                    icon={(e) => (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={skillIconUrl(e.name)} alt="" width={28} height={28} loading="lazy" className="size-7 rounded-lg" />
-                    )}
+                    icon={(e) => <SkillIcon name={e.name} />}
                   />
                   <UsageCard
                     title="Items"
