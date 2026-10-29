@@ -5,7 +5,7 @@ import { LRUCache } from 'lru-cache';
 import type { Pool } from 'pg';
 import type { Config } from '../config';
 import { addPriorityAccount } from '../db/status-repo';
-import { parseFilter } from './filters';
+import { parseFilter, type CharacterFilter } from './filters';
 import { getPrices } from '../db/prices-repo';
 import * as bq from './builds-queries';
 import { buildsCharacters, characterPreview } from './builds-characters';
@@ -43,6 +43,12 @@ export function cacheKeyFrom(path: string, query: Record<string, unknown>): stri
   return `${path}?${params.toString()}`;
 }
 
+/** Key of a Meta cohort from the normalised filter fields metaFilter keeps, so defaults and absent params collide and unrelated params do not. */
+export function metaCacheKey(path: string, f: CharacterFilter): string {
+  const skills = f.skills.map((x) => JSON.stringify([x.name, x.minLevel])).sort();
+  return `${path}?${JSON.stringify([f.season, f.mode, f.minLevel, f.maxLevel, [...f.classes].sort(), skills])}`;
+}
+
 const cacheKey = (req: Request): string => cacheKeyFrom(req.path, req.query);
 
 const WARM_MIN_LEVEL = 80;
@@ -78,7 +84,19 @@ export function createApp(deps: { pool: Pool; cfg: Config }): express.Express {
   const api = express.Router();
   const filterOf = (req: Request) => parseFilter(req.query, cfg);
 
-  api.get('/meta', cached((req) => meta.metaCohort(pool, metaFilter(filterOf(req)))));
+  api.get(
+    '/meta',
+    wrap(async (req, res) => {
+      const f = metaFilter(filterOf(req));
+      const key = metaCacheKey('/meta', f);
+      let body = cache.get(key);
+      if (body === undefined) {
+        body = JSON.stringify(await meta.metaCohort(pool, f));
+        cache.set(key, body);
+      }
+      res.type('application/json').send(body);
+    }),
+  );
 
   /** Computes the Meta cohort of every mode x (all classes + each class) one at a time and stores it under the key a real request has. */
   app.locals.warmMeta = async (): Promise<number> => {
@@ -87,8 +105,8 @@ export function createApp(deps: { pool: Pool; cfg: Config }): express.Express {
       for (const classes of ['', ...q.CLASSES]) {
         const query: Record<string, string> = { gameMode, minLevel: String(WARM_MIN_LEVEL) };
         if (classes) query.classes = classes;
-        const body = JSON.stringify(await meta.metaCohort(pool, metaFilter(parseFilter(query, cfg))));
-        cache.set(cacheKeyFrom('/meta', classes ? { gameMode, classes } : { gameMode }), body);
+        const f = metaFilter(parseFilter(query, cfg));
+        cache.set(metaCacheKey('/meta', f), JSON.stringify(await meta.metaCohort(pool, f)));
         n++;
       }
     }

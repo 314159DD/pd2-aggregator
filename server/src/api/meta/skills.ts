@@ -36,13 +36,13 @@ export async function skillUsage(
        where s.hard_level >= 1
      ), pr as (
        select * from unnest($${n + 1}::text[], $${n + 2}::text[]) as pr(skill, prereq)
+     ), hits as materialized (
+       select distinct b.character_id, pr.prereq as skill
+       from cs b join pr on pr.skill = b.skill
+       where b.hard_level > 1 and b.skill <> pr.prereq
      ), flagged as (
-       select a.skill, a.hard_level,
-              (a.hard_level = 1 and exists (
-                 select 1 from cs b join pr on pr.skill = b.skill
-                 where b.character_id = a.character_id and b.hard_level > 1
-                   and b.skill <> a.skill and pr.prereq = a.skill)) as prereq_only
-       from cs a
+       select a.skill, a.hard_level, (a.hard_level = 1 and h.character_id is not null) as prereq_only
+       from cs a left join hits h on h.character_id = a.character_id and h.skill = a.skill
      )
      select skill, count(*)::int as with_any,
             (count(*) filter (where not prereq_only))::int as as_build,
