@@ -164,7 +164,7 @@ export async function getPricesFor(
   if (!names.length) return out;
   const r = await pool.query(
     `select item_name, median_hr, samples, source from item_prices
-     where mode = $1 and item_name = any($2::text[])
+     where mode = $1 and item_type in ('Unique','Set','Runeword') and item_name = any($2::text[])
      order by samples desc`,
     [mode, names],
   );
