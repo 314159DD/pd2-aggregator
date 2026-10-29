@@ -11,6 +11,9 @@ export type MetaState = {
   char: string;
 };
 
+/** Change request applied to the newest state, so quick successive changes do not overwrite each other. */
+export type MetaUpdate = (fn: (s: MetaState) => MetaState) => void;
+
 export const DEFAULT_META_STATE: MetaState = {
   season: null,
   gameMode: "softcore",

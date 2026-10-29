@@ -7,7 +7,7 @@ import { Card } from "@/components/lx/Card";
 import { getSeasons } from "@/lib/builds/api";
 import type { SeasonsResponse } from "@/lib/builds/types";
 import { getMeta, getMetaDiff } from "@/lib/meta/api";
-import { metaApiParams, parseMetaState, serializeMetaState, type MetaState } from "@/lib/meta/state";
+import { metaApiParams, parseMetaState, serializeMetaState, type MetaUpdate } from "@/lib/meta/state";
 import type { CharacterDiff, MetaCohort } from "@/lib/meta/types";
 import { CohortLine } from "./CohortLine";
 import { MetaFilters } from "./MetaFilters";
@@ -36,8 +36,17 @@ export function MetaView() {
   const paramKey = useSearchParams()?.toString() ?? "";
   const state = useMemo(() => parseMetaState(new URLSearchParams(paramKey)), [paramKey]);
 
-  const update = useCallback(
-    (next: MetaState) => router.replace(`${pathname === "/meta" ? "/meta" : "/"}?${serializeMetaState(next).toString()}`, { scroll: false }),
+  // Updaters run against the newest state, also when two clicks land before the URL has re-rendered.
+  const newest = useRef(state);
+  useEffect(() => {
+    newest.current = state;
+  });
+  const update = useCallback<MetaUpdate>(
+    (fn) => {
+      const next = fn(newest.current);
+      newest.current = next;
+      router.replace(`${pathname === "/meta" ? "/meta" : "/"}?${serializeMetaState(next).toString()}`, { scroll: false });
+    },
     [router, pathname],
   );
 
@@ -135,7 +144,7 @@ export function MetaView() {
           !failed && <div className="skelett h-56 rounded-[var(--radius-panel)]" />
         ) : (
           <>
-            <CohortLine meta={meta} state={state} />
+            {!failed && <CohortLine meta={meta} state={state} />}
             {diff && (diff.failed || diff.diff === null) && (
               <Card className="p-5 text-sm text-ink-soft" role="status">
                 {diff.failed ? "Could not load the comparison." : `No character or account named ${state.char} found.`}
