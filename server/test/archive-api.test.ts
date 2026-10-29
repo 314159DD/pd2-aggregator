@@ -144,3 +144,16 @@ describe('archive seasons in the API', () => {
     expect((await get('/builds/history?season=13')).body).toEqual({ days: [] });
   });
 });
+
+describe('archive builds list ignores stored gear values', () => {
+  it('returns null gear and sorts gear as level for S13 even when the DB has a value', async () => {
+    await pool.query("update characters set gear_value_hr = 9, gear_value_partial = true where name = 'ArchRef'");
+    const r = await get('/builds/characters?season=13&sort=gear');
+    expect(r.status).toBe(200);
+    expect(r.body.sort).toBe('level');
+    expect(r.body.characters.length).toBe(2);
+    expect(r.body.characters.every((c: any) => c.gearValueHr === null && c.gearValuePartial === false)).toBe(true);
+    const l = await get('/builds/characters?season=14&sort=gear');
+    expect(l.body.sort).toBe('gear');
+  });
+});

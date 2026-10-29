@@ -7,6 +7,7 @@ import { toCompact, enrichRaw } from '../src/core/compact';
 import { computeItemPrices, getPrices, recomputeGearValues } from '../src/db/prices-repo';
 import { runPriceJob } from '../src/collector/jobs';
 import ladder from './fixtures/character-ladder.json';
+import { mkChar } from './helpers/meta-seed';
 
 const NOW = new Date('2026-10-29T12:00:00Z');
 const DAY = 86_400_000;
@@ -215,5 +216,26 @@ describe('gear value', () => {
     const mine = priceable.filter((i) => i.name === target.name).length;
     expect(Number((await gear()).gear_value_hr)).toBe(mine);
     expect(await runPriceJob({ pool, cfg: { currentSeason: 14 } }, NOW)).toEqual({ priced: 1, charactersChanged: 0 });
+  });
+});
+
+describe('recomputeGearValues batching', () => {
+  it('batches of 2 over interleaved seasons equal a single pass', async () => {
+    const item = (q: string, name: string) => ({ quality: q, name, slot: 'Helm' });
+    for (let i = 0; i < 7; i++) {
+      const season = i % 2 === 0 ? 14 : 13;
+      await upsertCharacter(pool, season, mkChar({ name: `B${i}`, items: [item('Unique', 'Harlequin Crest')] }), { character: { name: `B${i}` } });
+    }
+    await pool.query(`insert into item_prices (mode, item_type, item_name, median_hr, samples, source, computed_at)
+      values ('softcore', 'Unique', 'Harlequin Crest', 0.5, 5, 'sold', now())`);
+    const snap = async () => (await pool.query('select name, gear_value_hr, gear_value_partial from characters where season = 14 order by name')).rows;
+    expect(await recomputeGearValues(pool, { season: 14 }, 2)).toBe(4);
+    const batched = await snap();
+    await pool.query('update characters set gear_value_hr = null, gear_value_partial = false');
+    expect(await recomputeGearValues(pool, { season: 14 })).toBe(4);
+    expect(batched).toEqual(await snap());
+    expect(Number(batched[0].gear_value_hr)).toBe(0.5);
+    const other = await pool.query('select count(*)::int n from characters where season = 13 and gear_value_hr is not null');
+    expect(other.rows[0].n).toBe(0);
   });
 });
