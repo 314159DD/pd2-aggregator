@@ -38,6 +38,15 @@ describe("api.ts URL contract", () => {
   };
   const SKILLS = [{ name: "Lightning Fury", minLevel: 20 }];
 
+  describe("base URL", () => {
+    it("defaults to api.pd2meta.info when NEXT_PUBLIC_API_BASE is unset", async () => {
+      await getItemUsage(FILTER);
+      expect(capturedUrls[0]).toMatch(
+        /^https:\/\/api\.pd2meta\.info\/api\/v1\/characters\/stats\/item-usage\?/,
+      );
+    });
+  });
+
   describe("when skills array is non-empty", () => {
     it("getItemUsage URL includes skills= JSON-encoded", async () => {
       await getItemUsage(FILTER, SKILLS);
