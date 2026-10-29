@@ -23,8 +23,10 @@ const files: Array<[string, string]> = [
 describe("static data copies", () => {
   for (const [name, src] of files) {
     it(`${name} is byte-identical to ${src}`, () => {
-      const copy = readFileSync(join(__dirname, "..", "src", "core", "static", name));
-      const orig = readFileSync(join(root, src));
+      // Line endings may differ per checkout (core.autocrlf); everything else must match byte for byte.
+      const lf = (b: Buffer) => Buffer.from(b.toString("latin1").replace(/\r\n/g, "\n"), "latin1");
+      const copy = lf(readFileSync(join(__dirname, "..", "src", "core", "static", name)));
+      const orig = lf(readFileSync(join(root, src)));
       expect(copy.equals(orig), "run node server/scripts/sync-static.js").toBe(true);
     });
   }
