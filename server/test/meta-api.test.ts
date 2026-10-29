@@ -89,9 +89,9 @@ describe('GET /meta', () => {
     spy.mockRestore();
   });
 
-  it('cacheKeyFrom is order independent and includes char', () => {
+  it('cacheKeyFrom is order independent and ignores an unknown char param', () => {
     expect(cacheKeyFrom('/meta', { classes: 'B,A' })).toBe(cacheKeyFrom('/meta', { classes: 'A,B' }));
-    expect(cacheKeyFrom('/x', { char: 'Foo' })).not.toBe(cacheKeyFrom('/x', { char: 'Bar' }));
+    expect(cacheKeyFrom('/x', { char: 'Foo' })).toBe(cacheKeyFrom('/x', { char: 'Bar' }));
   });
 
   it('leaves item-usage unchanged', async () => {

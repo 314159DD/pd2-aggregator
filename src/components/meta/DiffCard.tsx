@@ -90,7 +90,7 @@ export function DiffCard({
                   <td className={`text-sm ${d.userItemName ? qualityClass(d.userItemQuality ?? "") : "text-muted-ink"}`}>
                     {d.userItemName ?? "-"}
                   </td>
-                  <td className={`text-sm ${d.poolTopItemName ? poolQuality(pool, slot, d.poolTopItemName) : "text-muted-ink"}`}>
+                  <td className={`text-sm ${d.poolTopItemName ? poolQuality(crossMode ? undefined : pool, slot, d.poolTopItemName) : "text-muted-ink"}`}>
                     {d.poolTopItemName ?? "-"}
                   </td>
                   <td>{both ? <Chip ok={d.userMatchesPoolTop} /> : null}</td>
