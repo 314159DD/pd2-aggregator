@@ -28,7 +28,7 @@ Next.js 16 static-export app that aggregates Project Diablo 2 ladder builds from
 
 ## Module boundaries
 - Meta aggregation is server side in `server/src/api/meta/`. The web only renders what `/meta` and `/meta/diff` return.
-- `src/lib/meta/api.ts` and `src/lib/builds/api.ts` are the only network modules (`src/lib/api.ts` keeps only `API_BASE`, `GameMode` and the skill-usage call used by the skill picker).
+- `src/lib/meta/api.ts`, `src/lib/builds/api.ts` and `src/lib/barb/api.ts` are the only network modules (`src/lib/api.ts` keeps only `API_BASE`, `GameMode` and the skill-usage call used by the skill picker).
 - Static data the server needs is copied byte-for-byte into `server/src/core/static/` with `node server/scripts/sync-static.js`; never edit the copies.
 
 ## Data sources
