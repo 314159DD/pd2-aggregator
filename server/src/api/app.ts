@@ -6,6 +6,8 @@ import type { Pool } from 'pg';
 import type { Config } from '../config';
 import { addPriorityAccount } from '../db/status-repo';
 import { parseFilter } from './filters';
+import { getPrices } from '../db/prices-repo';
+import * as bq from './builds-queries';
 import * as q from './queries';
 
 const VERCEL_PREVIEW_RE = /^https:\/\/pd2-aggregator-[a-z0-9-]+\.vercel\.app$/;
@@ -21,7 +23,7 @@ const wrap =
 
 const KEY_PARAMS = [
   'season', 'gameMode', 'minLevel', 'maxLevel', 'classes', 'items', 'skills',
-  'mercTypes', 'mercItems', 'page', 'pageSize',
+  'mercTypes', 'mercItems', 'maxGearHr', 'page', 'pageSize',
 ] as const;
 const LIST_PARAMS = new Set(['classes', 'items', 'mercTypes', 'mercItems']);
 
@@ -89,6 +91,10 @@ export function createApp(deps: { pool: Pool; cfg: Config }): express.Express {
     '/characters/accounts/:account',
     cached((req) => q.charactersByAccount(pool, filterOf(req).season, req.params.account)),
   );
+
+  api.get('/builds/usage', cached((req) => bq.buildsUsage(pool, filterOf(req))));
+  api.get('/builds/seasons', cached(() => bq.seasons(pool, cfg)));
+  api.get('/prices', cached((req) => getPrices(pool, filterOf(req).mode)));
 
   const hits = new Map<string, number[]>();
   api.post(
