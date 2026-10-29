@@ -152,8 +152,11 @@ Collector, Postgres and pd2.tools-compatible read API on the VPS (api.pd2meta.in
 ### Sprint 4.2 - Builds tab (DONE 2026-10-29)
 Price job + gear value, Builds page (class share, gear budget, usage cards, shopping list, character table + preview), character and account pages, LEXADIS shell with Builds/Meta tabs. Plan: docs/superpowers/plans/2026-10-29-pd2meta-v2-phase2-builds.md
 
+### Sprint 4.3 - Server-side Meta + Meta tab + launch (DONE 2026-10-29)
+GET /meta and /meta/diff with a per-class/level rollup (p95 ~130-180 ms), own rune prices, Meta tab rebuilt in the LEXADIS look, client aggregation/pd2trader calls/D2 theme removed, footer credits. Plan: docs/superpowers/plans/2026-10-29-pd2meta-v2-phase34-meta.md
+
 ### Next
-Phase 3 Meta endpoints + Meta tab on them; phase 4 Meta restyle + launch; phase 5 archive S11-S13 + parity test.
+Phase 5 archive S11-S13 + parity test.
 
 ## Future Phases
 
