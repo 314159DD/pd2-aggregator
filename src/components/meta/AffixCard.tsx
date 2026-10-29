@@ -1,11 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { Button } from "@/components/lx/Button";
 import { Segment } from "@/components/lx/Segment";
 import { formatCount, formatPct } from "@/lib/builds/format";
 import { acrossSlots } from "@/lib/meta/across-slots";
 import { META_SLOTS, type AffixSlot, type MetaSlot } from "@/lib/meta/types";
 import { Empty, MetaCard, cap, fin } from "./shared";
+
+const TOP = 8;
 
 const num = (v: number): string => {
   const n = fin(v);
@@ -14,6 +17,13 @@ const num = (v: number): string => {
 
 export function AffixCard({ data }: { data: Record<MetaSlot, AffixSlot> }) {
   const [view, setView] = useState<"slot" | "all">("slot");
+  const [open, setOpen] = useState<Set<string>>(new Set());
+  const toggle = (slot: string) =>
+    setOpen((cur) => {
+      const n = new Set(cur);
+      if (!n.delete(slot)) n.add(slot);
+      return n;
+    });
   const across = acrossSlots(data ?? ({} as Record<MetaSlot, AffixSlot>));
   return (
     <MetaCard
@@ -53,8 +63,8 @@ export function AffixCard({ data }: { data: Record<MetaSlot, AffixSlot> }) {
                           <th scope="col" className="text-right!">P75</th>
                         </tr>
                       </thead>
-                      <tbody>
-                        {g.mods.map((m) => (
+                      <tbody className="kaskade-zeilen">
+                        {(open.has(slot) ? g.mods : g.mods.slice(0, TOP)).map((m) => (
                           <tr key={m.modName}>
                             <td className="text-ink">{m.displayLabel}</td>
                             <td className="text-right font-mono text-xs text-ink-soft tabular-nums">{formatCount(fin(m.count))}</td>
@@ -66,6 +76,12 @@ export function AffixCard({ data }: { data: Record<MetaSlot, AffixSlot> }) {
                       </tbody>
                     </table>
                   </div>
+                )}
+                {g.mods.length > TOP && (
+                  <Button variant="ghost" size="sm" className="self-start" aria-expanded={open.has(slot)} onClick={() => toggle(slot)}>
+                    <span aria-hidden className="aufklapp-pfeil inline-block">{"\u203a"}</span>
+                    {open.has(slot) ? "Show top 8" : `Show all ${formatCount(g.mods.length)}`}
+                  </Button>
                 )}
               </section>
             );
@@ -87,7 +103,7 @@ export function AffixCard({ data }: { data: Record<MetaSlot, AffixSlot> }) {
               {across.mods.map((m) => (
                 <tr key={m.modName}>
                   <td className="text-ink">{m.displayLabel}</td>
-                  <td className="text-right font-mono text-xs text-ink-soft tabular-nums">{formatCount(m.count)}</td>
+                  <td className="text-right font-mono text-xs text-ink-soft tabular-nums">{formatCount(fin(m.count))}</td>
                   <td className="text-right font-mono text-xs text-ink tabular-nums">{formatPct(fin(m.pct) * 100)}</td>
                 </tr>
               ))}
