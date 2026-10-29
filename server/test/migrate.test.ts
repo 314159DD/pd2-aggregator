@@ -17,15 +17,15 @@ describe('migrate', () => {
     const s = await pool.query('select count(*)::int as n from collector_status');
     expect(s.rows[0].n).toBe(1);
     const m = await pool.query('select name from schema_migrations');
-    expect(m.rows.map((x) => x.name)).toEqual(['001_init.sql']);
+    expect(m.rows.map((x) => x.name)).toEqual(['001_init.sql', '002_market_miss_count.sql']);
   });
 
   it('handles concurrent migrate calls on a fresh schema', async () => {
     await pool.query('drop schema public cascade');
     await pool.query('create schema public');
     const [a, b] = await Promise.all([migrate(pool), migrate(pool)]);
-    expect([...a, ...b]).toEqual(['001_init.sql']);
+    expect([...a, ...b]).toEqual(['001_init.sql', '002_market_miss_count.sql']);
     const m = await pool.query('select name from schema_migrations');
-    expect(m.rows.map((x) => x.name)).toEqual(['001_init.sql']);
+    expect(m.rows.map((x) => x.name)).toEqual(['001_init.sql', '002_market_miss_count.sql']);
   });
 });

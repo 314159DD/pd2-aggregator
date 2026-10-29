@@ -25,7 +25,7 @@ export async function upsertListings(pool: Pool, rows: MarketListingRow[], now: 
        is_ladder = excluded.is_ladder, is_hardcore = excluded.is_hardcore,
        price_text = excluded.price_text, price_hr = excluded.price_hr,
        created_at = excluded.created_at, bumped_at = excluded.bumped_at,
-       last_seen_at = excluded.last_seen_at, gone_at = null`,
+       last_seen_at = excluded.last_seen_at, gone_at = null, miss_count = 0`,
     [
       col('id'), col('item_name'), col('quality'), col('base_name'), col('runeword_key'),
       col('is_corrupted'), col('is_ladder'), col('is_hardcore'), col('price_text'), col('price_hr'),
@@ -34,11 +34,19 @@ export async function upsertListings(pool: Pool, rows: MarketListingRow[], now: 
   );
 }
 
-/** Marks live listings not seen since the sweep started as gone. Returns the number marked. */
+/**
+ * Call after a completed full sweep. Live listings not seen since the sweep started get
+ * miss_count + 1; only a second consecutive miss sets gone_at (guards against pagination drift).
+ * Returns the number marked gone.
+ */
 export async function markGone(pool: Pool, sweepStartedAt: Date): Promise<number> {
   const r = await pool.query(
-    'update market_listings set gone_at = now() where gone_at is null and last_seen_at < $1',
+    `update market_listings
+       set miss_count = miss_count + 1,
+           gone_at = case when miss_count + 1 >= 2 then now() else null end
+     where gone_at is null and last_seen_at < $1
+     returning gone_at`,
     [sweepStartedAt],
   );
-  return r.rowCount ?? 0;
+  return r.rows.filter((row) => row.gone_at !== null).length;
 }
