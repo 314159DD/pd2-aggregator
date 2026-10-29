@@ -73,6 +73,10 @@ docker compose -p pd2meta exec -T db psql -U pd2meta -d pd2meta -c "select c.rel
 
 All four must show `indisvalid = t`. A concurrent build that fails leaves an invalid index under the name, and the migration's `if not exists` would then skip it: `drop index concurrently <name>` and build it again. Then deploy; migration 008 finds the indexes and does nothing. Afterwards the old `character_items_owner_name_idx` and `character_skills_skill_hard_level_idx` are prefixes of the new ones and can go: `drop index concurrently character_items_owner_name_idx` and `drop index concurrently character_skills_skill_hard_level_idx`.
 
+### Archive import: slow page writes
+
+If the page write p95 of the archive importer goes above 5,000 ms, stop the importer container (`docker stop pd2meta-archive`) and resume later off-peak; it is resumable, rerun the same command. Do not use `--no-rollup` as a fallback for slow writes. It marks the global rollup not ready, which sends `/builds/usage`, `/characters/stats/*` and `/meta` back to the slow per-character queries for every season until `backfill-meta` has run.
+
 ## Check
 
 ```

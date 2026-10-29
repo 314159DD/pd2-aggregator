@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { act, cleanup, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, render, screen, waitFor } from "@testing-library/react";
 
 let search = "";
 vi.mock("next/navigation", () => ({
@@ -66,8 +66,6 @@ function mockApi() {
   );
 }
 
-const flush = () => act(async () => void (await new Promise((r) => setTimeout(r, 700))));
-
 beforeEach(mockApi);
 afterEach(() => {
   cleanup();
@@ -87,29 +85,77 @@ describe("builds view", () => {
   it("hides budget, gear column and sum for a shared archive link", async () => {
     search = "season=13&maxGearHr=5&sort=gear";
     const { container } = render(<BuildsView />);
-    await flush();
     expect(await screen.findByText("Shopping list")).toBeTruthy();
+    expect(screen.queryByLabelText("Add account")).toBeNull();
     expect(screen.queryByText("Gear budget")).toBeNull();
     expect(screen.queryByText(/^Budget/)).toBeNull();
     expect(screen.queryByText("Gear HR")).toBeNull();
     expect(container.textContent).not.toContain("Σ");
     expect(container.textContent).not.toContain("NaN");
-    // The first request may go out before the seasons arrive; the settled one must not carry the budget.
-    const last = (part: string) => urls.filter((u) => u.includes(part)).at(-1) ?? "";
-    await waitFor(() => {
-      expect(last("/builds/usage")).not.toContain("maxGearHr");
-      expect(last("/builds/characters")).not.toContain("maxGearHr");
-    });
+    expect(urls.filter((u) => u.includes("/builds/usage")).every((u) => !u.includes("maxGearHr"))).toBe(true);
+    expect(urls.filter((u) => u.includes("/builds/characters")).every((u) => !u.includes("maxGearHr"))).toBe(true);
     expect(urls.some((u) => u.includes("/prices"))).toBe(false);
   });
 
   it("keeps the slider and the gear column for the current season", async () => {
     search = "season=14&maxGearHr=5";
     render(<BuildsView />);
-    await flush();
     expect(await screen.findByText("Gear budget")).toBeTruthy();
     expect(screen.getByText("Gear HR")).toBeTruthy();
     expect(screen.getByText(/^Budget/)).toBeTruthy();
+    expect(screen.getByLabelText("Add account")).toBeTruthy();
+  });
+
+  it("waits for the seasons before fetching an archive link: one usage request, no budget, no slider", async () => {
+    search = "season=13&maxGearHr=5&sort=gear";
+    let release!: () => void;
+    const gate = new Promise<void>((r) => (release = r));
+    const base = globalThis.fetch as unknown as (u: string) => Promise<unknown>;
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (url: string) => {
+        if (String(url).includes("/builds/seasons")) {
+          urls.push(String(url));
+          await gate;
+          return { ok: true, status: 200, json: async () => seasons };
+        }
+        return base(url);
+      }),
+    );
+    const { container } = render(<BuildsView />);
+    await new Promise((r) => setTimeout(r, 400));
+    expect(urls.filter((u) => u.includes("/builds/usage")).length).toBe(0);
+    expect(container.querySelector('[aria-busy="true"]')).toBeTruthy();
+    expect(screen.queryByText("Gear budget")).toBeNull();
+    release();
+    expect(await screen.findByText("Shopping list")).toBeTruthy();
+    const usageUrls = urls.filter((u) => u.includes("/builds/usage"));
+    expect(usageUrls.length).toBe(1);
+    expect(usageUrls[0]).not.toContain("maxGearHr");
+    expect(screen.queryByText("Gear budget")).toBeNull();
+  });
+
+  it("falls back to the current-season view when the seasons request fails", async () => {
+    search = "season=13&maxGearHr=5";
+    const base = globalThis.fetch as unknown as (u: string) => Promise<unknown>;
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (url: string) => {
+        if (String(url).includes("/builds/seasons")) throw new Error("down");
+        return base(url);
+      }),
+    );
+    render(<BuildsView />);
+    expect(await screen.findByText("Gear budget")).toBeTruthy();
+    expect(screen.getByLabelText("Add account")).toBeTruthy();
+  });
+
+  it("shows Lvl as the active sort column when sort=gear is requested on an archive season", async () => {
+    search = "season=13&sort=gear";
+    render(<BuildsView />);
+    expect(await screen.findByText("Shopping list")).toBeTruthy();
+    const th = screen.getByRole("columnheader", { name: /Lvl/ });
+    expect(th.getAttribute("aria-sort")).toBe("descending");
   });
 });
 
@@ -176,8 +222,7 @@ describe("meta view", () => {
       }),
     );
     render(<MetaView />);
-    await flush();
     expect(await screen.findByText("Past season: item prices and rune costs are not available.")).toBeTruthy();
-    expect(screen.getAllByText("n/a").length).toBeGreaterThan(0);
+    await waitFor(() => expect(screen.getAllByText("n/a").length).toBeGreaterThan(0));
   });
 });
