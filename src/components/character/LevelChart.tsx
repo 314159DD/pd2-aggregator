@@ -12,7 +12,7 @@ const TICKS = [80, 85, 90, 95, 99];
 
 const day = (ts: string) => new Date(ts).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
 
-export function LevelChart({ history }: { history: Row[] }) {
+export function LevelChart({ history, archive = false }: { history: Row[]; archive?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const [w, setW] = useState(480);
 
@@ -27,7 +27,7 @@ export function LevelChart({ history }: { history: Row[] }) {
     return () => ro.disconnect();
   }, [history.length]);
 
-  if (history.length < 2) return <p className="text-sm text-ink-soft">Not enough history yet.</p>;
+  if (history.length < 2) return <p className="text-sm text-ink-soft">{archive ? "No level history for archived seasons." : "Not enough history yet."}</p>;
 
   const first = history[0];
   const last = history[history.length - 1];

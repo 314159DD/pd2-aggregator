@@ -6,7 +6,7 @@ import type { ItemUsageEntry } from "@/lib/builds/types";
 import { buildMarketUrl } from "@/lib/price/marketUrl";
 import { ItemIcon } from "./ItemIcon";
 
-export function ShoppingList({ items }: { items: ItemUsageEntry[] }) {
+export function ShoppingList({ items, archive = false }: { items: ItemUsageEntry[]; archive?: boolean }) {
   const top = items.slice(0, 10);
   const sum = top.reduce((s, i) => s + (i.medianHr ?? 0), 0);
   const partial = top.some((i) => i.medianHr === null);
@@ -15,15 +15,19 @@ export function ShoppingList({ items }: { items: ItemUsageEntry[] }) {
     <Card className="flex flex-col gap-3 p-5" aria-label="Shopping list">
       <div className="flex items-baseline justify-between gap-3">
         <h2 className="text-sm font-semibold text-ink">Shopping list</h2>
-        <span
-          className="font-mono text-sm text-ink tabular-nums"
-          title={partial ? "Some items have no price yet" : undefined}
-        >
-          {`Σ ${formatHr(sum)} HR${partial ? "+" : ""}`}
-        </span>
+        {!archive && (
+          <span
+            className="font-mono text-sm text-ink tabular-nums"
+            title={partial ? "Some items have no price yet" : undefined}
+          >
+            {`Σ ${formatHr(sum)} HR${partial ? "+" : ""}`}
+          </span>
+        )}
       </div>
       <p className="text-xs text-ink-soft">
-        The 10 items most worn by characters matching your filters, at current market prices.
+        {archive
+          ? "The 10 items most worn by characters matching your filters. Past seasons have no market prices."
+          : "The 10 items most worn by characters matching your filters, at current market prices."}
       </p>
       {top.length === 0 ? (
         <p className="py-3 text-center text-sm text-ink-soft">No items match these filters.</p>
@@ -35,10 +39,12 @@ export function ShoppingList({ items }: { items: ItemUsageEntry[] }) {
               <span title={i.name} className={`min-w-0 flex-1 truncate text-sm ${qualityClass(i.itemType)}`}>{i.name}</span>
               <Bar pct={i.pct} className="w-10 shrink-0" />
               <span className="w-9 shrink-0 text-right font-mono text-xs text-ink-soft tabular-nums">{formatPct(i.pct)}</span>
-              <span className="min-w-[4.5rem] shrink-0 rounded-full bg-well px-2 py-0.5 text-center font-mono text-xs text-ink tabular-nums">
-                {i.medianHr === null ? "n/a" : `${formatHr(i.medianHr)} HR`}
-              </span>
-              {i.medianHr !== null && (
+              {!archive && (
+                <span className="min-w-[4.5rem] shrink-0 rounded-full bg-well px-2 py-0.5 text-center font-mono text-xs text-ink tabular-nums">
+                  {i.medianHr === null ? "n/a" : `${formatHr(i.medianHr)} HR`}
+                </span>
+              )}
+              {!archive && i.medianHr !== null && (
                 <a
                   href={buildMarketUrl({ itemType: i.itemType, name: i.name })}
                   target="_blank"

@@ -15,6 +15,7 @@ import { CharmsCard } from "./CharmsCard";
 import { BuildSheetCard } from "./BuildSheetCard";
 import { CohortLine } from "./CohortLine";
 import { DiffCard } from "./DiffCard";
+import { isArchiveSeason } from "@/lib/builds/scope";
 import { MetaFilters } from "./MetaFilters";
 import { MetaHeader } from "./MetaHeader";
 import { TopItemsCard } from "./TopItemsCard";
@@ -126,7 +127,7 @@ export function MetaView() {
   return (
     <div className="mx-auto flex w-full max-w-7xl flex-col gap-5" aria-busy={loading}>
       <div className="kaskade-karten flex flex-col gap-5">
-        <MetaHeader seasonLabel={seasonLabel} className={state.className} minLevel={state.minLevel} gameMode={state.gameMode} />
+        <MetaHeader archive={isArchiveSeason(seasonNumber, seasons)} seasonLabel={seasonLabel} className={state.className} minLevel={state.minLevel} gameMode={state.gameMode} />
 
         <MetaFilters state={state} onChange={update} />
 

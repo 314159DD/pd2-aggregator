@@ -3,11 +3,13 @@ export function MetaHeader({
   className,
   minLevel,
   gameMode,
+  archive = false,
 }: {
   seasonLabel: string | null;
   className: string;
   minLevel: number;
   gameMode: "softcore" | "hardcore";
+  archive?: boolean;
 }) {
   return (
     <header className="px-1">
@@ -16,6 +18,7 @@ export function MetaHeader({
       <p className="mt-3 text-sm text-ink-soft">
         {seasonLabel ?? "-"} · {gameMode === "hardcore" ? "Hardcore" : "Softcore"} · {className} · level {minLevel}+
       </p>
+      {archive && <p className="mt-2 text-sm text-ink-soft">Past season: item prices and rune costs are not available.</p>}
       <p className="mt-2 max-w-2xl text-sm text-muted-ink">
         What the characters of one build actually wear: the uniques per slot, the affixes on their rares, their charms, skills and mercs,
         across every matching level {minLevel}+ ladder character.

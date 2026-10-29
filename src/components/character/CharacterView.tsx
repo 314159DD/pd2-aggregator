@@ -137,6 +137,7 @@ export function CharacterView() {
             gearValueHr: detail.gear.valueHr,
             gearPartial: detail.gear.partial,
             mercValueHr: detail.gear.mercValueHr,
+            archive: detail.archive === true,
           }}
         />
         <div className="grid gap-5 lg:grid-cols-12">
@@ -157,7 +158,7 @@ export function CharacterView() {
             </Card>
             <Card>
               <Title>Level history</Title>
-              <LevelChart history={history} />
+              <LevelChart history={history} archive={detail.archive === true} />
             </Card>
           </div>
         </div>
