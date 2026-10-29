@@ -84,7 +84,7 @@ export function RowPreview({ name, scope, cache }: { name: string; scope: Scope;
 
   if (!done) {
     return (
-      <div className="grid gap-5 p-5 md:grid-cols-3" aria-busy="true" aria-label="Loading character">
+      <div className="grid gap-5 p-5 md:grid-cols-[repeat(3,minmax(0,1fr))]" aria-busy="true" aria-label="Loading character">
         {[0, 1, 2].map((c) => (
           <div key={c} className="flex flex-col gap-2.5">
             {[0, 1, 2, 3, 4, 5].map((r) => (
@@ -113,7 +113,7 @@ export function RowPreview({ name, scope, cache }: { name: string; scope: Scope;
 
   return (
     <div className="flex flex-col gap-5 p-5">
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-[repeat(3,minmax(0,1fr))]">
         <Column title="Skills">
           <ul className="flex flex-col gap-2">
             {p.skills.slice(0, 10).map((s) => {
@@ -173,7 +173,7 @@ export function RowPreview({ name, scope, cache }: { name: string; scope: Scope;
           )}
         </div>
       </div>
-      <div className="flex justify-end">
+      <div className="flex shrink-0 justify-end">
         <a href={href} className={buttonClass("secondary", "sm")}>
           Full character ›
         </a>
