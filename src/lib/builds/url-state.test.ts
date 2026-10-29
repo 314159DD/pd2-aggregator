@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { DEFAULT_META_STATE } from "@/lib/meta/state";
 import {
   DEFAULT_BUILDS_STATE as D,
   buildsHrefFromMeta,
@@ -106,17 +107,18 @@ describe("metaHref", () => {
     const h = metaHref({ ...D, classes: ["Paladin"], skills });
     expect(h).toContain("className=Paladin");
     expect(new URLSearchParams(h.slice(2)).get("skills")).toBe(JSON.stringify(skills));
-    expect(h.startsWith("/?mode=guide&gameMode=softcore")).toBe(true);
+    expect(h.startsWith("/?gameMode=softcore&className=Paladin")).toBe(true);
   });
 });
 
 describe("buildsHrefFromMeta", () => {
   it("carries mode, class, skills and snaps minLevel down to a preset", () => {
     const h = buildsHrefFromMeta({
-      filter: { gameMode: "hardcore", className: "Paladin", minLevel: 87 },
+      ...DEFAULT_META_STATE,
+      gameMode: "hardcore",
+      className: "Paladin",
+      minLevel: 87,
       skills: [{ name: "Fist of the Heavens", minLevel: 20 }],
-      mode: "guide",
-      diffName: "",
     });
     expect(h.startsWith("/builds?")).toBe(true);
     expect(h).toContain("gameMode=hardcore");

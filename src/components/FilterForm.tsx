@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { getSkillUsage, type SkillUsageRow } from "@/lib/api";
 import type { UiState } from "@/lib/url-state";
+import { DEFAULT_META_STATE } from "@/lib/meta/state";
 import { buildsHrefFromMeta } from "@/lib/builds/url-state";
 import {
   BUILD_PRESETS,
@@ -448,7 +449,7 @@ export function FilterForm({ initial, onSubmit, onReset }: Props) {
           Reset
         </button>
         <a
-          href={buildsHrefFromMeta(s)}
+          href={buildsHrefFromMeta({ ...DEFAULT_META_STATE, gameMode: s.filter.gameMode, className: s.filter.className ?? "Paladin", minLevel: s.filter.minLevel ?? 80, skills: s.skills })}
           className="text-xs uppercase tracking-wider text-muted-foreground hover:text-[#ffd47a] underline underline-offset-2 transition"
         >
           See characters
