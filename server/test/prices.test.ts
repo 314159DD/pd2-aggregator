@@ -148,10 +148,46 @@ describe('gear value', () => {
   });
 
   it('sets gear value on the ingest path without the job', async () => {
+    for (const i of distinct) await setPrice(i, 1);
     await ingest();
     const g = await gear();
+    expect(Number(g.gear_value_hr)).toBe(priceable.length);
+    expect(Number(g.gear_value_hr)).toBeGreaterThan(0);
+    expect(g.gear_value_partial).toBe(false);
+  });
+
+  const item = (o: Partial<(typeof c.items)[number]>): (typeof c.items)[number] => ({
+    owner: 'player', slot: 'Head', isSwitch: false, isCharm: false, name: 'X', quality: 'Unique',
+    baseName: null, baseType: null, isRuneword: false, invCode: null, mods: [], ...o,
+  } as any);
+  const synth = async (name: string, items: (typeof c.items)) => {
+    await upsertCharacter(pool, 14, { ...c, name, items }, enrichRaw(ladder as any, 'MC-MEEKS'));
+    return (await pool.query(
+      'select gear_value_hr, gear_value_partial, merc_gear_value_hr from characters where name = $1', [name])).rows[0];
+  };
+  const price = (n: string, hr: number) => setPrice({ isRuneword: false, quality: 'Unique', name: n } as any, hr);
+
+  it('counts worn switch items and charms; merc sum only when merc items exist', async () => {
+    await price('Worn', 1); await price('Swap', 2); await price('Charm', 4); await price('Hired', 8);
+    const base = [
+      item({ name: 'Worn' }),
+      item({ name: 'Swap', slot: 'Switch Weapon', isSwitch: true }),
+      item({ name: 'Charm', slot: null, isCharm: true }),
+      item({ name: 'Worn', slot: null }), // unworn, not counted
+    ];
+    const noMerc = await synth('NoMerc', base);
+    expect(Number(noMerc.gear_value_hr)).toBe(7);
+    expect(noMerc.merc_gear_value_hr).toBeNull();
+    const withMerc = await synth('WithMerc', [...base, item({ name: 'Hired', owner: 'merc' })]);
+    expect(Number(withMerc.gear_value_hr)).toBe(7);
+    expect(Number(withMerc.merc_gear_value_hr)).toBe(8);
+  });
+
+  it('gives a character without priceable items 0 and false', async () => {
+    const g = await synth('Plain', [item({ name: 'Cap', quality: 'Normal' })]);
     expect(Number(g.gear_value_hr)).toBe(0);
-    expect(g.gear_value_partial).toBe(true);
+    expect(g.gear_value_partial).toBe(false);
+    expect(g.merc_gear_value_hr).toBeNull();
   });
 
   it('runPriceJob prices from listings and updates the season', async () => {
@@ -162,8 +198,9 @@ describe('gear value', () => {
       runeword: target.isRuneword ? 'x' : null,
     });
     const r = await runPriceJob({ pool, cfg: { currentSeason: 14 } }, NOW);
-    expect(r).toEqual({ priced: 1, characters: 1 });
+    expect(r).toEqual({ priced: 1, charactersChanged: 1 });
     const mine = priceable.filter((i) => i.name === target.name).length;
     expect(Number((await gear()).gear_value_hr)).toBe(mine);
+    expect(await runPriceJob({ pool, cfg: { currentSeason: 14 } }, NOW)).toEqual({ priced: 1, charactersChanged: 0 });
   });
 });
