@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import type { Pool } from 'pg';
 import { freshDb } from './helpers/db';
 import { upsertListings } from '../src/db/market-repo';
@@ -59,7 +59,19 @@ describe('computeItemPrices', () => {
     await sold([1, 2, 3, 4]);
     await open([9, 9]);
     expect(await computeItemPrices(pool, NOW)).toEqual({ priced: 0 });
-    expect(await prices()).toEqual([]);
+    // empty new set: the previous price set is kept (see the dedicated test below)
+    expect((await prices())[0]).toMatchObject({ medianHr: 3, source: 'sold', samples: 5 });
+  });
+
+  it('keeps the existing prices and warns when the new set is empty', async () => {
+    await open([0.2, 0.3, 0.4]);
+    await computeItemPrices(pool, NOW);
+    await pool.query('delete from market_listings');
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    expect(await computeItemPrices(pool, NOW)).toEqual({ priced: 0 });
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('keeping existing'));
+    warn.mockRestore();
+    expect(await prices()).toEqual([{ itemType: 'Unique', name: 'Harlequin Crest', medianHr: 0.3, samples: 3, source: 'ask' }]);
   });
 
   it('2 open listings give no price', async () => {
@@ -96,11 +108,12 @@ describe('computeItemPrices', () => {
 
   it('removes stale rows on a second run', async () => {
     await open([1, 1, 1]);
+    await open([2, 2, 2], { name: 'Stone of Jordan', quality: 'Unique' });
     await computeItemPrices(pool, NOW);
+    expect(await prices()).toHaveLength(2);
     await pool.query('delete from market_listings where id = $1', ['l1']);
     await computeItemPrices(pool, NOW);
-    expect(await prices()).toEqual([]);
-    expect((await getPrices(pool, 'softcore')).computedAt).toBeNull();
+    expect((await prices()).map((p) => p.name)).toEqual(['Stone of Jordan']);
   });
 });
 
