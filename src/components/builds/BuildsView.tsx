@@ -64,13 +64,17 @@ export function BuildsView() {
   );
 
   const [seasons, setSeasons] = useState<SeasonsResponse | null>(null);
+  const [seasonsFailed, setSeasonsFailed] = useState(false);
   const archive = isArchiveSeason(state.season, seasons);
+  // A season link cannot be classified (current or archive) until the seasons are known; do not fetch before.
+  const waitingForSeasons = state.season !== null && seasons === null && !seasonsFailed;
 
   // Usage and character page for the current filters; the last result stays on screen meanwhile.
   // Archive seasons have no prices, so the budget is not sent.
   const apiState = useMemo(() => (archive ? { ...state, maxGearHr: null } : state), [archive, state]);
   const apiKey = toApiParams(apiState).toString();
   useEffect(() => {
+    if (waitingForSeasons) return;
     const ac = new AbortController();
     const t = setTimeout(() => {
       Promise.all([getUsage(apiState, ac.signal), getBuildCharacters(apiState, ac.signal)])
@@ -89,11 +93,11 @@ export function BuildsView() {
     };
     // `state` is derived from apiKey's inputs; apiKey is the stable identity.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apiKey, retry]);
+  }, [apiKey, retry, waitingForSeasons]);
 
-  const loading = result?.key !== apiKey;
+  const loading = waitingForSeasons || result?.key !== apiKey;
   const failed = !loading && result?.failed === true;
-  const data = lastData;
+  const data = waitingForSeasons ? null : lastData;
 
   const { season, gameMode } = state;
   useEffect(() => {
@@ -108,7 +112,10 @@ export function BuildsView() {
     const ac = new AbortController();
     getSeasons(ac.signal)
       .then(setSeasons)
-      .catch(() => {});
+      .catch((e: unknown) => {
+        if (ac.signal.aborted || (e instanceof Error && e.name === "AbortError")) return;
+        setSeasonsFailed(true);
+      });
     return () => ac.abort();
   }, []);
 
@@ -189,13 +196,15 @@ export function BuildsView() {
                 <div className="flex min-w-0 flex-col gap-5 lg:col-span-8">
                   <ShoppingList items={data.usage.items} archive={archive} />
                   <CharacterTable page={data.characters} state={state} onChange={update} archive={archive} />
-                  <section className="mat-thick flex flex-col gap-3 rounded-[var(--radius-panel)] p-5" aria-label="Add account">
-                    <div>
-                      <h2 className="text-sm font-semibold text-ink">Add account</h2>
-                      <p className="mt-1 text-xs text-ink-soft">Not listed? Track an account and its characters show up here.</p>
-                    </div>
-                    <AddAccount />
-                  </section>
+                  {!archive && (
+                    <section className="mat-thick flex flex-col gap-3 rounded-[var(--radius-panel)] p-5" aria-label="Add account">
+                      <div>
+                        <h2 className="text-sm font-semibold text-ink">Add account</h2>
+                        <p className="mt-1 text-xs text-ink-soft">Not listed? Track an account and its characters show up here.</p>
+                      </div>
+                      <AddAccount />
+                    </section>
+                  )}
                 </div>
               </div>
             </>
