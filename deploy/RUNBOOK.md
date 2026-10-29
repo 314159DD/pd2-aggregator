@@ -44,6 +44,17 @@ docker compose -p pd2meta exec -T api node dist/scripts/backfill-items.js
 4. If it reports skipped characters, run it again until none are skipped.
 5. Watch `docker stats` in a second shell while it runs (memory and CPU of `api` and `db`).
 
+### Meta rollup (migration 005) deploy
+
+Migration 005 creates `meta_rollup` empty and marks it not ready, so `/meta` keeps the old per-character queries until the rollup is built. Right after the server deploy:
+
+```
+docker compose -p pd2meta exec -T api node dist/scripts/backfill-meta.js
+docker compose -p pd2meta restart api   # drops meta results cached while the rollup was not ready
+```
+
+The rebuild runs in one transaction and holds the rollup lock, so the collector's writes wait until it commits (about 30 to 60 s at 6k characters). It is idempotent; run it again whenever the rollup is in doubt.
+
 ## Check
 
 ```
