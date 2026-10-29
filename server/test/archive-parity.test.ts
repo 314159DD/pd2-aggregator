@@ -9,7 +9,7 @@ import {
   applyExplained,
   compareBreakdown,
   compareUsage,
-  explainItems,
+  recountItems,
   formatTable,
   type Check,
 } from '../src/archive/parity';
@@ -23,6 +23,10 @@ describe('compareBreakdown', () => {
     const r = compareBreakdown({ Paladin: 4, total: 5 }, { Paladin: 5, total: 5 });
     expect(r.pass).toBe(false);
     expect(r.failures).toEqual(['Paladin 4 vs 5']);
+  });
+  it('fails an empty pd2.tools cohort', () => {
+    const r = compareBreakdown({ Paladin: 0, total: 0 }, { Paladin: 0, total: 0 });
+    expect(r.pass).toBe(false);
   });
 });
 
@@ -46,7 +50,19 @@ describe('compareUsage', () => {
   });
 });
 
-describe('explainItems', () => {
+describe('compareUsage guards', () => {
+  it('fails or throws on NaN pct on either side', () => {
+    expect(() => compareUsage([{ name: 'A', pct: NaN }], [{ name: 'A', pct: 5 }], opts)).toThrow();
+    expect(() => compareUsage([{ name: 'A', pct: 5 }], [{ name: 'A', pct: NaN }], opts)).toThrow();
+    expect(() => compareUsage([{ name: '', pct: 5 }], [], opts)).toThrow();
+  });
+  it('fails an empty comparison when rows are required', () => {
+    expect(compareUsage([], [], { ...opts, requireRows: true }).pass).toBe(false);
+    expect(compareUsage([], [], opts).pass).toBe(true);
+  });
+});
+
+describe('recountItems', () => {
   let pool: Pool;
   beforeAll(async () => {
     pool = await freshDb();
@@ -69,19 +85,34 @@ describe('explainItems', () => {
   });
   afterAll(() => pool.end());
 
-  it('counts a name found only in raw.items', async () => {
-    const m = await explainItems(pool, cfg, { season: '13', gameMode: 'softcore', minLevel: '80' }, ['Raven Frost']);
-    expect(m.get('Raven Frost')).toBe(50);
+  it('counts a name found only in raw.items the pd2.tools way and not our way', async () => {
+    const m = await recountItems(pool, cfg, { season: '13', gameMode: 'softcore', minLevel: '80' }, ['Raven Frost']);
+    expect(m.theirs.get('Raven Frost')).toBe(50);
+    expect(m.ours.get('Raven Frost')).toBe(0);
   });
 
-  it('turns a matching recount into an explained row', () => {
-    const base = compareUsage([], [{ name: 'Raven Frost', pct: 50 }], opts);
+  const theirs = [{ name: 'Raven Frost', pct: 50 }];
+  it('explains a row when both recounts agree with the two sides', () => {
+    const base = compareUsage([], theirs, opts);
     expect(base.pass).toBe(false);
-    const r = applyExplained(base, [{ name: 'Raven Frost', pct: 50 }], new Map([['Raven Frost', 50]]));
+    const r = applyExplained(base, [], theirs, { theirs: new Map([['Raven Frost', 50]]), ours: new Map([['Raven Frost', 0]]) });
     expect(r.pass).toBe(true);
     expect(r.explained).toEqual(['Raven Frost']);
-    const kept = applyExplained(base, [{ name: 'Raven Frost', pct: 50 }], new Map([['Raven Frost', 10]]));
-    expect(kept.pass).toBe(false);
+  });
+  it('fails when our own recount says we are missing the item', () => {
+    const base = compareUsage([], theirs, opts);
+    const r = applyExplained(base, [], theirs, { theirs: new Map([['Raven Frost', 50]]), ours: new Map([['Raven Frost', 50]]) });
+    expect(r.pass).toBe(false);
+    expect(r.explained).toEqual([]);
+  });
+  it('fails when the pd2.tools-style recount does not match theirs', () => {
+    const base = compareUsage([], theirs, opts);
+    const r = applyExplained(base, [], theirs, { theirs: new Map([['Raven Frost', 10]]), ours: new Map([['Raven Frost', 0]]) });
+    expect(r.pass).toBe(false);
+  });
+  it('keeps an empty-comparison failure', () => {
+    const base = compareUsage([], [], { ...opts, requireRows: true });
+    expect(applyExplained(base, [], [], { theirs: new Map(), ours: new Map() }).pass).toBe(false);
   });
 });
 
