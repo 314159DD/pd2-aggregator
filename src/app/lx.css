@@ -1,0 +1,415 @@
+/* ==================================================================
+   LEXADIS look and feel layer for the new PD2 Meta shell and Builds pages.
+   Tokens and utilities copied from the package (5-produkt-v2/src/app/globals.css);
+   the look only, no brand. Everything is scoped to .lx so the Meta tool keeps its D2 look.
+   Dark is the default, light via :root[data-mode="light"] (set before paint in layout.tsx).
+   ================================================================== */
+
+@theme static {
+  --ease-arrive: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.3, 1.42, 0.36, 1);
+  --ease-close: cubic-bezier(0.55, 0, 0.68, 0.4);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lx {
+  color-scheme: dark;
+  color: var(--ink);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+
+  /* Base tones (dark) */
+  --paper: #0b0d12;
+  --surface: #1a1e27;
+  --ink: #eef0f4;
+  --ink-soft: #b4bac6;
+  --muted-ink: #8e95a3;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.14);
+  --well: rgba(255, 255, 255, 0.06);
+  --edge: rgba(255, 255, 255, 0.16);
+  --edge-soft: rgba(255, 255, 255, 0.06);
+  --shadow-c: #000000;
+  --silver: #3a4150;
+
+  /* One accent */
+  --brand: #2b3a8c;
+  --glow: #8fa2ff;
+  --accent-text: var(--glow);
+
+  /* State colours */
+  --ok: #6fcf9e;
+  --warn: #f0b26b;
+  --danger: #ff8f78;
+  --ok-bg: rgba(111, 207, 158, 0.12);
+  --warn-bg: rgba(240, 178, 107, 0.12);
+  --danger-bg: rgba(255, 143, 120, 0.12);
+
+  --ambient-glow: 23%;
+  --ambient-mitte: 9%;
+  --ambient-brand: 13%;
+  --ambient-silver: 41%;
+
+  /* Form */
+  --radius: 0.75rem;
+  --radius-chip: 0.5rem;
+  --radius-box: 1rem;
+  --radius-panel: 1.375rem;
+  --radius-sheet: 1.75rem;
+
+  /* Shadows */
+  --shadow-lift:
+    inset 0 1px 0 var(--edge), inset 0 0 0 1px var(--edge-soft),
+    0 1px 1px color-mix(in oklab, var(--shadow-c) 4%, transparent),
+    0 10px 30px -12px color-mix(in oklab, var(--shadow-c) 16%, transparent),
+    0 30px 70px -30px color-mix(in oklab, var(--brand) 22%, transparent);
+  --shadow-float:
+    inset 0 1px 0 var(--edge), inset 0 0 0 1px var(--edge-soft),
+    0 2px 4px color-mix(in oklab, var(--shadow-c) 5%, transparent),
+    0 24px 60px -16px color-mix(in oklab, var(--shadow-c) 24%, transparent),
+    0 40px 90px -40px color-mix(in oklab, var(--brand) 36%, transparent);
+  --shadow-well:
+    inset 0 1px 2px color-mix(in oklab, var(--shadow-c) 9%, transparent),
+    inset 0 0 0 1px color-mix(in oklab, var(--ink) 5%, transparent);
+  --shadow-press:
+    0 1px 2px color-mix(in oklab, var(--shadow-c) 20%, transparent),
+    0 8px 20px -8px color-mix(in oklab, var(--shadow-c) 40%, transparent);
+
+  /* Motion: springs, durations, distances */
+  --feder-glatt: linear(0, 0.093, 0.269, 0.447, 0.599, 0.717, 0.804, 0.866, 0.91, 0.94, 0.96, 0.974, 0.983, 0.989, 0.993, 0.995, 0.997, 0.998, 0.999, 1);
+  --feder-zackig: linear(0, 0.097, 0.289, 0.489, 0.659, 0.788, 0.878, 0.936, 0.972, 0.991, 1.001, 1.005, 1.006, 1.005, 1.004, 1.003, 1.002, 1.001, 1);
+  --feder-federnd: linear(0, 0.099, 0.303, 0.52, 0.705, 0.844, 0.936, 0.99, 1.017, 1.027, 1.027, 1.022, 1.016, 1.01, 1.006, 1.003, 1.001, 1);
+  --dauer-feder: 560ms;
+  --dauer-feder-federnd: 720ms;
+  --dauer-druck: 90ms;
+  --dauer-kurz: 150ms;
+  --dauer-mittel: 240ms;
+  --dauer-lang: 360ms;
+  --dauer-auftritt: 520ms;
+  --weg-auftritt: 12px;
+  --weg-overlay: 8px;
+  --skala-overlay: 0.96;
+  --skala-druck: 0.97;
+  --hub-hover: -2px;
+  --versatz-karte: 60ms;
+  --versatz-zeile: 30ms;
+}
+
+:root[data-mode="light"] .lx {
+  color-scheme: light;
+  --paper: #f5f6f8;
+  --surface: #fcfcfd;
+  --ink: #0e1116;
+  --ink-soft: #4a5160;
+  --muted-ink: #5e6573;
+  --line: rgba(14, 17, 22, 0.08);
+  --line-strong: rgba(14, 17, 22, 0.14);
+  --well: rgba(14, 17, 22, 0.055);
+  --edge: rgba(255, 255, 255, 0.9);
+  --edge-soft: rgba(255, 255, 255, 0.4);
+  --shadow-c: #0e1116;
+  --silver: #c9ced8;
+  --accent-text: var(--brand);
+  --ok: #2f7a55;
+  --warn: #8f5512;
+  --danger: #a8452f;
+  --ok-bg: rgba(47, 122, 85, 0.1);
+  --warn-bg: rgba(143, 85, 18, 0.1);
+  --danger-bg: rgba(168, 69, 47, 0.1);
+  --ambient-glow: 42%;
+  --ambient-mitte: 16%;
+  --ambient-brand: 24%;
+  --ambient-silver: 75%;
+}
+
+/* Reduce motion: distances and springs drop out, fades stay */
+@media (prefers-reduced-motion: reduce) {
+  .lx {
+    --weg-auftritt: 0px; --weg-overlay: 0px; --skala-overlay: 1; --skala-druck: 1; --hub-hover: 0px;
+    --versatz-karte: 0ms; --versatz-zeile: 0ms;
+    --feder-glatt: var(--ease-arrive); --feder-zackig: var(--ease-arrive); --feder-federnd: var(--ease-arrive);
+  }
+}
+
+/* The product's body background: paper with four radial lights, fixed */
+.lx-stage {
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(55% 60% at 4% 0%, color-mix(in oklab, var(--glow) var(--ambient-glow), transparent), transparent 70%),
+    radial-gradient(45% 50% at 100% 8%, color-mix(in oklab, var(--silver) var(--ambient-silver), transparent), transparent 70%),
+    radial-gradient(40% 45% at 55% 60%, color-mix(in oklab, var(--glow) var(--ambient-mitte), transparent), transparent 72%),
+    radial-gradient(60% 55% at 85% 105%, color-mix(in oklab, var(--brand) var(--ambient-brand), transparent), transparent 72%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+/* Tailwind colour utilities: bg-paper, text-ink-soft, text-accent-text ... */
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-muted-ink: var(--muted-ink);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-well: var(--well);
+  --color-brand: var(--brand);
+  --color-glow: var(--glow);
+  --color-accent-text: var(--accent-text);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+  --color-danger: var(--danger);
+
+  /* D2 quality colours: data colours only (names, icon rims, tooltips) */
+  --color-q-unique: color-mix(in oklab, #a08f5d var(--q-mix, 100%), var(--ink));
+  --color-q-set: color-mix(in oklab, #00b800 var(--q-mix, 100%), var(--ink));
+  --color-q-runeword: color-mix(in oklab, #ffff64 var(--q-mix, 100%), var(--ink));
+  --color-q-rare: color-mix(in oklab, #ffff64 var(--q-mix, 100%), var(--ink));
+  --color-q-magic: color-mix(in oklab, #6b6bff var(--q-mix, 100%), var(--ink));
+  --color-q-crafted: color-mix(in oklab, #ff8000 var(--q-mix, 100%), var(--ink));
+}
+:root[data-mode="light"] .lx { --q-mix: 62%; }
+
+@property --rand-l {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+@property --rand-r {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+@keyframes erscheinen {
+  from { opacity: 0; transform: translateY(var(--weg-auftritt)); }
+}
+@keyframes blende {
+  from { opacity: 0; }
+}
+@keyframes skelett-streif {
+  to { background-position: -200% 0; }
+}
+@keyframes scroll-rand {
+  0% { --rand-l: 0px; --rand-r: 28px; }
+  8%, 92% { --rand-l: 28px; --rand-r: 28px; }
+  100% { --rand-l: 28px; --rand-r: 0px; }
+}
+@utility mat-thin {
+  background: color-mix(in oklab, var(--surface) 50%, transparent);
+  backdrop-filter: blur(28px) saturate(170%);
+  box-shadow: var(--shadow-lift);
+}
+@utility mat-regular {
+  background: color-mix(in oklab, var(--surface) 64%, transparent);
+  backdrop-filter: blur(28px) saturate(170%);
+  box-shadow: var(--shadow-lift);
+}
+@utility mat-thick {
+  background: color-mix(in oklab, var(--surface) 86%, transparent);
+  backdrop-filter: blur(28px) saturate(170%);
+  box-shadow: var(--shadow-lift);
+}
+@utility mat-float {
+  background: color-mix(in oklab, var(--surface) 86%, transparent);
+  backdrop-filter: blur(28px) saturate(170%);
+  box-shadow: var(--shadow-float);
+}
+@utility mat-chrome {
+  color: #eef0f4;
+  background: color-mix(in oklab, #0e1116 78%, transparent);
+  backdrop-filter: blur(28px) saturate(170%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), inset 0 0 0 1px rgba(255, 255, 255, 0.06), 0 24px 60px -16px rgba(0, 0, 0, 0.45);
+}
+@utility well {
+  background: var(--well);
+  box-shadow: var(--shadow-well);
+}
+@utility scroll-rand {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  @supports (animation-timeline: scroll()) {
+    mask-image: linear-gradient(to right, transparent, #000 var(--rand-l), #000 calc(100% - var(--rand-r)), transparent);
+    animation: scroll-rand linear both;
+    animation-timeline: scroll(self inline);
+  }
+}
+@utility sheen {
+  position: relative;
+  overflow: hidden;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 55%);
+    pointer-events: none;
+  }
+}
+@utility karte {
+  border-radius: var(--radius-panel);
+  background: color-mix(in oklab, var(--surface) 64%, transparent);
+  backdrop-filter: blur(28px) saturate(170%);
+  box-shadow: var(--shadow-lift);
+}
+@utility zeile {
+  border-radius: 14px;
+  padding: 0.75rem;
+  transition: background-color var(--dauer-kurz) var(--ease-arrive);
+  &:hover { background: var(--well); }
+}
+@utility feld {
+  min-height: 2.5rem;
+  border-radius: var(--radius);
+  border: 0;
+  padding: 0.5rem 0.875rem;
+  font-size: 0.9375rem;
+  color: var(--ink);
+  background: var(--well);
+  box-shadow: var(--shadow-well);
+  outline: none;
+  transition: box-shadow var(--dauer-kurz) var(--ease-arrive);
+  &::placeholder { color: var(--muted-ink); }
+  &:focus-visible { box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--accent-text); }
+  &[aria-invalid="true"] { box-shadow: inset 0 0 0 1.5px var(--danger); }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+@utility tabelle {
+  width: 100%;
+  font-size: 0.875rem;
+  border-collapse: collapse;
+  & th { height: 2.5rem; padding: 0 0.75rem; text-align: left; font-size: 0.75rem; font-weight: 500; color: var(--muted-ink); white-space: nowrap; }
+  & td { padding: 0.75rem; border-top: 1px solid var(--line); }
+  & tbody tr { transition: background-color var(--dauer-kurz) var(--ease-arrive); }
+  & tbody tr:hover { background: color-mix(in oklab, var(--brand) 5%, transparent); }
+}
+@utility drueckbar {
+  transition-property: scale, background-color, box-shadow, color;
+  transition-duration: var(--dauer-feder), var(--dauer-kurz), var(--dauer-kurz), var(--dauer-kurz);
+  transition-timing-function: var(--feder-zackig), var(--ease-arrive), var(--ease-arrive), var(--ease-arrive);
+  &:active:not([aria-haspopup]):not(:disabled) {
+    scale: var(--skala-druck);
+    transition-duration: var(--dauer-druck), var(--dauer-kurz), var(--dauer-kurz), var(--dauer-kurz);
+    transition-timing-function: cubic-bezier(0.2, 0, 0, 1), var(--ease-arrive), var(--ease-arrive), var(--ease-arrive);
+  }
+}
+@utility hebbar {
+  transition-property: translate, scale, box-shadow;
+  transition-duration: var(--dauer-kurz), var(--dauer-feder), var(--dauer-kurz);
+  transition-timing-function: var(--ease-arrive), var(--feder-zackig), var(--ease-arrive);
+  @media (hover: hover) {
+    &:hover { translate: 0 var(--hub-hover); box-shadow: var(--shadow-lift), 0 14px 28px -16px color-mix(in oklab, var(--shadow-c) 38%, transparent); }
+  }
+  &:active { scale: max(0.985, var(--skala-druck)); transition-duration: var(--dauer-kurz), var(--dauer-druck), var(--dauer-kurz); }
+}
+@utility erscheinen {
+  animation: erscheinen var(--dauer-auftritt) var(--ease-expo) both;
+  animation-delay: calc(min(var(--i, 0), 8) * var(--versatz-karte));
+}
+@utility kaskade-karten {
+  & > * { animation: erscheinen var(--dauer-auftritt) var(--ease-expo) both; animation-delay: calc(var(--i, 0) * var(--versatz-karte)); }
+  & > :nth-child(2) { --i: 1; }
+  & > :nth-child(3) { --i: 2; }
+  & > :nth-child(4) { --i: 3; }
+  & > :nth-child(5) { --i: 4; }
+  & > :nth-child(6) { --i: 5; }
+  & > :nth-child(7) { --i: 6; }
+  & > :nth-child(8) { --i: 7; }
+  & > :nth-child(n + 9) { --i: 8; }
+}
+@utility kaskade-zeilen {
+  & > * { animation: erscheinen var(--dauer-auftritt) var(--ease-expo) both; animation-delay: calc(var(--i, 0) * var(--versatz-zeile)); }
+  & > :nth-child(2) { --i: 1; }
+  & > :nth-child(3) { --i: 2; }
+  & > :nth-child(4) { --i: 3; }
+  & > :nth-child(5) { --i: 4; }
+  & > :nth-child(6) { --i: 5; }
+  & > :nth-child(7) { --i: 6; }
+  & > :nth-child(8) { --i: 7; }
+  & > :nth-child(9) { --i: 8; }
+  & > :nth-child(10) { --i: 9; }
+  & > :nth-child(11) { --i: 10; }
+  & > :nth-child(12) { --i: 11; }
+  & > :nth-child(n + 13) { --i: 12; }
+}
+@utility gleit-marker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: var(--gm-b, 0);
+  height: var(--gm-h, 0);
+  translate: var(--gm-x, 0) var(--gm-y, 0);
+  pointer-events: none;
+  transition: opacity var(--dauer-kurz) var(--ease-arrive);
+  &[data-bereit] {
+    transition-property: translate, width, height, opacity;
+    transition-duration: var(--dauer-feder), var(--dauer-feder), var(--dauer-feder), var(--dauer-kurz);
+    transition-timing-function: var(--feder-zackig), var(--feder-zackig), var(--feder-zackig), var(--ease-arrive);
+  }
+  &[data-leer] { opacity: 0; }
+  /* Reduce Motion: kein Weg, der Marker steht sofort am Ziel */
+  @media (prefers-reduced-motion: reduce) { &[data-bereit] { transition-property: opacity; } }
+  :root[data-bewegung="reduziert"] &[data-bereit] { transition-property: opacity; }
+}
+@utility aufklapp-inhalt {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition: grid-template-rows var(--dauer-kurz) var(--ease-close), visibility var(--dauer-kurz) step-end;
+  & > * {
+    min-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    translate: 0 calc(var(--weg-overlay) * -0.5);
+    transition: opacity var(--dauer-kurz) var(--ease-close), translate var(--dauer-kurz) var(--ease-close);
+  }
+  &[data-offen] {
+    grid-template-rows: 1fr;
+    visibility: visible;
+    transition: grid-template-rows var(--dauer-feder) var(--feder-glatt), visibility var(--dauer-feder) step-start;
+  }
+  &[data-offen] > * {
+    opacity: 1;
+    translate: none;
+    transition: opacity var(--dauer-mittel) var(--ease-arrive) calc(var(--dauer-druck) * 0.66), translate var(--dauer-mittel) var(--ease-arrive) calc(var(--dauer-druck) * 0.66);
+  }
+}
+@utility aufklapp-pfeil {
+  transition: rotate var(--dauer-lang) var(--feder-glatt);
+  [aria-expanded="true"] &,
+  details[open] > summary & { rotate: var(--pfeil-dreh, 90deg); }
+}
+@utility skelett {
+  background: linear-gradient(90deg, var(--well) 0%, color-mix(in oklab, var(--surface) 70%, var(--well)) 45%, var(--well) 90%) 0 0 / 200% 100%;
+  animation: skelett-streif 1.6s linear infinite;
+  @media (prefers-reduced-motion: reduce) { animation: none; }
+}
+@utility skelett-verzoegert {
+  animation: blende var(--dauer-kurz) var(--ease-arrive) 250ms both !important;
+}
+@utility blende-wechsel {
+  & > * { animation: blende var(--dauer-mittel) var(--ease-arrive) both; }
+}
+/* Gleitmarker: sits under the active entry and glides with a spring */
+*:has(> [data-slot="gleit-marker"]) { position: relative; isolation: isolate; }
+/* Once the marker stands, the active entry drops its own surface */
+[data-gleit] > [data-slot="segment-eintrag"] {
+  background: transparent;
+  box-shadow: none;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .mat-thin,
+  .mat-regular,
+  .mat-thick,
+  .mat-float,
+  .karte {
+    background: var(--surface) !important;
+    backdrop-filter: none !important;
+  }
+  .mat-chrome {
+    background: #0e1116 !important;
+    backdrop-filter: none !important;
+  }
+}

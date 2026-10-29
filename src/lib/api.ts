@@ -1,6 +1,8 @@
 const BASE =
   process.env.NEXT_PUBLIC_API_BASE ?? "https://api.pd2meta.info/api/v1";
 
+export const API_BASE = BASE;
+
 export type GameMode = "hardcore" | "softcore";
 
 export type CommonFilter = {
