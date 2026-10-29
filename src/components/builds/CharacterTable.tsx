@@ -14,6 +14,7 @@ import { RowPreview, type PreviewCache } from "./RowPreview";
 type Props = { page: BuildsCharactersPage; state: BuildsState; onChange: (next: BuildsState) => void };
 
 const COLS = 7;
+const MAX_GEAR_ICONS = 6;
 
 function SortHeader({ label, col, page, onSort }: { label: string; col: BuildsSort; page: BuildsCharactersPage; onSort: (c: BuildsSort) => void }) {
   const active = page.sort === col;
@@ -82,24 +83,33 @@ function Row({ c, open, onToggle, previewId, scope, cache }: {
           </div>
         </td>
         <td>
-          <div className="flex items-center gap-1.5">
-            {c.keyGear.map((g, i) => (
-              <span key={`${g.name}-${i}`} title={g.name}>
+          <div className="flex items-center gap-1">
+            {c.keyGear.slice(0, MAX_GEAR_ICONS).map((g, i) => (
+              <span key={`${g.name}-${i}`} title={g.name} className="shrink-0">
                 <ItemIcon item={g} />
               </span>
             ))}
+            {c.keyGear.length > MAX_GEAR_ICONS && (
+              <span
+                data-testid="gear-more"
+                title={c.keyGear.slice(MAX_GEAR_ICONS).map((g) => g.name).join(", ")}
+                className="shrink-0 font-mono text-xs text-ink-soft tabular-nums"
+              >
+                +{c.keyGear.length - MAX_GEAR_ICONS}
+              </span>
+            )}
             {c.keyGear.length === 0 && <span className="text-ink-soft">-</span>}
           </div>
         </td>
-        <td className="text-right font-mono text-ink tabular-nums">
+        <td className="min-w-[5rem] text-right font-mono whitespace-nowrap text-ink tabular-nums">
           {c.gearValueHr === null ? "-" : `${formatHr(c.gearValueHr)}${c.gearValuePartial ? "+" : ""}`}
         </td>
-        <td className="w-8 text-ink-soft">
+        <td className="text-ink-soft">
           <span aria-hidden className="aufklapp-pfeil inline-block">›</span>
         </td>
       </tr>
       <tr>
-        <td colSpan={COLS} id={previewId} className="p-0! border-t-0!">
+        <td colSpan={COLS} id={previewId} className="min-w-0 overflow-hidden p-0! border-t-0!">
           <div className="aufklapp-inhalt" data-offen={open ? "" : undefined}>
             <div>{open && <RowPreview name={c.name} scope={scope} cache={cache} />}</div>
           </div>
@@ -147,7 +157,16 @@ export function CharacterTable({ page, state, onChange }: Props) {
         <p className="py-8 text-center text-sm text-ink-soft">No characters match these filters.</p>
       ) : (
         <div className="overflow-x-auto">
-          <table className="tabelle kaskade-zeilen min-w-[44rem]">
+          <table className="tabelle kaskade-zeilen min-w-[50rem] table-fixed">
+            <colgroup>
+              <col />
+              <col className="w-[3.5rem]" />
+              <col className="w-[5rem]" />
+              <col className="w-[8rem]" />
+              <col className="w-[14rem]" />
+              <col className="w-[6rem]" />
+              <col className="w-[2rem]" />
+            </colgroup>
             <thead>
               <tr>
                 <th scope="col">Character</th>

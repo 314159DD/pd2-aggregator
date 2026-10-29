@@ -112,6 +112,17 @@ describe("CharacterTable", () => {
     expect(screen.getAllByText("-").length).toBeGreaterThanOrEqual(2);
   });
 
+  it("shows at most 6 key gear icons and a +N counter for the rest", () => {
+    const gear = (n: number) => Array.from({ length: n }, (_, i) => ({ name: `Item${i}`, itemType: "Unique", invCode: null, baseType: null }));
+    const characters = [row(0, { keyGear: gear(8) }), row(1, { keyGear: gear(6) })];
+    render(<CharacterTable page={page({ characters })} state={DEFAULT_BUILDS_STATE} onChange={() => {}} />);
+    const more = screen.getAllByTestId("gear-more");
+    expect(more).toHaveLength(1);
+    expect(more[0].textContent).toBe("+2");
+    expect(more[0].getAttribute("title")).toBe("Item6, Item7");
+    expect(screen.getAllByTitle(/^Item\d$/).length).toBe(6 + 6);
+  });
+
   it("opens one preview at a time, fetching once per open", async () => {
     const fetchMock = vi.fn(async (url: string) => {
       const name = decodeURIComponent(url.split("/builds/characters/")[1].split("?")[0]);
