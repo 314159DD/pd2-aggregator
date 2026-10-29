@@ -12,24 +12,29 @@ export async function upsertListings(pool: Pool, rows: MarketListingRow[], now: 
   await pool.query(
     `insert into market_listings
        (id, item_name, quality, base_name, runeword_key, is_corrupted, is_ladder, is_hardcore,
-        price_text, price_hr, created_at, bumped_at, first_seen_at, last_seen_at, gone_at)
+        price_text, price_hr, created_at, bumped_at, quantity, first_quantity, first_seen_at, last_seen_at, gone_at)
      select id, item_name, quality, base_name, runeword_key, is_corrupted, is_ladder, is_hardcore,
-            price_text, price_hr, created_at, bumped_at, $12::timestamptz, $12::timestamptz, null
+            price_text, price_hr, created_at, bumped_at, quantity, quantity, $12::timestamptz, $12::timestamptz, null
      from unnest($1::text[], $2::text[], $3::text[], $4::text[], $5::text[], $6::bool[], $7::bool[], $8::bool[],
-                 $9::text[], $10::numeric[], $11::timestamptz[], $13::timestamptz[])
+                 $9::text[], $10::numeric[], $11::timestamptz[], $13::timestamptz[], $14::int[])
        as t(id, item_name, quality, base_name, runeword_key, is_corrupted, is_ladder, is_hardcore,
-            price_text, price_hr, created_at, bumped_at)
+            price_text, price_hr, created_at, bumped_at, quantity)
      on conflict (id) do update set
        item_name = excluded.item_name, quality = excluded.quality, base_name = excluded.base_name,
        runeword_key = excluded.runeword_key, is_corrupted = excluded.is_corrupted,
        is_ladder = excluded.is_ladder, is_hardcore = excluded.is_hardcore,
        price_text = excluded.price_text, price_hr = excluded.price_hr,
        created_at = excluded.created_at, bumped_at = excluded.bumped_at,
+       quantity = excluded.quantity,
+       first_quantity = coalesce(market_listings.first_quantity, excluded.first_quantity),
+       qty_dropped = market_listings.qty_dropped + case
+         when market_listings.quantity is not null and excluded.quantity is not null
+         then greatest(market_listings.quantity - excluded.quantity, 0) else 0 end,
        last_seen_at = excluded.last_seen_at, gone_at = null, miss_count = 0`,
     [
       col('id'), col('item_name'), col('quality'), col('base_name'), col('runeword_key'),
       col('is_corrupted'), col('is_ladder'), col('is_hardcore'), col('price_text'), col('price_hr'),
-      col('created_at'), now, col('bumped_at'),
+      col('created_at'), now, col('bumped_at'), col('quantity'),
     ],
   );
 }

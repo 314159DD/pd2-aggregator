@@ -5,6 +5,7 @@ import { Button } from "@/components/lx/Button";
 import { Card } from "@/components/lx/Card";
 import { Chip } from "@/components/lx/Chip";
 import { Segment } from "@/components/lx/Segment";
+import { MarketDemand } from "@/components/barb/MarketDemand";
 import { GOLD_DEFAULTS, computeGold, shortNum, type GoldInputs, type Roll } from "@/lib/barb/gold";
 import { cn } from "@/lib/utils";
 
@@ -248,6 +249,8 @@ export function GoldCalc() {
             ))}
           </div>
         </Card>
+
+        <MarketDemand s={s} r={r} />
 
         <Card as="section" aria-labelledby="h-mkt" className="col-span-12">
           <div className="flex flex-wrap items-center justify-between gap-2">

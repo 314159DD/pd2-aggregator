@@ -26,9 +26,13 @@ export type MarketListingRow = {
   price_hr: number | null;
   created_at: string | null;
   bumped_at: string | null;
+  quantity: number | null;
 };
 
 const str = (v: unknown): string | null => (typeof v === 'string' && v !== '' ? v : null);
+
+const qty = (v: unknown): number | null =>
+  typeof v === 'number' && Number.isInteger(v) && v >= 0 ? v : null;
 
 export function toListingRow(l: RawListing): MarketListingRow {
   const item = (l.item ?? {}) as any;
@@ -46,5 +50,6 @@ export function toListingRow(l: RawListing): MarketListingRow {
     price_hr: parsePriceHr(l.price),
     created_at: str(l.created_at),
     bumped_at: str(l.bumped_at),
+    quantity: qty(item.quantity),
   };
 }
