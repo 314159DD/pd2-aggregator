@@ -10,6 +10,7 @@ export type CharacterFilter = {
   skills: Array<{ name: string; minLevel: number }>;
   mercTypes: string[];
   mercItems: string[];
+  maxGearHr: number | null;
 };
 
 function first(v: unknown): string | undefined {
@@ -50,6 +51,13 @@ function parseSkills(v: unknown): Array<{ name: string; minLevel: number }> {
   }
 }
 
+function budget(v: unknown): number | null {
+  const s = first(v);
+  if (s === undefined || s.trim() === '') return null;
+  const n = Number(s);
+  return Number.isFinite(n) && n >= 0 ? n : null;
+}
+
 export function parseFilter(q: Record<string, unknown>, cfg: Config): CharacterFilter {
   return {
     season: intParam(q.season, cfg.currentSeason, 0, 1_000_000),
@@ -61,5 +69,6 @@ export function parseFilter(q: Record<string, unknown>, cfg: Config): CharacterF
     skills: parseSkills(q.skills),
     mercTypes: list(q.mercTypes),
     mercItems: list(q.mercItems),
+    maxGearHr: budget(q.maxGearHr),
   };
 }
