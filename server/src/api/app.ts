@@ -29,7 +29,7 @@ const wrap =
 
 const KEY_PARAMS = [
   'season', 'gameMode', 'minLevel', 'maxLevel', 'classes', 'items', 'skills',
-  'mercTypes', 'mercItems', 'maxGearHr', 'page', 'pageSize', 'sort', 'dir', 'char',
+  'mercTypes', 'mercItems', 'maxGearHr', 'page', 'pageSize', 'sort', 'dir',
 ] as const;
 const LIST_PARAMS = new Set(['classes', 'items', 'mercTypes', 'mercItems']);
 
@@ -119,7 +119,8 @@ export function createApp(deps: { pool: Pool; cfg: Config }): express.Express {
         const found = await findDiffCharacter(pool, f.season, f.mode, name);
         const user = found ? await loadDiffUser(pool, found.id) : null;
         if (!user) return void notFound();
-        const cohort = JSON.parse(await metaBody(f)) as MetaCohort;
+        // Compare against the cohort of the mode the character was found in, not the requested one.
+        const cohort = JSON.parse(await metaBody({ ...f, mode: found!.mode })) as MetaCohort;
         body = JSON.stringify({
           diff: diffCharacter(user, {
             topItemsBySlot: cohort.topItemsBySlot,

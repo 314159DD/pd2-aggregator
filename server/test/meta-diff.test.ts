@@ -155,7 +155,7 @@ beforeAll(async () => {
     mkChar({ name: 'AcctHigh', account: 'LvlAcc', level: 99 }),
     mkChar({ name: 'SharedAcc', account: 'Other', level: 85 }),
     mkChar({ name: 'Holder', account: 'SharedAcc', level: 99 }),
-    mkChar({ name: 'HcOnly', mode: 'hardcore', level: 90 }),
+    mkChar({ name: 'HcOnly', mode: 'hardcore', level: 90, items: [{ name: 'Stone of Jordan', quality: 'Unique', slot: 'Left Ring', baseName: 'Ring' }] }),
     mkChar({ name: 'SameName', mode: 'softcore', level: 90 }),
     mkChar({ name: 'SameName', mode: 'hardcore', level: 90 }),
   ]);
@@ -220,6 +220,12 @@ describe('GET /meta/diff', () => {
     const r = await get('?gameMode=softcore&classes=Paladin&char=HcOnly');
     expect(r.status).toBe(200);
     expect(r.body.diff.mode).toBe('hardcore');
+  });
+
+  it('a cross-mode character is compared against the cohort of its own mode', async () => {
+    const r = await get('?gameMode=softcore&char=HcOnly');
+    expect(r.body.diff.mode).toBe('hardcore');
+    expect(r.body.diff.slots.ring.poolTopItemName).toBe('Stone of Jordan');
   });
 
   it('blank or missing char is 404', async () => {
