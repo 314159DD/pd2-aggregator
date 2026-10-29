@@ -182,6 +182,16 @@ describe('stats routes', () => {
     expect(calls2).toBe(calls + 1);
     spy.mockRestore();
   });
+
+  it('ignores unknown query params for the cache key', async () => {
+    await request(app).get('/api/v1/characters/stats/item-usage?minLevel=83');
+    const spy = vi.spyOn(pool, 'query');
+    const r = await request(app).get('/api/v1/characters/stats/item-usage?minLevel=83&_=x');
+    expect(r.status).toBe(200);
+    expect(r.headers['content-type']).toMatch(/application\/json/);
+    expect(spy).not.toHaveBeenCalled();
+    spy.mockRestore();
+  });
 });
 
 describe('accounts, queue, health', () => {

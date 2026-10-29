@@ -18,10 +18,20 @@ const wrap =
     fn(req, res).catch(next);
   };
 
+const KEY_PARAMS = [
+  'season', 'gameMode', 'minLevel', 'maxLevel', 'classes', 'items', 'skills',
+  'mercTypes', 'mercItems', 'page', 'pageSize',
+] as const;
+const LIST_PARAMS = new Set(['classes', 'items', 'mercTypes', 'mercItems']);
+
+/** Built from known params only, so unknown query noise (`?_=123`) cannot bypass or flood the cache. */
 function cacheKey(req: Request): string {
   const params = new URLSearchParams();
-  for (const [k, v] of Object.entries(req.query).sort(([a], [b]) => a.localeCompare(b))) {
-    for (const x of Array.isArray(v) ? v : [v]) params.append(k, String(x));
+  for (const k of KEY_PARAMS) {
+    const raw = req.query[k];
+    const v = Array.isArray(raw) ? raw[0] : raw;
+    if (typeof v !== 'string' || v === '') continue;
+    params.set(k, LIST_PARAMS.has(k) ? v.split(',').map((x) => x.trim()).filter(Boolean).sort().join(',') : v.trim());
   }
   return `${req.path}?${params.toString()}`;
 }
@@ -34,16 +44,20 @@ export function createApp(deps: { pool: Pool; cfg: Config }): express.Express {
   app.use(compression());
   app.use(express.json({ limit: '4kb' }));
 
-  const cache = new LRUCache<string, object>({ max: 500, ttl: 15 * 60 * 1000 });
+  const cache = new LRUCache<string, string>({
+    maxSize: 80 * 1024 * 1024,
+    sizeCalculation: (v) => Buffer.byteLength(v),
+    ttl: 15 * 60 * 1000,
+  });
   const cached = (compute: (req: Request) => Promise<object>): RequestHandler =>
     wrap(async (req, res) => {
       const key = cacheKey(req);
       let body = cache.get(key);
       if (body === undefined) {
-        body = await compute(req);
+        body = JSON.stringify(await compute(req));
         cache.set(key, body);
       }
-      res.json(body);
+      res.type('application/json').send(body);
     });
 
   const api = express.Router();
