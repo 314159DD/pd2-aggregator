@@ -4,6 +4,8 @@ import { markGone, upsertListings } from '../db/market-repo';
 import type { Pd2Client } from '../upstream/pd2-client';
 
 export const PAGE_SIZE = 250;
+/** Pages overlap so items pushed down by new bumps mid-sweep are still seen. */
+const PAGE_OVERLAP = 10;
 
 /** Newest-bumped page only. Returns rows upserted. */
 export async function pollIncremental(pool: Pool, client: Pd2Client, now = new Date()): Promise<number> {
@@ -29,9 +31,10 @@ export async function fullSweep(
     if (await shouldStop()) return false;
     const page = await client.listings({ limit: PAGE_SIZE, skip, sortBumpedDesc: true });
     total = page.total;
+    // An empty page before skip reaches total means the listing ended early: abandon the sweep.
+    if (!page.data.length && skip < total) return false;
     await upsertListings(pool, page.data.map(toListingRow), new Date());
-    if (!page.data.length) break;
-    skip += PAGE_SIZE;
+    skip += PAGE_SIZE - PAGE_OVERLAP;
   }
   await markGone(pool, sweepStart);
   return true;

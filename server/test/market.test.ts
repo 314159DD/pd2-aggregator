@@ -18,7 +18,7 @@ const fakeClient = (pages: any[][], total: number, calls: number[] = []) =>
   ({
     listings: async (q: { skip: number }) => {
       calls.push(q.skip);
-      return { total, data: pages[q.skip / 250] ?? [] };
+      return { total, data: pages[Math.floor(q.skip / 240)] ?? [] };
     },
   }) as any;
 
@@ -35,12 +35,28 @@ describe('market repo', () => {
     expect(Number(p.price_hr)).toBe(0.5);
   });
 
+  it('a re-sighting between misses resets the miss count', async () => {
+    const rows = data.map(toListingRow);
+    await upsertListings(pool, rows, new Date('2026-10-29T10:00:00Z'));
+    await markGone(pool, new Date('2026-10-29T12:00:00Z'));
+    await upsertListings(pool, rows, new Date('2026-10-29T12:30:00Z'));
+    await markGone(pool, new Date('2026-10-29T18:00:00Z'));
+    expect(await gone(rows[0].id)).toBeNull();
+    // counted from scratch: one miss, not two
+    expect((await pool.query('select max(miss_count)::int m from market_listings')).rows[0].m).toBe(1);
+  });
+
   it('markGone marks unseen listings and a later upsert clears it', async () => {
     const rows = data.map(toListingRow);
     await upsertListings(pool, rows, new Date('2026-10-29T10:00:00Z'));
     const sweepStart = new Date('2026-10-29T12:00:00Z');
     await upsertListings(pool, rows.slice(1), new Date('2026-10-29T12:01:00Z'));
-    expect(await markGone(pool, sweepStart)).toBe(1);
+    expect(await markGone(pool, sweepStart)).toBe(0);
+    expect(await gone(rows[0].id)).toBeNull();
+    // second completed sweep misses it again -> gone
+    const sweep2 = new Date('2026-10-29T18:00:00Z');
+    await upsertListings(pool, rows.slice(1), new Date('2026-10-29T18:01:00Z'));
+    expect(await markGone(pool, sweep2)).toBe(1);
     expect(await gone(rows[0].id)).not.toBeNull();
     expect(await gone(rows[1].id)).toBeNull();
     await upsertListings(pool, [rows[0]], new Date('2026-10-29T13:00:00Z'));
@@ -60,9 +76,21 @@ describe('market poller', () => {
     const calls: number[] = [];
     const ok = await fullSweep(pool, fakeClient([data.slice(1, 20), data.slice(20)], 300, calls), () => false);
     expect(ok).toBe(true);
-    expect(calls).toEqual([0, 250]);
+    expect(calls).toEqual([0, 240]);
+    // first completed sweep only counts a miss
+    expect(await gone(rows[0].id)).toBeNull();
+    await fullSweep(pool, fakeClient([data.slice(1, 20), data.slice(20)], 300), () => false);
     expect(await gone(rows[0].id)).not.toBeNull();
     expect(await gone(rows[1].id)).toBeNull();
+  });
+
+  it('empty page before total aborts the sweep without marking gone', async () => {
+    const rows = data.map(toListingRow);
+    await upsertListings(pool, rows, new Date('2020-01-01T00:00:00Z'));
+    await pool.query('update market_listings set miss_count = 1');
+    const ok = await fullSweep(pool, fakeClient([data.slice(1)], 500), () => false);
+    expect(ok).toBe(false);
+    expect((await pool.query('select count(*)::int n from market_listings where gone_at is not null')).rows[0].n).toBe(0);
   });
 
   it('interrupted or failed sweep does not mark gone', async () => {
