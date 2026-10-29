@@ -17,15 +17,23 @@ describe('migrate', () => {
     const s = await pool.query('select count(*)::int as n from collector_status');
     expect(s.rows[0].n).toBe(1);
     const m = await pool.query('select name from schema_migrations');
-    expect(m.rows.map((x) => x.name)).toEqual(['001_init.sql', '002_market_miss_count.sql']);
+    expect(m.rows.map((x) => x.name)).toEqual(['001_init.sql', '002_market_miss_count.sql', '003_builds.sql']);
+    const t = await pool.query(
+      "select table_name from information_schema.tables where table_name in ('item_prices','build_share_daily')",
+    );
+    expect(t.rows.map((x) => x.table_name).sort()).toEqual(['build_share_daily', 'item_prices']);
+    const col = await pool.query(
+      "select 1 from information_schema.columns where table_name = 'characters' and column_name = 'gear_value_hr'",
+    );
+    expect(col.rowCount).toBe(1);
   });
 
   it('handles concurrent migrate calls on a fresh schema', async () => {
     await pool.query('drop schema public cascade');
     await pool.query('create schema public');
     const [a, b] = await Promise.all([migrate(pool), migrate(pool)]);
-    expect([...a, ...b]).toEqual(['001_init.sql', '002_market_miss_count.sql']);
+    expect([...a, ...b]).toEqual(['001_init.sql', '002_market_miss_count.sql', '003_builds.sql']);
     const m = await pool.query('select name from schema_migrations');
-    expect(m.rows.map((x) => x.name)).toEqual(['001_init.sql', '002_market_miss_count.sql']);
+    expect(m.rows.map((x) => x.name)).toEqual(['001_init.sql', '002_market_miss_count.sql', '003_builds.sql']);
   });
 });

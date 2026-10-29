@@ -1,3 +1,4 @@
+import { invCode } from './item-art';
 import { calculateTotalSkills } from './vendor/skill-calculator';
 import type { CharacterApiResponse, CharacterResponse, IItem } from './vendor/types';
 
@@ -11,6 +12,7 @@ export type CompactItem = {
   baseName: string | null;
   baseType: string | null;
   isRuneword: boolean;
+  invCode: string | null;
   mods: Array<{ name: string; label: string; value: number | null }>;
 };
 
@@ -76,6 +78,7 @@ function toCompactItem(item: IItem, owner: 'player' | 'merc'): CompactItem | nul
     baseName: item.base?.name ?? null,
     baseType: item.base?.type ?? null,
     isRuneword: !!item.is_runeword,
+    invCode: invCode(item),
     mods: (item.modifiers ?? []).map((m) => {
       const v = m.values?.[0];
       return { name: m.name, label: m.label, value: (v ?? null) as number | null };
