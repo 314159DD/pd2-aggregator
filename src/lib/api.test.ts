@@ -9,11 +9,11 @@ import {
 } from "./api";
 
 // Live API holds a small season-14 pool, so use a broad softcore filter.
-const HC_PALA_L85 = { gameMode: "softcore" as const, className: "Paladin" };
+const SC_PALADIN = { gameMode: "softcore" as const, className: "Paladin" };
 
 describe("api (smoke)", () => {
   it("getItemUsage returns rows with totalSample > 0", async () => {
-    const rows = await getItemUsage(HC_PALA_L85);
+    const rows = await getItemUsage(SC_PALADIN);
     expect(rows.length).toBeGreaterThan(0);
     expect(rows[0].totalSample).toBeGreaterThan(0);
     expect(rows[0]).toHaveProperty("item");
@@ -21,12 +21,12 @@ describe("api (smoke)", () => {
   }, 15000);
 
   it("getSkillUsage returns rows", async () => {
-    const rows = await getSkillUsage(HC_PALA_L85);
+    const rows = await getSkillUsage(SC_PALADIN);
     expect(rows.length).toBeGreaterThan(0);
   }, 15000);
 
   it("getMercTypeUsage returns rows", async () => {
-    const rows = await getMercTypeUsage(HC_PALA_L85);
+    const rows = await getMercTypeUsage(SC_PALADIN);
     expect(rows.length).toBeGreaterThan(0);
   }, 15000);
 
