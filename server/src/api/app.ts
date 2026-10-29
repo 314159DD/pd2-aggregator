@@ -8,6 +8,7 @@ import { addPriorityAccount } from '../db/status-repo';
 import { parseFilter } from './filters';
 import { getPrices } from '../db/prices-repo';
 import * as bq from './builds-queries';
+import { buildsCharacters, characterPreview } from './builds-characters';
 import * as q from './queries';
 
 const VERCEL_PREVIEW_RE = /^https:\/\/pd2-aggregator-[a-z0-9-]+\.vercel\.app$/;
@@ -23,7 +24,7 @@ const wrap =
 
 const KEY_PARAMS = [
   'season', 'gameMode', 'minLevel', 'maxLevel', 'classes', 'items', 'skills',
-  'mercTypes', 'mercItems', 'maxGearHr', 'page', 'pageSize',
+  'mercTypes', 'mercItems', 'maxGearHr', 'page', 'pageSize', 'sort', 'dir',
 ] as const;
 const LIST_PARAMS = new Set(['classes', 'items', 'mercTypes', 'mercItems']);
 
@@ -94,6 +95,35 @@ export function createApp(deps: { pool: Pool; cfg: Config }): express.Express {
 
   api.get('/builds/usage', cached((req) => bq.buildsUsage(pool, filterOf(req))));
   api.get('/builds/seasons', cached(() => bq.seasons(pool, cfg)));
+  api.get(
+    '/builds/characters',
+    cached((req) => {
+      const str = (v: unknown) => (typeof v === 'string' ? v : '');
+      return buildsCharacters(pool, filterOf(req), {
+        sort: str(req.query.sort),
+        dir: str(req.query.dir),
+        page: Number(str(req.query.page) || 1),
+      });
+    }),
+  );
+  api.get(
+    '/builds/characters/:name',
+    wrap(async (req, res) => {
+      const f = filterOf(req);
+      const key = `${cacheKey(req)}|${req.params.name.toLowerCase()}`;
+      let body = cache.get(key);
+      if (body === undefined) {
+        const preview = await characterPreview(pool, f.season, f.mode, req.params.name);
+        if (!preview) {
+          res.status(404).json({ error: { message: 'Character not found' } });
+          return;
+        }
+        body = JSON.stringify(preview);
+        cache.set(key, body);
+      }
+      res.type('application/json').send(body);
+    }),
+  );
   api.get('/prices', cached((req) => getPrices(pool, filterOf(req).mode)));
 
   const hits = new Map<string, number[]>();
