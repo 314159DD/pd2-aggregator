@@ -115,17 +115,40 @@ describe("TopItemsCard", () => {
     expect(screen.getByText("Runes ~0.52 HR")).toBeTruthy();
   });
 
-  it("tooltip shows attributes, sold count and unknown rune price without a request", async () => {
+  it("tooltip opens on focus only, is portaled out of the table and describes the trigger", async () => {
     render(<TopItemsCard data={top()} gameMode="softcore" />);
     const name = screen.getAllByText("Harlequin Crest")[0];
-    fireEvent.focus(name);
-    await waitFor(() => expect(screen.getByText("+2 To All Skills")).toBeTruthy());
-    expect(screen.getByText("12 sold in the last 7 days")).toBeTruthy();
-    expect(screen.getByText("Median 0.30 HR")).toBeTruthy();
-    expect(screen.getByText("n/a, counted as 0.01")).toBeTruthy();
-    expect(screen.getByText("Jah + Ith + Ber")).toBeTruthy();
-    expect(screen.getByText("Total ~0.52 HR")).toBeTruthy();
+    const trigger = name.closest("[tabindex]") as HTMLElement;
+    expect(trigger.getAttribute("tabindex")).toBe("0");
+    expect(screen.queryByRole("tooltip")).toBeNull();
+    expect(trigger.getAttribute("aria-describedby")).toBeNull();
+    expect(screen.queryByText("12 sold in the last 7 days")).toBeNull();
+    fireEvent.focus(trigger);
+    const tip = await screen.findByRole("tooltip");
+    expect(trigger.getAttribute("aria-describedby")).toBe(tip.id);
+    expect(tip.parentElement).toBe(document.body);
+    expect(tip.closest("table")).toBeNull();
+    await waitFor(() => expect(within(tip).getByText("+2 To All Skills")).toBeTruthy());
+    expect(within(tip).getByText("12 sold in the last 7 days")).toBeTruthy();
+    expect(within(tip).getByText("Median 0.30 HR")).toBeTruthy();
+    fireEvent.blur(trigger);
+    expect(screen.queryByRole("tooltip")).toBeNull();
+    expect(trigger.getAttribute("aria-describedby")).toBeNull();
     expect((fetch as unknown as ReturnType<typeof vi.fn>).mock.calls.every((c) => String(c[0]) === "/items.json")).toBe(true);
+  });
+
+  it("tooltip shows rune rows with unknown price and the estimated total", async () => {
+    render(<TopItemsCard data={top()} gameMode="softcore" />);
+    fireEvent.mouseEnter(screen.getAllByText("Enigma")[0].closest("[tabindex]")!);
+    const tip = await screen.findByRole("tooltip");
+    expect(within(tip).getByText("n/a, counted as 0.01")).toBeTruthy();
+    expect(within(tip).getByText("Jah + Ith + Ber")).toBeTruthy();
+    expect(within(tip).getByText("Total ~0.52 HR")).toBeTruthy();
+  });
+
+  it("has a column header row", () => {
+    render(<TopItemsCard data={top()} gameMode="softcore" />);
+    expect(screen.getAllByRole("columnheader", { name: "Price" }).length).toBeGreaterThan(0);
   });
 });
 
@@ -140,6 +163,20 @@ describe("AffixCard", () => {
     expect(screen.getByText("% of items")).toBeTruthy();
     expect(screen.getByText("500")).toBeTruthy();
     expect(screen.getByText("50%")).toBeTruthy();
+  });
+});
+
+describe("AffixCard expander", () => {
+  it("shows the top 8 and expands on demand", () => {
+    const data = emptyAffix();
+    data.helm = {
+      items: 100,
+      mods: Array.from({ length: 12 }, (_, i) => ({ modName: `m${i}`, displayLabel: `Mod ${i}`, category: "x", count: 50 - i, pct: 0.5, medianValue: 1, p75Value: 2 })),
+    };
+    render(<AffixCard data={data} />);
+    expect(screen.queryByText("Mod 8")).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: /Show all 12/ }));
+    expect(screen.getByText("Mod 11")).toBeTruthy();
   });
 });
 

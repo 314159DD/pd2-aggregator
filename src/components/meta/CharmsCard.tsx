@@ -25,7 +25,7 @@ function ModList({ title, rows }: { title: string; rows: CharmModEntry[] }) {
               <span className="min-w-0 truncate text-sm text-ink">{m.displayLabel}</span>
               <span className="flex shrink-0 items-baseline gap-3">
                 <span className="font-mono text-xs text-ink-soft tabular-nums">{formatCount(fin(m.count))}</span>
-                <span className="w-12 text-right font-mono text-sm text-ink tabular-nums">{formatPct(fin(m.pct) * 100)}</span>
+                <span className="min-w-12 text-right font-mono text-sm text-ink tabular-nums">{formatPct(fin(m.pct) * 100)}</span>
               </span>
             </li>
           ))}

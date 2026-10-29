@@ -29,6 +29,15 @@ export function TopItemsCard({ data, gameMode }: { data: MetaCohort["topItemsByS
               ) : (
                 <div className="mat-thick overflow-x-auto rounded-2xl">
                   <table className="tabelle min-w-[34rem]">
+                    <thead>
+                      <tr>
+                        <th scope="col">Item</th>
+                        <th scope="col" className="text-right!">Count</th>
+                        <th scope="col">Share</th>
+                        <th scope="col">Price</th>
+                        <th scope="col"><span className="sr-only">Market</span></th>
+                      </tr>
+                    </thead>
                     <tbody>
                       {rows.map((it) => {
                         const est = it.runeCostEstimated ? "~" : "";
