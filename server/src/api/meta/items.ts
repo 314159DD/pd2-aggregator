@@ -1,7 +1,7 @@
 import type { Pool } from 'pg';
 import { META_SLOTS, runewordRecipe, slotFromItemName } from '../../core/static-data';
 import { mercTypeOf } from '../../core/merc-types';
-import { getPriceMap, getRunePrices } from '../../db/prices-repo';
+import { getPriceMap, getRunePrices, type ItemPrice } from '../../db/prices-repo';
 import { filterCte } from '../filter-sql';
 import type { CharacterFilter } from '../filters';
 import { mercTypeUsage, pct, skillUsage, type MercTypeUsageRow, type SkillUsageRow } from '../queries';
@@ -83,12 +83,15 @@ export async function topItemsBySlot(pool: Pool, f: CharacterFilter): Promise<Re
   const out = emptySlots<TopItem>();
   const anyItems = META_SLOTS.some((s) => shaped[s].length > 0);
   if (!anyItems) return out;
-  const [prices, runePrices] = await Promise.all([getPriceMap(pool, f.mode), getRunePrices(pool, f.mode)]);
+  const archive = f.archive === true;
+  const [prices, runePrices] = archive
+    ? [new Map<string, ItemPrice>(), new Map<string, number>()]
+    : await Promise.all([getPriceMap(pool, f.mode), getRunePrices(pool, f.mode)]);
   for (const s of META_SLOTS) {
     out[s] = shaped[s].map((it) => {
       const itemType = it.itemType as TopItem['itemType'];
       const price = prices.get(`${itemType}|${it.itemName}`) ?? null;
-      const recipe = itemType === 'Runeword' ? runewordRecipe(it.itemName) : null;
+      const recipe = itemType === 'Runeword' && !archive ? runewordRecipe(it.itemName) : null;
       let runes: TopItem['runes'] = null;
       let runeCostHr: number | null = null;
       let runeCostEstimated = false;

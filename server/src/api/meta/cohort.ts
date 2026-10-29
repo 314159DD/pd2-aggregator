@@ -66,7 +66,7 @@ export async function metaCohort(rawPool: Pool, cohort: CharacterFilter): Promis
     levelDistribution(pool, f),
     mercSummary(pool, f),
     className ? skillUsage(pool, f, className) : Promise.resolve(null),
-    getPrices(pool, f.mode),
+    f.archive ? Promise.resolve({ computedAt: null }) : getPrices(pool, f.mode),
   ]);
   const charms = await charmsAggregate(pool, f, sizes.poolSize);
   return {

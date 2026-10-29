@@ -160,6 +160,7 @@ export async function characterPreview(
   season: number,
   mode: 'softcore' | 'hardcore',
   name: string,
+  priced = true,
 ): Promise<CharacterPreview | null> {
   const c = (
     await pool.query(
@@ -197,7 +198,7 @@ export async function characterPreview(
     isCharm: i.is_charm,
     invCode: i.inv_code ?? null,
     baseType: i.base_type ?? null,
-    medianHr: num(i.median_hr),
+    medianHr: priced ? num(i.median_hr) : null,
   });
   const order = (a: PreviewItem, b: PreviewItem) =>
     Number(a.isSwitch) - Number(b.isSwitch) || slotRank(a.slot) - slotRank(b.slot);
@@ -224,9 +225,9 @@ export async function characterPreview(
     },
     skills: skillsR.rows.map((s) => ({ name: s.skill, hardLevel: s.hard_level, realLevel: s.real_level })),
     gear,
-    gearValueHr: num(c.gear_value_hr),
+    gearValueHr: priced ? num(c.gear_value_hr) : null,
     gearValuePartial: c.gear_value_partial,
-    mercGearValueHr: num(c.merc_gear_value_hr),
+    mercGearValueHr: priced ? num(c.merc_gear_value_hr) : null,
     merc: mt === null ? null : { type: mt.name, act: mt.act, items: mercItems },
   };
 }

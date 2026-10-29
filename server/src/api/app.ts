@@ -190,7 +190,7 @@ export function createApp(deps: { pool: Pool; cfg: Config }): express.Express {
       res.type('application/json').send(body);
     });
   // Registered after /characters/stats/* and /characters/accounts/:account.
-  api.get('/characters/:name', byName((s, m, n) => characterDetail(pool, s, m, n)));
+  api.get('/characters/:name', byName((s, m, n) => characterDetail(pool, s, m, n, s === cfg.currentSeason)));
   api.get('/characters/:name/history', byName((s, m, n) => characterHistory(pool, s, m, n)));
 
   api.get('/builds/usage', cached((req) => bq.buildsUsage(pool, filterOf(req))));
@@ -213,7 +213,7 @@ export function createApp(deps: { pool: Pool; cfg: Config }): express.Express {
       const key = `${cacheKey(req)}|${req.params.name.toLowerCase()}`;
       let body = cache.get(key);
       if (body === undefined) {
-        const preview = await characterPreview(pool, f.season, f.mode, req.params.name);
+        const preview = await characterPreview(pool, f.season, f.mode, req.params.name, f.season === cfg.currentSeason);
         if (!preview) {
           res.status(404).json({ error: { message: 'Character not found' } });
           return;
