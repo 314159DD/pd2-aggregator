@@ -17,7 +17,7 @@ describe('migrate', () => {
     const s = await pool.query('select count(*)::int as n from collector_status');
     expect(s.rows[0].n).toBe(1);
     const m = await pool.query('select name from schema_migrations');
-    expect(m.rows.map((x) => x.name)).toEqual(['001_init.sql', '002_market_miss_count.sql', '003_builds.sql', '004_rune_prices.sql', '005_meta_rollup.sql']);
+    expect(m.rows.map((x) => x.name)).toEqual(['001_init.sql', '002_market_miss_count.sql', '003_builds.sql', '004_rune_prices.sql', '005_meta_rollup.sql', '006_archive_import.sql']);
     const t = await pool.query(
       "select table_name from information_schema.tables where table_name in ('item_prices','build_share_daily')",
     );
@@ -32,9 +32,9 @@ describe('migrate', () => {
     await pool.query('drop schema public cascade');
     await pool.query('create schema public');
     const [a, b] = await Promise.all([migrate(pool), migrate(pool)]);
-    expect([...a, ...b]).toEqual(['001_init.sql', '002_market_miss_count.sql', '003_builds.sql', '004_rune_prices.sql', '005_meta_rollup.sql']);
+    expect([...a, ...b]).toEqual(['001_init.sql', '002_market_miss_count.sql', '003_builds.sql', '004_rune_prices.sql', '005_meta_rollup.sql', '006_archive_import.sql']);
     const m = await pool.query('select name from schema_migrations');
-    expect(m.rows.map((x) => x.name)).toEqual(['001_init.sql', '002_market_miss_count.sql', '003_builds.sql', '004_rune_prices.sql', '005_meta_rollup.sql']);
+    expect(m.rows.map((x) => x.name)).toEqual(['001_init.sql', '002_market_miss_count.sql', '003_builds.sql', '004_rune_prices.sql', '005_meta_rollup.sql', '006_archive_import.sql']);
   });
 
   it('item_prices accepts Rune and rejects unknown types', async () => {
@@ -42,5 +42,11 @@ describe('migrate', () => {
       "insert into item_prices (mode,item_type,item_name,median_hr,samples,source,computed_at) values ('softcore',$1,'x',1,3,'ask',now())", [t]);
     await ins('Rune');
     await expect(ins('Bogus')).rejects.toThrow();
+  });
+
+  it('archive_import_progress exists and its key is unique', async () => {
+    const ins = () => pool.query("insert into archive_import_progress (season, mode, pass) values (13, 'softcore', 1)");
+    await ins();
+    await expect(ins()).rejects.toThrow();
   });
 });
