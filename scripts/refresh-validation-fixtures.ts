@@ -74,11 +74,20 @@ async function getJson(url: string): Promise<any> {
   return r.json();
 }
 
-async function fetchOne(b: CanonicalBuild) {
+async function fetchOnce(b: CanonicalBuild) {
   const urls = urlsFor(b);
   const keys = Object.keys(urls);
   const results = await Promise.all(keys.map((k) => getJson(urls[k])));
   const data = Object.fromEntries(keys.map((k, i) => [k, results[i]]));
+  if (typeof data.meta?.season !== "number") throw new Error(`${b.slug}: meta.season is not a number`);
+  // One capture must be one consistent snapshot: the collector may write between requests.
+  const pool = data.meta.poolSize;
+  for (const key of ["itemUsage", "skillUsage"] as const) {
+    const total = data[key]?.[0]?.totalSample;
+    if (data[key]?.length > 0 && total !== pool) {
+      throw new Error(`${b.slug}: meta.poolSize=${pool} but ${key}[0].totalSample=${total}`);
+    }
+  }
   return {
     _meta: {
       build: b.slug,
@@ -95,6 +104,18 @@ async function fetchOne(b: CanonicalBuild) {
     levelDistribution: data.levelDistribution,
     meta: data.meta,
   };
+}
+
+async function fetchOne(b: CanonicalBuild, attempts = 3) {
+  for (let i = 1; ; i++) {
+    try {
+      return await fetchOnce(b);
+    } catch (e) {
+      if (i >= attempts) throw e;
+      console.warn(`  retry ${i}/${attempts - 1} for ${b.slug}: ${(e as Error).message}`);
+      await new Promise((r) => setTimeout(r, 2000));
+    }
+  }
 }
 
 async function main() {

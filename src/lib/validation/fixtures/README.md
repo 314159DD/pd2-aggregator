@@ -2,13 +2,13 @@
 
 Captured responses from our own API (`https://api.pd2meta.info/api/v1`, override with `NEXT_PUBLIC_API_BASE`) for canonical builds (one per class), softcore, minLevel 80 (S14 hardcore pools are too small early in the season). Used by `src/lib/validation/parity.test.ts` and `server/test/meta-parity.test.ts` to verify that the shaping and slot mapping preserve API data without dropping items or corrupting percentages.
 
-Each fixture holds the five stats endpoints plus the `meta` key: the `/meta` response for the same cohort. Parity cases on `meta` are skipped while a fixture has no `meta` key.
+Each fixture holds the five stats endpoints plus the `meta` key: the `/meta` response for the same cohort. Parity cases on `meta` are skipped while a fixture has no `meta` key; the Task 15 recapture activates them. A fixture with `_meta.api` but no `meta` fails a guard test, so the cases cannot be skipped silently after a recapture. The refresh script retries up to 3 times and then fails if `meta.poolSize` disagrees with `itemUsage`/`skillUsage` totals, so inconsistent fixtures are never written.
 
 ## Refreshing
 
 ```bash
 npx tsx scripts/refresh-validation-fixtures.ts            # fetch and write
-npx tsx scripts/refresh-validation-fixtures.ts --dry-run  # print the 7 URLs per build, write nothing
+npx tsx scripts/refresh-validation-fixtures.ts --dry-run  # print the 6 URLs per build, write nothing
 ```
 
 Cadence:
@@ -56,6 +56,7 @@ Each fixture is a single JSON file:
   "skillUsage": [...],
   "mercTypeUsage": [...],
   "mercItemUsage": [...],
-  "levelDistribution": {...}
+  "levelDistribution": {...},
+  "meta": { "poolSize": 0, "topItemsBySlot": {...} }
 }
 ```

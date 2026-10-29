@@ -11,7 +11,7 @@ import sorceressBlizzard from '../../src/lib/validation/fixtures/sorceress-blizz
 
 type MetaTopItem = { itemName: string; itemType: string; count: number; pct: number };
 type Fixture = {
-  _meta: { build: string };
+  _meta: { build: string; api?: string };
   itemUsage: UsageRow[];
   meta?: { topItemsBySlot: Record<string, MetaTopItem[]> };
 };
@@ -41,12 +41,16 @@ describe('meta shaping parity per canonical build', () => {
       it('no invented items and pct preserved', () => {
         const byName = new Map(f.itemUsage.map((r) => [r.item, r]));
         for (const [slot, items] of Object.entries(shaped)) {
-          for (const it of items) {
-            const row = byName.get(it.itemName);
-            expect(row, `${slot}/${it.itemName} not in API response`).toBeDefined();
-            expect(it.pct, `${slot}/${it.itemName} pct`).toBe(row!.pct);
+          for (const entry of items) {
+            const row = byName.get(entry.itemName);
+            expect(row, `${slot}/${entry.itemName} not in API response`).toBeDefined();
+            expect(entry.pct, `${slot}/${entry.itemName} pct`).toBe(row!.pct);
           }
         }
+      });
+
+      it('meta key is present once the fixture was captured from our API', () => {
+        if (f._meta.api) expect(f.meta, `${f._meta.build}: _meta.api set but meta missing`).toBeDefined();
       });
 
       it.skipIf(!f.meta)('captured /meta topItemsBySlot equals shaping of itemUsage', () => {
