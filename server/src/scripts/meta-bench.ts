@@ -41,7 +41,7 @@ async function main(): Promise<void> {
       const bytes = Buffer.byteLength(body);
       times.push(ms);
       maxBytes = Math.max(maxBytes, bytes);
-      console.log(`${c.label} ${ms} ${bytes}`);
+      console.log(`${ms}	${bytes}	${c.label}`);
     }
     times.sort((a, b) => a - b);
     const p95 = times[Math.min(times.length - 1, Math.ceil(times.length * 0.95) - 1)];

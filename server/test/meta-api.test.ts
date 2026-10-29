@@ -82,6 +82,8 @@ describe('GET /meta', () => {
     expect(r.status).toBe(200);
     expect(r.body.poolSize).toBe(3);
     expect(spy).not.toHaveBeenCalled();
+    await get('?gameMode=softcore&classes=Paladin&minLevel=80&items=Spirit&mercTypes=x&maxGearHr=3&_=1');
+    expect(spy).not.toHaveBeenCalled();
     await get('?gameMode=softcore&classes=Sorceress&minLevel=85');
     expect(spy).toHaveBeenCalledTimes(1);
     spy.mockRestore();

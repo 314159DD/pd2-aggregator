@@ -94,3 +94,18 @@ describe('skillUsage edge cases', () => {
     expect(by(out, 'Inner Sight')!.role).toBe('synergy');
   });
 });
+
+describe('skillUsage performance', () => {
+  it('handles ~400 characters x ~20 skills in under 2000 ms', async () => {
+    const names = ['Jab', 'Power Strike', 'Charged Strike', 'Lightning Strike', 'Decoy', 'Valkyrie', 'Inner Sight', 'Critical Strike', 'Dodge', 'Avoid', 'Evade', 'Slow Missiles', 'Penetrate', 'Pierce', 'Magic Arrow', 'Fire Arrow', 'Cold Arrow', 'Multiple Shot', 'Guided Arrow', 'Strafe'];
+    const chars = [];
+    for (let i = 0; i < 400; i++) {
+      chars.push(amazon(`Perf${i}`, names.map((n, j): [string, number] => [n, (i + j) % 3 === 0 ? 1 : 1 + ((i * 7 + j * 3) % 20)])));
+    }
+    await seed(pool, chars);
+    const t0 = performance.now();
+    const out = await skillUsage(pool, F, 'Amazon');
+    expect(performance.now() - t0).toBeLessThan(2000);
+    expect(out!.length).toBeGreaterThan(0);
+  }, 60000);
+});
