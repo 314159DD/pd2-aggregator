@@ -155,8 +155,11 @@ Price job + gear value, Builds page (class share, gear budget, usage cards, shop
 ### Sprint 4.3 - Server-side Meta + Meta tab + launch (DONE 2026-10-29)
 GET /meta and /meta/diff with a per-class/level rollup (p95 ~130-180 ms), own rune prices, Meta tab rebuilt in the LEXADIS look, client aggregation/pd2trader calls/D2 theme removed, footer credits. Plan: docs/superpowers/plans/2026-10-29-pd2meta-v2-phase34-meta.md
 
+### Sprint 4.4 - Archive S11-S13 + parity (DONE 2026-10-29)
+Resumable importer from api.pd2.tools (1 req/s, disk gate, gap passes), archive seasons in the season picker (no prices, no gear budget, past-season note), /builds/usage and stats on meta_rollup plus covering indexes. 214k archive characters, DB 9.4 GB. Parity vs pd2.tools S13: usage shares all within 0.32 points, class breakdown within 0.02% (upstream still moving). Plan: docs/superpowers/plans/2026-10-29-pd2meta-v2-phase5-archive.md
+
 ### Next
-Phase 5 archive S11-S13 + parity test.
+All v2 phases done. Candidates from spec section 10: ladder page, online players chart, trending builds, market.
 
 ## Future Phases
 

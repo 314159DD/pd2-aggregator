@@ -186,6 +186,8 @@ Application here (my call, flag if wrong):
 
 ## 8. Phases
 
+Status 2026-10-29: phases 1 to 5 done and live (sprints 4.1 to 4.4).
+
 1. **Pipeline:** collector + Postgres + read API (pd2.tools-compatible endpoints) on the VPS, S14 data flowing, `/health` green. Exit: S14 characters > 5,000 and growing; Builds endpoints return the same shapes as pd2.tools.
 1b. **Stopgap (owner decision):** point today's pd2meta at our `/characters` endpoint (one base URL change plus the stats endpoints) and redeploy, so pd2meta.info shows S14 within days. This temporarily keeps the raw pool download (accepted exception to the anti-goal until phase 3 replaces it).
 2. **Builds tab:** shell with tabs, price job (4.4), Builds page, character page, account page, on the new API. Exit: checklist in 4.1 ticked.
