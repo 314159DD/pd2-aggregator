@@ -49,6 +49,12 @@ export async function computeItemPrices(pool: Pool, now: Date = new Date()): Pro
        where sold_n >= $3 or open_n >= $4`,
       [now, PRICE_WINDOW_DAYS, MIN_SOLD_SAMPLES, MIN_SAMPLES],
     );
+    if ((r.rowCount ?? 0) === 0) {
+      // Nothing to price (e.g. market data wiped): roll back the delete and keep the old set.
+      await client.query('rollback');
+      console.warn('computeItemPrices: new price set is empty, keeping existing item_prices');
+      return { priced: 0 };
+    }
     await client.query('commit');
     return { priced: r.rowCount ?? 0 };
   } catch (e) {
