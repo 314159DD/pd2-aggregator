@@ -1,36 +1,26 @@
 /**
  * refresh-validation-fixtures.ts
  *
- * Fetches the 5 stats endpoints from api.pd2.tools for each of 7 canonical
- * builds (one per class) and writes one combined JSON file per build to
- * src/lib/validation/fixtures/.
+ * Fetches the 5 stats endpoints plus /meta from our own API for each of 7
+ * canonical builds (one per class) and writes one combined JSON file per
+ * build to src/lib/validation/fixtures/.
  *
- * The parity test suite (src/lib/validation/parity.test.ts) reads these
- * fixtures and asserts that our shaping / slot-mapping preserves API data.
+ * Uses plain fetch (no import of src/lib/api.ts) so URL building is explicit
+ * here. Softcore: S14 hardcore pools are too small early in the season.
  *
- * Deliberately uses src/lib/api.ts (the same API client the app uses), so any
- * bug in URL building affects the fixtures the same way it affects production.
- * Humans diffing fixtures vs pd2.tools' UI catch those — see the design spec.
+ * Tests reading the fixtures: src/lib/validation/parity.test.ts and
+ * server/test/meta-parity.test.ts.
  *
- * Run weekly during active development, on every PD2 patch, or whenever a
- * parity test starts looking suspicious:
- *   npx tsx scripts/refresh-validation-fixtures.ts
+ * Run weekly, on PD2 patches, or when a parity test looks suspicious:
+ *   npx tsx scripts/refresh-validation-fixtures.ts [--dry-run]
+ * --dry-run prints the URLs per build and writes nothing.
  */
 
 import { writeFile, mkdir } from "node:fs/promises";
 import { join } from "node:path";
-import {
-  getItemUsage,
-  getSkillUsage,
-  getMercTypeUsage,
-  getMercItemUsage,
-  getLevelDistribution,
-  type CommonFilter,
-  type ItemUsageRow,
-  type SkillUsageRow,
-  type MercTypeUsageRow,
-  type LevelDistribution,
-} from "../src/lib/api";
+
+const API = process.env.NEXT_PUBLIC_API_BASE ?? "https://api.pd2meta.info/api/v1";
+const DRY_RUN = process.argv.includes("--dry-run");
 
 type CanonicalBuild = {
   slug: string;
@@ -49,79 +39,90 @@ const CANONICAL_BUILDS: CanonicalBuild[] = [
   { slug: "sorceress-blizzard",         className: "Sorceress",   build: "Blizzard",          skills: [{ name: "Blizzard", minLevel: 20 }] },
 ];
 
-const COMMON: Omit<CommonFilter, "className"> = {
-  gameMode: "hardcore",
-  minLevel: 80,
-};
+const COMMON = { gameMode: "softcore", minLevel: 80 } as const;
 
-type FixtureFile = {
-  _meta: {
-    build: string;
-    fetchedAt: string;
-    filter: CommonFilter;
-    skills: CanonicalBuild["skills"];
-  };
-  itemUsage: ItemUsageRow[];
-  skillUsage: SkillUsageRow[];
-  mercTypeUsage: MercTypeUsageRow[];
-  mercItemUsage: ItemUsageRow[];
-  levelDistribution: LevelDistribution;
-};
+const STATS_ENDPOINTS = {
+  itemUsage: "characters/stats/item-usage",
+  skillUsage: "characters/stats/skill-usage",
+  mercTypeUsage: "characters/stats/merc-type-usage",
+  mercItemUsage: "characters/stats/merc-item-usage",
+  levelDistribution: "characters/stats/level-distribution",
+} as const;
 
-async function fetchOne(b: CanonicalBuild): Promise<FixtureFile> {
-  const filter: CommonFilter = { ...COMMON, className: b.className };
-  const [itemUsage, skillUsage, mercTypeUsage, mercItemUsage, levelDistribution] =
-    await Promise.all([
-      getItemUsage(filter, b.skills),
-      getSkillUsage(filter, b.skills),
-      getMercTypeUsage(filter, b.skills),
-      getMercItemUsage(filter, b.skills),
-      getLevelDistribution(
-        { gameMode: filter.gameMode, className: filter.className },
-        b.skills,
-      ),
-    ]);
+function query(b: CanonicalBuild, withMinLevel: boolean): string {
+  const p = new URLSearchParams();
+  p.set("gameMode", COMMON.gameMode);
+  p.set("classes", b.className);
+  if (withMinLevel) p.set("minLevel", String(COMMON.minLevel));
+  p.set("skills", JSON.stringify(b.skills));
+  return p.toString();
+}
+
+function urlsFor(b: CanonicalBuild): Record<string, string> {
+  const urls: Record<string, string> = {};
+  for (const [key, path] of Object.entries(STATS_ENDPOINTS)) {
+    // level distribution ignores minLevel (as the old client did)
+    urls[key] = `${API}/${path}?${query(b, key !== "levelDistribution")}`;
+  }
+  urls.meta = `${API}/meta?${query(b, true)}`;
+  return urls;
+}
+
+async function getJson(url: string): Promise<any> {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`${r.status} ${r.statusText} for ${url}`);
+  return r.json();
+}
+
+async function fetchOne(b: CanonicalBuild) {
+  const urls = urlsFor(b);
+  const keys = Object.keys(urls);
+  const results = await Promise.all(keys.map((k) => getJson(urls[k])));
+  const data = Object.fromEntries(keys.map((k, i) => [k, results[i]]));
   return {
     _meta: {
       build: b.slug,
       fetchedAt: new Date().toISOString(),
-      filter,
+      api: API,
+      season: data.meta.season as number,
+      filter: { ...COMMON, className: b.className },
       skills: b.skills,
     },
-    itemUsage,
-    skillUsage,
-    mercTypeUsage,
-    mercItemUsage,
-    levelDistribution,
+    itemUsage: data.itemUsage,
+    skillUsage: data.skillUsage,
+    mercTypeUsage: data.mercTypeUsage,
+    mercItemUsage: data.mercItemUsage,
+    levelDistribution: data.levelDistribution,
+    meta: data.meta,
   };
 }
 
 async function main() {
-  const root = process.cwd();
-  const outDir = join(root, "src", "lib", "validation", "fixtures");
+  if (DRY_RUN) {
+    for (const b of CANONICAL_BUILDS) {
+      console.log(`# ${b.slug}`);
+      for (const [k, u] of Object.entries(urlsFor(b))) console.log(`  ${k}: ${u}`);
+    }
+    console.log("\n(dry run, nothing written)");
+    return;
+  }
+  const outDir = join(process.cwd(), "src", "lib", "validation", "fixtures");
   await mkdir(outDir, { recursive: true });
 
-  // Concurrency cap of 3 — be polite to api.pd2.tools.
+  // Concurrency cap of 3, be polite to the API.
   const CONCURRENCY = 3;
   for (let i = 0; i < CANONICAL_BUILDS.length; i += CONCURRENCY) {
     const batch = CANONICAL_BUILDS.slice(i, i + CONCURRENCY);
-    console.log(`Fetching: ${batch.map((b) => b.slug).join(", ")}…`);
+    console.log(`Fetching: ${batch.map((b) => b.slug).join(", ")}...`);
     await Promise.all(
       batch.map(async (b) => {
         const data = await fetchOne(b);
-        const path = join(outDir, `${b.slug}.json`);
-        await writeFile(path, JSON.stringify(data, null, 2) + "\n", "utf8");
-        const total = data.itemUsage[0]?.totalSample ?? 0;
-        console.log(
-          `  ✓ ${b.slug}.json  totalSample=${total}  rows=${data.itemUsage.length}`,
-        );
+        await writeFile(join(outDir, `${b.slug}.json`), JSON.stringify(data, null, 2) + "\n", "utf8");
+        console.log(`  ok ${b.slug}.json  totalSample=${data.itemUsage[0]?.totalSample ?? 0}  rows=${data.itemUsage.length}`);
       }),
     );
   }
-
-  console.log(
-    `\n✓ Wrote ${CANONICAL_BUILDS.length} fixtures to ${outDir}`,
-  );
+  console.log(`\nWrote ${CANONICAL_BUILDS.length} fixtures to ${outDir}`);
 }
 
 main().catch((e) => {
