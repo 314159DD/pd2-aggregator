@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Button } from "@/components/lx/Button";
 import { displayName } from "@/lib/builds/display-name";
 import { formatCount, formatHr } from "@/lib/builds/format";
@@ -122,15 +122,17 @@ function Row({ c, open, onToggle, previewId, scope, cache }: {
 export function CharacterTable({ page, state, onChange }: Props) {
   const top = useRef<HTMLDivElement>(null);
   const [openName, setOpenName] = useState<string | null>(null);
-  const cache = useRef<PreviewCache>(new Map());
   const { season, gameMode } = state;
   const scope = useMemo<Scope>(() => ({ season, gameMode }), [season, gameMode]);
+  // New page of rows or new scope: the cache belongs to the old ones.
+  const cache = useMemo<PreviewCache>(() => new Map(), [page, season, gameMode]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // New page of rows or new scope: the open preview and the cache belong to the old ones.
-  useEffect(() => {
-    cache.current = new Map();
+  // Store-previous-key pattern: close the open preview in the same render, so no stale frame shows.
+  const [prevKey, setPrevKey] = useState<{ page: BuildsCharactersPage; season: number | null; gameMode: string }>({ page, season, gameMode });
+  if (prevKey.page !== page || prevKey.season !== season || prevKey.gameMode !== gameMode) {
+    setPrevKey({ page, season, gameMode });
     setOpenName(null);
-  }, [page, season, gameMode]);
+  }
 
   const go = (target: number) => {
     const reduced = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
@@ -186,7 +188,7 @@ export function CharacterTable({ page, state, onChange }: Props) {
                 onToggle={() => setOpenName(openName === c.name ? null : c.name)}
                 previewId={`preview-${i}`}
                 scope={scope}
-                cache={cache.current}
+                cache={cache}
               />
             ))}
           </table>
