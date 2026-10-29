@@ -11,6 +11,8 @@ export type CharacterFilter = {
   mercTypes: string[];
   mercItems: string[];
   maxGearHr: number | null;
+  /** Ended season imported from the archive: no prices, the gear budget is ignored. */
+  archive?: boolean;
 };
 
 function first(v: unknown): string | undefined {
@@ -59,8 +61,10 @@ function budget(v: unknown): number | null {
 }
 
 export function parseFilter(q: Record<string, unknown>, cfg: Config): CharacterFilter {
+  const season = intParam(q.season, cfg.currentSeason, 0, 1_000_000);
+  const archive = season !== cfg.currentSeason;
   return {
-    season: intParam(q.season, cfg.currentSeason, 0, 1_000_000),
+    season,
     mode: first(q.gameMode)?.toLowerCase() === 'hardcore' ? 'hardcore' : 'softcore',
     minLevel: intParam(q.minLevel, 80, 1, 99),
     maxLevel: intParam(q.maxLevel, 99, 1, 99),
@@ -69,6 +73,7 @@ export function parseFilter(q: Record<string, unknown>, cfg: Config): CharacterF
     skills: parseSkills(q.skills),
     mercTypes: list(q.mercTypes),
     mercItems: list(q.mercItems),
-    maxGearHr: budget(q.maxGearHr),
+    maxGearHr: archive ? null : budget(q.maxGearHr),
+    archive,
   };
 }

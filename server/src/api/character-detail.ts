@@ -13,6 +13,7 @@ export type CharacterDetail = Record<string, unknown> & {
   season: number;
   mode: Mode;
   lastIngestedAt: string;
+  archive: boolean;
 };
 
 const num = (v: unknown): number | null => (v === null || v === undefined ? null : Number(v));
@@ -48,6 +49,7 @@ export async function characterDetail(
   season: number,
   mode: Mode,
   name: string,
+  priced = true,
 ): Promise<CharacterDetail | null> {
   const c = await findCharacter(
     pool,
@@ -67,18 +69,23 @@ export async function characterDetail(
     [c.id],
   );
   const itemNames: string[] = items.rows.map((x) => x.name);
-  const priceMap = await getPricesFor(pool, foundMode, itemNames);
+  const priceMap = priced ? await getPricesFor(pool, foundMode, itemNames) : new Map<string, ItemPrice>();
   const prices: Record<string, ItemPrice | null> = {};
   for (const n of itemNames) prices[n] = priceMap.get(n) ?? null;
 
   return {
     ...(raw as Record<string, unknown>),
     realStats: computeStats(raw, c.name),
-    gear: { valueHr: num(c.gear_value_hr), partial: c.gear_value_partial, mercValueHr: num(c.merc_gear_value_hr) },
+    gear: {
+      valueHr: priced ? num(c.gear_value_hr) : null,
+      partial: c.gear_value_partial,
+      mercValueHr: priced ? num(c.merc_gear_value_hr) : null,
+    },
     prices,
     season,
     mode: foundMode,
     lastIngestedAt: new Date(c.last_ingested_at).toISOString(),
+    archive: !priced,
   };
 }
 

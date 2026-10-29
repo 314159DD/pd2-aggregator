@@ -23,6 +23,16 @@ export async function replaceItems(client: PoolClient, characterId: number, item
   );
 }
 
+/** One row per skill (the primary key of character_skills): the highest hardLevel wins. */
+export function dedupeSkills(c: CompactCharacter): Array<{ skill: string; hardLevel: number; realLevel: number | null }> {
+  const skillMap = new Map<string, { skill: string; hardLevel: number; realLevel: number | null }>();
+  for (const sk of c.skills) {
+    const prev = skillMap.get(sk.skill);
+    if (!prev || sk.hardLevel > prev.hardLevel) skillMap.set(sk.skill, sk);
+  }
+  return [...skillMap.values()];
+}
+
 export async function upsertCharacter(
   pool: Pool,
   season: number,
@@ -31,12 +41,7 @@ export async function upsertCharacter(
   now: Date = new Date(),
 ): Promise<{ id: number; historyWritten: boolean }> {
   const raw = gzipSync(JSON.stringify(enrichedRaw));
-  const skillMap = new Map<string, { skill: string; hardLevel: number; realLevel: number | null }>();
-  for (const sk of c.skills) {
-    const prev = skillMap.get(sk.skill);
-    if (!prev || sk.hardLevel > prev.hardLevel) skillMap.set(sk.skill, sk);
-  }
-  const skills = [...skillMap.values()];
+  const skills = dedupeSkills(c);
   const client = await pool.connect();
   let destroy = false;
   try {

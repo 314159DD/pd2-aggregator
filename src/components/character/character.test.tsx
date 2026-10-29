@@ -99,7 +99,7 @@ describe("character page", () => {
 
 const info = (over: Partial<HeaderInfo> = {}): HeaderInfo => ({
   name: "Alli_pal", className: "Paladin", level: 89, mode: "softcore", season: 14, seasonName: null,
-  account: "MC-MEEKS", lastIngestedAt: new Date().toISOString(), gearValueHr: null, gearPartial: false, mercValueHr: null, ...over,
+  account: "MC-MEEKS", lastIngestedAt: new Date().toISOString(), gearValueHr: null, gearPartial: false, mercValueHr: null, archive: false, ...over,
 });
 
 describe("refresh", () => {

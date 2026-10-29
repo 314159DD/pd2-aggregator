@@ -10,7 +10,7 @@ export interface Config {
   minLevel: number;
 }
 
-export const SEASON_NAMES: Record<number, string> = { 12: 'Suffering', 13: 'Betrayal', 14: 'Alliance' };
+export const SEASON_NAMES: Record<number, string> = { 11: 'Prosperity', 12: 'Suffering', 13: 'Betrayal', 14: 'Alliance' };
 
 const DEFAULT_CORS = [
   'https://www.pd2meta.info',

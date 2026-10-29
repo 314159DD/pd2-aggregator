@@ -141,6 +141,7 @@ export type CharacterDetail = Record<string, unknown> & {
   season: number;
   mode: "softcore" | "hardcore";
   lastIngestedAt: string;
+  archive: boolean;
 };
 export type CharacterHistory = {
   history: Array<{ ts: string; level: number; experience: number }>;

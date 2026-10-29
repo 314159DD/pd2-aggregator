@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback } from "react";
+import type { SeasonsResponse } from "@/lib/builds/types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export type Scope = { season: number | null; gameMode: "softcore" | "hardcore" };
@@ -13,6 +14,11 @@ export function readScope(p: URLSearchParams): Scope {
     season: Number.isSafeInteger(n) && n > 0 ? n : null,
     gameMode: p.get("gameMode")?.toLowerCase() === "hardcore" ? "hardcore" : "softcore",
   };
+}
+
+/** True only when both are known and the season is not the current one; false while seasons load. */
+export function isArchiveSeason(season: number | null, seasons: SeasonsResponse | null): boolean {
+  return season !== null && seasons !== null && season !== seasons.current;
 }
 
 /** Scope from the URL plus a setter that rewrites season/gameMode in place and resets paging. */

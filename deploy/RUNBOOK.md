@@ -59,6 +59,24 @@ The rebuild runs in one transaction and holds the rollup lock (about 30 to 60 s 
 
 Run it again (same steps) after any deploy that changes the meta fact code (`src/db/meta-rollup.ts`, the static prereq/slot data): the api then logs `meta rollup fingerprint mismatch, run backfill-meta` once and serves `/meta` from the per-character queries until the rebuild.
 
+### Usage indexes (migration 008) deploy
+
+`/builds/usage` and `/characters/stats/*` read `meta_rollup` for base cohorts (season, mode, classes, level window); cohorts with an item, skill, merc or gear filter still query `character_items` and `character_skills`, and migration 008 adds covering indexes for them. A plain `create index` inside the migration would block writes (collector, archive import) for the whole build, so on the live database build them first, one at a time, before deploying the server:
+
+```
+docker compose -p pd2meta exec -T db psql -U pd2meta -d pd2meta -c "create index concurrently if not exists character_items_owner_name_char_idx on character_items (owner, name, character_id)"
+docker compose -p pd2meta exec -T db psql -U pd2meta -d pd2meta -c "create index concurrently if not exists character_items_usage_idx on character_items (character_id, owner) include (name, quality, is_runeword, inv_code) where is_runeword or quality in ('Unique', 'Set')"
+docker compose -p pd2meta exec -T db psql -U pd2meta -d pd2meta -c "create index concurrently if not exists character_skills_skill_level_char_idx on character_skills (skill, hard_level) include (character_id)"
+docker compose -p pd2meta exec -T db psql -U pd2meta -d pd2meta -c "create index concurrently if not exists character_skills_at20_idx on character_skills (character_id) include (skill) where hard_level >= 20"
+docker compose -p pd2meta exec -T db psql -U pd2meta -d pd2meta -c "select c.relname, i.indisvalid from pg_index i join pg_class c on c.oid = i.indexrelid where c.relname in ('character_items_owner_name_char_idx', 'character_items_usage_idx', 'character_skills_skill_level_char_idx', 'character_skills_at20_idx')"
+```
+
+All four must show `indisvalid = t`. A concurrent build that fails leaves an invalid index under the name, and the migration's `if not exists` would then skip it: `drop index concurrently <name>` and build it again. Then deploy; migration 008 finds the indexes and does nothing. Afterwards the old `character_items_owner_name_idx` and `character_skills_skill_hard_level_idx` are prefixes of the new ones and can go: `drop index concurrently character_items_owner_name_idx` and `drop index concurrently character_skills_skill_hard_level_idx`.
+
+### Archive import: slow page writes
+
+If the page write p95 of the archive importer goes above 5,000 ms, stop the importer container (`docker stop pd2meta-archive`) and resume later off-peak; it is resumable, rerun the same command. Do not use `--no-rollup` as a fallback for slow writes. It marks the global rollup not ready, which sends `/builds/usage`, `/characters/stats/*` and `/meta` back to the slow per-character queries for every season until `backfill-meta` has run.
+
 ## Check
 
 ```
