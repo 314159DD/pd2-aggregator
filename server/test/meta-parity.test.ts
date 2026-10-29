@@ -27,6 +27,8 @@ const FIXTURES = [
 ] as unknown as Fixture[];
 
 const COVERAGE_FLOOR = 0.95;
+// Unique charms have no equipment slot by design, so they are not slot items.
+const UNIQUE_CHARM_NAMES = new Set(['Hellfire Torch', 'Annihilus', "Gheed's Fortune"]);
 
 describe('meta shaping parity per canonical build', () => {
   for (const f of FIXTURES) {
@@ -35,7 +37,8 @@ describe('meta shaping parity per canonical build', () => {
 
       it(`slot coverage >= ${COVERAGE_FLOOR * 100}%`, () => {
         const all = Object.values(shapeTopItemsBySlot(f.itemUsage, Infinity)).flat();
-        expect(all.length / f.itemUsage.length, `${f._meta.build}: unslotted items`).toBeGreaterThanOrEqual(COVERAGE_FLOOR);
+        const slotItems = f.itemUsage.filter((r) => !UNIQUE_CHARM_NAMES.has(r.item));
+        expect(all.length / slotItems.length, `${f._meta.build}: unslotted items`).toBeGreaterThanOrEqual(COVERAGE_FLOOR);
       });
 
       it('no invented items and pct preserved', () => {
