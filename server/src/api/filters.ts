@@ -39,10 +39,10 @@ function parseSkills(v: unknown): Array<{ name: string; minLevel: number }> {
     if (!Array.isArray(parsed)) return [];
     const out: Array<{ name: string; minLevel: number }> = [];
     for (const e of parsed) {
-      if (!e || typeof e !== 'object') return [];
+      if (!e || typeof e !== 'object') continue;
       const { name, minLevel } = e as Record<string, unknown>;
-      if (typeof name !== 'string' || !name || typeof minLevel !== 'number' || !Number.isFinite(minLevel)) return [];
-      out.push({ name, minLevel });
+      if (typeof name !== 'string' || !name || typeof minLevel !== 'number' || !Number.isInteger(minLevel)) continue;
+      out.push({ name, minLevel: Math.min(99, Math.max(0, minLevel)) });
     }
     return out;
   } catch {
