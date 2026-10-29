@@ -16,6 +16,7 @@ import { RateLimiter } from '../upstream/rate-limiter';
 import { ladderNames, planFromAccount, planFromLadder } from './discovery';
 import { ingestOne } from './ingest';
 import { CharQueue } from './queue';
+import { fullSweep, pollIncremental } from './market-poller';
 
 const MIN = 60_000;
 const HOUR = 60 * MIN;
@@ -151,6 +152,24 @@ async function main(): Promise<void> {
         stats.seasonName = s.name;
         if (firstSeason === null) firstSeason = s.name;
         else if (firstSeason !== s.name) log('error', `SEASON CHANGED: ${firstSeason} -> ${s.name}`);
+      },
+    },
+    {
+      name: 'market-poll',
+      everyMs: 75_000,
+      run: async () => {
+        if (!(await active())) return;
+        await pollIncremental(pool, client);
+        stats.lastMarketPollAt = new Date().toISOString();
+      },
+    },
+    {
+      name: 'market-full-sweep',
+      everyMs: 6 * HOUR,
+      run: async () => {
+        if (!(await active())) return;
+        const done = await fullSweep(pool, client, async () => stopping || !(await active()));
+        if (done) stats.lastFullMarketSweepAt = new Date().toISOString();
       },
     },
     {
