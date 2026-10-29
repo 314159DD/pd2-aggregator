@@ -1,16 +1,16 @@
 # PD2 Build Affix Aggregator
 
-Next.js 16 static-export app that aggregates Project Diablo 2 ladder builds from the pd2.tools public API and produces filterable build guides. Live at https://pd2-aggregator.vercel.app.
+Next.js 16 static-export app that aggregates Project Diablo 2 ladder builds from its own ladder collector (API at api.pd2meta.info, `server/`) and produces filterable build guides. Live at https://www.pd2meta.info (pd2-aggregator.vercel.app redirects there).
 
 **Status:** v2 in progress (spec `docs/superpowers/specs/2026-10-28-pd2meta-v2-design.md`). Sprint 4.1 (own pipeline + S14 stopgap) and Sprint 4.2 (Builds tab: prices, gear value, usage cards, shopping list, character table, character and account pages, LEXADIS shell) merged 2026-10-29. Next: phase 3 (server-side Meta endpoints + Meta tab on them), then phase 4 (Meta restyle + launch), phase 5 (archive S11-S13 + parity test).
 
 **Plan is the source of truth.** If it's not in `plan/`, it doesn't exist. Start a session by reading [`plan/README.md`](plan/README.md) → [`plan/roadmap.md`](plan/roadmap.md) → the active sprint file.
 
 ## Stack
-- Next.js 15 App Router, static export (`output: 'export'`)
-- TypeScript, Tailwind, shadcn/ui
+- Next.js 16 App Router, static export (`output: 'export'`)
+- TypeScript, Tailwind 4, LEXADIS look (`src/app/lx.css`, `src/components/lx/`)
 - vitest for unit tests
-- idb-keyval for IndexedDB cache
+- No IndexedDB: the web holds no data cache; the server (`server/`) aggregates and caches
 
 ## Commands
 - `npm run dev` — local dev server
@@ -27,16 +27,16 @@ Next.js 16 static-export app that aggregates Project Diablo 2 ladder builds from
 - `npx tsx scripts/build-kontra-snapshot.ts` — rebuild `data/kontra-builds.json` (build presets + tier letters) from the Dark Humility tier-list Google Sheet + the curated `data/kontra-build-skills.json` mapping (auto-refreshed nightly by the same workflow)
 
 ## Module boundaries
-- `src/lib/data-loader.ts` is the ONLY module that does network or IndexedDB I/O.
-- `src/lib/filter.ts`, `src/lib/aggregate.ts`, `src/lib/diff.ts` are pure functions. Easy to unit test.
-- The web worker (`src/workers/aggregate.worker.ts`) is the only place async aggregation runs.
+- Meta aggregation is server side in `server/src/api/meta/`. The web only renders what `/meta` and `/meta/diff` return.
+- `src/lib/meta/api.ts` and `src/lib/builds/api.ts` are the only network modules (`src/lib/api.ts` keeps only `API_BASE`, `GameMode` and the skill-usage call used by the skill picker).
+- Static data the server needs is copied byte-for-byte into `server/src/core/static/` with `node server/scripts/sync-static.js`; never edit the copies.
 
 ## Data sources
 - Live: `https://api.pd2meta.info/api/v1` (our own pd2.tools-compatible API, `server/`, collector + Postgres on the VPS `/opt/pd2meta`; see `deploy/RUNBOOK.md`). Override with `NEXT_PUBLIC_API_BASE`. pd2.tools stopped collecting at Season 14.
-- Snapshot fallback: `data/snapshot.json` (committed; refreshed manually)
+- Prices: own `item_prices` (Unique/Set/Runeword/Rune medians from `market_listings`, hourly, sold preferred), served by `/prices` and inside `/meta`. No pd2trader.com, no snapshot fallback in the app.
+- Static data copies: `data/*.json` and `public/runeword-runes.json` are the sources; `server/src/core/static/` holds the synced copies. `data/snapshot.json` and its scripts stay as script input only (not bundled). `public/price-snapshot.json` is still built nightly (it also yields `data/unique-ids.json` for market links) but the app does not read it.
 - Mod dictionary: `data/mod-dictionary.json` (built by `scripts/build-mod-dictionary.ts`)
-- Market prices: `api.projectdiablo2.com/market/listing` via the Vercel Edge proxy at `api/market.ts` (live, hover sidecar) and `public/price-snapshot.json` (nightly snapshot, inline median column)
-- Build tier list: Dark Humility S13 tier-list Google Sheet (`docs.google.com/spreadsheets/d/1ipTsARndewEJaREWfcDeuCelKWpCEcFy9nrigp220_Y`) → `data/kontra-builds.json` (build presets + tiers). `data/kontra-build-skills.json` is the hand-curated build→skills mapping the sheet can't provide.
+- Build tier list: Dark Humility S13 tier-list Google Sheet (`docs.google.com/spreadsheets/d/1ipTsARndewEJaREWfcDeuCelKWpCEcFy9nrigp220_Y`) -> `data/kontra-builds.json` (build presets + tiers). `data/kontra-build-skills.json` is the hand-curated build->skills mapping the sheet can't provide.
 
 ## Design doc
 `docs/specs/2026-05-08-pd2-build-affix-aggregator-design.md` (architectural rationale + the mid-impl revision after the API turned out to paginate)

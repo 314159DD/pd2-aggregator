@@ -1,4 +1,4 @@
-import type { UiState } from "@/lib/url-state";
+import { serializeMetaState, DEFAULT_META_STATE, type MetaState } from "@/lib/meta/state";
 export type BuildsSort = "level" | "life" | "gear";
 export type BuildsSkill = { name: string; minLevel: number };
 export type BuildsState = {
@@ -161,26 +161,28 @@ export const clearFilters = (s: BuildsState): BuildsState => ({
 
 /** Link to the Meta page (its url-state names) carrying the class, level and skills of this selection. */
 export function metaHref(s: BuildsState): string {
-  const p = new URLSearchParams();
-  p.set("mode", "guide");
-  p.set("gameMode", s.gameMode);
-  if (s.classes.length) p.set("className", s.classes[0]);
-  p.set("minLevel", String(s.minLevel));
-  if (s.skills.length) p.set("skills", JSON.stringify(s.skills));
-  return `/?${p.toString()}`;
+  const cls = s.classes[0];
+  const next: MetaState = {
+    ...DEFAULT_META_STATE,
+    season: s.season,
+    gameMode: s.gameMode,
+    className: cls ?? DEFAULT_META_STATE.className,
+    minLevel: s.minLevel,
+    skills: s.skills.filter((k) => k.minLevel >= 1),
+  };
+  return `/?${serializeMetaState(next).toString()}`;
 }
 
 /** Link from the Meta page to /builds with the same class, skills and mode; minLevel snaps down to a preset. */
-export function buildsHrefFromMeta(ui: UiState): string {
-  const lvl = ui.filter.minLevel ?? 80;
-  const minLevel = ([...LEVEL_PRESETS].reverse().find((x) => x <= lvl) ?? 80) as BuildsState["minLevel"];
-  const cls = ui.filter.className;
+export function buildsHrefFromMeta(s: MetaState): string {
+  const minLevel = ([...LEVEL_PRESETS].reverse().find((x) => x <= s.minLevel) ?? 80) as BuildsState["minLevel"];
   const next: BuildsState = {
     ...DEFAULT_BUILDS_STATE,
-    gameMode: ui.filter.gameMode === "hardcore" ? "hardcore" : "softcore",
+    season: s.season,
+    gameMode: s.gameMode,
     minLevel,
-    classes: cls && (CLASS_NAMES as readonly string[]).includes(cls) ? [cls] : [],
-    skills: ui.skills,
+    classes: (CLASS_NAMES as readonly string[]).includes(s.className) ? [s.className] : [],
+    skills: s.skills,
   };
   const q = serializeBuildsState(next).toString();
   return q ? `/builds?${q}` : "/builds";

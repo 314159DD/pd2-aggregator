@@ -9,7 +9,7 @@ export type ItemUsageRow = { item: string; itemType: string; numOccurrences: num
 export type SkillUsageRow = { name: string; numOccurrences: number; totalSample: number; pct: number };
 export type MercTypeUsageRow = { mercType: string; numOccurrences: number; totalSample: number; pct: number };
 
-const pct = (n: number, total: number): number => (total > 0 ? Math.round((n / total) * 10000) / 100 : 0);
+export const pct = (n: number, total: number): number => (total > 0 ? Math.round((n / total) * 10000) / 100 : 0);
 
 export async function charactersPage(
   pool: Pool,

@@ -47,13 +47,13 @@ afterEach(() => vi.unstubAllGlobals());
 
 describe("CharacterTable", () => {
   it("renders 25 rows, masks profane names but links with the raw name", () => {
-    const characters = Array.from({ length: 25 }, (_, i) => row(i, i === 0 ? { name: "shitlord" } : {}));
-    const fetchMock = vi.fn(async () => new Response(JSON.stringify(preview("shitlord"))));
+    const characters = Array.from({ length: 25 }, (_, i) => row(i, i === 0 ? { name: "ShitLord" } : {}));
+    const fetchMock = vi.fn(async () => new Response(JSON.stringify(preview("ShitLord"))));
     vi.stubGlobal("fetch", fetchMock);
     render(<CharacterTable page={page({ characters })} state={DEFAULT_BUILDS_STATE} onChange={() => {}} />);
     expect(screen.getAllByRole("row", { expanded: false })).toHaveLength(25);
-    expect(screen.queryByText("shitlord")).toBeNull();
-    expect(screen.getByText("s*******")).toBeTruthy();
+    expect(screen.queryByText("ShitLord")).toBeNull();
+    expect(screen.getByText("S*******")).toBeTruthy();
     expect(screen.getByText("12,294 characters match")).toBeTruthy();
   });
 

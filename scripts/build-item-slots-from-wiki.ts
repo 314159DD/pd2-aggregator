@@ -45,7 +45,7 @@ type Slot =
   | "ring";
 
 const UA =
-  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0";
+  "Mozilla/5.0";
 
 const PAGES = [
   "All_Unique_Weapons",
@@ -296,6 +296,11 @@ async function main() {
       allFromWiki.push({ ...it, source: page });
     }
   }
+
+  // Class weapons live on /wiki/Class_Weapons, which is not scraped. Amazon spears
+  // and javelins added in S14 (wiki Class_Weapons page) are listed here by hand.
+  const CLASS_WEAPONS = ["Titan's Revenge", "Zerae's Resolve"];
+  for (const name of CLASS_WEAPONS) allFromWiki.push({ name, slot: "weapon", base: "", source: "Class_Weapons" });
 
   // Build the wiki name → slot dict. If wiki itself has the same item in two
   // pages (shouldn't happen but defensive), the first occurrence wins.

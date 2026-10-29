@@ -1,17 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { Button } from "@/components/lx/Button";
 
 type Mode = "dark" | "light";
 
+function subscribe(onChange: () => void) {
+  const obs = new MutationObserver(onChange);
+  obs.observe(document.documentElement, { attributes: true, attributeFilter: ["data-mode"] });
+  return () => obs.disconnect();
+}
+const getMode = (): Mode => (document.documentElement.dataset.mode === "light" ? "light" : "dark");
+const getServerMode = (): Mode => "dark";
+
 /** Dark is the default; the inline script in layout.tsx has already set data-mode before paint. */
 export function ThemeToggle() {
-  const [mode, setMode] = useState<Mode>("dark");
-
-  useEffect(() => {
-    setMode(document.documentElement.dataset.mode === "light" ? "light" : "dark");
-  }, []);
+  const mode = useSyncExternalStore(subscribe, getMode, getServerMode);
 
   function toggle() {
     const next: Mode = mode === "dark" ? "light" : "dark";
@@ -21,7 +25,6 @@ export function ThemeToggle() {
     } catch {
       // storage can be blocked; the mode still applies for this visit
     }
-    setMode(next);
   }
 
   return (

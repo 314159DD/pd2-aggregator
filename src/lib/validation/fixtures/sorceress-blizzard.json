@@ -1,9 +1,11 @@
 {
   "_meta": {
     "build": "sorceress-blizzard",
-    "fetchedAt": "2026-05-10T23:21:36.412Z",
+    "fetchedAt": "2026-10-29T08:02:07.065Z",
+    "api": "https://api.pd2meta.info/api/v1",
+    "season": 14,
     "filter": {
-      "gameMode": "hardcore",
+      "gameMode": "softcore",
       "minLevel": 80,
       "className": "Sorceress"
     },
@@ -16,1415 +18,4379 @@
   },
   "itemUsage": [
     {
-      "item": "Death's Fathom",
+      "item": "Gheed's Fortune",
       "itemType": "Unique",
-      "numOccurrences": 20,
-      "totalSample": 65,
-      "pct": 30.76923076923077
+      "numOccurrences": 30,
+      "totalSample": 53,
+      "pct": 56.6
     },
     {
-      "item": "Harlequin Crest",
+      "item": "Hellfire Torch",
       "itemType": "Unique",
-      "numOccurrences": 17,
-      "totalSample": 65,
-      "pct": 26.153846153846157
+      "numOccurrences": 25,
+      "totalSample": 53,
+      "pct": 47.17
     },
     {
-      "item": "Nightwing's Veil",
+      "item": "Annihilus",
       "itemType": "Unique",
-      "numOccurrences": 14,
-      "totalSample": 65,
-      "pct": 21.53846153846154
-    },
-    {
-      "item": "Tal Rasha's Guardianship",
-      "itemType": "Set",
-      "numOccurrences": 14,
-      "totalSample": 65,
-      "pct": 21.53846153846154
+      "numOccurrences": 18,
+      "totalSample": 53,
+      "pct": 33.96
     },
     {
       "item": "Snowclash",
       "itemType": "Unique",
-      "numOccurrences": 14,
-      "totalSample": 65,
-      "pct": 21.53846153846154
+      "numOccurrences": 17,
+      "totalSample": 53,
+      "pct": 32.08
     },
     {
-      "item": "Tal Rasha's Adjudication",
-      "itemType": "Set",
-      "numOccurrences": 13,
-      "totalSample": 65,
-      "pct": 20
-    },
-    {
-      "item": "Tal Rasha's Horadric Crest",
-      "itemType": "Set",
-      "numOccurrences": 13,
-      "totalSample": 65,
-      "pct": 20
-    },
-    {
-      "item": "Skin of the Vipermagi",
+      "item": "Death's Fathom",
       "itemType": "Unique",
-      "numOccurrences": 12,
-      "totalSample": 65,
-      "pct": 18.461538461538463
-    },
-    {
-      "item": "The Oculus",
-      "itemType": "Unique",
-      "numOccurrences": 12,
-      "totalSample": 65,
-      "pct": 18.461538461538463
+      "numOccurrences": 16,
+      "totalSample": 53,
+      "pct": 30.19
     },
     {
       "item": "Medusa's Gaze",
       "itemType": "Unique",
-      "numOccurrences": 11,
-      "totalSample": 65,
-      "pct": 16.923076923076923
+      "numOccurrences": 16,
+      "totalSample": 53,
+      "pct": 30.19
     },
     {
-      "item": "Stormshield",
+      "item": "Nightwing's Veil",
       "itemType": "Unique",
-      "numOccurrences": 11,
-      "totalSample": 65,
-      "pct": 16.923076923076923
+      "numOccurrences": 16,
+      "totalSample": 53,
+      "pct": 30.19
+    },
+    {
+      "item": "Spirit",
+      "itemType": "Runeword",
+      "numOccurrences": 16,
+      "totalSample": 53,
+      "pct": 30.19
+    },
+    {
+      "item": "Frostburn",
+      "itemType": "Unique",
+      "numOccurrences": 14,
+      "totalSample": 53,
+      "pct": 26.42
+    },
+    {
+      "item": "Lidless Wall",
+      "itemType": "Unique",
+      "numOccurrences": 14,
+      "totalSample": 53,
+      "pct": 26.42
+    },
+    {
+      "item": "Ormus' Robes",
+      "itemType": "Unique",
+      "numOccurrences": 13,
+      "totalSample": 53,
+      "pct": 24.53
     },
     {
       "item": "Tal Rasha's Fine-Spun Cloth",
       "itemType": "Set",
-      "numOccurrences": 10,
-      "totalSample": 65,
-      "pct": 15.384615384615385
+      "numOccurrences": 13,
+      "totalSample": 53,
+      "pct": 24.53
+    },
+    {
+      "item": "Call to Arms",
+      "itemType": "Runeword",
+      "numOccurrences": 11,
+      "totalSample": 53,
+      "pct": 20.75
+    },
+    {
+      "item": "Tal Rasha's Adjudication",
+      "itemType": "Set",
+      "numOccurrences": 11,
+      "totalSample": 53,
+      "pct": 20.75
+    },
+    {
+      "item": "Tal Rasha's Guardianship",
+      "itemType": "Set",
+      "numOccurrences": 11,
+      "totalSample": 53,
+      "pct": 20.75
     },
     {
       "item": "Tal Rasha's Lidless Eye",
       "itemType": "Set",
       "numOccurrences": 10,
-      "totalSample": 65,
-      "pct": 15.384615384615385
+      "totalSample": 53,
+      "pct": 18.87
     },
     {
-      "item": "Frostburn",
-      "itemType": "Unique",
-      "numOccurrences": 10,
-      "totalSample": 65,
-      "pct": 15.384615384615385
-    },
-    {
-      "item": "Magefist",
-      "itemType": "Unique",
-      "numOccurrences": 10,
-      "totalSample": 65,
-      "pct": 15.384615384615385
-    },
-    {
-      "item": "Trang-Oul's Claws",
+      "item": "Milabrega's Orb",
       "itemType": "Set",
       "numOccurrences": 9,
-      "totalSample": 65,
-      "pct": 13.846153846153847
+      "totalSample": 53,
+      "pct": 16.98
     },
     {
-      "item": "Waterwalk",
-      "itemType": "Unique",
-      "numOccurrences": 8,
-      "totalSample": 65,
-      "pct": 12.307692307692308
+      "item": "Tal Rasha's Horadric Crest",
+      "itemType": "Set",
+      "numOccurrences": 9,
+      "totalSample": 53,
+      "pct": 16.98
     },
     {
-      "item": "Arachnid Mesh",
+      "item": "Harlequin Crest",
       "itemType": "Unique",
       "numOccurrences": 8,
-      "totalSample": 65,
-      "pct": 12.307692307692308
+      "totalSample": 53,
+      "pct": 15.09
     },
     {
       "item": "Mara's Kaleidoscope",
       "itemType": "Unique",
       "numOccurrences": 8,
-      "totalSample": 65,
-      "pct": 12.307692307692308
+      "totalSample": 53,
+      "pct": 15.09
     },
     {
-      "item": "Spirit",
-      "itemType": "Runeword",
+      "item": "The Oculus",
+      "itemType": "Unique",
       "numOccurrences": 8,
-      "totalSample": 65,
-      "pct": 12.307692307692308
-    },
-    {
-      "item": "Atma's Wail",
-      "itemType": "Unique",
-      "numOccurrences": 7,
-      "totalSample": 65,
-      "pct": 10.76923076923077
-    },
-    {
-      "item": "Dwarf Star",
-      "itemType": "Unique",
-      "numOccurrences": 7,
-      "totalSample": 65,
-      "pct": 10.76923076923077
-    },
-    {
-      "item": "Silkweave",
-      "itemType": "Unique",
-      "numOccurrences": 6,
-      "totalSample": 65,
-      "pct": 9.230769230769232
-    },
-    {
-      "item": "Chance Guards",
-      "itemType": "Unique",
-      "numOccurrences": 6,
-      "totalSample": 65,
-      "pct": 9.230769230769232
-    },
-    {
-      "item": "Memory",
-      "itemType": "Runeword",
-      "numOccurrences": 6,
-      "totalSample": 65,
-      "pct": 9.230769230769232
-    },
-    {
-      "item": "Occultist",
-      "itemType": "Unique",
-      "numOccurrences": 6,
-      "totalSample": 65,
-      "pct": 9.230769230769232
-    },
-    {
-      "item": "Milabrega's Orb",
-      "itemType": "Set",
-      "numOccurrences": 6,
-      "totalSample": 65,
-      "pct": 9.230769230769232
-    },
-    {
-      "item": "Verdungo's Hearty Cord",
-      "itemType": "Unique",
-      "numOccurrences": 6,
-      "totalSample": 65,
-      "pct": 9.230769230769232
-    },
-    {
-      "item": "Blackoak Shield",
-      "itemType": "Unique",
-      "numOccurrences": 5,
-      "totalSample": 65,
-      "pct": 7.6923076923076925
-    },
-    {
-      "item": "Blade of Ali Baba",
-      "itemType": "Unique",
-      "numOccurrences": 5,
-      "totalSample": 65,
-      "pct": 7.6923076923076925
-    },
-    {
-      "item": "Crescent Moon",
-      "itemType": "Unique",
-      "numOccurrences": 5,
-      "totalSample": 65,
-      "pct": 7.6923076923076925
-    },
-    {
-      "item": "Raven Frost",
-      "itemType": "Unique",
-      "numOccurrences": 5,
-      "totalSample": 65,
-      "pct": 7.6923076923076925
-    },
-    {
-      "item": "War Traveler",
-      "itemType": "Unique",
-      "numOccurrences": 5,
-      "totalSample": 65,
-      "pct": 7.6923076923076925
-    },
-    {
-      "item": "Shaftstop",
-      "itemType": "Unique",
-      "numOccurrences": 4,
-      "totalSample": 65,
-      "pct": 6.153846153846154
-    },
-    {
-      "item": "Nature's Peace",
-      "itemType": "Unique",
-      "numOccurrences": 4,
-      "totalSample": 65,
-      "pct": 6.153846153846154
-    },
-    {
-      "item": "Obsession",
-      "itemType": "Runeword",
-      "numOccurrences": 4,
-      "totalSample": 65,
-      "pct": 6.153846153846154
-    },
-    {
-      "item": "Steelclash",
-      "itemType": "Unique",
-      "numOccurrences": 4,
-      "totalSample": 65,
-      "pct": 6.153846153846154
-    },
-    {
-      "item": "The Stone of Jordan",
-      "itemType": "Unique",
-      "numOccurrences": 4,
-      "totalSample": 65,
-      "pct": 6.153846153846154
-    },
-    {
-      "item": "Infernostride",
-      "itemType": "Unique",
-      "numOccurrences": 4,
-      "totalSample": 65,
-      "pct": 6.153846153846154
+      "totalSample": 53,
+      "pct": 15.09
     },
     {
       "item": "Nagelring",
       "itemType": "Unique",
-      "numOccurrences": 3,
-      "totalSample": 65,
-      "pct": 4.615384615384616
+      "numOccurrences": 7,
+      "totalSample": 53,
+      "pct": 13.21
     },
     {
-      "item": "Gerke's Sanctuary",
+      "item": "Skin of the Vipermagi",
+      "itemType": "Unique",
+      "numOccurrences": 7,
+      "totalSample": 53,
+      "pct": 13.21
+    },
+    {
+      "item": "Silkweave",
+      "itemType": "Unique",
+      "numOccurrences": 5,
+      "totalSample": 53,
+      "pct": 9.43
+    },
+    {
+      "item": "The Stone of Jordan",
+      "itemType": "Unique",
+      "numOccurrences": 5,
+      "totalSample": 53,
+      "pct": 9.43
+    },
+    {
+      "item": "Trang-Oul's Claws",
+      "itemType": "Set",
+      "numOccurrences": 4,
+      "totalSample": 53,
+      "pct": 7.55
+    },
+    {
+      "item": "War Traveler",
+      "itemType": "Unique",
+      "numOccurrences": 4,
+      "totalSample": 53,
+      "pct": 7.55
+    },
+    {
+      "item": "Arachnid Mesh",
       "itemType": "Unique",
       "numOccurrences": 3,
-      "totalSample": 65,
-      "pct": 4.615384615384616
+      "totalSample": 53,
+      "pct": 5.66
     },
     {
-      "item": "Skullder's Ire",
+      "item": "Blade of Ali Baba",
       "itemType": "Unique",
       "numOccurrences": 3,
-      "totalSample": 65,
-      "pct": 4.615384615384616
+      "totalSample": 53,
+      "pct": 5.66
     },
     {
-      "item": "Aldur's Advance",
+      "item": "Chance Guards",
+      "itemType": "Unique",
+      "numOccurrences": 3,
+      "totalSample": 53,
+      "pct": 5.66
+    },
+    {
+      "item": "Infernostride",
+      "itemType": "Unique",
+      "numOccurrences": 3,
+      "totalSample": 53,
+      "pct": 5.66
+    },
+    {
+      "item": "Magefist",
+      "itemType": "Unique",
+      "numOccurrences": 3,
+      "totalSample": 53,
+      "pct": 5.66
+    },
+    {
+      "item": "Sigon's Guard",
       "itemType": "Set",
       "numOccurrences": 3,
-      "totalSample": 65,
-      "pct": 4.615384615384616
+      "totalSample": 53,
+      "pct": 5.66
     },
     {
-      "item": "Steel Shade",
+      "item": "Steelclash",
       "itemType": "Unique",
-      "numOccurrences": 2,
-      "totalSample": 65,
-      "pct": 3.076923076923077
+      "numOccurrences": 3,
+      "totalSample": 53,
+      "pct": 5.66
+    },
+    {
+      "item": "Tempest",
+      "itemType": "Unique",
+      "numOccurrences": 3,
+      "totalSample": 53,
+      "pct": 5.66
+    },
+    {
+      "item": "Waterwalk",
+      "itemType": "Unique",
+      "numOccurrences": 3,
+      "totalSample": 53,
+      "pct": 5.66
     },
     {
       "item": "Ancients' Pledge",
       "itemType": "Runeword",
       "numOccurrences": 2,
-      "totalSample": 65,
-      "pct": 3.076923076923077
+      "totalSample": 53,
+      "pct": 3.77
     },
     {
-      "item": "Chromatic Ire",
+      "item": "Atma's Wail",
       "itemType": "Unique",
       "numOccurrences": 2,
-      "totalSample": 65,
-      "pct": 3.076923076923077
+      "totalSample": 53,
+      "pct": 3.77
+    },
+    {
+      "item": "Blackoak Shield",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 53,
+      "pct": 3.77
     },
     {
       "item": "Constricting Loop",
       "itemType": "Unique",
       "numOccurrences": 2,
-      "totalSample": 65,
-      "pct": 3.076923076923077
+      "totalSample": 53,
+      "pct": 3.77
     },
     {
-      "item": "Guardian Angel",
+      "item": "Dwarf Star",
       "itemType": "Unique",
       "numOccurrences": 2,
-      "totalSample": 65,
-      "pct": 3.076923076923077
+      "totalSample": 53,
+      "pct": 3.77
     },
     {
-      "item": "Kira's Guardian",
+      "item": "Eschuta's Temper",
       "itemType": "Unique",
       "numOccurrences": 2,
-      "totalSample": 65,
-      "pct": 3.076923076923077
-    },
-    {
-      "item": "Metalgrid",
-      "itemType": "Unique",
-      "numOccurrences": 2,
-      "totalSample": 65,
-      "pct": 3.076923076923077
-    },
-    {
-      "item": "Nokozan Relic",
-      "itemType": "Unique",
-      "numOccurrences": 2,
-      "totalSample": 65,
-      "pct": 3.076923076923077
-    },
-    {
-      "item": "Tempest",
-      "itemType": "Unique",
-      "numOccurrences": 2,
-      "totalSample": 65,
-      "pct": 3.076923076923077
-    },
-    {
-      "item": "The Spirit Shroud",
-      "itemType": "Unique",
-      "numOccurrences": 2,
-      "totalSample": 65,
-      "pct": 3.076923076923077
-    },
-    {
-      "item": "Sandstorm Trek",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Rockstopper",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Rhyme",
-      "itemType": "Runeword",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 3.77
     },
     {
       "item": "Que-Hegan's Wisdom",
       "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "numOccurrences": 2,
+      "totalSample": 53,
+      "pct": 3.77
     },
     {
-      "item": "Prudence",
+      "item": "Rhyme",
       "itemType": "Runeword",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "numOccurrences": 2,
+      "totalSample": 53,
+      "pct": 3.77
     },
     {
-      "item": "Spirit Ward",
+      "item": "Sandstorm Trek",
       "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "numOccurrences": 2,
+      "totalSample": 53,
+      "pct": 3.77
     },
     {
-      "item": "Steel Carapace",
+      "item": "Skullder's Ire",
       "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "numOccurrences": 2,
+      "totalSample": 53,
+      "pct": 3.77
     },
     {
-      "item": "Ormus' Robes",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Ondal's Wisdom",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Natalya's Soul",
-      "itemType": "Set",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Suicide Branch",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Naj's Light Plate",
-      "itemType": "Set",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Moser's Blessed Circle",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Lava Gout",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Goldwrap",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Enlightenment",
+      "item": "Stealth",
       "itemType": "Runeword",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "numOccurrences": 2,
+      "totalSample": 53,
+      "pct": 3.77
     },
     {
-      "item": "Whitstan's Guard",
+      "item": "Aldur's Advance",
       "itemType": "Set",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
     },
     {
-      "item": "Embersworn",
+      "item": "Arkaine's Valor",
       "itemType": "Unique",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Wisp Projector",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Duriel's Shell",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "The Ward",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Dracul's Grasp",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Venom Grip",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Crown of Ages",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Warpspear",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
     },
     {
       "item": "Bul-Kathos' Wedding Band",
       "itemType": "Unique",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
     },
     {
-      "item": "Bul-Kathos' Death Band",
-      "itemType": "Set",
+      "item": "Chains of Honor",
+      "itemType": "Runeword",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
     },
     {
-      "item": "Siggard's Staunch",
+      "item": "Chromatic Ire",
       "itemType": "Unique",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
     },
     {
-      "item": "Sigon's Guard",
+      "item": "Cow King's Horns",
       "itemType": "Set",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Duriel's Shell",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Enlightenment",
+      "itemType": "Runeword",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Goldwrap",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Gorefoot",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Gull",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Heart of the Oak",
+      "itemType": "Runeword",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Lava Gout",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Lore",
+      "itemType": "Runeword",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Memory",
+      "itemType": "Runeword",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Metalgrid",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Naj's Circlet",
+      "itemType": "Set",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Naj's Light Plate",
+      "itemType": "Set",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Natalya's Soul",
+      "itemType": "Set",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Nature's Peace",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Occultist",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Ondal's Wisdom",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Peasant Crown",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Raven Frost",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Skull Collector",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Smoke",
+      "itemType": "Runeword",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Spirit Ward",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Stone",
+      "itemType": "Runeword",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Stormshield",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Titan's Grip",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Treads of Cthon",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Wall of the Eyeless",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Warpspear",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Whitstan's Guard",
+      "itemType": "Set",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Wizardspike",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
     }
   ],
   "skillUsage": [
     {
-      "name": "Ice Blast",
-      "numOccurrences": 65,
-      "totalSample": 65,
+      "name": "Blizzard",
+      "numOccurrences": 53,
+      "totalSample": 53,
       "pct": 100
     },
     {
-      "name": "Blizzard",
-      "numOccurrences": 65,
-      "totalSample": 65,
-      "pct": 100
+      "name": "Ice Blast",
+      "numOccurrences": 50,
+      "totalSample": 53,
+      "pct": 94.34
     },
     {
       "name": "Ice Bolt",
-      "numOccurrences": 62,
-      "totalSample": 65,
-      "pct": 95.38461538461539
+      "numOccurrences": 49,
+      "totalSample": 53,
+      "pct": 92.45
     },
     {
       "name": "Cold Mastery",
-      "numOccurrences": 62,
-      "totalSample": 65,
-      "pct": 95.38461538461539
-    },
-    {
-      "name": "Energy Shield",
-      "numOccurrences": 2,
-      "totalSample": 65,
-      "pct": 3.076923076923077
-    },
-    {
-      "name": "Teleport",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "numOccurrences": 48,
+      "totalSample": 53,
+      "pct": 90.57
     },
     {
       "name": "Chilling Armor",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "numOccurrences": 2,
+      "totalSample": 53,
+      "pct": 3.77
     },
     {
-      "name": "Glacial Spike",
+      "name": "Chain Lightning",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
     },
     {
-      "name": "Shiver Armor",
+      "name": "Charged Bolt",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "name": "Frozen Orb",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "name": "Lightning",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
     }
   ],
   "mercTypeUsage": [
     {
       "mercType": "Defensive Auras",
-      "numOccurrences": 45,
-      "totalSample": 65,
-      "pct": 69.23076923076923
+      "numOccurrences": 41,
+      "totalSample": 53,
+      "pct": 77.36
+    },
+    {
+      "mercType": "Combat",
+      "numOccurrences": 3,
+      "totalSample": 53,
+      "pct": 5.66
     },
     {
       "mercType": "Might Merc",
-      "numOccurrences": 17,
-      "totalSample": 65,
-      "pct": 26.153846153846157
+      "numOccurrences": 3,
+      "totalSample": 53,
+      "pct": 5.66
     },
     {
       "mercType": "Cold Arrow",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "numOccurrences": 2,
+      "totalSample": 53,
+      "pct": 3.77
     },
     {
-      "mercType": "Fire Spells",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "mercType": "Offensive Auras",
+      "numOccurrences": 2,
+      "totalSample": 53,
+      "pct": 3.77
     },
     {
-      "mercType": "Physical Arrow",
+      "mercType": "Fire Arrow",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "mercType": "Lightning Spells",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
     }
   ],
   "mercItemUsage": [
     {
       "item": "Insight",
       "itemType": "Runeword",
-      "numOccurrences": 33,
-      "totalSample": 65,
-      "pct": 50.76923076923077
-    },
-    {
-      "item": "Laying of Hands",
-      "itemType": "Set",
-      "numOccurrences": 22,
-      "totalSample": 65,
-      "pct": 33.84615384615385
-    },
-    {
-      "item": "String of Ears",
-      "itemType": "Unique",
-      "numOccurrences": 14,
-      "totalSample": 65,
-      "pct": 21.53846153846154
-    },
-    {
-      "item": "Rite of Passage",
-      "itemType": "Set",
-      "numOccurrences": 14,
-      "totalSample": 65,
-      "pct": 21.53846153846154
-    },
-    {
-      "item": "Immortal King's Detail",
-      "itemType": "Set",
-      "numOccurrences": 11,
-      "totalSample": 65,
-      "pct": 16.923076923076923
+      "numOccurrences": 29,
+      "totalSample": 53,
+      "pct": 54.72
     },
     {
       "item": "Tal Rasha's Horadric Crest",
       "itemType": "Set",
+      "numOccurrences": 14,
+      "totalSample": 53,
+      "pct": 26.42
+    },
+    {
+      "item": "String of Ears",
+      "itemType": "Unique",
+      "numOccurrences": 11,
+      "totalSample": 53,
+      "pct": 20.75
+    },
+    {
+      "item": "Laying of Hands",
+      "itemType": "Set",
       "numOccurrences": 10,
-      "totalSample": 65,
-      "pct": 15.384615384615385
-    },
-    {
-      "item": "Vampire Gaze",
-      "itemType": "Unique",
-      "numOccurrences": 8,
-      "totalSample": 65,
-      "pct": 12.307692307692308
-    },
-    {
-      "item": "Immortal King's Pillar",
-      "itemType": "Set",
-      "numOccurrences": 8,
-      "totalSample": 65,
-      "pct": 12.307692307692308
-    },
-    {
-      "item": "Shaftstop",
-      "itemType": "Unique",
-      "numOccurrences": 7,
-      "totalSample": 65,
-      "pct": 10.76923076923077
-    },
-    {
-      "item": "Gore Rider",
-      "itemType": "Unique",
-      "numOccurrences": 7,
-      "totalSample": 65,
-      "pct": 10.76923076923077
-    },
-    {
-      "item": "Immortal King's Forge",
-      "itemType": "Set",
-      "numOccurrences": 7,
-      "totalSample": 65,
-      "pct": 10.76923076923077
-    },
-    {
-      "item": "Immortal King's Will",
-      "itemType": "Set",
-      "numOccurrences": 6,
-      "totalSample": 65,
-      "pct": 9.230769230769232
+      "totalSample": 53,
+      "pct": 18.87
     },
     {
       "item": "Andariel's Visage",
       "itemType": "Unique",
-      "numOccurrences": 6,
-      "totalSample": 65,
-      "pct": 9.230769230769232
+      "numOccurrences": 8,
+      "totalSample": 53,
+      "pct": 15.09
     },
     {
-      "item": "Immortal King's Stone Crusher",
+      "item": "Rite of Passage",
       "itemType": "Set",
-      "numOccurrences": 6,
-      "totalSample": 65,
-      "pct": 9.230769230769232
+      "numOccurrences": 8,
+      "totalSample": 53,
+      "pct": 15.09
+    },
+    {
+      "item": "Dracul's Grasp",
+      "itemType": "Unique",
+      "numOccurrences": 5,
+      "totalSample": 53,
+      "pct": 9.43
     },
     {
       "item": "Goblin Toe",
       "itemType": "Unique",
       "numOccurrences": 5,
-      "totalSample": 65,
-      "pct": 7.6923076923076925
-    },
-    {
-      "item": "Immortal King's Soul Cage",
-      "itemType": "Set",
-      "numOccurrences": 5,
-      "totalSample": 65,
-      "pct": 7.6923076923076925
+      "totalSample": 53,
+      "pct": 9.43
     },
     {
       "item": "Goldwrap",
       "itemType": "Unique",
-      "numOccurrences": 4,
-      "totalSample": 65,
-      "pct": 6.153846153846154
-    },
-    {
-      "item": "Leviathan",
-      "itemType": "Unique",
-      "numOccurrences": 4,
-      "totalSample": 65,
-      "pct": 6.153846153846154
-    },
-    {
-      "item": "Nosferatu's Coil",
-      "itemType": "Unique",
-      "numOccurrences": 4,
-      "totalSample": 65,
-      "pct": 6.153846153846154
-    },
-    {
-      "item": "Guillaume's Face",
-      "itemType": "Set",
-      "numOccurrences": 4,
-      "totalSample": 65,
-      "pct": 6.153846153846154
+      "numOccurrences": 5,
+      "totalSample": 53,
+      "pct": 9.43
     },
     {
       "item": "Lava Gout",
       "itemType": "Unique",
-      "numOccurrences": 4,
-      "totalSample": 65,
-      "pct": 6.153846153846154
+      "numOccurrences": 5,
+      "totalSample": 53,
+      "pct": 9.43
     },
     {
-      "item": "Sander's Taboo",
+      "item": "Crown of Thieves",
+      "itemType": "Unique",
+      "numOccurrences": 4,
+      "totalSample": 53,
+      "pct": 7.55
+    },
+    {
+      "item": "Duriel's Shell",
+      "itemType": "Unique",
+      "numOccurrences": 4,
+      "totalSample": 53,
+      "pct": 7.55
+    },
+    {
+      "item": "Infernostride",
+      "itemType": "Unique",
+      "numOccurrences": 4,
+      "totalSample": 53,
+      "pct": 7.55
+    },
+    {
+      "item": "Infinity",
+      "itemType": "Runeword",
+      "numOccurrences": 4,
+      "totalSample": 53,
+      "pct": 7.55
+    },
+    {
+      "item": "Marrowwalk",
+      "itemType": "Unique",
+      "numOccurrences": 4,
+      "totalSample": 53,
+      "pct": 7.55
+    },
+    {
+      "item": "Verdungo's Hearty Cord",
+      "itemType": "Unique",
+      "numOccurrences": 4,
+      "totalSample": 53,
+      "pct": 7.55
+    },
+    {
+      "item": "Bonehew",
+      "itemType": "Unique",
+      "numOccurrences": 3,
+      "totalSample": 53,
+      "pct": 5.66
+    },
+    {
+      "item": "Guillaume's Face",
       "itemType": "Set",
       "numOccurrences": 3,
-      "totalSample": 65,
-      "pct": 4.615384615384616
+      "totalSample": 53,
+      "pct": 5.66
+    },
+    {
+      "item": "Immortal King's Detail",
+      "itemType": "Set",
+      "numOccurrences": 3,
+      "totalSample": 53,
+      "pct": 5.66
+    },
+    {
+      "item": "Immortal King's Pillar",
+      "itemType": "Set",
+      "numOccurrences": 3,
+      "totalSample": 53,
+      "pct": 5.66
+    },
+    {
+      "item": "Sigon's Sabot",
+      "itemType": "Set",
+      "numOccurrences": 3,
+      "totalSample": 53,
+      "pct": 5.66
     },
     {
       "item": "Sigon's Wrap",
       "itemType": "Set",
       "numOccurrences": 3,
-      "totalSample": 65,
-      "pct": 4.615384615384616
+      "totalSample": 53,
+      "pct": 5.66
     },
     {
-      "item": "Infinity",
-      "itemType": "Runeword",
+      "item": "The Reaper's Toll",
+      "itemType": "Unique",
       "numOccurrences": 3,
-      "totalSample": 65,
-      "pct": 4.615384615384616
+      "totalSample": 53,
+      "pct": 5.66
     },
     {
-      "item": "Sigon's Gage",
-      "itemType": "Set",
-      "numOccurrences": 3,
-      "totalSample": 65,
-      "pct": 4.615384615384616
-    },
-    {
-      "item": "Leoric's Mithril Bane",
+      "item": "Boneflesh",
       "itemType": "Unique",
       "numOccurrences": 2,
-      "totalSample": 65,
-      "pct": 3.076923076923077
+      "totalSample": 53,
+      "pct": 3.77
+    },
+    {
+      "item": "Crow Caw",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 53,
+      "pct": 3.77
+    },
+    {
+      "item": "Fortitude",
+      "itemType": "Runeword",
+      "numOccurrences": 2,
+      "totalSample": 53,
+      "pct": 3.77
+    },
+    {
+      "item": "Gore Rider",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 53,
+      "pct": 3.77
+    },
+    {
+      "item": "Immortal King's Forge",
+      "itemType": "Set",
+      "numOccurrences": 2,
+      "totalSample": 53,
+      "pct": 3.77
+    },
+    {
+      "item": "Leviathan",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 53,
+      "pct": 3.77
     },
     {
       "item": "Magnus' Skin",
       "itemType": "Set",
       "numOccurrences": 2,
-      "totalSample": 65,
-      "pct": 3.076923076923077
+      "totalSample": 53,
+      "pct": 3.77
     },
     {
-      "item": "Merman's Sprocket",
+      "item": "Nosferatu's Coil",
       "itemType": "Unique",
       "numOccurrences": 2,
-      "totalSample": 65,
-      "pct": 3.076923076923077
+      "totalSample": 53,
+      "pct": 3.77
     },
     {
-      "item": "Duriel's Shell",
-      "itemType": "Unique",
+      "item": "Sander's Taboo",
+      "itemType": "Set",
       "numOccurrences": 2,
-      "totalSample": 65,
-      "pct": 3.076923076923077
+      "totalSample": 53,
+      "pct": 3.77
     },
     {
-      "item": "Verdungo's Hearty Cord",
+      "item": "Sigon's Gage",
+      "itemType": "Set",
+      "numOccurrences": 2,
+      "totalSample": 53,
+      "pct": 3.77
+    },
+    {
+      "item": "Skin of the Flayed One",
       "itemType": "Unique",
       "numOccurrences": 2,
-      "totalSample": 65,
-      "pct": 3.076923076923077
+      "totalSample": 53,
+      "pct": 3.77
+    },
+    {
+      "item": "Smoke",
+      "itemType": "Runeword",
+      "numOccurrences": 2,
+      "totalSample": 53,
+      "pct": 3.77
+    },
+    {
+      "item": "Stealskull",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 53,
+      "pct": 3.77
+    },
+    {
+      "item": "Templar's Might",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 53,
+      "pct": 3.77
+    },
+    {
+      "item": "Vampire Gaze",
+      "itemType": "Unique",
+      "numOccurrences": 2,
+      "totalSample": 53,
+      "pct": 3.77
+    },
+    {
+      "item": "Black Hades",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Bladebuckle",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
     },
     {
       "item": "Cleglaw's Pincers",
       "itemType": "Set",
-      "numOccurrences": 2,
-      "totalSample": 65,
-      "pct": 3.076923076923077
-    },
-    {
-      "item": "The Reaper's Toll",
-      "itemType": "Unique",
-      "numOccurrences": 2,
-      "totalSample": 65,
-      "pct": 3.076923076923077
-    },
-    {
-      "item": "Sander's Riprap",
-      "itemType": "Set",
-      "numOccurrences": 2,
-      "totalSample": 65,
-      "pct": 3.076923076923077
-    },
-    {
-      "item": "Wraithskin",
-      "itemType": "Unique",
-      "numOccurrences": 2,
-      "totalSample": 65,
-      "pct": 3.076923076923077
-    },
-    {
-      "item": "Sage's Defiance",
-      "itemType": "Unique",
-      "numOccurrences": 2,
-      "totalSample": 65,
-      "pct": 3.076923076923077
-    },
-    {
-      "item": "Rockstopper",
-      "itemType": "Unique",
-      "numOccurrences": 2,
-      "totalSample": 65,
-      "pct": 3.076923076923077
-    },
-    {
-      "item": "Infernostride",
-      "itemType": "Unique",
-      "numOccurrences": 2,
-      "totalSample": 65,
-      "pct": 3.076923076923077
-    },
-    {
-      "item": "Pus Spitter",
-      "itemType": "Unique",
-      "numOccurrences": 2,
-      "totalSample": 65,
-      "pct": 3.076923076923077
-    },
-    {
-      "item": "Sigon's Sabot",
-      "itemType": "Set",
-      "numOccurrences": 2,
-      "totalSample": 65,
-      "pct": 3.076923076923077
-    },
-    {
-      "item": "Natalya's Soul",
-      "itemType": "Set",
-      "numOccurrences": 2,
-      "totalSample": 65,
-      "pct": 3.076923076923077
-    },
-    {
-      "item": "Treads of Cthon",
-      "itemType": "Unique",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
     },
     {
-      "item": "Venom Grip",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Wilhelm's Pride",
+      "item": "Credendum",
       "itemType": "Set",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Titan's Grip",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Atma's Wail",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Bannerlord's Call",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Blackhorn's Face",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Bonehew",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Bul-Kathos' Sacred Charge",
-      "itemType": "Set",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Bul-Kathos' Tribal Guardian",
-      "itemType": "Set",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
     },
     {
       "item": "Crown of Ages",
       "itemType": "Unique",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
     },
     {
-      "item": "Crown of Thieves",
+      "item": "Delirium",
+      "itemType": "Runeword",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Duskdeep",
       "itemType": "Unique",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
     },
     {
-      "item": "Cyclopean Roar",
+      "item": "Ghoulhide",
       "itemType": "Unique",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
     },
     {
-      "item": "Doombringer",
-      "itemType": "Unique",
+      "item": "Gloom",
+      "itemType": "Runeword",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
     },
     {
-      "item": "Dracul's Grasp",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Eschuta's Temper",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Flamebellow",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Giant Skull",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Haemosu's Adamant",
+      "item": "Griswold's Heart",
       "itemType": "Set",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Harlequin Crest",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
     },
     {
       "item": "Heavenly Garb",
       "itemType": "Unique",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
     },
     {
-      "item": "Hellslayer",
-      "itemType": "Unique",
+      "item": "Hustle",
+      "itemType": "Runeword",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
     },
     {
-      "item": "Hotspur",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Howltusk",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Marrowwalk",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "M'avina's Icy Clutch",
+      "item": "Hwanin's Blessing",
       "itemType": "Set",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
     },
     {
-      "item": "Medusa's Gaze",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Natalya's Shadow",
+      "item": "Immortal King's Soul Cage",
       "itemType": "Set",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
     },
     {
-      "item": "Rattlecage",
-      "itemType": "Unique",
+      "item": "Immortal King's Stone Crusher",
+      "itemType": "Set",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
     },
     {
-      "item": "Rockfleece",
+      "item": "Immortal King's Will",
+      "itemType": "Set",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Lionheart",
+      "itemType": "Runeword",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Lore",
+      "itemType": "Runeword",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Magefist",
       "itemType": "Unique",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Merman's Sprocket",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Obedience",
+      "itemType": "Runeword",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Purity",
+      "itemType": "Runeword",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Pus Spitter",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Raekor's Virtue",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Ramfodder",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Rapture",
+      "itemType": "Runeword",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Razortail",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Rhyme",
+      "itemType": "Runeword",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Sage's Defiance",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
     },
     {
       "item": "Sandstorm Trek",
       "itemType": "Unique",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
     },
     {
-      "item": "Skin of the Vipermagi",
+      "item": "Skyfall",
       "itemType": "Unique",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Smoke",
-      "itemType": "Runeword",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
     },
     {
       "item": "Soul Drainer",
       "itemType": "Unique",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
     },
     {
-      "item": "Spirit Forge",
+      "item": "Sparking Mail",
       "itemType": "Unique",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
     },
     {
-      "item": "Stealskull",
+      "item": "Spectral Plate",
       "itemType": "Unique",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Steel Carapace",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
     },
     {
       "item": "Steelrend",
       "itemType": "Unique",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
     },
     {
-      "item": "Tancred's Hobnails",
-      "itemType": "Set",
+      "item": "Stone",
+      "itemType": "Runeword",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Stormspire",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "The Face of Horror",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "The Gavel of Pain",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
     },
     {
       "item": "The Gladiator's Bane",
       "itemType": "Unique",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Toothrow",
-      "itemType": "Unique",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
-    },
-    {
-      "item": "Trang-Oul's Claws",
-      "itemType": "Set",
-      "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
     },
     {
       "item": "Trang-Oul's Girth",
       "itemType": "Set",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
     },
     {
       "item": "Treachery",
       "itemType": "Runeword",
       "numOccurrences": 1,
-      "totalSample": 65,
-      "pct": 1.5384615384615385
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "War Traveler",
+      "itemType": "Unique",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
+    },
+    {
+      "item": "Wilhelm's Pride",
+      "itemType": "Set",
+      "numOccurrences": 1,
+      "totalSample": 53,
+      "pct": 1.89
     }
   ],
   "levelDistribution": {
-    "softcore": [
-      {
-        "level": 80,
-        "count": 6437
-      },
-      {
-        "level": 81,
-        "count": 6421
-      },
-      {
-        "level": 82,
-        "count": 6434
-      },
-      {
-        "level": 83,
-        "count": 6582
-      },
-      {
-        "level": 84,
-        "count": 6859
-      },
-      {
-        "level": 85,
-        "count": 8057
-      },
-      {
-        "level": 86,
-        "count": 8955
-      },
-      {
-        "level": 87,
-        "count": 10165
-      },
-      {
-        "level": 88,
-        "count": 11271
-      },
-      {
-        "level": 89,
-        "count": 11854
-      },
-      {
-        "level": 90,
-        "count": 13028
-      },
-      {
-        "level": 91,
-        "count": 12274
-      },
-      {
-        "level": 92,
-        "count": 10826
-      },
-      {
-        "level": 93,
-        "count": 9200
-      },
-      {
-        "level": 94,
-        "count": 7054
-      },
-      {
-        "level": 95,
-        "count": 5390
-      },
-      {
-        "level": 96,
-        "count": 3026
-      },
-      {
-        "level": 97,
-        "count": 1378
-      },
-      {
-        "level": 98,
-        "count": 482
-      },
-      {
-        "level": 99,
-        "count": 1124
-      }
-    ],
     "hardcore": [
       {
         "level": 80,
-        "count": 1396
-      },
-      {
-        "level": 81,
-        "count": 1292
-      },
-      {
-        "level": 82,
-        "count": 1300
+        "count": 1
       },
       {
         "level": 83,
-        "count": 1361
-      },
-      {
-        "level": 84,
-        "count": 1421
-      },
-      {
-        "level": 85,
-        "count": 1578
+        "count": 1
       },
       {
         "level": 86,
-        "count": 1778
+        "count": 1
       },
       {
         "level": 87,
-        "count": 2113
+        "count": 2
       },
       {
         "level": 88,
-        "count": 2221
+        "count": 1
       },
       {
         "level": 89,
-        "count": 2321
+        "count": 9
       },
       {
         "level": 90,
-        "count": 2512
+        "count": 1
       },
       {
         "level": 91,
-        "count": 2326
-      },
-      {
-        "level": 92,
-        "count": 2015
-      },
-      {
-        "level": 93,
-        "count": 1810
+        "count": 3
       },
       {
         "level": 94,
-        "count": 1442
+        "count": 1
+      }
+    ],
+    "softcore": [
+      {
+        "level": 81,
+        "count": 3
       },
       {
-        "level": 95,
-        "count": 1069
+        "level": 82,
+        "count": 4
       },
       {
-        "level": 96,
-        "count": 716
+        "level": 83,
+        "count": 2
       },
       {
-        "level": 97,
-        "count": 315
+        "level": 84,
+        "count": 3
       },
       {
-        "level": 98,
-        "count": 141
+        "level": 85,
+        "count": 2
       },
       {
-        "level": 99,
-        "count": 289
+        "level": 86,
+        "count": 1
+      },
+      {
+        "level": 87,
+        "count": 7
+      },
+      {
+        "level": 88,
+        "count": 6
+      },
+      {
+        "level": 89,
+        "count": 8
+      },
+      {
+        "level": 90,
+        "count": 4
+      },
+      {
+        "level": 91,
+        "count": 5
+      },
+      {
+        "level": 92,
+        "count": 6
+      },
+      {
+        "level": 93,
+        "count": 2
       }
     ]
+  },
+  "meta": {
+    "season": 14,
+    "mode": "softcore",
+    "className": "Sorceress",
+    "minLevel": 80,
+    "skills": [
+      {
+        "name": "Blizzard",
+        "minLevel": 20
+      }
+    ],
+    "poolSize": 53,
+    "basePoolSize": 788,
+    "coreStats": [
+      {
+        "key": "strength",
+        "label": "Strength",
+        "avg": 126.18867924528301
+      },
+      {
+        "key": "dexterity",
+        "label": "Dexterity",
+        "avg": 37.62264150943396
+      },
+      {
+        "key": "vitality",
+        "label": "Vitality",
+        "avg": 293.6792452830189
+      },
+      {
+        "key": "energy",
+        "label": "Energy",
+        "avg": 56.15094339622642
+      },
+      {
+        "key": "life",
+        "label": "Life",
+        "avg": 1028.132075471698
+      },
+      {
+        "key": "mana",
+        "label": "Mana",
+        "avg": 609.5094339622641
+      }
+    ],
+    "avgStats": [
+      {
+        "modName": "item_fastercastrate",
+        "displayLabel": "Faster Cast Rate",
+        "suffix": "%",
+        "avgValue": 105.94339622641509,
+        "charsWithMod": 52,
+        "pctOfChars": 0.9811320754716981
+      },
+      {
+        "modName": "item_magicbonus",
+        "displayLabel": "Magic Find",
+        "suffix": "%",
+        "avgValue": 129.26415094339623,
+        "charsWithMod": 52,
+        "pctOfChars": 0.9811320754716981
+      },
+      {
+        "modName": "maxhp",
+        "displayLabel": "+Life",
+        "suffix": "",
+        "avgValue": 171.66037735849056,
+        "charsWithMod": 52,
+        "pctOfChars": 0.9811320754716981
+      },
+      {
+        "modName": "item_armor_percent",
+        "displayLabel": "Enhanced Defense %",
+        "suffix": "%",
+        "avgValue": 385.7169811320755,
+        "charsWithMod": 50,
+        "pctOfChars": 0.9433962264150944
+      },
+      {
+        "modName": "item_fastermovevelocity",
+        "displayLabel": "Faster Run/Walk",
+        "suffix": "%",
+        "avgValue": 31.58490566037736,
+        "charsWithMod": 50,
+        "pctOfChars": 0.9433962264150944
+      },
+      {
+        "modName": "maxmana",
+        "displayLabel": "+Mana",
+        "suffix": "",
+        "avgValue": 126.75471698113208,
+        "charsWithMod": 49,
+        "pctOfChars": 0.9245283018867925
+      },
+      {
+        "modName": "dexterity",
+        "displayLabel": "+Dexterity",
+        "suffix": "",
+        "avgValue": 20.62264150943396,
+        "charsWithMod": 47,
+        "pctOfChars": 0.8867924528301887
+      },
+      {
+        "modName": "item_fastergethitrate",
+        "displayLabel": "Faster Hit Recovery",
+        "suffix": "%",
+        "avgValue": 34.20754716981132,
+        "charsWithMod": 47,
+        "pctOfChars": 0.8867924528301887
+      }
+    ],
+    "topItemsBySlot": {
+      "weapon": [
+        {
+          "itemName": "Death's Fathom",
+          "itemType": "Unique",
+          "count": 16,
+          "pct": 30.19,
+          "invCode": "ob5",
+          "price": {
+            "medianHr": 0.35,
+            "samples": 23,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Call to Arms",
+          "itemType": "Runeword",
+          "count": 11,
+          "pct": 20.75,
+          "invCode": "crs",
+          "price": {
+            "medianHr": 3,
+            "samples": 16,
+            "source": "ask"
+          },
+          "runes": [
+            {
+              "rune": "Amn",
+              "medianHr": null
+            },
+            {
+              "rune": "Ral",
+              "medianHr": null
+            },
+            {
+              "rune": "Mal",
+              "medianHr": null
+            },
+            {
+              "rune": "Ist",
+              "medianHr": null
+            },
+            {
+              "rune": "Ohm",
+              "medianHr": 1
+            }
+          ],
+          "runeCostHr": 1.04,
+          "runeCostEstimated": true
+        },
+        {
+          "itemName": "Tal Rasha's Lidless Eye",
+          "itemType": "Set",
+          "count": 10,
+          "pct": 18.87,
+          "invCode": "ob5",
+          "price": {
+            "medianHr": 0.1,
+            "samples": 3,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "The Oculus",
+          "itemType": "Unique",
+          "count": 8,
+          "pct": 15.09,
+          "invCode": "ob5",
+          "price": {
+            "medianHr": 0.1,
+            "samples": 17,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Blade of Ali Baba",
+          "itemType": "Unique",
+          "count": 3,
+          "pct": 5.66,
+          "invCode": "flc",
+          "price": null,
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Tempest",
+          "itemType": "Unique",
+          "count": 3,
+          "pct": 5.66,
+          "invCode": "ob1",
+          "price": null,
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Eschuta's Temper",
+          "itemType": "Unique",
+          "count": 2,
+          "pct": 3.77,
+          "invCode": "ob2",
+          "price": {
+            "medianHr": 0.1,
+            "samples": 18,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Chromatic Ire",
+          "itemType": "Unique",
+          "count": 1,
+          "pct": 1.89,
+          "invCode": "cst",
+          "price": null,
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        }
+      ],
+      "offhand": [
+        {
+          "itemName": "Medusa's Gaze",
+          "itemType": "Unique",
+          "count": 16,
+          "pct": 30.19,
+          "invCode": "tow",
+          "price": {
+            "medianHr": 0.2,
+            "samples": 6,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Spirit",
+          "itemType": "Runeword",
+          "count": 16,
+          "pct": 30.19,
+          "invCode": "bsd",
+          "price": null,
+          "runes": [
+            {
+              "rune": "Tal",
+              "medianHr": null
+            },
+            {
+              "rune": "Thul",
+              "medianHr": null
+            },
+            {
+              "rune": "Ort",
+              "medianHr": 0.5
+            },
+            {
+              "rune": "Amn",
+              "medianHr": null
+            }
+          ],
+          "runeCostHr": 0.53,
+          "runeCostEstimated": true
+        },
+        {
+          "itemName": "Lidless Wall",
+          "itemType": "Unique",
+          "count": 14,
+          "pct": 26.42,
+          "invCode": "bsh",
+          "price": {
+            "medianHr": 0.1,
+            "samples": 7,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Milabrega's Orb",
+          "itemType": "Set",
+          "count": 9,
+          "pct": 16.98,
+          "invCode": "kit",
+          "price": null,
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Sigon's Guard",
+          "itemType": "Set",
+          "count": 3,
+          "pct": 5.66,
+          "invCode": "tow",
+          "price": null,
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Steelclash",
+          "itemType": "Unique",
+          "count": 3,
+          "pct": 5.66,
+          "invCode": "kit",
+          "price": null,
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Ancients' Pledge",
+          "itemType": "Runeword",
+          "count": 2,
+          "pct": 3.77,
+          "invCode": "kit",
+          "price": null,
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Blackoak Shield",
+          "itemType": "Unique",
+          "count": 2,
+          "pct": 3.77,
+          "invCode": "sml",
+          "price": null,
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        }
+      ],
+      "helm": [
+        {
+          "itemName": "Nightwing's Veil",
+          "itemType": "Unique",
+          "count": 16,
+          "pct": 30.19,
+          "invCode": "ghm",
+          "price": {
+            "medianHr": 0.5,
+            "samples": 24,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Tal Rasha's Horadric Crest",
+          "itemType": "Set",
+          "count": 9,
+          "pct": 16.98,
+          "invCode": "msk",
+          "price": null,
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Harlequin Crest",
+          "itemType": "Unique",
+          "count": 8,
+          "pct": 15.09,
+          "invCode": "cap",
+          "price": {
+            "medianHr": 0.25,
+            "samples": 23,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Cow King's Horns",
+          "itemType": "Set",
+          "count": 1,
+          "pct": 1.89,
+          "invCode": "cap",
+          "price": null,
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Lore",
+          "itemType": "Runeword",
+          "count": 1,
+          "pct": 1.89,
+          "invCode": "fhl",
+          "price": null,
+          "runes": [
+            {
+              "rune": "Ort",
+              "medianHr": 0.5
+            },
+            {
+              "rune": "Sol",
+              "medianHr": null
+            }
+          ],
+          "runeCostHr": 0.51,
+          "runeCostEstimated": true
+        },
+        {
+          "itemName": "Naj's Circlet",
+          "itemType": "Set",
+          "count": 1,
+          "pct": 1.89,
+          "invCode": "ci0",
+          "price": null,
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Peasant Crown",
+          "itemType": "Unique",
+          "count": 1,
+          "pct": 1.89,
+          "invCode": "cap",
+          "price": null,
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        }
+      ],
+      "armor": [
+        {
+          "itemName": "Ormus' Robes",
+          "itemType": "Unique",
+          "count": 13,
+          "pct": 24.53,
+          "invCode": "qui",
+          "price": {
+            "medianHr": 0.25,
+            "samples": 42,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Tal Rasha's Guardianship",
+          "itemType": "Set",
+          "count": 11,
+          "pct": 20.75,
+          "invCode": "gth",
+          "price": {
+            "medianHr": 0.1,
+            "samples": 8,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Skin of the Vipermagi",
+          "itemType": "Unique",
+          "count": 7,
+          "pct": 13.21,
+          "invCode": "lea",
+          "price": {
+            "medianHr": 0.18,
+            "samples": 23,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Atma's Wail",
+          "itemType": "Unique",
+          "count": 2,
+          "pct": 3.77,
+          "invCode": "gth",
+          "price": {
+            "medianHr": 0.1,
+            "samples": 4,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Que-Hegan's Wisdom",
+          "itemType": "Unique",
+          "count": 2,
+          "pct": 3.77,
+          "invCode": "ltp",
+          "price": null,
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Skullder's Ire",
+          "itemType": "Unique",
+          "count": 2,
+          "pct": 3.77,
+          "invCode": "spl",
+          "price": {
+            "medianHr": 0.2,
+            "samples": 5,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Stealth",
+          "itemType": "Runeword",
+          "count": 2,
+          "pct": 3.77,
+          "invCode": "lea",
+          "price": null,
+          "runes": [
+            {
+              "rune": "Tal",
+              "medianHr": null
+            },
+            {
+              "rune": "Eth",
+              "medianHr": null
+            }
+          ],
+          "runeCostHr": 0.02,
+          "runeCostEstimated": true
+        },
+        {
+          "itemName": "Arkaine's Valor",
+          "itemType": "Unique",
+          "count": 1,
+          "pct": 1.89,
+          "invCode": "spl",
+          "price": {
+            "medianHr": 0.5,
+            "samples": 13,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        }
+      ],
+      "gloves": [
+        {
+          "itemName": "Frostburn",
+          "itemType": "Unique",
+          "count": 14,
+          "pct": 26.42,
+          "invCode": "hgl",
+          "price": {
+            "medianHr": 0.1,
+            "samples": 3,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Trang-Oul's Claws",
+          "itemType": "Set",
+          "count": 4,
+          "pct": 7.55,
+          "invCode": "mgl",
+          "price": {
+            "medianHr": 0.1,
+            "samples": 5,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Chance Guards",
+          "itemType": "Unique",
+          "count": 3,
+          "pct": 5.66,
+          "invCode": "mgl",
+          "price": {
+            "medianHr": 0.13,
+            "samples": 4,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Magefist",
+          "itemType": "Unique",
+          "count": 3,
+          "pct": 5.66,
+          "invCode": "tgl",
+          "price": {
+            "medianHr": 0.1,
+            "samples": 4,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Lava Gout",
+          "itemType": "Unique",
+          "count": 1,
+          "pct": 1.89,
+          "invCode": "tgl",
+          "price": {
+            "medianHr": 0.5,
+            "samples": 9,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Occultist",
+          "itemType": "Unique",
+          "count": 1,
+          "pct": 1.89,
+          "invCode": "tgl",
+          "price": {
+            "medianHr": 0.23,
+            "samples": 6,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Titan's Grip",
+          "itemType": "Unique",
+          "count": 1,
+          "pct": 1.89,
+          "invCode": "lgl",
+          "price": null,
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        }
+      ],
+      "belt": [
+        {
+          "itemName": "Snowclash",
+          "itemType": "Unique",
+          "count": 17,
+          "pct": 32.08,
+          "invCode": "tbl",
+          "price": {
+            "medianHr": 0.25,
+            "samples": 15,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Tal Rasha's Fine-Spun Cloth",
+          "itemType": "Set",
+          "count": 13,
+          "pct": 24.53,
+          "invCode": "mbl",
+          "price": null,
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Arachnid Mesh",
+          "itemType": "Unique",
+          "count": 3,
+          "pct": 5.66,
+          "invCode": "lbl",
+          "price": {
+            "medianHr": 0.4,
+            "samples": 33,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Goldwrap",
+          "itemType": "Unique",
+          "count": 1,
+          "pct": 1.89,
+          "invCode": "tbl",
+          "price": {
+            "medianHr": 0.1,
+            "samples": 7,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        }
+      ],
+      "boots": [
+        {
+          "itemName": "Silkweave",
+          "itemType": "Unique",
+          "count": 5,
+          "pct": 9.43,
+          "invCode": "mbt",
+          "price": {
+            "medianHr": 0.15,
+            "samples": 9,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "War Traveler",
+          "itemType": "Unique",
+          "count": 4,
+          "pct": 7.55,
+          "invCode": "tbt",
+          "price": {
+            "medianHr": 0.28,
+            "samples": 10,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Infernostride",
+          "itemType": "Unique",
+          "count": 3,
+          "pct": 5.66,
+          "invCode": "lbt",
+          "price": null,
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Waterwalk",
+          "itemType": "Unique",
+          "count": 3,
+          "pct": 5.66,
+          "invCode": "vbt",
+          "price": {
+            "medianHr": 0.1,
+            "samples": 6,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Sandstorm Trek",
+          "itemType": "Unique",
+          "count": 2,
+          "pct": 3.77,
+          "invCode": "vbt",
+          "price": {
+            "medianHr": 0.1,
+            "samples": 7,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Aldur's Advance",
+          "itemType": "Set",
+          "count": 1,
+          "pct": 1.89,
+          "invCode": "tbt",
+          "price": {
+            "medianHr": 0.05,
+            "samples": 4,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Gorefoot",
+          "itemType": "Unique",
+          "count": 1,
+          "pct": 1.89,
+          "invCode": "vbt",
+          "price": null,
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Natalya's Soul",
+          "itemType": "Set",
+          "count": 1,
+          "pct": 1.89,
+          "invCode": "mbt",
+          "price": null,
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        }
+      ],
+      "amulet": [
+        {
+          "itemName": "Tal Rasha's Adjudication",
+          "itemType": "Set",
+          "count": 11,
+          "pct": 20.75,
+          "invCode": "amu",
+          "price": {
+            "medianHr": 0.1,
+            "samples": 13,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Mara's Kaleidoscope",
+          "itemType": "Unique",
+          "count": 8,
+          "pct": 15.09,
+          "invCode": "amu",
+          "price": {
+            "medianHr": 0.75,
+            "samples": 20,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Metalgrid",
+          "itemType": "Unique",
+          "count": 1,
+          "pct": 1.89,
+          "invCode": "amu",
+          "price": {
+            "medianHr": 0.38,
+            "samples": 12,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        }
+      ],
+      "ring": [
+        {
+          "itemName": "Nagelring",
+          "itemType": "Unique",
+          "count": 7,
+          "pct": 13.21,
+          "invCode": "rin",
+          "price": null,
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "The Stone of Jordan",
+          "itemType": "Unique",
+          "count": 5,
+          "pct": 9.43,
+          "invCode": "rin",
+          "price": {
+            "medianHr": 1,
+            "samples": 20,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Constricting Loop",
+          "itemType": "Unique",
+          "count": 2,
+          "pct": 3.77,
+          "invCode": "rin",
+          "price": {
+            "medianHr": 0.5,
+            "samples": 8,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Dwarf Star",
+          "itemType": "Unique",
+          "count": 2,
+          "pct": 3.77,
+          "invCode": "rin",
+          "price": {
+            "medianHr": 0.1,
+            "samples": 9,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Bul-Kathos' Wedding Band",
+          "itemType": "Unique",
+          "count": 1,
+          "pct": 1.89,
+          "invCode": "rin",
+          "price": {
+            "medianHr": 1.25,
+            "samples": 19,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Nature's Peace",
+          "itemType": "Unique",
+          "count": 1,
+          "pct": 1.89,
+          "invCode": "rin",
+          "price": {
+            "medianHr": 0.2,
+            "samples": 31,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        },
+        {
+          "itemName": "Raven Frost",
+          "itemType": "Unique",
+          "count": 1,
+          "pct": 1.89,
+          "invCode": "rin",
+          "price": {
+            "medianHr": 0.2,
+            "samples": 30,
+            "source": "ask"
+          },
+          "runes": null,
+          "runeCostHr": null,
+          "runeCostEstimated": false
+        }
+      ]
+    },
+    "affixModsBySlot": {
+      "weapon": {
+        "items": 15,
+        "mods": [
+          {
+            "modName": "item_singleskill",
+            "displayLabel": "+X to Specific Skill",
+            "category": "skill",
+            "count": 27,
+            "pct": 1.8,
+            "medianValue": 56,
+            "p75Value": 63
+          },
+          {
+            "modName": "item_addskill_tab|Cold Skills (Sorceress Only)",
+            "displayLabel": "Cold Skills (Sorceress Only)",
+            "category": "skill",
+            "count": 6,
+            "pct": 0.4,
+            "medianValue": 10,
+            "p75Value": 10
+          },
+          {
+            "modName": "item_healafterkill",
+            "displayLabel": "Life After Each Kill",
+            "category": "leech",
+            "count": 6,
+            "pct": 0.4,
+            "medianValue": 6.5,
+            "p75Value": 8
+          },
+          {
+            "modName": "maxhp",
+            "displayLabel": "+Life",
+            "category": "stat",
+            "count": 6,
+            "pct": 0.4,
+            "medianValue": 20,
+            "p75Value": 30
+          },
+          {
+            "modName": "passive_cold_mastery",
+            "displayLabel": "Cold Mastery",
+            "category": "damage",
+            "count": 6,
+            "pct": 0.4,
+            "medianValue": 20.5,
+            "p75Value": 22
+          },
+          {
+            "modName": "energy",
+            "displayLabel": "+Energy",
+            "category": "stat",
+            "count": 5,
+            "pct": 0.3333333333333333,
+            "medianValue": 11,
+            "p75Value": 17
+          },
+          {
+            "modName": "item_addclassskills",
+            "displayLabel": "+X to All Class Skills",
+            "category": "skill",
+            "count": 5,
+            "pct": 0.3333333333333333,
+            "medianValue": 1,
+            "p75Value": 1
+          },
+          {
+            "modName": "item_fastercastrate",
+            "displayLabel": "Faster Cast Rate",
+            "category": "speed",
+            "count": 5,
+            "pct": 0.3333333333333333,
+            "medianValue": 50,
+            "p75Value": 50
+          },
+          {
+            "modName": "dexterity",
+            "displayLabel": "+Dexterity",
+            "category": "stat",
+            "count": 3,
+            "pct": 0.2,
+            "medianValue": 15,
+            "p75Value": 15
+          },
+          {
+            "modName": "hpregen",
+            "displayLabel": "Replenish Life",
+            "category": "stat",
+            "count": 3,
+            "pct": 0.2,
+            "medianValue": 7,
+            "p75Value": 15
+          },
+          {
+            "modName": "item_charged_skill",
+            "displayLabel": "Charged Skill",
+            "category": "skill",
+            "count": 3,
+            "pct": 0.2,
+            "medianValue": 6,
+            "p75Value": 6
+          },
+          {
+            "modName": "item_damagetomana",
+            "displayLabel": "Damage Taken Goes to Mana",
+            "category": "damage",
+            "count": 3,
+            "pct": 0.2,
+            "medianValue": 16,
+            "p75Value": 18
+          },
+          {
+            "modName": "item_splashonhit",
+            "displayLabel": "Splash Damage On Hit",
+            "category": "damage",
+            "count": 3,
+            "pct": 0.2,
+            "medianValue": 1,
+            "p75Value": 1
+          },
+          {
+            "modName": "lightresist",
+            "displayLabel": "Lightning Resist",
+            "category": "resist",
+            "count": 3,
+            "pct": 0.2,
+            "medianValue": 12,
+            "p75Value": 22
+          },
+          {
+            "modName": "manarecoverybonus",
+            "displayLabel": "Mana Recovery Bonus",
+            "category": "stat",
+            "count": 3,
+            "pct": 0.2,
+            "medianValue": 11,
+            "p75Value": 29
+          }
+        ]
+      },
+      "offhand": {
+        "items": 4,
+        "mods": [
+          {
+            "modName": "coldresist",
+            "displayLabel": "Cold Resist",
+            "category": "resist",
+            "count": 2,
+            "pct": 0.5,
+            "medianValue": 48,
+            "p75Value": 66
+          },
+          {
+            "modName": "fireresist",
+            "displayLabel": "Fire Resist",
+            "category": "resist",
+            "count": 2,
+            "pct": 0.5,
+            "medianValue": 47.5,
+            "p75Value": 84
+          },
+          {
+            "modName": "item_armor_percent",
+            "displayLabel": "Enhanced Defense %",
+            "category": "defense",
+            "count": 2,
+            "pct": 0.5,
+            "medianValue": 39.5,
+            "p75Value": 41
+          },
+          {
+            "modName": "item_fasterblockrate",
+            "displayLabel": "Faster Block Rate",
+            "category": "speed",
+            "count": 2,
+            "pct": 0.5,
+            "medianValue": 22.5,
+            "p75Value": 30
+          },
+          {
+            "modName": "item_skillongethit",
+            "displayLabel": "Proc On Getting Hit",
+            "category": "proc",
+            "count": 2,
+            "pct": 0.5,
+            "medianValue": 4,
+            "p75Value": 5
+          },
+          {
+            "modName": "lightresist",
+            "displayLabel": "Lightning Resist",
+            "category": "resist",
+            "count": 2,
+            "pct": 0.5,
+            "medianValue": 29,
+            "p75Value": 47
+          },
+          {
+            "modName": "poisonresist",
+            "displayLabel": "Poison Resist",
+            "category": "resist",
+            "count": 2,
+            "pct": 0.5,
+            "medianValue": 29,
+            "p75Value": 47
+          },
+          {
+            "modName": "toblock",
+            "displayLabel": "Chance to Block",
+            "category": "defense",
+            "count": 2,
+            "pct": 0.5,
+            "medianValue": 15,
+            "p75Value": 20
+          },
+          {
+            "modName": "all_resist",
+            "displayLabel": "All Resistances",
+            "category": "resist",
+            "count": 1,
+            "pct": 0.25,
+            "medianValue": 11,
+            "p75Value": 11
+          },
+          {
+            "modName": "energy",
+            "displayLabel": "+Energy",
+            "category": "stat",
+            "count": 1,
+            "pct": 0.25,
+            "medianValue": 25,
+            "p75Value": 25
+          },
+          {
+            "modName": "item_addskill_tab|Offensive Auras Skills (Paladin Only)",
+            "displayLabel": "Offensive Auras Skills (Paladin Only)",
+            "category": "skill",
+            "count": 1,
+            "pct": 0.25,
+            "medianValue": 25,
+            "p75Value": 25
+          },
+          {
+            "modName": "item_attackertakesdamage",
+            "displayLabel": "Attacker Takes Damage (Flat)",
+            "category": "leech",
+            "count": 1,
+            "pct": 0.25,
+            "medianValue": 4,
+            "p75Value": 4
+          },
+          {
+            "modName": "item_halffreezeduration",
+            "displayLabel": "Half Freeze Duration",
+            "category": "resist",
+            "count": 1,
+            "pct": 0.25,
+            "medianValue": 1,
+            "p75Value": 1
+          },
+          {
+            "modName": "item_manaafterkill",
+            "displayLabel": "Mana After Each Kill",
+            "category": "leech",
+            "count": 1,
+            "pct": 0.25,
+            "medianValue": 1,
+            "p75Value": 1
+          },
+          {
+            "modName": "magic_damage_reduction",
+            "displayLabel": "Magic Damage Reduction",
+            "category": "resist",
+            "count": 1,
+            "pct": 0.25,
+            "medianValue": 4,
+            "p75Value": 4
+          }
+        ]
+      },
+      "helm": {
+        "items": 12,
+        "mods": [
+          {
+            "modName": "item_addclassskills",
+            "displayLabel": "+X to All Class Skills",
+            "category": "skill",
+            "count": 7,
+            "pct": 0.5833333333333334,
+            "medianValue": 1,
+            "p75Value": 1
+          },
+          {
+            "modName": "item_armor_percent",
+            "displayLabel": "Enhanced Defense %",
+            "category": "defense",
+            "count": 6,
+            "pct": 0.5,
+            "medianValue": 73,
+            "p75Value": 94
+          },
+          {
+            "modName": "fireresist",
+            "displayLabel": "Fire Resist",
+            "category": "resist",
+            "count": 4,
+            "pct": 0.3333333333333333,
+            "medianValue": 24.5,
+            "p75Value": 28
+          },
+          {
+            "modName": "item_magicbonus",
+            "displayLabel": "Magic Find",
+            "category": "utility",
+            "count": 4,
+            "pct": 0.3333333333333333,
+            "medianValue": 36,
+            "p75Value": 48
+          },
+          {
+            "modName": "coldresist",
+            "displayLabel": "Cold Resist",
+            "category": "resist",
+            "count": 3,
+            "pct": 0.25,
+            "medianValue": 26,
+            "p75Value": 43
+          },
+          {
+            "modName": "dexterity",
+            "displayLabel": "+Dexterity",
+            "category": "stat",
+            "count": 3,
+            "pct": 0.25,
+            "medianValue": 10,
+            "p75Value": 21
+          },
+          {
+            "modName": "item_addskill_tab|Cold Skills (Sorceress Only)",
+            "displayLabel": "Cold Skills (Sorceress Only)",
+            "category": "skill",
+            "count": 3,
+            "pct": 0.25,
+            "medianValue": 10,
+            "p75Value": 10
+          },
+          {
+            "modName": "maxhp",
+            "displayLabel": "+Life",
+            "category": "stat",
+            "count": 3,
+            "pct": 0.25,
+            "medianValue": 32,
+            "p75Value": 39
+          },
+          {
+            "modName": "normal_damage_reduction",
+            "displayLabel": "Physical Damage Reduction (Flat)",
+            "category": "resist",
+            "count": 3,
+            "pct": 0.25,
+            "medianValue": 6,
+            "p75Value": 8
+          },
+          {
+            "modName": "poisonresist",
+            "displayLabel": "Poison Resist",
+            "category": "resist",
+            "count": 3,
+            "pct": 0.25,
+            "medianValue": 37,
+            "p75Value": 37
+          },
+          {
+            "modName": "all_resist",
+            "displayLabel": "All Resistances",
+            "category": "resist",
+            "count": 2,
+            "pct": 0.16666666666666666,
+            "medianValue": 17.5,
+            "p75Value": 19
+          },
+          {
+            "modName": "item_attackertakesdamage",
+            "displayLabel": "Attacker Takes Damage (Flat)",
+            "category": "leech",
+            "count": 2,
+            "pct": 0.16666666666666666,
+            "medianValue": 170,
+            "p75Value": 236
+          },
+          {
+            "modName": "item_fastercastrate",
+            "displayLabel": "Faster Cast Rate",
+            "category": "speed",
+            "count": 2,
+            "pct": 0.16666666666666666,
+            "medianValue": 15,
+            "p75Value": 20
+          },
+          {
+            "modName": "item_skillongethit",
+            "displayLabel": "Proc On Getting Hit",
+            "category": "proc",
+            "count": 2,
+            "pct": 0.16666666666666666,
+            "medianValue": 4.5,
+            "p75Value": 5
+          },
+          {
+            "modName": "lightresist",
+            "displayLabel": "Lightning Resist",
+            "category": "resist",
+            "count": 2,
+            "pct": 0.16666666666666666,
+            "medianValue": 24.5,
+            "p75Value": 28
+          }
+        ]
+      },
+      "armor": {
+        "items": 3,
+        "mods": [
+          {
+            "modName": "coldresist",
+            "displayLabel": "Cold Resist",
+            "category": "resist",
+            "count": 2,
+            "pct": 0.6666666666666666,
+            "medianValue": 21.5,
+            "p75Value": 27
+          },
+          {
+            "modName": "fireresist",
+            "displayLabel": "Fire Resist",
+            "category": "resist",
+            "count": 2,
+            "pct": 0.6666666666666666,
+            "medianValue": 21.5,
+            "p75Value": 27
+          },
+          {
+            "modName": "item_addclassskills",
+            "displayLabel": "+X to All Class Skills",
+            "category": "skill",
+            "count": 2,
+            "pct": 0.6666666666666666,
+            "medianValue": 1,
+            "p75Value": 1
+          },
+          {
+            "modName": "lightresist",
+            "displayLabel": "Lightning Resist",
+            "category": "resist",
+            "count": 2,
+            "pct": 0.6666666666666666,
+            "medianValue": 40.5,
+            "p75Value": 54
+          },
+          {
+            "modName": "poisonresist",
+            "displayLabel": "Poison Resist",
+            "category": "resist",
+            "count": 2,
+            "pct": 0.6666666666666666,
+            "medianValue": 37.5,
+            "p75Value": 59
+          },
+          {
+            "modName": "strength",
+            "displayLabel": "+Strength",
+            "category": "stat",
+            "count": 2,
+            "pct": 0.6666666666666666,
+            "medianValue": 14.5,
+            "p75Value": 20
+          },
+          {
+            "modName": "tohit",
+            "displayLabel": "+Attack Rating",
+            "category": "utility",
+            "count": 2,
+            "pct": 0.6666666666666666,
+            "medianValue": 82,
+            "p75Value": 105
+          },
+          {
+            "modName": "all_resist",
+            "displayLabel": "All Resistances",
+            "category": "resist",
+            "count": 1,
+            "pct": 0.3333333333333333,
+            "medianValue": 19,
+            "p75Value": 19
+          },
+          {
+            "modName": "damageresist",
+            "displayLabel": "Physical Damage Reduction %",
+            "category": "resist",
+            "count": 1,
+            "pct": 0.3333333333333333,
+            "medianValue": 14,
+            "p75Value": 14
+          },
+          {
+            "modName": "hpregen",
+            "displayLabel": "Replenish Life",
+            "category": "stat",
+            "count": 1,
+            "pct": 0.3333333333333333,
+            "medianValue": 8,
+            "p75Value": 8
+          },
+          {
+            "modName": "item_attackertakesdamage",
+            "displayLabel": "Attacker Takes Damage (Flat)",
+            "category": "leech",
+            "count": 1,
+            "pct": 0.3333333333333333,
+            "medianValue": 326,
+            "p75Value": 326
+          },
+          {
+            "modName": "item_manaafterkill",
+            "displayLabel": "Mana After Each Kill",
+            "category": "leech",
+            "count": 1,
+            "pct": 0.3333333333333333,
+            "medianValue": 2,
+            "p75Value": 2
+          },
+          {
+            "modName": "item_poisonlengthresist",
+            "displayLabel": "Poison Length Reduced By",
+            "category": "resist",
+            "count": 1,
+            "pct": 0.3333333333333333,
+            "medianValue": 75,
+            "p75Value": 75
+          },
+          {
+            "modName": "item_replenish_durability",
+            "displayLabel": "Replenish Durability",
+            "category": "defense",
+            "count": 1,
+            "pct": 0.3333333333333333,
+            "medianValue": 3,
+            "p75Value": 3
+          },
+          {
+            "modName": "magic_damage_reduction",
+            "displayLabel": "Magic Damage Reduction",
+            "category": "resist",
+            "count": 1,
+            "pct": 0.3333333333333333,
+            "medianValue": 3,
+            "p75Value": 3
+          }
+        ]
+      },
+      "gloves": {
+        "items": 22,
+        "mods": [
+          {
+            "modName": "item_fastercastrate",
+            "displayLabel": "Faster Cast Rate",
+            "category": "speed",
+            "count": 19,
+            "pct": 0.8636363636363636,
+            "medianValue": 20,
+            "p75Value": 20
+          },
+          {
+            "modName": "item_armor_percent",
+            "displayLabel": "Enhanced Defense %",
+            "category": "defense",
+            "count": 10,
+            "pct": 0.45454545454545453,
+            "medianValue": 75.5,
+            "p75Value": 92
+          },
+          {
+            "modName": "fireresist",
+            "displayLabel": "Fire Resist",
+            "category": "resist",
+            "count": 9,
+            "pct": 0.4090909090909091,
+            "medianValue": 23,
+            "p75Value": 25
+          },
+          {
+            "modName": "item_magicbonus",
+            "displayLabel": "Magic Find",
+            "category": "utility",
+            "count": 9,
+            "pct": 0.4090909090909091,
+            "medianValue": 23,
+            "p75Value": 24
+          },
+          {
+            "modName": "lightresist",
+            "displayLabel": "Lightning Resist",
+            "category": "resist",
+            "count": 8,
+            "pct": 0.36363636363636365,
+            "medianValue": 23.5,
+            "p75Value": 28
+          },
+          {
+            "modName": "item_manaafterkill",
+            "displayLabel": "Mana After Each Kill",
+            "category": "leech",
+            "count": 7,
+            "pct": 0.3181818181818182,
+            "medianValue": 2,
+            "p75Value": 3
+          },
+          {
+            "modName": "tohit",
+            "displayLabel": "+Attack Rating",
+            "category": "utility",
+            "count": 7,
+            "pct": 0.3181818181818182,
+            "medianValue": 80,
+            "p75Value": 113
+          },
+          {
+            "modName": "coldresist",
+            "displayLabel": "Cold Resist",
+            "category": "resist",
+            "count": 5,
+            "pct": 0.22727272727272727,
+            "medianValue": 20,
+            "p75Value": 23
+          },
+          {
+            "modName": "item_crushingblow",
+            "displayLabel": "Crushing Blow",
+            "category": "damage",
+            "count": 5,
+            "pct": 0.22727272727272727,
+            "medianValue": 8,
+            "p75Value": 9
+          },
+          {
+            "modName": "item_skillongethit",
+            "displayLabel": "Proc On Getting Hit",
+            "category": "proc",
+            "count": 5,
+            "pct": 0.22727272727272727,
+            "medianValue": 3,
+            "p75Value": 4
+          },
+          {
+            "modName": "lifedrainmindam",
+            "displayLabel": "Life Drain Min Damage",
+            "category": "damage",
+            "count": 5,
+            "pct": 0.22727272727272727,
+            "medianValue": 3,
+            "p75Value": 3
+          },
+          {
+            "modName": "poisonresist",
+            "displayLabel": "Poison Resist",
+            "category": "resist",
+            "count": 5,
+            "pct": 0.22727272727272727,
+            "medianValue": 24,
+            "p75Value": 24
+          },
+          {
+            "modName": "strength",
+            "displayLabel": "+Strength",
+            "category": "stat",
+            "count": 4,
+            "pct": 0.18181818181818182,
+            "medianValue": 4.5,
+            "p75Value": 6
+          },
+          {
+            "modName": "item_goldbonus",
+            "displayLabel": "Gold Find",
+            "category": "utility",
+            "count": 3,
+            "pct": 0.13636363636363635,
+            "medianValue": 58,
+            "p75Value": 77
+          },
+          {
+            "modName": "item_halffreezeduration",
+            "displayLabel": "Half Freeze Duration",
+            "category": "resist",
+            "count": 3,
+            "pct": 0.13636363636363635,
+            "medianValue": 1,
+            "p75Value": 1
+          }
+        ]
+      },
+      "belt": {
+        "items": 15,
+        "mods": [
+          {
+            "modName": "item_fastercastrate",
+            "displayLabel": "Faster Cast Rate",
+            "category": "speed",
+            "count": 13,
+            "pct": 0.8666666666666667,
+            "medianValue": 20,
+            "p75Value": 20
+          },
+          {
+            "modName": "item_armor_percent",
+            "displayLabel": "Enhanced Defense %",
+            "category": "defense",
+            "count": 11,
+            "pct": 0.7333333333333333,
+            "medianValue": 89,
+            "p75Value": 138
+          },
+          {
+            "modName": "fireresist",
+            "displayLabel": "Fire Resist",
+            "category": "resist",
+            "count": 9,
+            "pct": 0.6,
+            "medianValue": 26,
+            "p75Value": 28
+          },
+          {
+            "modName": "item_fastergethitrate",
+            "displayLabel": "Faster Hit Recovery",
+            "category": "speed",
+            "count": 7,
+            "pct": 0.4666666666666667,
+            "medianValue": 17,
+            "p75Value": 24
+          },
+          {
+            "modName": "lightresist",
+            "displayLabel": "Lightning Resist",
+            "category": "resist",
+            "count": 7,
+            "pct": 0.4666666666666667,
+            "medianValue": 17,
+            "p75Value": 21
+          },
+          {
+            "modName": "maxhp",
+            "displayLabel": "+Life",
+            "category": "stat",
+            "count": 6,
+            "pct": 0.4,
+            "medianValue": 50,
+            "p75Value": 73
+          },
+          {
+            "modName": "poisonresist",
+            "displayLabel": "Poison Resist",
+            "category": "resist",
+            "count": 6,
+            "pct": 0.4,
+            "medianValue": 15.5,
+            "p75Value": 17
+          },
+          {
+            "modName": "strength",
+            "displayLabel": "+Strength",
+            "category": "stat",
+            "count": 5,
+            "pct": 0.3333333333333333,
+            "medianValue": 9,
+            "p75Value": 15
+          },
+          {
+            "modName": "hpregen",
+            "displayLabel": "Replenish Life",
+            "category": "stat",
+            "count": 4,
+            "pct": 0.26666666666666666,
+            "medianValue": 12,
+            "p75Value": 14
+          },
+          {
+            "modName": "damageresist",
+            "displayLabel": "Physical Damage Reduction %",
+            "category": "resist",
+            "count": 3,
+            "pct": 0.2,
+            "medianValue": 6,
+            "p75Value": 6
+          },
+          {
+            "modName": "item_skillongethit",
+            "displayLabel": "Proc On Getting Hit",
+            "category": "proc",
+            "count": 3,
+            "pct": 0.2,
+            "medianValue": 4,
+            "p75Value": 5
+          },
+          {
+            "modName": "coldresist",
+            "displayLabel": "Cold Resist",
+            "category": "resist",
+            "count": 2,
+            "pct": 0.13333333333333333,
+            "medianValue": 28.5,
+            "p75Value": 38
+          },
+          {
+            "modName": "item_goldbonus",
+            "displayLabel": "Gold Find",
+            "category": "utility",
+            "count": 2,
+            "pct": 0.13333333333333333,
+            "medianValue": 44,
+            "p75Value": 55
+          },
+          {
+            "modName": "maxfireresist",
+            "displayLabel": "Max Fire Resist",
+            "category": "resist",
+            "count": 2,
+            "pct": 0.13333333333333333,
+            "medianValue": 2,
+            "p75Value": 2
+          },
+          {
+            "modName": "maxlightresist",
+            "displayLabel": "Max Lightning Resist",
+            "category": "resist",
+            "count": 2,
+            "pct": 0.13333333333333333,
+            "medianValue": 2,
+            "p75Value": 2
+          }
+        ]
+      },
+      "boots": {
+        "items": 28,
+        "mods": [
+          {
+            "modName": "item_fastermovevelocity",
+            "displayLabel": "Faster Run/Walk",
+            "category": "speed",
+            "count": 24,
+            "pct": 0.8571428571428571,
+            "medianValue": 30,
+            "p75Value": 30
+          },
+          {
+            "modName": "fireresist",
+            "displayLabel": "Fire Resist",
+            "category": "resist",
+            "count": 20,
+            "pct": 0.7142857142857143,
+            "medianValue": 31,
+            "p75Value": 34
+          },
+          {
+            "modName": "lightresist",
+            "displayLabel": "Lightning Resist",
+            "category": "resist",
+            "count": 19,
+            "pct": 0.6785714285714286,
+            "medianValue": 24,
+            "p75Value": 33
+          },
+          {
+            "modName": "item_magicbonus",
+            "displayLabel": "Magic Find",
+            "category": "utility",
+            "count": 15,
+            "pct": 0.5357142857142857,
+            "medianValue": 21,
+            "p75Value": 34
+          },
+          {
+            "modName": "coldresist",
+            "displayLabel": "Cold Resist",
+            "category": "resist",
+            "count": 14,
+            "pct": 0.5,
+            "medianValue": 32,
+            "p75Value": 39
+          },
+          {
+            "modName": "item_armor_percent",
+            "displayLabel": "Enhanced Defense %",
+            "category": "defense",
+            "count": 13,
+            "pct": 0.4642857142857143,
+            "medianValue": 68,
+            "p75Value": 85
+          },
+          {
+            "modName": "item_staminadrainpct",
+            "displayLabel": "Less Stamina Drain %",
+            "category": "utility",
+            "count": 10,
+            "pct": 0.35714285714285715,
+            "medianValue": 88,
+            "p75Value": 88
+          },
+          {
+            "modName": "poisonresist",
+            "displayLabel": "Poison Resist",
+            "category": "resist",
+            "count": 10,
+            "pct": 0.35714285714285715,
+            "medianValue": 33,
+            "p75Value": 38
+          },
+          {
+            "modName": "item_skillongethit",
+            "displayLabel": "Proc On Getting Hit",
+            "category": "proc",
+            "count": 9,
+            "pct": 0.32142857142857145,
+            "medianValue": 3,
+            "p75Value": 4
+          },
+          {
+            "modName": "item_halffreezeduration",
+            "displayLabel": "Half Freeze Duration",
+            "category": "resist",
+            "count": 8,
+            "pct": 0.2857142857142857,
+            "medianValue": 1,
+            "p75Value": 1
+          },
+          {
+            "modName": "dexterity",
+            "displayLabel": "+Dexterity",
+            "category": "stat",
+            "count": 6,
+            "pct": 0.21428571428571427,
+            "medianValue": 7.5,
+            "p75Value": 13
+          },
+          {
+            "modName": "maxmana",
+            "displayLabel": "+Mana",
+            "category": "stat",
+            "count": 6,
+            "pct": 0.21428571428571427,
+            "medianValue": 23.5,
+            "p75Value": 37
+          },
+          {
+            "modName": "item_replenish_durability",
+            "displayLabel": "Replenish Durability",
+            "category": "defense",
+            "count": 5,
+            "pct": 0.17857142857142858,
+            "medianValue": 3,
+            "p75Value": 3
+          },
+          {
+            "modName": "item_fastergethitrate",
+            "displayLabel": "Faster Hit Recovery",
+            "category": "speed",
+            "count": 4,
+            "pct": 0.14285714285714285,
+            "medianValue": 10,
+            "p75Value": 10
+          },
+          {
+            "modName": "item_goldbonus",
+            "displayLabel": "Gold Find",
+            "category": "utility",
+            "count": 3,
+            "pct": 0.10714285714285714,
+            "medianValue": 75,
+            "p75Value": 77
+          }
+        ]
+      },
+      "amulet": {
+        "items": 30,
+        "mods": [
+          {
+            "modName": "item_addskill_tab|Cold Skills (Sorceress Only)",
+            "displayLabel": "Cold Skills (Sorceress Only)",
+            "category": "skill",
+            "count": 16,
+            "pct": 0.5333333333333333,
+            "medianValue": 10,
+            "p75Value": 10
+          },
+          {
+            "modName": "item_addclassskills",
+            "displayLabel": "+X to All Class Skills",
+            "category": "skill",
+            "count": 10,
+            "pct": 0.3333333333333333,
+            "medianValue": 1,
+            "p75Value": 1
+          },
+          {
+            "modName": "item_fastercastrate",
+            "displayLabel": "Faster Cast Rate",
+            "category": "speed",
+            "count": 10,
+            "pct": 0.3333333333333333,
+            "medianValue": 10,
+            "p75Value": 20
+          },
+          {
+            "modName": "fireresist",
+            "displayLabel": "Fire Resist",
+            "category": "resist",
+            "count": 9,
+            "pct": 0.3,
+            "medianValue": 20,
+            "p75Value": 38
+          },
+          {
+            "modName": "item_magicbonus",
+            "displayLabel": "Magic Find",
+            "category": "utility",
+            "count": 9,
+            "pct": 0.3,
+            "medianValue": 25,
+            "p75Value": 29
+          },
+          {
+            "modName": "strength",
+            "displayLabel": "+Strength",
+            "category": "stat",
+            "count": 8,
+            "pct": 0.26666666666666666,
+            "medianValue": 11.5,
+            "p75Value": 16
+          },
+          {
+            "modName": "coldresist",
+            "displayLabel": "Cold Resist",
+            "category": "resist",
+            "count": 7,
+            "pct": 0.23333333333333334,
+            "medianValue": 19,
+            "p75Value": 27
+          },
+          {
+            "modName": "energy",
+            "displayLabel": "+Energy",
+            "category": "stat",
+            "count": 6,
+            "pct": 0.2,
+            "medianValue": 8.5,
+            "p75Value": 21
+          },
+          {
+            "modName": "poisonresist",
+            "displayLabel": "Poison Resist",
+            "category": "resist",
+            "count": 6,
+            "pct": 0.2,
+            "medianValue": 18,
+            "p75Value": 19
+          },
+          {
+            "modName": "dexterity",
+            "displayLabel": "+Dexterity",
+            "category": "stat",
+            "count": 5,
+            "pct": 0.16666666666666666,
+            "medianValue": 12,
+            "p75Value": 23
+          },
+          {
+            "modName": "lightresist",
+            "displayLabel": "Lightning Resist",
+            "category": "resist",
+            "count": 5,
+            "pct": 0.16666666666666666,
+            "medianValue": 19,
+            "p75Value": 29
+          },
+          {
+            "modName": "magic_damage_reduction",
+            "displayLabel": "Magic Damage Reduction",
+            "category": "resist",
+            "count": 5,
+            "pct": 0.16666666666666666,
+            "medianValue": 9,
+            "p75Value": 10
+          },
+          {
+            "modName": "manadrainmindam",
+            "displayLabel": "Mana Drain Min Damage",
+            "category": "damage",
+            "count": 5,
+            "pct": 0.16666666666666666,
+            "medianValue": 8,
+            "p75Value": 8
+          },
+          {
+            "modName": "item_damagetomana",
+            "displayLabel": "Damage Taken Goes to Mana",
+            "category": "damage",
+            "count": 4,
+            "pct": 0.13333333333333333,
+            "medianValue": 28.5,
+            "p75Value": 30
+          },
+          {
+            "modName": "all_resist",
+            "displayLabel": "All Resistances",
+            "category": "resist",
+            "count": 3,
+            "pct": 0.1,
+            "medianValue": 12,
+            "p75Value": 15
+          }
+        ]
+      },
+      "ring": {
+        "items": 77,
+        "mods": [
+          {
+            "modName": "item_fastercastrate",
+            "displayLabel": "Faster Cast Rate",
+            "category": "speed",
+            "count": 47,
+            "pct": 0.6103896103896104,
+            "medianValue": 10,
+            "p75Value": 10
+          },
+          {
+            "modName": "item_magicbonus",
+            "displayLabel": "Magic Find",
+            "category": "utility",
+            "count": 40,
+            "pct": 0.5194805194805194,
+            "medianValue": 15,
+            "p75Value": 20
+          },
+          {
+            "modName": "tohit",
+            "displayLabel": "+Attack Rating",
+            "category": "utility",
+            "count": 38,
+            "pct": 0.4935064935064935,
+            "medianValue": 79,
+            "p75Value": 104
+          },
+          {
+            "modName": "lightresist",
+            "displayLabel": "Lightning Resist",
+            "category": "resist",
+            "count": 33,
+            "pct": 0.42857142857142855,
+            "medianValue": 18,
+            "p75Value": 27
+          },
+          {
+            "modName": "poisonresist",
+            "displayLabel": "Poison Resist",
+            "category": "resist",
+            "count": 30,
+            "pct": 0.38961038961038963,
+            "medianValue": 16,
+            "p75Value": 24
+          },
+          {
+            "modName": "coldresist",
+            "displayLabel": "Cold Resist",
+            "category": "resist",
+            "count": 29,
+            "pct": 0.37662337662337664,
+            "medianValue": 17,
+            "p75Value": 27
+          },
+          {
+            "modName": "item_manaafterkill",
+            "displayLabel": "Mana After Each Kill",
+            "category": "leech",
+            "count": 29,
+            "pct": 0.37662337662337664,
+            "medianValue": 3,
+            "p75Value": 3
+          },
+          {
+            "modName": "fireresist",
+            "displayLabel": "Fire Resist",
+            "category": "resist",
+            "count": 24,
+            "pct": 0.3116883116883117,
+            "medianValue": 21.5,
+            "p75Value": 26
+          },
+          {
+            "modName": "maxmana",
+            "displayLabel": "+Mana",
+            "category": "stat",
+            "count": 23,
+            "pct": 0.2987012987012987,
+            "medianValue": 76,
+            "p75Value": 97
+          },
+          {
+            "modName": "energy",
+            "displayLabel": "+Energy",
+            "category": "stat",
+            "count": 21,
+            "pct": 0.2727272727272727,
+            "medianValue": 8,
+            "p75Value": 11
+          },
+          {
+            "modName": "maxhp",
+            "displayLabel": "+Life",
+            "category": "stat",
+            "count": 18,
+            "pct": 0.23376623376623376,
+            "medianValue": 20.5,
+            "p75Value": 23
+          },
+          {
+            "modName": "strength",
+            "displayLabel": "+Strength",
+            "category": "stat",
+            "count": 16,
+            "pct": 0.2077922077922078,
+            "medianValue": 8,
+            "p75Value": 17
+          },
+          {
+            "modName": "lifedrainmindam",
+            "displayLabel": "Life Drain Min Damage",
+            "category": "damage",
+            "count": 14,
+            "pct": 0.18181818181818182,
+            "medianValue": 6.5,
+            "p75Value": 7
+          },
+          {
+            "modName": "item_healafterkill",
+            "displayLabel": "Life After Each Kill",
+            "category": "leech",
+            "count": 13,
+            "pct": 0.16883116883116883,
+            "medianValue": 2,
+            "p75Value": 3
+          },
+          {
+            "modName": "dexterity",
+            "displayLabel": "+Dexterity",
+            "category": "stat",
+            "count": 11,
+            "pct": 0.14285714285714285,
+            "medianValue": 8,
+            "p75Value": 9
+          }
+        ]
+      }
+    },
+    "charms": {
+      "avgCount": 19.49056603773585,
+      "annihilus": {
+        "count": 18,
+        "pct": 0.33962264150943394
+      },
+      "torch": {
+        "count": 25,
+        "pct": 0.4716981132075472
+      },
+      "gheeds": {
+        "count": 30,
+        "pct": 0.5660377358490566
+      },
+      "topGcMods": [
+        {
+          "modName": "item_addskill_tab",
+          "displayLabel": "+X to Skill Tab",
+          "count": 190,
+          "pct": 3.5849056603773586
+        },
+        {
+          "modName": "maxhp",
+          "displayLabel": "+Life",
+          "count": 78,
+          "pct": 1.471698113207547
+        },
+        {
+          "modName": "item_fastergethitrate",
+          "displayLabel": "Faster Hit Recovery",
+          "count": 26,
+          "pct": 0.49056603773584906
+        },
+        {
+          "modName": "item_goldbonus",
+          "displayLabel": "Gold Find",
+          "count": 23,
+          "pct": 0.4339622641509434
+        },
+        {
+          "modName": "max_damage",
+          "displayLabel": "+Max Physical Damage",
+          "count": 20,
+          "pct": 0.37735849056603776
+        },
+        {
+          "modName": "item_fastermovevelocity",
+          "displayLabel": "Faster Run/Walk",
+          "count": 17,
+          "pct": 0.32075471698113206
+        },
+        {
+          "modName": "lightdam",
+          "displayLabel": "Lightning  Damage",
+          "count": 17,
+          "pct": 0.32075471698113206
+        },
+        {
+          "modName": "maxmana",
+          "displayLabel": "+Mana",
+          "count": 17,
+          "pct": 0.32075471698113206
+        },
+        {
+          "modName": "poisonresist",
+          "displayLabel": "Poison Resist",
+          "count": 17,
+          "pct": 0.32075471698113206
+        },
+        {
+          "modName": "dexterity",
+          "displayLabel": "+Dexterity",
+          "count": 13,
+          "pct": 0.24528301886792453
+        },
+        {
+          "modName": "fireresist",
+          "displayLabel": "Fire Resist",
+          "count": 13,
+          "pct": 0.24528301886792453
+        },
+        {
+          "modName": "coldresist",
+          "displayLabel": "Cold Resist",
+          "count": 12,
+          "pct": 0.22641509433962265
+        }
+      ],
+      "topScMods": [
+        {
+          "modName": "maxhp",
+          "displayLabel": "+Life",
+          "count": 199,
+          "pct": 3.7547169811320753
+        },
+        {
+          "modName": "item_magicbonus",
+          "displayLabel": "Magic Find",
+          "count": 112,
+          "pct": 2.1132075471698113
+        },
+        {
+          "modName": "poisonresist",
+          "displayLabel": "Poison Resist",
+          "count": 95,
+          "pct": 1.7924528301886793
+        },
+        {
+          "modName": "lightresist",
+          "displayLabel": "Lightning Resist",
+          "count": 75,
+          "pct": 1.4150943396226414
+        },
+        {
+          "modName": "fireresist",
+          "displayLabel": "Fire Resist",
+          "count": 68,
+          "pct": 1.2830188679245282
+        },
+        {
+          "modName": "item_fastergethitrate",
+          "displayLabel": "Faster Hit Recovery",
+          "count": 67,
+          "pct": 1.2641509433962264
+        },
+        {
+          "modName": "coldresist",
+          "displayLabel": "Cold Resist",
+          "count": 59,
+          "pct": 1.1132075471698113
+        },
+        {
+          "modName": "maxmana",
+          "displayLabel": "+Mana",
+          "count": 42,
+          "pct": 0.7924528301886793
+        },
+        {
+          "modName": "dexterity",
+          "displayLabel": "+Dexterity",
+          "count": 26,
+          "pct": 0.49056603773584906
+        },
+        {
+          "modName": "all_resist",
+          "displayLabel": "All Resistances",
+          "count": 25,
+          "pct": 0.4716981132075472
+        },
+        {
+          "modName": "item_fastermovevelocity",
+          "displayLabel": "Faster Run/Walk",
+          "count": 25,
+          "pct": 0.4716981132075472
+        },
+        {
+          "modName": "passive_cold_mastery",
+          "displayLabel": "Cold Mastery",
+          "count": 25,
+          "pct": 0.4716981132075472
+        }
+      ]
+    },
+    "skillFrequency": [
+      {
+        "name": "Blizzard",
+        "numOccurrences": 53,
+        "totalSample": 53,
+        "pct": 100
+      },
+      {
+        "name": "Ice Blast",
+        "numOccurrences": 50,
+        "totalSample": 53,
+        "pct": 94.34
+      },
+      {
+        "name": "Ice Bolt",
+        "numOccurrences": 49,
+        "totalSample": 53,
+        "pct": 92.45
+      },
+      {
+        "name": "Cold Mastery",
+        "numOccurrences": 48,
+        "totalSample": 53,
+        "pct": 90.57
+      },
+      {
+        "name": "Chilling Armor",
+        "numOccurrences": 2,
+        "totalSample": 53,
+        "pct": 3.77
+      },
+      {
+        "name": "Chain Lightning",
+        "numOccurrences": 1,
+        "totalSample": 53,
+        "pct": 1.89
+      },
+      {
+        "name": "Charged Bolt",
+        "numOccurrences": 1,
+        "totalSample": 53,
+        "pct": 1.89
+      },
+      {
+        "name": "Frozen Orb",
+        "numOccurrences": 1,
+        "totalSample": 53,
+        "pct": 1.89
+      },
+      {
+        "name": "Lightning",
+        "numOccurrences": 1,
+        "totalSample": 53,
+        "pct": 1.89
+      }
+    ],
+    "skillUsage": [
+      {
+        "name": "Blizzard",
+        "numWithAny": 53,
+        "numAsBuild": 53,
+        "numAsPrereq": 0,
+        "numAtTwenty": 53,
+        "avgBaseLevel": 20,
+        "avgBaseLevelAsBuild": 20,
+        "totalSample": 53,
+        "pctBuild": 1,
+        "pctAny": 1,
+        "pctAtTwenty": 1,
+        "role": "core"
+      },
+      {
+        "name": "Cold Mastery",
+        "numWithAny": 53,
+        "numAsBuild": 53,
+        "numAsPrereq": 0,
+        "numAtTwenty": 48,
+        "avgBaseLevel": 19.264150943396228,
+        "avgBaseLevelAsBuild": 19.264150943396228,
+        "totalSample": 53,
+        "pctBuild": 1,
+        "pctAny": 1,
+        "pctAtTwenty": 0.9056603773584906,
+        "role": "synergy"
+      },
+      {
+        "name": "Ice Bolt",
+        "numWithAny": 53,
+        "numAsBuild": 52,
+        "numAsPrereq": 1,
+        "numAtTwenty": 49,
+        "avgBaseLevel": 19.39622641509434,
+        "avgBaseLevelAsBuild": 19.75,
+        "totalSample": 53,
+        "pctBuild": 0.9811320754716981,
+        "pctAny": 1,
+        "pctAtTwenty": 0.9245283018867925,
+        "role": "core"
+      },
+      {
+        "name": "Ice Blast",
+        "numWithAny": 53,
+        "numAsBuild": 51,
+        "numAsPrereq": 2,
+        "numAtTwenty": 50,
+        "avgBaseLevel": 19.20754716981132,
+        "avgBaseLevelAsBuild": 19.92156862745098,
+        "totalSample": 53,
+        "pctBuild": 0.9622641509433962,
+        "pctAny": 1,
+        "pctAtTwenty": 0.9433962264150944,
+        "role": "core"
+      },
+      {
+        "name": "Warmth",
+        "numWithAny": 50,
+        "numAsBuild": 50,
+        "numAsPrereq": 0,
+        "numAtTwenty": 0,
+        "avgBaseLevel": 1.34,
+        "avgBaseLevelAsBuild": 1.34,
+        "totalSample": 53,
+        "pctBuild": 0.9433962264150944,
+        "pctAny": 0.9433962264150944,
+        "pctAtTwenty": 0,
+        "role": "synergy"
+      },
+      {
+        "name": "Teleport",
+        "numWithAny": 53,
+        "numAsBuild": 49,
+        "numAsPrereq": 4,
+        "numAtTwenty": 0,
+        "avgBaseLevel": 4.754716981132075,
+        "avgBaseLevelAsBuild": 5.061224489795919,
+        "totalSample": 53,
+        "pctBuild": 0.9245283018867925,
+        "pctAny": 1,
+        "pctAtTwenty": 0,
+        "role": "synergy"
+      },
+      {
+        "name": "Shiver Armor",
+        "numWithAny": 46,
+        "numAsBuild": 32,
+        "numAsPrereq": 14,
+        "numAtTwenty": 0,
+        "avgBaseLevel": 1.1521739130434783,
+        "avgBaseLevelAsBuild": 1.21875,
+        "totalSample": 53,
+        "pctBuild": 0.6037735849056604,
+        "pctAny": 0.8679245283018868,
+        "pctAtTwenty": 0,
+        "role": "synergy"
+      },
+      {
+        "name": "Telekinesis",
+        "numWithAny": 53,
+        "numAsBuild": 31,
+        "numAsPrereq": 22,
+        "numAtTwenty": 0,
+        "avgBaseLevel": 1,
+        "avgBaseLevelAsBuild": 1,
+        "totalSample": 53,
+        "pctBuild": 0.5849056603773585,
+        "pctAny": 1,
+        "pctAtTwenty": 0,
+        "role": "synergy"
+      },
+      {
+        "name": "Cold Enchant",
+        "numWithAny": 46,
+        "numAsBuild": 27,
+        "numAsPrereq": 19,
+        "numAtTwenty": 0,
+        "avgBaseLevel": 1,
+        "avgBaseLevelAsBuild": 1,
+        "totalSample": 53,
+        "pctBuild": 0.5094339622641509,
+        "pctAny": 0.8679245283018868,
+        "pctAtTwenty": 0,
+        "role": "core"
+      },
+      {
+        "name": "Static Field",
+        "numWithAny": 21,
+        "numAsBuild": 21,
+        "numAsPrereq": 0,
+        "numAtTwenty": 0,
+        "avgBaseLevel": 1,
+        "avgBaseLevelAsBuild": 1,
+        "totalSample": 53,
+        "pctBuild": 0.39622641509433965,
+        "pctAny": 0.39622641509433965,
+        "pctAtTwenty": 0,
+        "role": "synergy"
+      },
+      {
+        "name": "Chilling Armor",
+        "numWithAny": 20,
+        "numAsBuild": 20,
+        "numAsPrereq": 0,
+        "numAtTwenty": 2,
+        "avgBaseLevel": 9.25,
+        "avgBaseLevelAsBuild": 9.25,
+        "totalSample": 53,
+        "pctBuild": 0.37735849056603776,
+        "pctAny": 0.37735849056603776,
+        "pctAtTwenty": 0.03773584905660377,
+        "role": "synergy"
+      },
+      {
+        "name": "Energy Shield",
+        "numWithAny": 8,
+        "numAsBuild": 8,
+        "numAsPrereq": 0,
+        "numAtTwenty": 0,
+        "avgBaseLevel": 6.375,
+        "avgBaseLevelAsBuild": 6.375,
+        "totalSample": 53,
+        "pctBuild": 0.1509433962264151,
+        "pctAny": 0.1509433962264151,
+        "pctAtTwenty": 0,
+        "role": "synergy"
+      },
+      {
+        "name": "Glacial Spike",
+        "numWithAny": 53,
+        "numAsBuild": 8,
+        "numAsPrereq": 45,
+        "numAtTwenty": 0,
+        "avgBaseLevel": 2.2452830188679247,
+        "avgBaseLevelAsBuild": 9.25,
+        "totalSample": 53,
+        "pctBuild": 0.1509433962264151,
+        "pctAny": 1,
+        "pctAtTwenty": 0,
+        "role": "core"
+      },
+      {
+        "name": "Charged Bolt",
+        "numWithAny": 9,
+        "numAsBuild": 4,
+        "numAsPrereq": 5,
+        "numAtTwenty": 1,
+        "avgBaseLevel": 3.111111111111111,
+        "avgBaseLevelAsBuild": 5.75,
+        "totalSample": 53,
+        "pctBuild": 0.07547169811320754,
+        "pctAny": 0.16981132075471697,
+        "pctAtTwenty": 0.018867924528301886,
+        "role": "core"
+      },
+      {
+        "name": "Chain Lightning",
+        "numWithAny": 8,
+        "numAsBuild": 3,
+        "numAsPrereq": 5,
+        "numAtTwenty": 1,
+        "avgBaseLevel": 3.375,
+        "avgBaseLevelAsBuild": 7.333333333333333,
+        "totalSample": 53,
+        "pctBuild": 0.05660377358490566,
+        "pctAny": 0.1509433962264151,
+        "pctAtTwenty": 0.018867924528301886,
+        "role": "core"
+      },
+      {
+        "name": "Lightning",
+        "numWithAny": 8,
+        "numAsBuild": 3,
+        "numAsPrereq": 5,
+        "numAtTwenty": 1,
+        "avgBaseLevel": 3.375,
+        "avgBaseLevelAsBuild": 7.333333333333333,
+        "totalSample": 53,
+        "pctBuild": 0.05660377358490566,
+        "pctAny": 0.1509433962264151,
+        "pctAtTwenty": 0.018867924528301886,
+        "role": "core"
+      }
+    ],
+    "levelDistribution": [
+      {
+        "level": 81,
+        "count": 3
+      },
+      {
+        "level": 82,
+        "count": 4
+      },
+      {
+        "level": 83,
+        "count": 2
+      },
+      {
+        "level": 84,
+        "count": 3
+      },
+      {
+        "level": 85,
+        "count": 2
+      },
+      {
+        "level": 86,
+        "count": 1
+      },
+      {
+        "level": 87,
+        "count": 7
+      },
+      {
+        "level": 88,
+        "count": 6
+      },
+      {
+        "level": 89,
+        "count": 8
+      },
+      {
+        "level": 90,
+        "count": 4
+      },
+      {
+        "level": 91,
+        "count": 5
+      },
+      {
+        "level": 92,
+        "count": 6
+      },
+      {
+        "level": 93,
+        "count": 2
+      }
+    ],
+    "mercenary": {
+      "topType": "Defensive Auras",
+      "typeFrequency": [
+        {
+          "mercType": "Defensive Auras",
+          "act": 2,
+          "numOccurrences": 41,
+          "totalSample": 53,
+          "pct": 77.36
+        },
+        {
+          "mercType": "Combat",
+          "act": 2,
+          "numOccurrences": 3,
+          "totalSample": 53,
+          "pct": 5.66
+        },
+        {
+          "mercType": "Might Merc",
+          "act": 5,
+          "numOccurrences": 3,
+          "totalSample": 53,
+          "pct": 5.66
+        },
+        {
+          "mercType": "Cold Arrow",
+          "act": 1,
+          "numOccurrences": 2,
+          "totalSample": 53,
+          "pct": 3.77
+        },
+        {
+          "mercType": "Offensive Auras",
+          "act": 2,
+          "numOccurrences": 2,
+          "totalSample": 53,
+          "pct": 3.77
+        },
+        {
+          "mercType": "Fire Arrow",
+          "act": 1,
+          "numOccurrences": 1,
+          "totalSample": 53,
+          "pct": 1.89
+        },
+        {
+          "mercType": "Lightning Spells",
+          "act": 3,
+          "numOccurrences": 1,
+          "totalSample": 53,
+          "pct": 1.89
+        }
+      ],
+      "topItemsBySlot": {
+        "weapon": [
+          {
+            "itemName": "Insight",
+            "itemType": "Runeword",
+            "invCode": "bar",
+            "pct": 54.72
+          },
+          {
+            "itemName": "Infinity",
+            "itemType": "Runeword",
+            "invCode": "bar",
+            "pct": 7.55
+          },
+          {
+            "itemName": "Bonehew",
+            "itemType": "Unique",
+            "invCode": "bar",
+            "pct": 5.66
+          },
+          {
+            "itemName": "The Reaper's Toll",
+            "itemType": "Unique",
+            "invCode": "scy",
+            "pct": 5.66
+          },
+          {
+            "itemName": "Immortal King's Stone Crusher",
+            "itemType": "Set",
+            "invCode": "mau",
+            "pct": 1.89
+          }
+        ],
+        "helm": [
+          {
+            "itemName": "Tal Rasha's Horadric Crest",
+            "itemType": "Set",
+            "invCode": "msk",
+            "pct": 26.42
+          },
+          {
+            "itemName": "Andariel's Visage",
+            "itemType": "Unique",
+            "invCode": "msk",
+            "pct": 15.09
+          },
+          {
+            "itemName": "Crown of Thieves",
+            "itemType": "Unique",
+            "invCode": "crn",
+            "pct": 7.55
+          },
+          {
+            "itemName": "Guillaume's Face",
+            "itemType": "Set",
+            "invCode": "ghm",
+            "pct": 5.66
+          },
+          {
+            "itemName": "Stealskull",
+            "itemType": "Unique",
+            "invCode": "hlm",
+            "pct": 3.77
+          }
+        ],
+        "belt": [
+          {
+            "itemName": "String of Ears",
+            "itemType": "Unique",
+            "invCode": "lbl",
+            "pct": 20.75
+          },
+          {
+            "itemName": "Goldwrap",
+            "itemType": "Unique",
+            "invCode": "tbl",
+            "pct": 9.43
+          },
+          {
+            "itemName": "Verdungo's Hearty Cord",
+            "itemType": "Unique",
+            "invCode": "mbl",
+            "pct": 7.55
+          },
+          {
+            "itemName": "Immortal King's Detail",
+            "itemType": "Set",
+            "invCode": "hbl",
+            "pct": 5.66
+          },
+          {
+            "itemName": "Sigon's Wrap",
+            "itemType": "Set",
+            "invCode": "hbl",
+            "pct": 5.66
+          }
+        ],
+        "gloves": [
+          {
+            "itemName": "Laying of Hands",
+            "itemType": "Set",
+            "invCode": "lgl",
+            "pct": 18.87
+          },
+          {
+            "itemName": "Dracul's Grasp",
+            "itemType": "Unique",
+            "invCode": "vgl",
+            "pct": 9.43
+          },
+          {
+            "itemName": "Lava Gout",
+            "itemType": "Unique",
+            "invCode": "tgl",
+            "pct": 9.43
+          },
+          {
+            "itemName": "Immortal King's Forge",
+            "itemType": "Set",
+            "invCode": "hgl",
+            "pct": 3.77
+          },
+          {
+            "itemName": "Magnus' Skin",
+            "itemType": "Set",
+            "invCode": "vgl",
+            "pct": 3.77
+          }
+        ],
+        "boots": [
+          {
+            "itemName": "Rite of Passage",
+            "itemType": "Set",
+            "invCode": "lbt",
+            "pct": 15.09
+          },
+          {
+            "itemName": "Goblin Toe",
+            "itemType": "Unique",
+            "invCode": "tbt",
+            "pct": 9.43
+          },
+          {
+            "itemName": "Infernostride",
+            "itemType": "Unique",
+            "invCode": "lbt",
+            "pct": 7.55
+          },
+          {
+            "itemName": "Marrowwalk",
+            "itemType": "Unique",
+            "invCode": "mbt",
+            "pct": 7.55
+          },
+          {
+            "itemName": "Immortal King's Pillar",
+            "itemType": "Set",
+            "invCode": "hbt",
+            "pct": 5.66
+          }
+        ],
+        "armor": [
+          {
+            "itemName": "Duriel's Shell",
+            "itemType": "Unique",
+            "invCode": "brs",
+            "pct": 7.55
+          },
+          {
+            "itemName": "Boneflesh",
+            "itemType": "Unique",
+            "invCode": "plt",
+            "pct": 3.77
+          },
+          {
+            "itemName": "Crow Caw",
+            "itemType": "Unique",
+            "invCode": "scl",
+            "pct": 3.77
+          },
+          {
+            "itemName": "Fortitude",
+            "itemType": "Runeword",
+            "invCode": "brs",
+            "pct": 3.77
+          },
+          {
+            "itemName": "Leviathan",
+            "itemType": "Unique",
+            "invCode": "fld",
+            "pct": 3.77
+          }
+        ],
+        "offhand": [
+          {
+            "itemName": "Ramfodder",
+            "itemType": "Unique",
+            "invCode": "cqv",
+            "pct": 1.89
+          },
+          {
+            "itemName": "Rhyme",
+            "itemType": "Runeword",
+            "invCode": "gts",
+            "pct": 1.89
+          }
+        ]
+      }
+    },
+    "pricesComputedAt": "2026-10-29T07:59:16.168Z"
   }
 }
