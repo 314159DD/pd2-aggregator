@@ -17,7 +17,7 @@ describe('migrate', () => {
     const s = await pool.query('select count(*)::int as n from collector_status');
     expect(s.rows[0].n).toBe(1);
     const m = await pool.query('select name from schema_migrations');
-    expect(m.rows.map((x) => x.name)).toEqual(['001_init.sql', '002_market_miss_count.sql', '003_builds.sql']);
+    expect(m.rows.map((x) => x.name)).toEqual(['001_init.sql', '002_market_miss_count.sql', '003_builds.sql', '004_rune_prices.sql']);
     const t = await pool.query(
       "select table_name from information_schema.tables where table_name in ('item_prices','build_share_daily')",
     );
@@ -32,8 +32,15 @@ describe('migrate', () => {
     await pool.query('drop schema public cascade');
     await pool.query('create schema public');
     const [a, b] = await Promise.all([migrate(pool), migrate(pool)]);
-    expect([...a, ...b]).toEqual(['001_init.sql', '002_market_miss_count.sql', '003_builds.sql']);
+    expect([...a, ...b]).toEqual(['001_init.sql', '002_market_miss_count.sql', '003_builds.sql', '004_rune_prices.sql']);
     const m = await pool.query('select name from schema_migrations');
-    expect(m.rows.map((x) => x.name)).toEqual(['001_init.sql', '002_market_miss_count.sql', '003_builds.sql']);
+    expect(m.rows.map((x) => x.name)).toEqual(['001_init.sql', '002_market_miss_count.sql', '003_builds.sql', '004_rune_prices.sql']);
+  });
+
+  it('item_prices accepts Rune and rejects unknown types', async () => {
+    const ins = (t: string) => pool.query(
+      "insert into item_prices (mode,item_type,item_name,median_hr,samples,source,computed_at) values ('softcore',$1,'x',1,3,'ask',now())", [t]);
+    await ins('Rune');
+    await expect(ins('Bogus')).rejects.toThrow();
   });
 });
