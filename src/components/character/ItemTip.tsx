@@ -56,7 +56,7 @@ export function ItemTip({ item, price, id }: { item: RawItem; price?: ItemPrice 
         </ul>
       )}
       {item.corrupted && <p className="mt-1 font-medium text-danger">Corrupted</p>}
-      {priced && <p className="mt-2 border-t border-[color-mix(in_oklab,currentColor_14%,transparent)] pt-2 font-mono tabular-nums">{priceLine(price)}</p>}
+      {priced && <p className="mt-2 border-t border-[var(--line-strong)] pt-2 font-mono tabular-nums">{priceLine(price)}</p>}
     </div>
   );
 }
