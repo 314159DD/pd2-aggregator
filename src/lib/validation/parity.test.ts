@@ -52,26 +52,31 @@ describe("parity of captured API responses per canonical build", () => {
         ).toBeGreaterThanOrEqual(COVERAGE_FLOOR);
       });
 
+      it("meta key is present once the fixture was captured from our API", () => {
+        if (f._meta.api) expect(f.meta, `${f._meta.build}: _meta.api set but meta missing`).toBeDefined();
+      });
+
       it.skipIf(!f.meta)("meta.poolSize equals itemUsage totalSample", () => {
         expect(f.meta!.poolSize).toBe(f.itemUsage[0].totalSample);
       });
 
       it.skipIf(!f.meta)("meta top items exist in itemUsage with identical pct and count", () => {
+        expect(Object.values(f.meta!.topItemsBySlot).flat().length, `${f._meta.build}: no top items`).toBeGreaterThan(0);
         const byName = new Map(f.itemUsage.map((r) => [r.item, r]));
         for (const [slot, items] of Object.entries(f.meta!.topItemsBySlot)) {
-          for (const it of items) {
-            const row = byName.get(it.itemName);
-            expect(row, `${f._meta.build}/${slot}: "${it.itemName}" invented`).toBeDefined();
-            expect(it.pct, `${slot}/${it.itemName} pct`).toBe(row!.pct);
-            expect(it.count, `${slot}/${it.itemName} count`).toBe(row!.numOccurrences);
+          for (const entry of items) {
+            const row = byName.get(entry.itemName);
+            expect(row, `${f._meta.build}/${slot}: "${entry.itemName}" invented`).toBeDefined();
+            expect(entry.pct, `${slot}/${entry.itemName} pct`).toBe(row!.pct);
+            expect(entry.count, `${slot}/${entry.itemName} count`).toBe(row!.numOccurrences);
           }
         }
       });
 
       it.skipIf(!f.meta)("meta top items sit in the slot item-slots.json gives them", () => {
         for (const [slot, items] of Object.entries(f.meta!.topItemsBySlot)) {
-          for (const it of items) {
-            expect(SLOTS[it.itemName], `${f._meta.build}: "${it.itemName}" in ${slot}`).toBe(slot);
+          for (const entry of items) {
+            expect(SLOTS[entry.itemName], `${f._meta.build}: "${entry.itemName}" in ${slot}`).toBe(slot);
           }
         }
       });
