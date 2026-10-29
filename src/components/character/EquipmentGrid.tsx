@@ -90,8 +90,12 @@ function ItemCell({
       style={style}
       onPointerEnter={(e) => e.pointerType === "mouse" && setOpen(true)}
       onPointerLeave={(e) => {
-        pointer.current = null; // a press that left the cell without a click
-        if (e.pointerType === "mouse") setOpen(false);
+        // Touch and pen keep their value until click, blur, cancel or the next press:
+        // Chrome Android fires pointerleave before focus and click.
+        if (e.pointerType === "mouse") {
+          pointer.current = null;
+          setOpen(false);
+        }
       }}
     >
       <button

@@ -209,6 +209,22 @@ describe("equipment", () => {
     tap();
     expect(screen.queryByRole("tooltip")).toBeNull();
   });
+  it("full Chrome Android touch order: leave fires before focus and click", () => {
+    render(<EquipmentGrid items={items} mercItems={merc} prices={prices} />);
+    const cell = screen.getByRole("button", { name: "Helm: Nightwing's Veil" });
+    const tap = () => {
+      fireEvent(cell, typed(createEvent.pointerDown(cell), "touch"));
+      fireEvent(cell, typed(createEvent.pointerUp(cell), "touch"));
+      fireEvent(cell, typed(createEvent.pointerOut(cell), "touch"));
+      fireEvent(cell, typed(createEvent.pointerLeave(cell), "touch"));
+      act(() => cell.focus());
+      fireEvent.click(cell);
+    };
+    tap();
+    expect(screen.getByRole("tooltip")).toBeTruthy();
+    tap();
+    expect(screen.queryByRole("tooltip")).toBeNull();
+  });
   it("mouse hover opens and closes without a click", () => {
     render(<EquipmentGrid items={items} mercItems={merc} prices={prices} />);
     const cell = screen.getByRole("button", { name: "Helm: Nightwing's Veil" });
