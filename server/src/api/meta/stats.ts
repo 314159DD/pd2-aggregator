@@ -1,7 +1,9 @@
 import type { Pool } from 'pg';
 import { MOD_DICTIONARY } from '../../core/static-data';
+import { UNIQUE_CHARM_NAMES } from '../../db/meta-rollup';
 import { filterCte } from '../filter-sql';
 import type { CharacterFilter } from '../filters';
+import { rollupPoolSizeSql, rollupScope } from './rollup';
 import type { AvgStat, CoreStat } from './types';
 
 export async function poolSizes(pool: Pool, f: CharacterFilter): Promise<{ poolSize: number; basePoolSize: number }> {
@@ -15,17 +17,29 @@ export async function poolSizes(pool: Pool, f: CharacterFilter): Promise<{ poolS
 }
 
 export async function coreStats(pool: Pool, f: CharacterFilter): Promise<CoreStat[]> {
-  const { sql, params } = filterCte(f);
-  const attr = (k: string) => `coalesce(avg(coalesce((c.attributes->>'${k}')::numeric, 0)), 0)`;
-  const r = await pool.query(
-    `${sql}
-     select ${attr('strength')} as strength, ${attr('dexterity')} as dexterity,
-            ${attr('vitality')} as vitality, ${attr('energy')} as energy,
-            coalesce(avg(coalesce(c.life, 0)), 0) as life, coalesce(avg(coalesce(c.mana, 0)), 0) as mana
-     from characters c join filtered on filtered.id = c.id`,
-    params,
-  );
-  const row = r.rows[0];
+  const scope = await rollupScope(pool, f);
+  let row: Record<string, unknown>;
+  if (scope) {
+    // Same numeric division avg() performs: sum of the values over the character count.
+    const r = await pool.query(
+      `select r.k1, sum(r.total) / nullif(sum(r.n), 0) as avg
+       from meta_rollup r where ${scope.where} and r.kind = 'core' group by r.k1`,
+      scope.params,
+    );
+    row = Object.fromEntries(r.rows.map((x) => [x.k1, x.avg]));
+  } else {
+    const { sql, params } = filterCte(f);
+    const attr = (k: string) => `coalesce(avg(coalesce((c.attributes->>'${k}')::numeric, 0)), 0)`;
+    const r = await pool.query(
+      `${sql}
+       select ${attr('strength')} as strength, ${attr('dexterity')} as dexterity,
+              ${attr('vitality')} as vitality, ${attr('energy')} as energy,
+              coalesce(avg(coalesce(c.life, 0)), 0) as life, coalesce(avg(coalesce(c.mana, 0)), 0) as mana
+       from characters c join filtered on filtered.id = c.id`,
+      params,
+    );
+    row = r.rows[0];
+  }
   const n = (k: string): number => Number(row[k]) || 0;
   return [
     { key: 'strength', label: 'Strength', avg: n('strength') },
@@ -36,9 +50,6 @@ export async function coreStats(pool: Pool, f: CharacterFilter): Promise<CoreSta
     { key: 'mana', label: 'Mana', avg: n('mana') },
   ];
 }
-
-/** Charms that are unique one-offs; shown elsewhere. */
-const UNIQUE_CHARM_NAMES = ['Annihilus', 'Hellfire Torch', "Gheed's Fortune"];
 
 const META_FLAG_LABELS = new Set(['corrupted', 'desecrated', 'mirrored']);
 
@@ -98,6 +109,44 @@ function suffixForMod(modName: string, displayLabel: string): '%' | '' {
  * Ranked by prevalence (charsWithMod desc, then modName).
  */
 export async function avgStats(pool: Pool, f: CharacterFilter, topN = 8): Promise<AvgStat[]> {
+  const scope = await rollupScope(pool, f);
+  const rows = scope ? await avgStatsRollup(pool, scope.where, scope.params) : await avgStatsScan(pool, f);
+  const out: AvgStat[] = [];
+  for (const row of rows) {
+    const modName = String(row.mod_name);
+    const displayLabel = MOD_DICTIONARY[modName]?.displayLabel ?? modName;
+    if (META_FLAG_LABELS.has(displayLabel.toLowerCase().trim())) continue;
+    const poolSize = Number(row.pool_size);
+    const charsWithMod = Number(row.chars_with_mod);
+    out.push({
+      modName,
+      displayLabel,
+      suffix: suffixForMod(modName, displayLabel),
+      avgValue: Number(row.total) / poolSize,
+      charsWithMod,
+      pctOfChars: charsWithMod / poolSize,
+    });
+  }
+  out.sort((a, b) => b.charsWithMod - a.charsWithMod || (a.modName < b.modName ? -1 : a.modName > b.modName ? 1 : 0));
+  return out.slice(0, topN);
+}
+
+type AvgRow = { mod_name: string; total: string; chars_with_mod: number; pool_size: number };
+
+/** Base cohorts: per-character mod totals summed per (class, level) in meta_rollup (kind 'avg'). */
+async function avgStatsRollup(pool: Pool, where: string, params: unknown[]): Promise<AvgRow[]> {
+  const r = await pool.query(
+    `select r.k1 as mod_name, sum(r.total) as total, sum(r.n)::int as chars_with_mod, ${rollupPoolSizeSql(where)} as pool_size
+     from meta_rollup r
+     where ${where} and r.kind = 'avg' and not (r.k1 = any($${params.length + 1}::text[]))
+     group by r.k1
+     having sum(r.n) > 0`,
+    [...params, EXCLUDED_MOD_NAMES],
+  );
+  return r.rows;
+}
+
+async function avgStatsScan(pool: Pool, f: CharacterFilter): Promise<AvgRow[]> {
   const { sql, params } = filterCte(f);
   const n = params.length;
   const r = await pool.query(
@@ -121,23 +170,5 @@ export async function avgStats(pool: Pool, f: CharacterFilter, topN = 8): Promis
      having count(*) filter (where total > 0) > 0`,
     [...params, UNIQUE_CHARM_NAMES, EXCLUDED_MOD_NAMES],
   );
-  const out: AvgStat[] = [];
-  for (const row of r.rows) {
-    const modName = String(row.mod_name);
-    const displayLabel = MOD_DICTIONARY[modName]?.displayLabel ?? modName;
-    if (META_FLAG_LABELS.has(displayLabel.toLowerCase().trim())) continue;
-    const poolSize = Number(row.pool_size);
-    const charsWithMod = Number(row.chars_with_mod);
-    out.push({
-      modName,
-      displayLabel,
-      suffix: suffixForMod(modName, displayLabel),
-      avgValue: Number(row.total) / poolSize,
-      charsWithMod,
-      pctOfChars: charsWithMod / poolSize,
-    });
-  }
-  out.sort((a, b) => b.charsWithMod - a.charsWithMod || (a.modName < b.modName ? -1 : a.modName > b.modName ? 1 : 0));
-  return out.slice(0, topN);
+  return r.rows;
 }
-

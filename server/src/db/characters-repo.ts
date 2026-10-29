@@ -1,6 +1,7 @@
 import { gunzipSync, gzipSync } from 'node:zlib';
 import type { Pool, PoolClient } from 'pg';
 import type { CompactCharacter, CompactItem } from '../core/compact';
+import { withMetaRollup } from './meta-rollup';
 import { recomputeGearValues } from './prices-repo';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -40,37 +41,46 @@ export async function upsertCharacter(
   let destroy = false;
   try {
     await client.query('begin');
-    const up = await client.query(
-      `insert into characters
-         (season, mode, name, account, class, level, experience, life, mana, attributes, guild, is_dead, raw, last_ingested_at)
-       values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
-       on conflict (season, mode, name) do update set
-         account = coalesce(excluded.account, characters.account), class = excluded.class, level = excluded.level,
-         experience = excluded.experience, life = excluded.life, mana = excluded.mana,
-         attributes = excluded.attributes, guild = excluded.guild, is_dead = excluded.is_dead,
-         raw = excluded.raw, last_ingested_at = excluded.last_ingested_at
-       returning id, (xmax = 0) as inserted`,
-      [season, c.mode, c.name, c.account, c.className, c.level, c.experience, c.life, c.mana,
-        JSON.stringify(c.attributes), c.guild, c.isDead, raw, now],
-    );
-    const id = Number(up.rows[0].id);
-    const isNew: boolean = up.rows[0].inserted;
-
-    await client.query('delete from character_skills where character_id = $1', [id]);
-    await client.query('delete from character_merc where character_id = $1', [id]);
-
-    if (skills.length) {
-      await client.query(
-        `insert into character_skills (character_id, skill, hard_level, real_level)
-         select $1, * from unnest($2::text[], $3::int[], $4::int[])`,
-        [id, skills.map((s) => s.skill), skills.map((s) => s.hardLevel), skills.map((s) => s.realLevel)],
+    const prev = await client.query('select id from characters where season = $1 and mode = $2 and name = $3', [
+      season,
+      c.mode,
+      c.name,
+    ]);
+    let isNew = false;
+    const id = await withMetaRollup(client, prev.rows.length ? Number(prev.rows[0].id) : null, async () => {
+      const up = await client.query(
+        `insert into characters
+           (season, mode, name, account, class, level, experience, life, mana, attributes, guild, is_dead, raw, last_ingested_at)
+         values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
+         on conflict (season, mode, name) do update set
+           account = coalesce(excluded.account, characters.account), class = excluded.class, level = excluded.level,
+           experience = excluded.experience, life = excluded.life, mana = excluded.mana,
+           attributes = excluded.attributes, guild = excluded.guild, is_dead = excluded.is_dead,
+           raw = excluded.raw, last_ingested_at = excluded.last_ingested_at
+         returning id, (xmax = 0) as inserted`,
+        [season, c.mode, c.name, c.account, c.className, c.level, c.experience, c.life, c.mana,
+          JSON.stringify(c.attributes), c.guild, c.isDead, raw, now],
       );
-    }
-    await replaceItems(client, id, c.items);
-    await recomputeGearValues(client, { characterIds: [id] });
-    if (c.mercDescription !== null) {
-      await client.query('insert into character_merc (character_id, description) values ($1, $2)', [id, c.mercDescription]);
-    }
+      const id = Number(up.rows[0].id);
+      isNew = up.rows[0].inserted;
+
+      await client.query('delete from character_skills where character_id = $1', [id]);
+      await client.query('delete from character_merc where character_id = $1', [id]);
+
+      if (skills.length) {
+        await client.query(
+          `insert into character_skills (character_id, skill, hard_level, real_level)
+           select $1, * from unnest($2::text[], $3::int[], $4::int[])`,
+          [id, skills.map((s) => s.skill), skills.map((s) => s.hardLevel), skills.map((s) => s.realLevel)],
+        );
+      }
+      await replaceItems(client, id, c.items);
+      await recomputeGearValues(client, { characterIds: [id] });
+      if (c.mercDescription !== null) {
+        await client.query('insert into character_merc (character_id, description) values ($1, $2)', [id, c.mercDescription]);
+      }
+      return id;
+    });
 
     let historyWritten = isNew;
     if (!historyWritten) {
