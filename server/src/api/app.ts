@@ -51,14 +51,14 @@ export function createApp(deps: { pool: Pool; cfg: Config }): express.Express {
 
   api.get(
     '/characters',
-    wrap(async (req, res) => {
+    cached((req) => {
       const num = (v: unknown, d: number) => {
         const n = Number(typeof v === 'string' ? v : NaN);
         return Number.isFinite(n) ? Math.trunc(n) : d;
       };
-      const page = Math.max(1, num(req.query.page, 1));
+      const page = Math.min(100000, Math.max(1, num(req.query.page, 1)));
       const pageSize = Math.min(50, Math.max(1, num(req.query.pageSize, 50)));
-      res.json(await q.charactersPage(pool, filterOf(req), page, pageSize));
+      return q.charactersPage(pool, filterOf(req), page, pageSize);
     }),
   );
   api.get('/characters/stats/item-usage', cached((req) => q.itemUsage(pool, filterOf(req))));
@@ -68,9 +68,7 @@ export function createApp(deps: { pool: Pool; cfg: Config }): express.Express {
   api.get('/characters/stats/level-distribution', cached((req) => q.levelDistribution(pool, filterOf(req))));
   api.get(
     '/characters/accounts/:account',
-    wrap(async (req, res) => {
-      res.json(await q.charactersByAccount(pool, filterOf(req).season, req.params.account));
-    }),
+    cached((req) => q.charactersByAccount(pool, filterOf(req).season, req.params.account)),
   );
 
   const hits = new Map<string, number[]>();
@@ -84,7 +82,11 @@ export function createApp(deps: { pool: Pool; cfg: Config }): express.Express {
       }
       const ip = req.ip ?? 'unknown';
       const now = Date.now();
+      if (hits.size > 10000) {
+        for (const [k, v] of hits) if (v.every((t) => now - t >= QUEUE_WINDOW_MS)) hits.delete(k);
+      }
       const recent = (hits.get(ip) ?? []).filter((t) => now - t < QUEUE_WINDOW_MS);
+      if (recent.length === 0) hits.delete(ip);
       if (recent.length >= QUEUE_LIMIT) {
         hits.set(ip, recent);
         res.status(429).json({ error: 'Rate limit exceeded' });

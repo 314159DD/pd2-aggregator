@@ -108,6 +108,12 @@ describe('GET /characters', () => {
     expect(r.body.total).toBe(2);
     const all = await request(app).get('/api/v1/characters?skills=abc');
     expect(all.body.total).toBe(3);
+    for (const sk of ['[{"name":"X","minLevel":1.5}]', '[{}]']) {
+      const r2 = await request(app).get(`/api/v1/characters?skills=${encodeURIComponent(sk)}`);
+      expect(r2.status).toBe(200);
+      expect(r2.body.total).toBe(3);
+    }
+    expect((await request(app).get('/api/v1/characters?page=1e300')).status).toBe(200);
     const hi = await request(app).get('/api/v1/characters?gameMode=hardcore&minLevel=91');
     expect(hi.body.total).toBe(0);
   });
@@ -166,6 +172,14 @@ describe('stats routes', () => {
     const r = await request(app).get('/api/v1/characters/stats/skill-usage?gameMode=softcore&minLevel=81');
     expect(r.status).toBe(200);
     expect(spy).not.toHaveBeenCalled();
+    await request(app).get('/api/v1/characters?minLevel=82');
+    const calls = spy.mock.calls.length;
+    await request(app).get('/api/v1/characters?minLevel=82');
+    await request(app).get('/api/v1/characters/accounts/mc-meeks');
+    const calls2 = spy.mock.calls.length;
+    await request(app).get('/api/v1/characters/accounts/mc-meeks');
+    expect(spy.mock.calls.length).toBe(calls2);
+    expect(calls2).toBe(calls + 1);
     spy.mockRestore();
   });
 });
