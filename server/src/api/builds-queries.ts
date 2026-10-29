@@ -38,9 +38,9 @@ async function itemEntries(pool: Pool, f: CharacterFilter, owner: 'player' | 'me
        from character_items i join filtered on filtered.id = i.character_id
        where i.owner = $${n + 1} and (i.is_runeword or i.quality in ('Unique','Set'))
      ) t
-     left join item_prices p on p.mode = $${n + 2} and p.item_name = t.name and p.item_type = t.item_type
+     left join item_prices p on p.mode = $${n + 2} and p.item_name = t.name and p.item_type = t.item_type and not $${n + 3}::boolean
      group by t.name, t.item_type, p.median_hr`,
-    [...params, owner, f.mode],
+    [...params, owner, f.mode, f.archive === true],
   );
   return r.rows.map((x) => ({
     name: x.name as string,

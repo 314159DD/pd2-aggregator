@@ -122,11 +122,17 @@ export async function recomputeGearValues(
   if ('characterIds' in scope) {
     return scope.characterIds.length ? run('c.id = any($1::bigint[])', [scope.characterIds]) : 0;
   }
-  const range = (await db.query('select min(id) as lo, max(id) as hi from characters where season = $1', [scope.season])).rows[0];
-  if (range.lo === null) return 0;
+  // Keyset pagination over the season's real ids: archive rows are inserted later and sit between live ids.
   let changed = 0;
-  for (let lo = Number(range.lo); lo <= Number(range.hi); lo += GEAR_BATCH_IDS) {
-    changed += await run('c.season = $1 and c.id >= $2 and c.id < $3', [scope.season, lo, lo + GEAR_BATCH_IDS]);
+  let last = 0;
+  for (;;) {
+    const hi = (await db.query(
+      'select max(id) as hi from (select id from characters where season = $1 and id > $2 order by id limit $3) b',
+      [scope.season, last, GEAR_BATCH_IDS],
+    )).rows[0].hi;
+    if (hi === null) break;
+    changed += await run('c.season = $1 and c.id > $2 and c.id <= $3', [scope.season, last, Number(hi)]);
+    last = Number(hi);
   }
   return changed;
 }
