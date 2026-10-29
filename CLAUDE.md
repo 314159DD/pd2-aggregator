@@ -2,7 +2,7 @@
 
 Next.js 16 static-export app that aggregates Project Diablo 2 ladder builds from the pd2.tools public API and produces filterable build guides. Live at https://pd2-aggregator.vercel.app.
 
-**Status:** Phase 2 in progress. Sprint 2.1 shipped 2026-05-10 (Reddit bug fixes A/D/F + build presets). Sprint 2.1.1 same day — server stats endpoints now receive the `skills` filter. Sprint 2.1.2 same day — wiki-scraped `data/item-slots.json` now covers every PD2 unique/set/runeword (475 → 1591 entries; was dropping 32% of named items including M'avina set, Lore, Hellrack, Kuko Shakaku because they weren't in the snapshot). Sprint 2.2 shipped 2026-05-11 (validation test suite, MIT license, README rewrite, integration-prep doc for the coleestrin conversation). Sprint 2.3 shipped to PR 2026-05-11: full port into `coleestrin/pd2-tools` as a new `/meta` page (`feature/meta-build-aggregator` on the fork → [PR #20](https://github.com/coleestrin/pd2-tools/pull/20)). Awaiting Cole's review. Sprint 2.4 shipped 2026-05-13 — backported every PR feature into the standalone Vercel app (avg-stats section, level chart, Core/Synergy toggles, item tooltips, min-level slider clamp, sidebar interactivity fix), self-hosted skill icons + BMC button, custom favicon, Vercel Web Analytics wired. Eleven commits straight to `main`. Sprint 3.1 shipped 2026-05-16 — inline median price column + per-row market deeplinks + live hover sidecar (`MarketDetailsCard`) via Vercel Edge proxy + nightly GH Action snapshot refresh. 634 priced items in first snapshot. Awaiting merge to main.
+**Status:** v2 in progress (spec `docs/superpowers/specs/2026-10-28-pd2meta-v2-design.md`). Sprint 4.1 (phase 1 + 1b) merged 2026-10-29: own collector from `api.projectdiablo2.com`, read API live at `https://api.pd2meta.info/api/v1`, site reads from it (S14 data back). Next: phase 2 plan (tabs shell, price job, Builds tab per pd2trader feature set).
 
 **Plan is the source of truth.** If it's not in `plan/`, it doesn't exist. Start a session by reading [`plan/README.md`](plan/README.md) → [`plan/roadmap.md`](plan/roadmap.md) → the active sprint file.
 
@@ -32,7 +32,7 @@ Next.js 16 static-export app that aggregates Project Diablo 2 ladder builds from
 - The web worker (`src/workers/aggregate.worker.ts`) is the only place async aggregation runs.
 
 ## Data sources
-- Live: `https://api.pd2.tools/api/v1/characters` (~3.4 MB JSON, CORS *)
+- Live: `https://api.pd2meta.info/api/v1` (our own pd2.tools-compatible API, `server/`, collector + Postgres on the VPS `/opt/pd2meta`; see `deploy/RUNBOOK.md`). Override with `NEXT_PUBLIC_API_BASE`. pd2.tools stopped collecting at Season 14.
 - Snapshot fallback: `data/snapshot.json` (committed; refreshed manually)
 - Mod dictionary: `data/mod-dictionary.json` (built by `scripts/build-mod-dictionary.ts`)
 - Market prices: `api.projectdiablo2.com/market/listing` via the Vercel Edge proxy at `api/market.ts` (live, hover sidecar) and `public/price-snapshot.json` (nightly snapshot, inline median column)
