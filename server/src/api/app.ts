@@ -13,6 +13,8 @@ import { characterDetail, characterHistory } from './character-detail';
 import * as q from './queries';
 import * as meta from './meta/cohort';
 import { metaFilter } from './meta/cohort';
+import type { MetaCohort } from './meta/types';
+import { diffCharacter, findDiffCharacter, loadDiffUser } from './meta/diff';
 
 const VERCEL_PREVIEW_RE = /^https:\/\/pd2-aggregator-[a-z0-9-]+\.vercel\.app$/;
 const ACCOUNT_RE = /^[a-zA-Z0-9_-]{1,50}$/;
@@ -84,14 +86,47 @@ export function createApp(deps: { pool: Pool; cfg: Config }): express.Express {
   const api = express.Router();
   const filterOf = (req: Request) => parseFilter(req.query, cfg);
 
+  /** JSON of a Meta cohort, cached under its normalised key. */
+  const metaBody = async (f: CharacterFilter): Promise<string> => {
+    const key = metaCacheKey('/meta', f);
+    let body = cache.get(key);
+    if (body === undefined) {
+      body = JSON.stringify(await meta.metaCohort(pool, f));
+      cache.set(key, body);
+    }
+    return body;
+  };
+
   api.get(
     '/meta',
     wrap(async (req, res) => {
+      res.type('application/json').send(await metaBody(metaFilter(filterOf(req))));
+    }),
+  );
+
+  api.get(
+    '/meta/diff',
+    wrap(async (req, res) => {
+      const raw = req.query.char;
+      const char = (Array.isArray(raw) ? raw[0] : raw);
+      const name = typeof char === 'string' ? char.trim() : '';
+      const notFound = () => res.status(404).json({ error: { message: 'Character not found' } });
+      if (!name) return void notFound();
       const f = metaFilter(filterOf(req));
-      const key = metaCacheKey('/meta', f);
+      const key = `${metaCacheKey('/meta/diff', f)}|${name.toLowerCase()}`;
       let body = cache.get(key);
       if (body === undefined) {
-        body = JSON.stringify(await meta.metaCohort(pool, f));
+        const found = await findDiffCharacter(pool, f.season, f.mode, name);
+        const user = found ? await loadDiffUser(pool, found.id) : null;
+        if (!user) return void notFound();
+        const cohort = JSON.parse(await metaBody(f)) as MetaCohort;
+        body = JSON.stringify({
+          diff: diffCharacter(user, {
+            topItemsBySlot: cohort.topItemsBySlot,
+            affixModsBySlot: cohort.affixModsBySlot,
+            poolMercType: cohort.mercenary.topType || null,
+          }),
+        });
         cache.set(key, body);
       }
       res.type('application/json').send(body);
