@@ -9,6 +9,7 @@ import { parseFilter } from './filters';
 import { getPrices } from '../db/prices-repo';
 import * as bq from './builds-queries';
 import { buildsCharacters, characterPreview } from './builds-characters';
+import { characterDetail, characterHistory } from './character-detail';
 import * as q from './queries';
 
 const VERCEL_PREVIEW_RE = /^https:\/\/pd2-aggregator-[a-z0-9-]+\.vercel\.app$/;
@@ -92,6 +93,28 @@ export function createApp(deps: { pool: Pool; cfg: Config }): express.Express {
     '/characters/accounts/:account',
     cached((req) => q.charactersByAccount(pool, filterOf(req).season, req.params.account)),
   );
+
+  const byName = (
+    fn: (season: number, mode: 'softcore' | 'hardcore', name: string) => Promise<object | null>,
+  ): RequestHandler =>
+    wrap(async (req, res) => {
+      const f = filterOf(req);
+      const key = `${cacheKey(req)}|${req.params.name.toLowerCase()}`;
+      let body = cache.get(key);
+      if (body === undefined) {
+        const result = await fn(f.season, f.mode, req.params.name);
+        if (!result) {
+          res.status(404).json({ error: { message: 'Character not found' } });
+          return;
+        }
+        body = JSON.stringify(result);
+        cache.set(key, body);
+      }
+      res.type('application/json').send(body);
+    });
+  // Registered after /characters/stats/* and /characters/accounts/:account.
+  api.get('/characters/:name', byName((s, m, n) => characterDetail(pool, s, m, n)));
+  api.get('/characters/:name/history', byName((s, m, n) => characterHistory(pool, s, m, n)));
 
   api.get('/builds/usage', cached((req) => bq.buildsUsage(pool, filterOf(req))));
   api.get('/builds/seasons', cached(() => bq.seasons(pool, cfg)));
