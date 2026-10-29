@@ -165,10 +165,6 @@ export function GoldCalc() {
               {fx(r.wss / s.hr, 2)} HR / h
             </Chip>
           </div>
-          <p className="mb-4 rounded-[14px] bg-warn-bg px-4 py-3 text-[13px] leading-relaxed text-warn">
-            Per hour figures assume the market buys everything at these prices. The whole ladder market lists only about
-            20 stacks of each orb, so buyers, not gold, are the real limit.
-          </p>
           <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
             <Kpi k="Runs per hour" v={fx(r.runs, 0)} r={`${s.down}% downtime`} />
             <Kpi k="Gold per hour" v={shortNum(r.gold)} r={nf.format(Math.round(r.gold))} />
