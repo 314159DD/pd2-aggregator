@@ -2,7 +2,7 @@
 
 Next.js 16 static-export app that aggregates Project Diablo 2 ladder builds from the pd2.tools public API and produces filterable build guides. Live at https://pd2-aggregator.vercel.app.
 
-**Status:** v2 in progress (spec `docs/superpowers/specs/2026-10-28-pd2meta-v2-design.md`). Sprint 4.1 (phase 1 + 1b) merged 2026-10-29: own collector from `api.projectdiablo2.com`, read API live at `https://api.pd2meta.info/api/v1`, site reads from it (S14 data back). Next: phase 2 plan (tabs shell, price job, Builds tab per pd2trader feature set).
+**Status:** v2 in progress (spec `docs/superpowers/specs/2026-10-28-pd2meta-v2-design.md`). Sprint 4.1 (own pipeline + S14 stopgap) and Sprint 4.2 (Builds tab: prices, gear value, usage cards, shopping list, character table, character and account pages, LEXADIS shell) merged 2026-10-29. Next: phase 3 (server-side Meta endpoints + Meta tab on them), then phase 4 (Meta restyle + launch), phase 5 (archive S11-S13 + parity test).
 
 **Plan is the source of truth.** If it's not in `plan/`, it doesn't exist. Start a session by reading [`plan/README.md`](plan/README.md) → [`plan/roadmap.md`](plan/roadmap.md) → the active sprint file.
 

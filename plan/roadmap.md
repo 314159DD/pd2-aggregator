@@ -144,6 +144,17 @@ The sprints below are scaffolded but not yet detailed — they'll be filled in o
 
 **Verification:** test suite 180 to 201 (+21). tsc clean. next build clean.
 
+## v2 - Own pipeline, Builds + Meta (spec docs/superpowers/specs/2026-10-28-pd2meta-v2-design.md)
+
+### Sprint 4.1 - Own data pipeline + S14 stopgap (DONE 2026-10-29)
+Collector, Postgres and pd2.tools-compatible read API on the VPS (api.pd2meta.info); pd2meta reads from it. Plan: docs/superpowers/plans/2026-10-29-pd2meta-v2-phase1-pipeline.md
+
+### Sprint 4.2 - Builds tab (DONE 2026-10-29)
+Price job + gear value, Builds page (class share, gear budget, usage cards, shopping list, character table + preview), character and account pages, LEXADIS shell with Builds/Meta tabs. Plan: docs/superpowers/plans/2026-10-29-pd2meta-v2-phase2-builds.md
+
+### Next
+Phase 3 Meta endpoints + Meta tab on them; phase 4 Meta restyle + launch; phase 5 archive S11-S13 + parity test.
+
 ## Future Phases
 
 Speculative — only commit when Phase 2 shows demand.
