@@ -1,7 +1,7 @@
 {
   "_meta": {
     "build": "druid-wind-tornado",
-    "fetchedAt": "2026-10-29T07:54:16.089Z",
+    "fetchedAt": "2026-10-29T08:02:06.907Z",
     "api": "https://api.pd2meta.info/api/v1",
     "season": 14,
     "filter": {
@@ -202,9 +202,9 @@
     {
       "item": "The Stone of Jordan",
       "itemType": "Unique",
-      "numOccurrences": 18,
+      "numOccurrences": 19,
       "totalSample": 237,
-      "pct": 7.59
+      "pct": 8.02
     },
     {
       "item": "Denmother",
@@ -335,9 +335,9 @@
     {
       "item": "Nagelring",
       "itemType": "Unique",
-      "numOccurrences": 8,
+      "numOccurrences": 9,
       "totalSample": 237,
-      "pct": 3.38
+      "pct": 3.8
     },
     {
       "item": "Quetzalcoatl",
@@ -2591,11 +2591,11 @@
       },
       {
         "level": 92,
-        "count": 38
+        "count": 35
       },
       {
         "level": 93,
-        "count": 17
+        "count": 20
       },
       {
         "level": 94,
@@ -2629,12 +2629,12 @@
       {
         "key": "dexterity",
         "label": "Dexterity",
-        "avg": 66.88185654008439
+        "avg": 66.90295358649789
       },
       {
         "key": "vitality",
         "label": "Vitality",
-        "avg": 287.1518987341772
+        "avg": 287.1729957805907
       },
       {
         "key": "energy",
@@ -2644,12 +2644,12 @@
       {
         "key": "life",
         "label": "Life",
-        "avg": 1058.3586497890296
+        "avg": 1057.3417721518988
       },
       {
         "key": "mana",
         "label": "Mana",
-        "avg": 457.8101265822785
+        "avg": 457.64978902953584
       }
     ],
     "avgStats": [
@@ -2657,7 +2657,7 @@
         "modName": "maxhp",
         "displayLabel": "+Life",
         "suffix": "",
-        "avgValue": 163.31645569620252,
+        "avgValue": 163.35864978902953,
         "charsWithMod": 227,
         "pctOfChars": 0.9578059071729957
       },
@@ -2689,7 +2689,7 @@
         "modName": "dexterity",
         "displayLabel": "+Dexterity",
         "suffix": "",
-        "avgValue": 23.367088607594937,
+        "avgValue": 23.30801687763713,
         "charsWithMod": 218,
         "pctOfChars": 0.919831223628692
       },
@@ -2697,7 +2697,7 @@
         "modName": "item_magicbonus",
         "displayLabel": "Magic Find",
         "suffix": "%",
-        "avgValue": 75.84388185654008,
+        "avgValue": 75.9113924050633,
         "charsWithMod": 215,
         "pctOfChars": 0.9071729957805907
       },
@@ -2713,7 +2713,7 @@
         "modName": "item_fastercastrate",
         "displayLabel": "Faster Cast Rate",
         "suffix": "%",
-        "avgValue": 90.80590717299577,
+        "avgValue": 90.76371308016877,
         "charsWithMod": 209,
         "pctOfChars": 0.8818565400843882
       }
@@ -2947,8 +2947,8 @@
           "pct": 5.91,
           "invCode": "tow",
           "price": {
-            "medianHr": 0.15,
-            "samples": 5,
+            "medianHr": 0.2,
+            "samples": 6,
             "source": "ask"
           },
           "runes": null,
@@ -3000,7 +3000,11 @@
           "count": 20,
           "pct": 8.44,
           "invCode": "dr3",
-          "price": null,
+          "price": {
+            "medianHr": 0.2,
+            "samples": 3,
+            "source": "ask"
+          },
           "runes": null,
           "runeCostHr": null,
           "runeCostEstimated": false
@@ -3096,7 +3100,7 @@
           "pct": 2.95,
           "invCode": "dr1",
           "price": {
-            "medianHr": 0.18,
+            "medianHr": 0.13,
             "samples": 4,
             "source": "ask"
           },
@@ -3342,7 +3346,7 @@
           "invCode": "lbl",
           "price": {
             "medianHr": 0.4,
-            "samples": 32,
+            "samples": 33,
             "source": "ask"
           },
           "runes": null,
@@ -3357,7 +3361,7 @@
           "invCode": "mbl",
           "price": {
             "medianHr": 0.25,
-            "samples": 41,
+            "samples": 40,
             "source": "ask"
           },
           "runes": null,
@@ -3371,8 +3375,8 @@
           "pct": 8.02,
           "invCode": "tbl",
           "price": {
-            "medianHr": 0.28,
-            "samples": 16,
+            "medianHr": 0.25,
+            "samples": 15,
             "source": "ask"
           },
           "runes": null,
@@ -3542,7 +3546,7 @@
           "invCode": "mbt",
           "price": {
             "medianHr": 0.15,
-            "samples": 8,
+            "samples": 9,
             "source": "ask"
           },
           "runes": null,
@@ -3589,7 +3593,7 @@
           "invCode": "amu",
           "price": {
             "medianHr": 0.75,
-            "samples": 19,
+            "samples": 20,
             "source": "ask"
           },
           "runes": null,
@@ -3662,7 +3666,7 @@
           "invCode": "rin",
           "price": {
             "medianHr": 0.1,
-            "samples": 8,
+            "samples": 9,
             "source": "ask"
           },
           "runes": null,
@@ -3677,7 +3681,7 @@
           "invCode": "rin",
           "price": {
             "medianHr": 0.2,
-            "samples": 28,
+            "samples": 30,
             "source": "ask"
           },
           "runes": null,
@@ -3687,8 +3691,8 @@
         {
           "itemName": "The Stone of Jordan",
           "itemType": "Unique",
-          "count": 18,
-          "pct": 7.59,
+          "count": 19,
+          "pct": 8.02,
           "invCode": "rin",
           "price": {
             "medianHr": 1,
@@ -3707,7 +3711,7 @@
           "invCode": "rin",
           "price": {
             "medianHr": 0.5,
-            "samples": 7,
+            "samples": 8,
             "source": "ask"
           },
           "runes": null,
@@ -3732,8 +3736,8 @@
         {
           "itemName": "Nagelring",
           "itemType": "Unique",
-          "count": 8,
-          "pct": 3.38,
+          "count": 9,
+          "pct": 3.8,
           "invCode": "rin",
           "price": null,
           "runes": null,
@@ -3748,7 +3752,7 @@
           "invCode": "rin",
           "price": {
             "medianHr": 2.5,
-            "samples": 17,
+            "samples": 18,
             "source": "ask"
           },
           "runes": null,
@@ -4894,14 +4898,14 @@
         ]
       },
       "ring": {
-        "items": 295,
+        "items": 293,
         "mods": [
           {
             "modName": "item_fastercastrate",
             "displayLabel": "Faster Cast Rate",
             "category": "speed",
-            "count": 200,
-            "pct": 0.6779661016949152,
+            "count": 199,
+            "pct": 0.6791808873720137,
             "medianValue": 10,
             "p75Value": 10
           },
@@ -4910,7 +4914,7 @@
             "displayLabel": "+Attack Rating",
             "category": "utility",
             "count": 146,
-            "pct": 0.49491525423728816,
+            "pct": 0.49829351535836175,
             "medianValue": 76,
             "p75Value": 99
           },
@@ -4918,8 +4922,8 @@
             "modName": "fireresist",
             "displayLabel": "Fire Resist",
             "category": "resist",
-            "count": 135,
-            "pct": 0.4576271186440678,
+            "count": 134,
+            "pct": 0.45733788395904434,
             "medianValue": 16,
             "p75Value": 27
           },
@@ -4928,7 +4932,7 @@
             "displayLabel": "Cold Resist",
             "category": "resist",
             "count": 131,
-            "pct": 0.4440677966101695,
+            "pct": 0.447098976109215,
             "medianValue": 15,
             "p75Value": 24
           },
@@ -4936,8 +4940,8 @@
             "modName": "lightresist",
             "displayLabel": "Lightning Resist",
             "category": "resist",
-            "count": 129,
-            "pct": 0.43728813559322033,
+            "count": 128,
+            "pct": 0.43686006825938567,
             "medianValue": 14,
             "p75Value": 25
           },
@@ -4945,26 +4949,26 @@
             "modName": "poisonresist",
             "displayLabel": "Poison Resist",
             "category": "resist",
-            "count": 121,
-            "pct": 0.4101694915254237,
+            "count": 119,
+            "pct": 0.4061433447098976,
             "medianValue": 14,
-            "p75Value": 23
+            "p75Value": 24
           },
           {
             "modName": "item_magicbonus",
             "displayLabel": "Magic Find",
             "category": "utility",
-            "count": 102,
-            "pct": 0.34576271186440677,
-            "medianValue": 13.5,
-            "p75Value": 19
+            "count": 101,
+            "pct": 0.3447098976109215,
+            "medianValue": 13,
+            "p75Value": 18
           },
           {
             "modName": "item_manaafterkill",
             "displayLabel": "Mana After Each Kill",
             "category": "leech",
             "count": 100,
-            "pct": 0.3389830508474576,
+            "pct": 0.3412969283276451,
             "medianValue": 3,
             "p75Value": 4
           },
@@ -4972,8 +4976,8 @@
             "modName": "strength",
             "displayLabel": "+Strength",
             "category": "stat",
-            "count": 85,
-            "pct": 0.288135593220339,
+            "count": 84,
+            "pct": 0.28668941979522183,
             "medianValue": 10,
             "p75Value": 15
           },
@@ -4981,9 +4985,9 @@
             "modName": "maxmana",
             "displayLabel": "+Mana",
             "category": "stat",
-            "count": 75,
-            "pct": 0.2542372881355932,
-            "medianValue": 35,
+            "count": 74,
+            "pct": 0.2525597269624573,
+            "medianValue": 35.5,
             "p75Value": 68
           },
           {
@@ -4991,7 +4995,7 @@
             "displayLabel": "Life After Each Kill",
             "category": "leech",
             "count": 72,
-            "pct": 0.2440677966101695,
+            "pct": 0.24573378839590443,
             "medianValue": 3,
             "p75Value": 3
           },
@@ -5000,7 +5004,7 @@
             "displayLabel": "Life Drain Min Damage",
             "category": "damage",
             "count": 62,
-            "pct": 0.21016949152542372,
+            "pct": 0.21160409556313994,
             "medianValue": 5,
             "p75Value": 7
           },
@@ -5009,7 +5013,7 @@
             "displayLabel": "Half Freeze Duration",
             "category": "resist",
             "count": 60,
-            "pct": 0.2033898305084746,
+            "pct": 0.20477815699658702,
             "medianValue": 1,
             "p75Value": 1
           },
@@ -5018,7 +5022,7 @@
             "displayLabel": "All Resistances",
             "category": "resist",
             "count": 56,
-            "pct": 0.18983050847457628,
+            "pct": 0.19112627986348124,
             "medianValue": 9,
             "p75Value": 13
           },
@@ -5026,8 +5030,8 @@
             "modName": "dexterity",
             "displayLabel": "+Dexterity",
             "category": "stat",
-            "count": 56,
-            "pct": 0.18983050847457628,
+            "count": 55,
+            "pct": 0.18771331058020477,
             "medianValue": 7,
             "p75Value": 12
           }
@@ -5062,22 +5066,22 @@
           "pct": 1.8818565400843883
         },
         {
+          "modName": "item_goldbonus",
+          "displayLabel": "Gold Find",
+          "count": 120,
+          "pct": 0.5063291139240507
+        },
+        {
           "modName": "item_fastergethitrate",
           "displayLabel": "Faster Hit Recovery",
           "count": 119,
           "pct": 0.5021097046413502
         },
         {
-          "modName": "item_goldbonus",
-          "displayLabel": "Gold Find",
-          "count": 119,
-          "pct": 0.5021097046413502
-        },
-        {
           "modName": "max_damage",
           "displayLabel": "+Max Physical Damage",
-          "count": 104,
-          "pct": 0.4388185654008439
+          "count": 103,
+          "pct": 0.4345991561181435
         },
         {
           "modName": "strength",
@@ -5126,20 +5130,20 @@
         {
           "modName": "maxhp",
           "displayLabel": "+Life",
-          "count": 828,
-          "pct": 3.4936708860759493
+          "count": 829,
+          "pct": 3.49789029535865
         },
         {
           "modName": "item_magicbonus",
           "displayLabel": "Magic Find",
-          "count": 438,
-          "pct": 1.8481012658227849
+          "count": 437,
+          "pct": 1.8438818565400843
         },
         {
           "modName": "fireresist",
           "displayLabel": "Fire Resist",
-          "count": 393,
-          "pct": 1.6582278481012658
+          "count": 395,
+          "pct": 1.6666666666666667
         },
         {
           "modName": "lightresist",
@@ -5168,8 +5172,8 @@
         {
           "modName": "all_resist",
           "displayLabel": "All Resistances",
-          "count": 178,
-          "pct": 0.7510548523206751
+          "count": 177,
+          "pct": 0.7468354430379747
         },
         {
           "modName": "item_fastermovevelocity",
@@ -5180,8 +5184,8 @@
         {
           "modName": "strength",
           "displayLabel": "+Strength",
-          "count": 120,
-          "pct": 0.5063291139240507
+          "count": 121,
+          "pct": 0.510548523206751
         },
         {
           "modName": "tohit",
@@ -5316,8 +5320,8 @@
         "numAsBuild": 188,
         "numAsPrereq": 41,
         "numAtTwenty": 14,
-        "avgBaseLevel": 5.419213973799127,
-        "avgBaseLevelAsBuild": 6.382978723404255,
+        "avgBaseLevel": 5.423580786026201,
+        "avgBaseLevelAsBuild": 6.388297872340425,
         "totalSample": 237,
         "pctBuild": 0.7932489451476793,
         "pctAny": 0.9662447257383966,
@@ -5358,8 +5362,8 @@
         "numAsBuild": 125,
         "numAsPrereq": 0,
         "numAtTwenty": 0,
-        "avgBaseLevel": 2.656,
-        "avgBaseLevelAsBuild": 2.656,
+        "avgBaseLevel": 2.664,
+        "avgBaseLevelAsBuild": 2.664,
         "totalSample": 237,
         "pctBuild": 0.5274261603375527,
         "pctAny": 0.5274261603375527,
@@ -5530,11 +5534,11 @@
       },
       {
         "level": 92,
-        "count": 38
+        "count": 35
       },
       {
         "level": 93,
-        "count": 17
+        "count": 20
       },
       {
         "level": 94,
@@ -5832,12 +5836,6 @@
         ],
         "other": [
           {
-            "itemName": "Spectral Plate",
-            "itemType": "Unique",
-            "invCode": "brs",
-            "pct": 1.27
-          },
-          {
             "itemName": "Griswold's Valor",
             "itemType": "Set",
             "invCode": "crn",
@@ -5846,6 +5844,6 @@
         ]
       }
     },
-    "pricesComputedAt": "2026-10-29T07:53:18.530Z"
+    "pricesComputedAt": "2026-10-29T07:59:16.168Z"
   }
 }

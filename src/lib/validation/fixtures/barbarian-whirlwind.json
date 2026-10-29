@@ -1,7 +1,7 @@
 {
   "_meta": {
     "build": "barbarian-whirlwind",
-    "fetchedAt": "2026-10-29T07:54:15.188Z",
+    "fetchedAt": "2026-10-29T08:02:06.536Z",
     "api": "https://api.pd2meta.info/api/v1",
     "season": 14,
     "filter": {
@@ -27,9 +27,9 @@
     {
       "item": "Hellfire Torch",
       "itemType": "Unique",
-      "numOccurrences": 158,
+      "numOccurrences": 159,
       "totalSample": 270,
-      "pct": 58.52
+      "pct": 58.89
     },
     {
       "item": "Raven Frost",
@@ -67,18 +67,18 @@
       "pct": 31.85
     },
     {
-      "item": "Immortal King's Will",
-      "itemType": "Set",
+      "item": "Highlord's Wrath",
+      "itemType": "Unique",
       "numOccurrences": 85,
       "totalSample": 270,
       "pct": 31.48
     },
     {
-      "item": "Highlord's Wrath",
-      "itemType": "Unique",
-      "numOccurrences": 84,
+      "item": "Immortal King's Will",
+      "itemType": "Set",
+      "numOccurrences": 85,
       "totalSample": 270,
-      "pct": 31.11
+      "pct": 31.48
     },
     {
       "item": "Immortal King's Pillar",
@@ -144,6 +144,13 @@
       "pct": 12.59
     },
     {
+      "item": "Bul-Kathos' Death Band",
+      "itemType": "Set",
+      "numOccurrences": 31,
+      "totalSample": 270,
+      "pct": 11.48
+    },
+    {
       "item": "Naj's Puzzler",
       "itemType": "Set",
       "numOccurrences": 31,
@@ -153,13 +160,6 @@
     {
       "item": "Atma's Scarab",
       "itemType": "Unique",
-      "numOccurrences": 30,
-      "totalSample": 270,
-      "pct": 11.11
-    },
-    {
-      "item": "Bul-Kathos' Death Band",
-      "itemType": "Set",
       "numOccurrences": 30,
       "totalSample": 270,
       "pct": 11.11
@@ -195,9 +195,9 @@
     {
       "item": "Saracen's Chance",
       "itemType": "Unique",
-      "numOccurrences": 24,
+      "numOccurrences": 23,
       "totalSample": 270,
-      "pct": 8.89
+      "pct": 8.52
     },
     {
       "item": "Goblin Toe",
@@ -1396,6 +1396,13 @@
       "pct": 12.22
     },
     {
+      "item": "Marrowwalk",
+      "itemType": "Unique",
+      "numOccurrences": 31,
+      "totalSample": 270,
+      "pct": 11.48
+    },
+    {
       "item": "Rite of Passage",
       "itemType": "Set",
       "numOccurrences": 31,
@@ -1410,13 +1417,6 @@
       "pct": 11.48
     },
     {
-      "item": "Marrowwalk",
-      "itemType": "Unique",
-      "numOccurrences": 30,
-      "totalSample": 270,
-      "pct": 11.11
-    },
-    {
       "item": "The Reaper's Toll",
       "itemType": "Unique",
       "numOccurrences": 30,
@@ -1424,18 +1424,18 @@
       "pct": 11.11
     },
     {
-      "item": "Immortal King's Detail",
-      "itemType": "Set",
-      "numOccurrences": 29,
-      "totalSample": 270,
-      "pct": 10.74
-    },
-    {
       "item": "Mist",
       "itemType": "Runeword",
       "numOccurrences": 29,
       "totalSample": 270,
       "pct": 10.74
+    },
+    {
+      "item": "Immortal King's Detail",
+      "itemType": "Set",
+      "numOccurrences": 28,
+      "totalSample": 270,
+      "pct": 10.37
     },
     {
       "item": "Immortal King's Pillar",
@@ -1538,9 +1538,9 @@
     {
       "item": "Nosferatu's Coil",
       "itemType": "Unique",
-      "numOccurrences": 12,
+      "numOccurrences": 13,
       "totalSample": 270,
-      "pct": 4.44
+      "pct": 4.81
     },
     {
       "item": "The Vile Husk",
@@ -1548,13 +1548,6 @@
       "numOccurrences": 12,
       "totalSample": 270,
       "pct": 4.44
-    },
-    {
-      "item": "Sandstorm Trek",
-      "itemType": "Unique",
-      "numOccurrences": 11,
-      "totalSample": 270,
-      "pct": 4.07
     },
     {
       "item": "Crown of Thieves",
@@ -1565,6 +1558,13 @@
     },
     {
       "item": "Guardian Angel",
+      "itemType": "Unique",
+      "numOccurrences": 10,
+      "totalSample": 270,
+      "pct": 3.7
+    },
+    {
+      "item": "Sandstorm Trek",
       "itemType": "Unique",
       "numOccurrences": 10,
       "totalSample": 270,
@@ -2913,11 +2913,11 @@
       },
       {
         "level": 92,
-        "count": 37
+        "count": 36
       },
       {
         "level": 93,
-        "count": 35
+        "count": 36
       },
       {
         "level": 94,
@@ -2954,7 +2954,7 @@
       {
         "key": "strength",
         "label": "Strength",
-        "avg": 211.57037037037037
+        "avg": 211.66296296296295
       },
       {
         "key": "dexterity",
@@ -2974,12 +2974,12 @@
       {
         "key": "life",
         "label": "Life",
-        "avg": 1695.611111111111
+        "avg": 1695.0814814814814
       },
       {
         "key": "mana",
         "label": "Mana",
-        "avg": 278.5444444444444
+        "avg": 277.52222222222224
       }
     ],
     "avgStats": [
@@ -2987,7 +2987,7 @@
         "modName": "strength",
         "displayLabel": "+Strength",
         "suffix": "",
-        "avgValue": 47.696296296296296,
+        "avgValue": 47.65555555555556,
         "charsWithMod": 267,
         "pctOfChars": 0.9888888888888889
       },
@@ -2995,7 +2995,7 @@
         "modName": "tohit",
         "displayLabel": "+Attack Rating",
         "suffix": "",
-        "avgValue": 549.2814814814815,
+        "avgValue": 548.7740740740741,
         "charsWithMod": 266,
         "pctOfChars": 0.9851851851851852
       },
@@ -3011,7 +3011,7 @@
         "modName": "maxdamage_percent",
         "displayLabel": "+Max Damage %",
         "suffix": "",
-        "avgValue": 629.7814814814815,
+        "avgValue": 630.262962962963,
         "charsWithMod": 265,
         "pctOfChars": 0.9814814814814815
       },
@@ -3019,7 +3019,7 @@
         "modName": "maxhp",
         "displayLabel": "+Life",
         "suffix": "",
-        "avgValue": 177.33333333333334,
+        "avgValue": 177.26296296296297,
         "charsWithMod": 265,
         "pctOfChars": 0.9814814814814815
       },
@@ -3035,15 +3035,15 @@
         "modName": "dexterity",
         "displayLabel": "+Dexterity",
         "suffix": "",
-        "avgValue": 27.77037037037037,
-        "charsWithMod": 259,
-        "pctOfChars": 0.9592592592592593
+        "avgValue": 27.70740740740741,
+        "charsWithMod": 258,
+        "pctOfChars": 0.9555555555555556
       },
       {
         "modName": "max_damage",
         "displayLabel": "+Max Physical Damage",
         "suffix": "",
-        "avgValue": 39.7,
+        "avgValue": 39.61851851851852,
         "charsWithMod": 256,
         "pctOfChars": 0.9481481481481482
       }
@@ -3084,7 +3084,7 @@
           "invCode": "scy",
           "price": {
             "medianHr": 0.2,
-            "samples": 25,
+            "samples": 26,
             "source": "ask"
           },
           "runes": null,
@@ -3275,8 +3275,8 @@
           "pct": 12.59,
           "invCode": "ba4",
           "price": {
-            "medianHr": 0.18,
-            "samples": 8,
+            "medianHr": 0.25,
+            "samples": 9,
             "source": "ask"
           },
           "runes": null,
@@ -3351,7 +3351,7 @@
           "invCode": "ci1",
           "price": {
             "medianHr": 0.2,
-            "samples": 28,
+            "samples": 29,
             "source": "ask"
           },
           "runes": null,
@@ -3430,7 +3430,7 @@
           "invCode": "aar",
           "price": {
             "medianHr": 7,
-            "samples": 13,
+            "samples": 14,
             "source": "ask"
           },
           "runes": null,
@@ -3566,7 +3566,7 @@
           "invCode": "vgl",
           "price": {
             "medianHr": 0.35,
-            "samples": 43,
+            "samples": 44,
             "source": "ask"
           },
           "runes": null,
@@ -3687,7 +3687,7 @@
           "invCode": "mbl",
           "price": {
             "medianHr": 0.25,
-            "samples": 41,
+            "samples": 40,
             "source": "ask"
           },
           "runes": null,
@@ -3781,8 +3781,8 @@
           "pct": 3.33,
           "invCode": "tbt",
           "price": {
-            "medianHr": 0.3,
-            "samples": 9,
+            "medianHr": 0.28,
+            "samples": 10,
             "source": "ask"
           },
           "runes": null,
@@ -3846,8 +3846,8 @@
         {
           "itemName": "Highlord's Wrath",
           "itemType": "Unique",
-          "count": 84,
-          "pct": 31.11,
+          "count": 85,
+          "pct": 31.48,
           "invCode": "amu",
           "price": {
             "medianHr": 0.5,
@@ -3876,8 +3876,8 @@
         {
           "itemName": "Saracen's Chance",
           "itemType": "Unique",
-          "count": 24,
-          "pct": 8.89,
+          "count": 23,
+          "pct": 8.52,
           "invCode": "amu",
           "price": {
             "medianHr": 0.15,
@@ -3896,7 +3896,7 @@
           "invCode": "amu",
           "price": {
             "medianHr": 0.75,
-            "samples": 19,
+            "samples": 20,
             "source": "ask"
           },
           "runes": null,
@@ -3965,7 +3965,7 @@
           "invCode": "rin",
           "price": {
             "medianHr": 0.2,
-            "samples": 28,
+            "samples": 30,
             "source": "ask"
           },
           "runes": null,
@@ -3975,8 +3975,8 @@
         {
           "itemName": "Bul-Kathos' Death Band",
           "itemType": "Set",
-          "count": 30,
-          "pct": 11.11,
+          "count": 31,
+          "pct": 11.48,
           "invCode": "rin",
           "price": {
             "medianHr": 0.2,
@@ -3995,7 +3995,7 @@
           "invCode": "rin",
           "price": {
             "medianHr": 2.5,
-            "samples": 17,
+            "samples": 18,
             "source": "ask"
           },
           "runes": null,
@@ -4010,7 +4010,7 @@
           "invCode": "rin",
           "price": {
             "medianHr": 0.1,
-            "samples": 8,
+            "samples": 9,
             "source": "ask"
           },
           "runes": null,
@@ -5189,14 +5189,14 @@
         ]
       },
       "ring": {
-        "items": 289,
+        "items": 288,
         "mods": [
           {
             "modName": "lifedrainmindam",
             "displayLabel": "Life Drain Min Damage",
             "category": "damage",
             "count": 173,
-            "pct": 0.5986159169550173,
+            "pct": 0.6006944444444444,
             "medianValue": 6,
             "p75Value": 7
           },
@@ -5204,17 +5204,17 @@
             "modName": "tohit",
             "displayLabel": "+Attack Rating",
             "category": "utility",
-            "count": 173,
-            "pct": 0.5986159169550173,
-            "medianValue": 85,
+            "count": 172,
+            "pct": 0.5972222222222222,
+            "medianValue": 84.5,
             "p75Value": 106
           },
           {
             "modName": "fireresist",
             "displayLabel": "Fire Resist",
             "category": "resist",
-            "count": 130,
-            "pct": 0.44982698961937717,
+            "count": 129,
+            "pct": 0.4479166666666667,
             "medianValue": 15,
             "p75Value": 25
           },
@@ -5223,7 +5223,7 @@
             "displayLabel": "Lightning Resist",
             "category": "resist",
             "count": 125,
-            "pct": 0.43252595155709345,
+            "pct": 0.4340277777777778,
             "medianValue": 14,
             "p75Value": 21
           },
@@ -5232,7 +5232,7 @@
             "displayLabel": "Cold Resist",
             "category": "resist",
             "count": 121,
-            "pct": 0.4186851211072664,
+            "pct": 0.4201388888888889,
             "medianValue": 17,
             "p75Value": 25
           },
@@ -5241,7 +5241,7 @@
             "displayLabel": "Poison Resist",
             "category": "resist",
             "count": 121,
-            "pct": 0.4186851211072664,
+            "pct": 0.4201388888888889,
             "medianValue": 15,
             "p75Value": 23
           },
@@ -5250,7 +5250,7 @@
             "displayLabel": "Mana Drain Min Damage",
             "category": "damage",
             "count": 115,
-            "pct": 0.39792387543252594,
+            "pct": 0.3993055555555556,
             "medianValue": 5,
             "p75Value": 6
           },
@@ -5259,7 +5259,7 @@
             "displayLabel": "+Strength",
             "category": "stat",
             "count": 98,
-            "pct": 0.3391003460207612,
+            "pct": 0.3402777777777778,
             "medianValue": 10.5,
             "p75Value": 17
           },
@@ -5267,8 +5267,8 @@
             "modName": "item_magicbonus",
             "displayLabel": "Magic Find",
             "category": "utility",
-            "count": 97,
-            "pct": 0.3356401384083045,
+            "count": 96,
+            "pct": 0.3333333333333333,
             "medianValue": 14,
             "p75Value": 21
           },
@@ -5277,7 +5277,7 @@
             "displayLabel": "+Mana",
             "category": "stat",
             "count": 89,
-            "pct": 0.3079584775086505,
+            "pct": 0.3090277777777778,
             "medianValue": 43,
             "p75Value": 85
           },
@@ -5285,8 +5285,8 @@
             "modName": "item_manaafterkill",
             "displayLabel": "Mana After Each Kill",
             "category": "leech",
-            "count": 83,
-            "pct": 0.28719723183391005,
+            "count": 82,
+            "pct": 0.2847222222222222,
             "medianValue": 3,
             "p75Value": 3
           },
@@ -5295,7 +5295,7 @@
             "displayLabel": "+Life",
             "category": "stat",
             "count": 76,
-            "pct": 0.2629757785467128,
+            "pct": 0.2638888888888889,
             "medianValue": 20.5,
             "p75Value": 32
           },
@@ -5304,7 +5304,7 @@
             "displayLabel": "+Min Physical Damage",
             "category": "damage",
             "count": 61,
-            "pct": 0.21107266435986158,
+            "pct": 0.21180555555555555,
             "medianValue": 10,
             "p75Value": 12
           },
@@ -5312,8 +5312,8 @@
             "modName": "max_damage",
             "displayLabel": "+Max Physical Damage",
             "category": "damage",
-            "count": 52,
-            "pct": 0.17993079584775087,
+            "count": 51,
+            "pct": 0.17708333333333334,
             "medianValue": 11,
             "p75Value": 13
           },
@@ -5321,23 +5321,23 @@
             "modName": "dexterity",
             "displayLabel": "+Dexterity",
             "category": "stat",
-            "count": 48,
-            "pct": 0.16608996539792387,
+            "count": 47,
+            "pct": 0.16319444444444445,
             "medianValue": 9,
-            "p75Value": 11
+            "p75Value": 12
           }
         ]
       }
     },
     "charms": {
-      "avgCount": 21.385185185185186,
+      "avgCount": 21.38888888888889,
       "annihilus": {
         "count": 116,
         "pct": 0.42962962962962964
       },
       "torch": {
-        "count": 158,
-        "pct": 0.5851851851851851
+        "count": 159,
+        "pct": 0.5888888888888889
       },
       "gheeds": {
         "count": 165,
@@ -5353,20 +5353,20 @@
         {
           "modName": "tohit",
           "displayLabel": "+Attack Rating",
-          "count": 580,
-          "pct": 2.1481481481481484
+          "count": 578,
+          "pct": 2.140740740740741
         },
         {
           "modName": "maxhp",
           "displayLabel": "+Life",
-          "count": 537,
-          "pct": 1.988888888888889
+          "count": 536,
+          "pct": 1.9851851851851852
         },
         {
           "modName": "max_damage",
           "displayLabel": "+Max Physical Damage",
-          "count": 493,
-          "pct": 1.825925925925926
+          "count": 492,
+          "pct": 1.8222222222222222
         },
         {
           "modName": "item_goldbonus",
@@ -5421,20 +5421,20 @@
         {
           "modName": "maxhp",
           "displayLabel": "+Life",
-          "count": 1054,
-          "pct": 3.903703703703704
+          "count": 1053,
+          "pct": 3.9
         },
         {
           "modName": "tohit",
           "displayLabel": "+Attack Rating",
-          "count": 852,
-          "pct": 3.1555555555555554
+          "count": 851,
+          "pct": 3.151851851851852
         },
         {
           "modName": "max_damage",
           "displayLabel": "+Max Physical Damage",
-          "count": 595,
-          "pct": 2.2037037037037037
+          "count": 594,
+          "pct": 2.2
         },
         {
           "modName": "item_magicbonus",
@@ -5445,14 +5445,14 @@
         {
           "modName": "fireresist",
           "displayLabel": "Fire Resist",
-          "count": 371,
-          "pct": 1.374074074074074
+          "count": 370,
+          "pct": 1.3703703703703705
         },
         {
           "modName": "coldresist",
           "displayLabel": "Cold Resist",
-          "count": 365,
-          "pct": 1.3518518518518519
+          "count": 364,
+          "pct": 1.348148148148148
         },
         {
           "modName": "item_fastermovevelocity",
@@ -5463,14 +5463,14 @@
         {
           "modName": "lightresist",
           "displayLabel": "Lightning Resist",
-          "count": 292,
-          "pct": 1.0814814814814815
+          "count": 293,
+          "pct": 1.0851851851851853
         },
         {
           "modName": "poisonresist",
           "displayLabel": "Poison Resist",
-          "count": 248,
-          "pct": 0.9185185185185185
+          "count": 250,
+          "pct": 0.9259259259259259
         },
         {
           "modName": "item_fastergethitrate",
@@ -5601,8 +5601,8 @@
         "numAsBuild": 266,
         "numAsPrereq": 0,
         "numAtTwenty": 2,
-        "avgBaseLevel": 2.8345864661654137,
-        "avgBaseLevelAsBuild": 2.8345864661654137,
+        "avgBaseLevel": 2.838345864661654,
+        "avgBaseLevelAsBuild": 2.838345864661654,
         "totalSample": 270,
         "pctBuild": 0.9851851851851852,
         "pctAny": 0.9851851851851852,
@@ -5611,15 +5611,15 @@
       },
       {
         "name": "Berserker",
-        "numWithAny": 265,
-        "numAsBuild": 265,
+        "numWithAny": 264,
+        "numAsBuild": 264,
         "numAsPrereq": 0,
         "numAtTwenty": 0,
         "avgBaseLevel": 1,
         "avgBaseLevelAsBuild": 1,
         "totalSample": 270,
-        "pctBuild": 0.9814814814814815,
-        "pctAny": 0.9814814814814815,
+        "pctBuild": 0.9777777777777777,
+        "pctAny": 0.9777777777777777,
         "pctAtTwenty": 0,
         "role": "core"
       },
@@ -5843,11 +5843,11 @@
       },
       {
         "level": 92,
-        "count": 37
+        "count": 36
       },
       {
         "level": 93,
-        "count": 35
+        "count": 36
       },
       {
         "level": 94,
@@ -5938,7 +5938,7 @@
             "itemName": "Immortal King's Detail",
             "itemType": "Set",
             "invCode": "hbl",
-            "pct": 10.74
+            "pct": 10.37
           },
           {
             "itemName": "Verdungo's Hearty Cord",
@@ -5950,7 +5950,7 @@
             "itemName": "Nosferatu's Coil",
             "itemType": "Unique",
             "invCode": "vbl",
-            "pct": 4.44
+            "pct": 4.81
           },
           {
             "itemName": "Credendum",
@@ -6057,16 +6057,16 @@
         ],
         "boots": [
           {
+            "itemName": "Marrowwalk",
+            "itemType": "Unique",
+            "invCode": "mbt",
+            "pct": 11.48
+          },
+          {
             "itemName": "Rite of Passage",
             "itemType": "Set",
             "invCode": "lbt",
             "pct": 11.48
-          },
-          {
-            "itemName": "Marrowwalk",
-            "itemType": "Unique",
-            "invCode": "mbt",
-            "pct": 11.11
           },
           {
             "itemName": "Immortal King's Pillar",
@@ -6078,7 +6078,7 @@
             "itemName": "Sandstorm Trek",
             "itemType": "Unique",
             "invCode": "vbt",
-            "pct": 4.07
+            "pct": 3.7
           },
           {
             "itemName": "Goblin Toe",
@@ -6159,12 +6159,6 @@
             "pct": 0.37
           },
           {
-            "itemName": "Finesse",
-            "itemType": "Runeword",
-            "invCode": "gth",
-            "pct": 0.37
-          },
-          {
             "itemName": "Griswold's Valor",
             "itemType": "Set",
             "invCode": "crn",
@@ -6173,6 +6167,6 @@
         ]
       }
     },
-    "pricesComputedAt": "2026-10-29T07:53:18.530Z"
+    "pricesComputedAt": "2026-10-29T07:59:16.168Z"
   }
 }

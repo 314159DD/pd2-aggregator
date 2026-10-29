@@ -1,7 +1,7 @@
 {
   "_meta": {
     "build": "assassin-lightning-trapsin",
-    "fetchedAt": "2026-10-29T07:54:15.124Z",
+    "fetchedAt": "2026-10-29T08:02:06.503Z",
     "api": "https://api.pd2meta.info/api/v1",
     "season": 14,
     "filter": {
@@ -1929,7 +1929,7 @@
           "invCode": "skr",
           "price": {
             "medianHr": 0.15,
-            "samples": 30,
+            "samples": 31,
             "source": "ask"
           },
           "runes": null,
@@ -2310,8 +2310,8 @@
           "pct": 3.09,
           "invCode": "scl",
           "price": {
-            "medianHr": 0.08,
-            "samples": 6,
+            "medianHr": 0.1,
+            "samples": 7,
             "source": "ask"
           },
           "runes": null,
@@ -2325,8 +2325,8 @@
           "pct": 3.09,
           "invCode": "spl",
           "price": {
-            "medianHr": 0.23,
-            "samples": 6,
+            "medianHr": 0.2,
+            "samples": 5,
             "source": "ask"
           },
           "runes": null,
@@ -2501,7 +2501,7 @@
           "invCode": "lbl",
           "price": {
             "medianHr": 0.4,
-            "samples": 32,
+            "samples": 33,
             "source": "ask"
           },
           "runes": null,
@@ -2531,7 +2531,7 @@
           "invCode": "mbl",
           "price": {
             "medianHr": 0.25,
-            "samples": 41,
+            "samples": 40,
             "source": "ask"
           },
           "runes": null,
@@ -2683,7 +2683,7 @@
           "invCode": "amu",
           "price": {
             "medianHr": 0.75,
-            "samples": 19,
+            "samples": 20,
             "source": "ask"
           },
           "runes": null,
@@ -2759,7 +2759,7 @@
           "invCode": "rin",
           "price": {
             "medianHr": 0.2,
-            "samples": 28,
+            "samples": 30,
             "source": "ask"
           },
           "runes": null,
@@ -2819,7 +2819,7 @@
           "invCode": "rin",
           "price": {
             "medianHr": 0.1,
-            "samples": 8,
+            "samples": 9,
             "source": "ask"
           },
           "runes": null,
@@ -4914,16 +4914,10 @@
             "itemType": "Unique",
             "invCode": "am2",
             "pct": 2.06
-          },
-          {
-            "itemName": "Spectral Plate",
-            "itemType": "Unique",
-            "invCode": "brs",
-            "pct": 1.03
           }
         ]
       }
     },
-    "pricesComputedAt": "2026-10-29T07:53:18.530Z"
+    "pricesComputedAt": "2026-10-29T07:59:16.168Z"
   }
 }
