@@ -1,8 +1,26 @@
 import { gunzipSync, gzipSync } from 'node:zlib';
-import type { Pool } from 'pg';
-import type { CompactCharacter } from '../core/compact';
+import type { Pool, PoolClient } from 'pg';
+import type { CompactCharacter, CompactItem } from '../core/compact';
+import { recomputeGearValues } from './prices-repo';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
+
+/** Replaces all items of a character: delete, then one unnest insert. */
+export async function replaceItems(client: PoolClient, characterId: number, items: CompactItem[]): Promise<void> {
+  await client.query('delete from character_items where character_id = $1', [characterId]);
+  if (!items.length) return;
+  const it = items;
+  await client.query(
+    `insert into character_items
+       (character_id, owner, slot, is_switch, is_charm, name, quality, base_name, base_type, is_runeword, inv_code, mods)
+     select $1, owner, slot, is_switch, is_charm, name, quality, base_name, base_type, is_runeword, inv_code, mods::jsonb
+     from unnest($2::text[], $3::text[], $4::boolean[], $5::boolean[], $6::text[], $7::text[], $8::text[], $9::text[], $10::boolean[], $11::text[], $12::text[])
+       as t(owner, slot, is_switch, is_charm, name, quality, base_name, base_type, is_runeword, inv_code, mods)`,
+    [characterId, it.map((i) => i.owner), it.map((i) => i.slot), it.map((i) => i.isSwitch), it.map((i) => i.isCharm),
+      it.map((i) => i.name), it.map((i) => i.quality), it.map((i) => i.baseName), it.map((i) => i.baseType),
+      it.map((i) => i.isRuneword), it.map((i) => i.invCode), it.map((i) => JSON.stringify(i.mods))],
+  );
+}
 
 export async function upsertCharacter(
   pool: Pool,
@@ -39,7 +57,6 @@ export async function upsertCharacter(
     const isNew: boolean = up.rows[0].inserted;
 
     await client.query('delete from character_skills where character_id = $1', [id]);
-    await client.query('delete from character_items where character_id = $1', [id]);
     await client.query('delete from character_merc where character_id = $1', [id]);
 
     if (skills.length) {
@@ -49,19 +66,8 @@ export async function upsertCharacter(
         [id, skills.map((s) => s.skill), skills.map((s) => s.hardLevel), skills.map((s) => s.realLevel)],
       );
     }
-    if (c.items.length) {
-      const it = c.items;
-      await client.query(
-        `insert into character_items
-           (character_id, owner, slot, is_switch, is_charm, name, quality, base_name, base_type, is_runeword, mods)
-         select $1, owner, slot, is_switch, is_charm, name, quality, base_name, base_type, is_runeword, mods::jsonb
-         from unnest($2::text[], $3::text[], $4::boolean[], $5::boolean[], $6::text[], $7::text[], $8::text[], $9::text[], $10::boolean[], $11::text[])
-           as t(owner, slot, is_switch, is_charm, name, quality, base_name, base_type, is_runeword, mods)`,
-        [id, it.map((i) => i.owner), it.map((i) => i.slot), it.map((i) => i.isSwitch), it.map((i) => i.isCharm),
-          it.map((i) => i.name), it.map((i) => i.quality), it.map((i) => i.baseName), it.map((i) => i.baseType),
-          it.map((i) => i.isRuneword), it.map((i) => JSON.stringify(i.mods))],
-      );
-    }
+    await replaceItems(client, id, c.items);
+    await recomputeGearValues(client, { characterIds: [id] });
     if (c.mercDescription !== null) {
       await client.query('insert into character_merc (character_id, description) values ($1, $2)', [id, c.mercDescription]);
     }

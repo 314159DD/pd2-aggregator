@@ -17,6 +17,7 @@ import { ladderNames, planFromAccount, planFromLadder } from './discovery';
 import { ingestOne } from './ingest';
 import { CharQueue } from './queue';
 import { fullSweep, pollIncremental } from './market-poller';
+import { runBuildShareJob, runPriceJob } from './jobs';
 
 const MIN = 60_000;
 const HOUR = 60 * MIN;
@@ -171,6 +172,22 @@ async function main(): Promise<void> {
         if (!(await active())) return;
         const done = await fullSweep(pool, client, async () => stopping || !(await active()));
         if (done) stats.lastFullMarketSweepAt = new Date().toISOString();
+      },
+    },
+    {
+      name: 'prices',
+      everyMs: HOUR,
+      run: async () => {
+        const r = await runPriceJob({ pool, cfg });
+        log('info', `price job: ${r.priced} items priced, ${r.charactersChanged} characters changed`);
+      },
+    },
+    {
+      name: 'build-share',
+      everyMs: 6 * HOUR,
+      run: async () => {
+        const n = await runBuildShareJob({ pool, cfg });
+        log('info', `build-share job: ${n} rows`);
       },
     },
     {

@@ -31,6 +31,19 @@ nginx -t && systemctl reload nginx
 certbot --nginx -d api.pd2meta.info --non-interactive --agree-tos --redirect -m <owner email>
 ```
 
+### Phase 2 (Builds tab) deploy
+
+1. Deploy the server first (steps above), then the web app. The new web build calls the `/builds/*` endpoints, which must exist before it goes live.
+2. Wait until the collector has logged its first price job: `docker compose -p pd2meta logs collector | grep "price job:"`.
+3. Only then run the item backfill:
+
+```
+docker compose -p pd2meta exec -T api node dist/scripts/backfill-items.js
+```
+
+4. If it reports skipped characters, run it again until none are skipped.
+5. Watch `docker stats` in a second shell while it runs (memory and CPU of `api` and `db`).
+
 ## Check
 
 ```
