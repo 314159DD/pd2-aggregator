@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Cinzel } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
-import { Suspense } from "react";
 import { SiteHeader } from "@/components/shell/SiteHeader";
 import "./globals.css";
 
@@ -45,9 +44,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
       </head>
       <body className="min-h-full flex flex-col">
-        <Suspense fallback={null}>
-          <SiteHeader />
-        </Suspense>
+        <SiteHeader />
         {children}
         <Analytics />
       </body>

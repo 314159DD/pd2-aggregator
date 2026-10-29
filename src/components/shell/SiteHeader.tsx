@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Freshness } from "./Freshness";
@@ -17,7 +18,11 @@ export function SiteHeader() {
           PD2 Meta
         </Link>
         <TabNav />
-        {onBuilds && <ScopeSwitch />}
+        {onBuilds && (
+          <Suspense fallback={<div aria-hidden className="h-10 w-[22.5rem] max-w-full" />}>
+            <ScopeSwitch />
+          </Suspense>
+        )}
         <div className="ml-auto flex items-center gap-3">
           <Freshness />
           <ThemeToggle />

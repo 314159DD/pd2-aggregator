@@ -131,6 +131,11 @@
   }
 }
 
+/* Headings in the LEXADIS layer use Geist; the Meta tool keeps its own heading face. */
+.lx :is(h1, h2, h3, h4) {
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
 /* The product's body background: paper with four radial lights, fixed */
 .lx-stage {
   background-color: var(--paper);
@@ -413,3 +418,51 @@
     backdrop-filter: none !important;
   }
 }
+
+/* Gear budget slider: well track, glow fill, 22px knob with a spring on press */
+.lx-range {
+  --fill: 0%;
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 22px;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+}
+.lx-range::-webkit-slider-runnable-track {
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, color-mix(in oklab, var(--glow) 60%, transparent) var(--fill), var(--well) var(--fill));
+  box-shadow: var(--shadow-well);
+}
+.lx-range::-moz-range-track {
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, color-mix(in oklab, var(--glow) 60%, transparent) var(--fill), var(--well) var(--fill));
+  box-shadow: var(--shadow-well);
+}
+.lx-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  margin-top: -7px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ink);
+  box-shadow: inset 0 1px 0 var(--edge), 0 1px 2px color-mix(in oklab, var(--shadow-c) 20%, transparent), 0 4px 10px -4px color-mix(in oklab, var(--shadow-c) 40%, transparent);
+  transition: scale var(--dauer-feder) var(--feder-zackig);
+}
+.lx-range::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ink);
+  box-shadow: inset 0 1px 0 var(--edge), 0 1px 2px color-mix(in oklab, var(--shadow-c) 20%, transparent), 0 4px 10px -4px color-mix(in oklab, var(--shadow-c) 40%, transparent);
+  transition: scale var(--dauer-feder) var(--feder-zackig);
+}
+.lx-range:active::-webkit-slider-thumb { scale: 1.12; }
+.lx-range:active::-moz-range-thumb { scale: 1.12; }
+.lx-range:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--accent-text); outline-offset: 2px; }
+.lx-range:focus-visible::-moz-range-thumb { outline: 2px solid var(--accent-text); outline-offset: 2px; }
