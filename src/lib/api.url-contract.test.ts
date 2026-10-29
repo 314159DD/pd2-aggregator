@@ -28,6 +28,7 @@ describe("api.ts URL contract", () => {
   });
 
   afterEach(() => {
+    vi.unstubAllEnvs();
     vi.restoreAllMocks();
   });
 
@@ -40,7 +41,10 @@ describe("api.ts URL contract", () => {
 
   describe("base URL", () => {
     it("defaults to api.pd2meta.info when NEXT_PUBLIC_API_BASE is unset", async () => {
-      await getItemUsage(FILTER);
+      vi.stubEnv("NEXT_PUBLIC_API_BASE", undefined);
+      vi.resetModules();
+      const fresh = await import("./api");
+      await fresh.getItemUsage(FILTER);
       expect(capturedUrls[0]).toMatch(
         /^https:\/\/api\.pd2meta\.info\/api\/v1\/characters\/stats\/item-usage\?/,
       );
