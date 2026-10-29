@@ -1,5 +1,5 @@
 import type { Pool } from 'pg';
-import { readRaw } from '../db/characters-repo';
+import { readRawWithAccount } from '../db/characters-repo';
 import { filterCte } from './filter-sql';
 import type { CharacterFilter } from './filters';
 
@@ -21,7 +21,7 @@ export async function charactersPage(
   const n = params.length;
   const [rows, counts] = await Promise.all([
     pool.query(
-      `${sql} select c.raw from characters c join filtered on filtered.id = c.id
+      `${sql} select c.raw, c.account from characters c join filtered on filtered.id = c.id
        order by c.level desc, c.id desc limit $${n + 1} offset $${n + 2}`,
       [...params, pageSize, (page - 1) * pageSize],
     ),
@@ -37,7 +37,7 @@ export async function charactersPage(
     if (r.class in breakdown) breakdown[r.class] = r.n;
   }
   breakdown.total = total;
-  return { total, characters: rows.rows.map((r) => readRaw(r)), breakdown };
+  return { total, characters: rows.rows.map((r) => readRawWithAccount(r)), breakdown };
 }
 
 export async function charactersByAccount(
@@ -46,10 +46,10 @@ export async function charactersByAccount(
   account: string,
 ): Promise<{ characters: unknown[]; total: number }> {
   const r = await pool.query(
-    `select raw from characters where season = $1 and lower(account) = lower($2) order by level desc, id desc`,
+    `select raw, account from characters where season = $1 and lower(account) = lower($2) order by level desc, id desc`,
     [season, account],
   );
-  return { characters: r.rows.map((x) => readRaw(x)), total: r.rows.length };
+  return { characters: r.rows.map((x) => readRawWithAccount(x)), total: r.rows.length };
 }
 
 async function itemUsageFor(pool: Pool, f: CharacterFilter, owner: 'player' | 'merc'): Promise<ItemUsageRow[]> {

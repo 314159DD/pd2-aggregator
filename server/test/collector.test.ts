@@ -40,6 +40,14 @@ describe('CharQueue', () => {
     expect(q.shift()?.name).toBe('y');
     expect(q.shift()).toBeUndefined();
   });
+
+  it('merges an account into a queued duplicate that has none', () => {
+    const q = new CharQueue();
+    q.push({ name: 'x', priority: 1 });
+    expect(q.push({ name: 'x', account: 'acc', priority: 2 })).toBe(false);
+    expect(q.push({ name: 'x', account: 'other', priority: 1 })).toBe(false);
+    expect(q.shift()).toMatchObject({ name: 'x', account: 'acc' });
+  });
 });
 
 describe('planning', () => {

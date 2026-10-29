@@ -1,5 +1,5 @@
 import { loadConfig } from '../config';
-import { getLastIngest } from '../db/characters-repo';
+import { backfillAccount, getLastIngest } from '../db/characters-repo';
 import { migrate } from '../db/migrate';
 import { createPool } from '../db/pool';
 import {
@@ -86,6 +86,7 @@ async function main(): Promise<void> {
 
   async function planAccount(account: string, priority: 0 | 1 | 2): Promise<void> {
     const res = await client.account(account);
+    await backfillAccount(pool, cfg.currentSeason, account, res.details.map((d) => d.name));
     const last = await getLastIngest(pool, cfg.currentSeason, res.details.map((d) => d.name));
     queueNames(planFromAccount(res.details, last, new Date(), cfg), priority, account);
   }

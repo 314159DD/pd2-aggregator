@@ -14,7 +14,11 @@ export class CharQueue {
     const key = item.name.toLowerCase();
     const cur = this.queued.get(key);
     if (cur !== undefined) {
-      if (item.priority >= cur) return false;
+      if (item.priority >= cur) {
+        const queuedItem = this.lanes[cur].get(key)!;
+        if (!queuedItem.account && item.account) queuedItem.account = item.account;
+        return false;
+      }
       // Promote to the more urgent lane, keeping a known account.
       const old = this.lanes[cur].get(key)!;
       this.lanes[cur].delete(key);
