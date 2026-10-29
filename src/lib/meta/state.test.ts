@@ -76,3 +76,12 @@ describe("metaApiParams", () => {
     expect(p.has("skills")).toBe(false);
   });
 });
+
+describe("skill caps", () => {
+  it("keeps at most 20 skills and 60 chars per name", () => {
+    const many = Array.from({ length: 30 }, (_, i) => ({ name: "S" + i, minLevel: 1 }));
+    expect(parse("skills=" + encodeURIComponent(JSON.stringify(many))).skills).toHaveLength(20);
+    const long = [{ name: "x".repeat(100), minLevel: 5 }];
+    expect(parse("skills=" + encodeURIComponent(JSON.stringify(long))).skills[0].name).toHaveLength(60);
+  });
+});

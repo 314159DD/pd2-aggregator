@@ -67,8 +67,9 @@ export async function getItemUsage(
 export async function getSkillUsage(
   f: CommonFilter,
   skills?: SkillReq[],
+  signal?: AbortSignal,
 ): Promise<SkillUsageRow[]> {
-  const r = await fetch(`${BASE}/characters/stats/skill-usage?${qs(f, { skills })}`);
+  const r = await fetch(`${BASE}/characters/stats/skill-usage?${qs(f, { skills })}`, { signal });
   if (!r.ok) throw new Error(`skill-usage HTTP ${r.status}`);
   return r.json();
 }

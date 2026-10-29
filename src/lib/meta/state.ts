@@ -21,6 +21,9 @@ export const DEFAULT_META_STATE: MetaState = {
   char: "",
 };
 
+const MAX_SKILLS = 20;
+const MAX_SKILL_NAME = 60;
+
 function parseSkills(raw: string | null): MetaState["skills"] {
   if (!raw) return [];
   try {
@@ -28,10 +31,11 @@ function parseSkills(raw: string | null): MetaState["skills"] {
     if (!Array.isArray(parsed)) return [];
     const out: MetaState["skills"] = [];
     for (const e of parsed) {
+      if (out.length >= MAX_SKILLS) break;
       if (!e || typeof e !== "object") continue;
       const { name, minLevel } = e as Record<string, unknown>;
       if (typeof name !== "string" || !name || typeof minLevel !== "number" || !Number.isInteger(minLevel)) continue;
-      out.push({ name, minLevel: Math.min(99, Math.max(1, minLevel)) });
+      out.push({ name: name.slice(0, MAX_SKILL_NAME), minLevel: Math.min(99, Math.max(1, minLevel)) });
     }
     return out;
   } catch {
