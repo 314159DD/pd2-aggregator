@@ -13,13 +13,21 @@ import {
   setLevel,
   toApiParams,
   toggleClass,
+  toggleItem,
+  toggleMercItem,
+  toggleMercType,
+  toggleSkill,
   type BuildsState,
 } from "@/lib/builds/url-state";
 import { ActiveFilters } from "./ActiveFilters";
 import { BuildsHeader } from "./BuildsHeader";
 import { ClassShare } from "./ClassShare";
 import { GearBudget } from "./GearBudget";
+import { ItemIcon } from "./ItemIcon";
+import { ShoppingList } from "./ShoppingList";
 import { Toolbar } from "./Toolbar";
+import { UsageCard } from "./UsageCard";
+import { skillIconUrl } from "@/lib/builds/item-art";
 
 type Data = { usage: BuildsUsage; characters: BuildsCharactersPage };
 
@@ -144,10 +152,39 @@ export function BuildsView() {
               <div className="grid gap-5 lg:grid-cols-12">
                 <div className="flex min-w-0 flex-col gap-5 lg:col-span-4">
                   <GearBudget value={state.maxGearHr} onChange={(v) => update(setBudget(state, v))} />
-                  {/* Task 10: four UsageCards (skills, items, merc types, merc items) */}
+                  <UsageCard
+                    title="Skills"
+                    entries={data.usage.skills}
+                    selected={state.skills.map((k) => k.name)}
+                    onToggle={(n) => update(toggleSkill(state, n))}
+                    icon={(e) => (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={skillIconUrl(e.name)} alt="" width={28} height={28} loading="lazy" className="size-7 rounded-lg" />
+                    )}
+                  />
+                  <UsageCard
+                    title="Items"
+                    entries={data.usage.items}
+                    selected={state.items}
+                    onToggle={(n) => update(toggleItem(state, n))}
+                    icon={(e) => <ItemIcon item={e} />}
+                  />
+                  <UsageCard
+                    title="Mercenary"
+                    entries={data.usage.mercTypes}
+                    selected={state.mercTypes}
+                    onToggle={(n) => update(toggleMercType(state, n))}
+                  />
+                  <UsageCard
+                    title="Merc items"
+                    entries={data.usage.mercItems}
+                    selected={state.mercItems}
+                    onToggle={(n) => update(toggleMercItem(state, n))}
+                    icon={(e) => <ItemIcon item={e} />}
+                  />
                 </div>
                 <div className="flex min-w-0 flex-col gap-5 lg:col-span-8">
-                  {/* Task 10: ShoppingList */}
+                  <ShoppingList items={data.usage.items} />
                   {/* Task 11: CharacterTable (data.characters) */}
                 </div>
               </div>
