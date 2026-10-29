@@ -5,7 +5,7 @@ import {
   applyExplained,
   compareBreakdown,
   compareUsage,
-  explainItems,
+  recountItems,
   formatTable,
   type Check,
   type CheckResult,
@@ -50,14 +50,25 @@ async function getJson(http: HttpGet, limiter: RateLimiter | null, url: string):
 
 const qs = (q: Record<string, string>): string => new URLSearchParams(q).toString();
 
-const asRows = (key: string) => (json: unknown): UsageRow[] =>
-  (json as Array<Record<string, unknown>>).map((r) => ({ name: String(r[key]), pct: Number(r.pct) }));
+const asRows = (key: string) => (json: unknown): UsageRow[] => {
+  if (!Array.isArray(json)) throw new Error('usage response is not an array');
+  return json.map((r: Record<string, unknown>) => {
+    const name = r?.[key];
+    const pct = typeof r?.pct === 'number' ? r.pct : NaN;
+    if (typeof name !== 'string' || !name || !Number.isFinite(pct)) {
+      throw new Error(`unexpected usage row: ${JSON.stringify(r)}`);
+    }
+    return { name, pct };
+  });
+};
 
-const USAGE: Array<{ check: Check['check']; path: string; key: string; exclude: boolean }> = [
-  { check: 'items', path: 'item-usage', key: 'item', exclude: true },
-  { check: 'skills', path: 'skill-usage', key: 'name', exclude: false },
-  { check: 'merc-types', path: 'merc-type-usage', key: 'mercType', exclude: false },
-  { check: 'merc-items', path: 'merc-item-usage', key: 'item', exclude: true },
+// exclude: pd2.tools drops the ignored items in item-usage only; merc-item-usage has no ignore list.
+// requireRows: items and skills must have rows in every parity set (none of the sets may be legitimately empty).
+const USAGE: Array<{ check: Check['check']; path: string; key: string; exclude: boolean; requireRows: boolean }> = [
+  { check: 'items', path: 'item-usage', key: 'item', exclude: true, requireRows: true },
+  { check: 'skills', path: 'skill-usage', key: 'name', exclude: false, requireRows: true },
+  { check: 'merc-types', path: 'merc-type-usage', key: 'mercType', exclude: false, requireRows: false },
+  { check: 'merc-items', path: 'merc-item-usage', key: 'item', exclude: false, requireRows: false },
 ];
 
 function strip(r: CheckResult): Omit<Check, 'set' | 'check'> {
@@ -82,9 +93,9 @@ async function main(): Promise<number> {
         const path = `/characters/stats/${u.path}?${qs(set.query)}`;
         const o = asRows(u.key)(await getJson(http, null, OUR_API + path));
         const t = asRows(u.key)(await getJson(http, limiter, THEIR_API + path));
-        let r: CheckResult = compareUsage(o, t, { ...OPTS, exclude: u.exclude ? OPTS.exclude : [] });
+        let r: CheckResult = compareUsage(o, t, { ...OPTS, exclude: u.exclude ? OPTS.exclude : [], requireRows: u.requireRows });
         if (u.check === 'items' && r.failedNames.length && pool && cfg) {
-          r = applyExplained(r, t, await explainItems(pool, cfg, set.query, r.failedNames));
+          r = applyExplained(r, o, t, await recountItems(pool, cfg, set.query, r.failedNames));
         }
         checks.push({ set: set.id, check: u.check, ...strip(r) });
       }
