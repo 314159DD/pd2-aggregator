@@ -1,44 +1,58 @@
-# PD2 Build Affix Aggregator
+# PD2 Meta
 
-Aggregates Project Diablo 2 ladder builds from the [pd2.tools](https://pd2.tools) public API and surfaces what gear, affixes, and charms top players actually use for a given class + skills filter. Live at **https://pd2-aggregator.vercel.app**.
+Builds and gear meta for Project Diablo 2 ladder characters. Two tabs:
 
-The use case: PD2 has very few written build guides, especially for off-meta builds. Players who want to know "what affixes should I roll on my Phoenix Strike Assassin's amulet?" can now pull the answer directly from what the ladder is doing.
+- **Builds**: browse ladder characters by class and skills, with usage cards, gear value in HR, a shopping list, character and account pages.
+- **Meta**: for one cohort (class, skills, minimum level, mode) the most worn items per slot with own prices, affix frequencies, charm patterns, average stats, a build sheet and a diff against one character.
 
-## Quick start
+Live at **https://pd2-aggregator.vercel.app**.
+
+## Architecture
+
+- `server/`: collector, Postgres and read API (`api.pd2meta.info`) on the VPS. The Meta aggregation runs server side in `server/src/api/meta/`.
+- Web (repo root): Next.js 16 static export on Vercel. It only renders what the API returns.
+- Deploy: see [`deploy/RUNBOOK.md`](deploy/RUNBOOK.md).
+
+## Local development
 
 ```bash
-git clone https://github.com/314159DD/pd2-aggregator.git
-cd pd2-aggregator
 npm install
-npm run dev
-# open http://localhost:3000
+npm run dev          # http://localhost:3000
+npm test             # web tests
+npm run typecheck
+npm run lint
+npm run build        # static export to out/
+cd server && npm test
 ```
-
-Other commands:
-- `npm test` — run the test suite (vitest)
-- `npm run typecheck` — TypeScript check
-- `npm run build` — static export to `out/`
-
-## Documentation
-
-- [`plan/README.md`](plan/README.md) — full planning hub (vision, roadmap, architecture, decisions, providers, sprints)
-- [`docs/specs/2026-05-08-pd2-build-affix-aggregator-design.md`](docs/specs/2026-05-08-pd2-build-affix-aggregator-design.md) — original architecture doc
-- [`CLAUDE.md`](CLAUDE.md) — guide for AI agents working in this repo
 
 ## Data sources
 
-- **[pd2.tools](https://pd2.tools)** by [@coleestrin](https://github.com/coleestrin) — the ladder data source (public REST API). Without their work, this project doesn't exist.
-- **[wiki.projectdiablo2.com](https://wiki.projectdiablo2.com)** — skill prereqs/synergies and item metadata. Content is CC-BY-SA; we link back to the wiki in-app.
-- **[coleestrin/pd2-tools](https://github.com/coleestrin/pd2-tools)** — affix mod dictionary (MIT-licensed, copied with attribution).
+- Character and market data: the official Project Diablo 2 API, collected by `server/`.
+- Prices: own `item_prices` (Unique, Set, Runeword and Rune medians from `market_listings`, hourly, sold listings preferred).
+- Item and skill data: PD2 wiki, kept in `data/*.json`.
+- Build tiers: Dark Humility tier list (Google Sheet) via pd2.madebykontra.com, in `data/kontra-builds.json`.
 
-## Stack
+## Static data sync
 
-Next.js 16 (App Router, static export), React 19, TypeScript, Tailwind 4, shadcn/ui, vitest. No backend — the browser talks to api.pd2.tools directly. Aggregation runs in a Web Worker; cache lives in IndexedDB.
+The server uses byte-identical copies of some repo data files. After refreshing `data/*.json` or `public/runeword-runes.json`, run from the repo root:
 
-## Contributing
+```bash
+node server/scripts/sync-static.js
+```
 
-Issues and PRs welcome. The current sprint and roadmap live in [`plan/`](plan/). Test suite must stay green (`npm test`) and types must check (`npm run typecheck`).
+The nightly workflow (`.github/workflows/refresh-price-snapshot.yml`) does this itself.
 
-## License
+## Documentation
 
-[MIT](LICENSE).
+- [`plan/README.md`](plan/README.md): planning hub (vision, roadmap, architecture, decisions, sprints)
+- [`CLAUDE.md`](CLAUDE.md): guide for AI agents working in this repo
+
+## Credits and licences
+
+- Character and market data from the official Project Diablo 2 API.
+- Parts of the code from [pd2.tools](https://github.com/coleestrin/pd2-tools) by Cole Estrin (MIT).
+- Item and skill data from the [PD2 wiki](https://wiki.projectdiablo2.com) (CC BY-SA 4.0).
+- Build tiers from the Dark Humility tier list via pd2.madebykontra.com.
+- Not affiliated with Project Diablo 2.
+
+Code licence: see [`LICENSE`](LICENSE).

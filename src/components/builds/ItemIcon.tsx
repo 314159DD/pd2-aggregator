@@ -4,12 +4,12 @@ import { useState } from "react";
 import { itemArtUrl, skillIconUrl } from "@/lib/builds/item-art";
 
 const RIM: Record<string, string> = {
-  Unique: "var(--rarity-unique)",
-  Set: "var(--rarity-set)",
-  Runeword: "var(--rarity-rare)",
-  Rare: "var(--rarity-rare)",
-  Magic: "var(--rarity-magic)",
-  Crafted: "var(--rarity-crafted)",
+  Unique: "var(--color-q-unique)",
+  Set: "var(--color-q-set)",
+  Runeword: "var(--color-q-runeword)",
+  Rare: "var(--color-q-rare)",
+  Magic: "var(--color-q-magic)",
+  Crafted: "var(--color-q-crafted)",
 };
 
 type Props = {

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Cinzel } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SiteHeader } from "@/components/shell/SiteHeader";
+import { SiteFooter } from "@/components/shell/SiteFooter";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -14,19 +15,12 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const cinzel = Cinzel({
-  variable: "--font-cinzel",
-  subsets: ["latin"],
-  weight: ["400", "600", "700", "900"],
-});
-
 // Sets the LEXADIS theme before paint: stored choice, else dark.
 const THEME_SCRIPT = `try{var m=localStorage.getItem("pd2meta-theme");document.documentElement.dataset.mode=m==="light"?"light":"dark"}catch(e){document.documentElement.dataset.mode="dark"}`;
 
 export const metadata: Metadata = {
-  title: "PD2 Meta Info",
-  description:
-    "Aggregates Project Diablo 2 ladder builds — what items and affixes top players actually wear.",
+  title: "PD2 Meta",
+  description: "Builds and gear meta for Project Diablo 2 ladder characters.",
 };
 
 export default function RootLayout({
@@ -38,14 +32,15 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} ${cinzel.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
       </head>
-      <body className="min-h-full flex flex-col">
+      <body className="lx lx-stage min-h-full flex flex-col">
         <SiteHeader />
         {children}
+        <SiteFooter />
         <Analytics />
       </body>
     </html>
