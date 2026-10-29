@@ -1,4 +1,5 @@
-const BASE = "https://api.pd2.tools/api/v1";
+const BASE =
+  process.env.NEXT_PUBLIC_API_BASE ?? "https://api.pd2meta.info/api/v1";
 
 export type GameMode = "hardcore" | "softcore";
 
@@ -125,6 +126,9 @@ export async function getCharactersByAccount(accountName: string): Promise<unkno
   // but has no characters. Treat any error envelope as "not found".
   if (body && typeof body === "object" && "error" in body) return null;
   // Also treat responses with no characters array as not found.
-  if (!Array.isArray((body as Record<string, unknown>).characters)) return null;
+  const chars = (body as Record<string, unknown>).characters;
+  if (!Array.isArray(chars)) return null;
+  // api.pd2meta.info answers 200 with an empty list for unknown accounts.
+  if (chars.length === 0) return null;
   return body;
 }

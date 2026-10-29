@@ -1,0 +1,7515 @@
+{
+ "total": 177650,
+ "limit": 50,
+ "skip": 0,
+ "data": [
+  {
+   "_id": "6adf123e4b73c4249b512cf0",
+   "user_id": "6827e90c51abdd37265479b2",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "jew",
+     "category": "misc",
+     "codes": {
+      "normal": "jew",
+      "exceptional": "",
+      "elite": ""
+     },
+     "name": "Jewel",
+     "stackable": false,
+     "type": "Jewel",
+     "type_code": "jewl",
+     "size": {
+      "height": 1,
+      "width": 1
+     },
+     "requirements": {}
+    },
+    "socketed_count": 0,
+    "id": 49774960,
+    "item_level": 87,
+    "quality": {
+     "id": 4,
+     "name": "Magic"
+    },
+    "graphic_id": 4,
+    "class_specifics": false,
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "min_damage",
+      "values": [
+       7
+      ],
+      "label": "+7 to Minimum Damage",
+      "priority": 127
+     },
+     {
+      "name": "passive_cold_mastery",
+      "values": [
+       3
+      ],
+      "label": "3% to Cold Skill Damage",
+      "priority": 88,
+      "min": 3,
+      "max": 5
+     }
+    ],
+    "name": "Numbing Jewel of Bliss",
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 9,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Boots",
+     "stash_page": 9
+    },
+    "position": {
+     "column": 9,
+     "row": 3
+    },
+    "category": "misc",
+    "base_code": "jew",
+    "requirements": {
+     "level": 42,
+     "strength": 0,
+     "dexterity": 0
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "+7 to Minimum Damage",
+     "3% to Cold Skill Damage"
+    ],
+    "hash": "9a29f434c2cd4a8988f7b95bd109b033072ea616",
+    "account_id": "xilus"
+   },
+   "hr_price": 0,
+   "price": "3wss",
+   "bumped_at": "2026-10-28T23:43:27.720Z",
+   "user_last_online": "2026-10-28T23:43:09.390Z",
+   "user_last_ingame": "2026-10-28T08:56:00.533Z",
+   "created_at": "2026-10-26T08:41:34.770Z",
+   "updated_at": "2026-10-28T23:43:27.720Z",
+   "created_by_id": "6827e90c51abdd37265479b2",
+   "updated_by_id": "6827e90c51abdd37265479b2"
+  },
+  {
+   "_id": "6ae1b877ecf01a7d3a16410d",
+   "user_id": "6827e90c51abdd37265479b2",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "item": {
+    "is_identified": true,
+    "is_socketed": true,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "bst",
+     "category": "weapon",
+     "codes": {
+      "normal": "bst",
+      "exceptional": "8bs",
+      "elite": "6bs"
+     },
+     "name": "Battle Staff",
+     "stackable": false,
+     "type": "Staff",
+     "type_code": "staf",
+     "size": {
+      "height": 4,
+      "width": 1
+     },
+     "class": {
+      "base_code": "stf",
+      "2hd_code": "stf",
+      "base": "Staff",
+      "2hd": "Staff"
+     },
+     "requirements": {},
+     "damage": {
+      "one_handed": {},
+      "two_handed": {
+       "minimum": 6,
+       "maximum": 13
+      },
+      "missile": {}
+     }
+    },
+    "socketed_count": 0,
+    "id": 411068215,
+    "item_level": 87,
+    "quality": {
+     "id": 2,
+     "name": "Normal"
+    },
+    "graphic_id": false,
+    "class_specifics": 42,
+    "durability": {
+     "maximum": 80,
+     "current": 66
+    },
+    "socket_count": 4,
+    "modifiers": [
+     {
+      "name": "item_splashonhit",
+      "values": [
+       1,
+       358,
+       100
+      ],
+      "label": "Melee Attacks Deal Splash Damage",
+      "priority": 245
+     },
+     {
+      "name": "item_fastercastrate",
+      "values": [
+       10
+      ],
+      "label": "10% Faster Cast Rate",
+      "priority": 142
+     },
+     {
+      "name": "item_singleskill",
+      "values": [
+       57,
+       3
+      ],
+      "label": "+3 to Thunder Storm (Sorceress Only)",
+      "priority": 81
+     }
+    ],
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 9,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Boots",
+     "stash_page": 9
+    },
+    "position": {
+     "column": 2,
+     "row": 5
+    },
+    "category": "weapon",
+    "base_code": "bst",
+    "name": "Battle Staff",
+    "requirements": {
+     "level": 0,
+     "strength": 0,
+     "dexterity": 0
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "Melee Attacks Deal Splash Damage",
+     "10% Faster Cast Rate",
+     "+3 to Thunder Storm (Sorceress Only)"
+    ],
+    "damage": {
+     "two_handed": {
+      "minimum": 6,
+      "maximum": 13
+     }
+    },
+    "hash": "7acfdec7d1676b927c7ae2d86ef954fddf2e9445",
+    "account_id": "xilus"
+   },
+   "hr_price": 0,
+   "price": "10 wss",
+   "bumped_at": "2026-10-28T23:43:27.720Z",
+   "user_last_online": "2026-10-28T23:43:09.390Z",
+   "user_last_ingame": "2026-10-28T08:55:19.052Z",
+   "created_at": "2026-10-28T08:55:19.052Z",
+   "updated_at": "2026-10-28T23:43:27.720Z",
+   "created_by_id": "6827e90c51abdd37265479b2",
+   "updated_by_id": "6827e90c51abdd37265479b2"
+  },
+  {
+   "_id": "6ae19ffafb40ff57521987f5",
+   "user_id": "6827e90c51abdd37265479b2",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "cm1",
+     "category": "misc",
+     "codes": {
+      "normal": "cm1",
+      "exceptional": "",
+      "elite": ""
+     },
+     "name": "Small Charm",
+     "stackable": false,
+     "type": "Small Charm",
+     "type_code": "scha",
+     "size": {
+      "height": 1,
+      "width": 1
+     },
+     "requirements": {}
+    },
+    "socketed_count": 0,
+    "id": 61247135152,
+    "item_level": 87,
+    "quality": {
+     "id": 4,
+     "name": "Magic"
+    },
+    "graphic_id": 2,
+    "class_specifics": false,
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "lightdam",
+      "values": [
+       1,
+       36
+      ],
+      "label": "Adds 1-36 Lightning Damage",
+      "priority": 99
+     }
+    ],
+    "name": "Shocking Small Charm",
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 9,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Boots",
+     "stash_page": 9
+    },
+    "position": {
+     "column": 7,
+     "row": 5
+    },
+    "category": "misc",
+    "base_code": "cm1",
+    "requirements": {
+     "level": 36,
+     "strength": 0,
+     "dexterity": 0
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "Adds 1-36 Lightning Damage"
+    ],
+    "hash": "066a0486b293f1d76805f2cf5b611b1f74d391b5",
+    "account_id": "xilus"
+   },
+   "hr_price": 0,
+   "price": "3wss",
+   "bumped_at": "2026-10-28T23:43:27.720Z",
+   "user_last_online": "2026-10-28T23:43:09.390Z",
+   "user_last_ingame": "2026-10-28T08:56:00.533Z",
+   "created_at": "2026-10-28T07:10:50.269Z",
+   "updated_at": "2026-10-28T23:43:27.720Z",
+   "created_by_id": "6827e90c51abdd37265479b2",
+   "updated_by_id": "6827e90c51abdd37265479b2"
+  },
+  {
+   "_id": "6ae1392a63634328d3d936fd",
+   "user_id": "6827e90c51abdd37265479b2",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "amu",
+     "category": "misc",
+     "codes": {
+      "normal": "amu",
+      "exceptional": "",
+      "elite": ""
+     },
+     "name": "Amulet",
+     "stackable": false,
+     "type": "Amulet",
+     "type_code": "amul",
+     "size": {
+      "height": 1,
+      "width": 1
+     },
+     "requirements": {}
+    },
+    "socketed_count": 0,
+    "id": 1583575115,
+    "item_level": 85,
+    "quality": {
+     "id": 4,
+     "name": "Magic"
+    },
+    "graphic_id": 2,
+    "class_specifics": false,
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "corrupted",
+      "values": [
+       0,
+       37
+      ],
+      "label": "Corrupted",
+      "priority": 246
+     },
+     {
+      "name": "item_addskill_tab",
+      "values": [
+       41,
+       3
+      ],
+      "label": "+3 to Shape Shifting Skills (Druid Only)",
+      "priority": 151
+     },
+     {
+      "name": "coldresist",
+      "corrupted": true,
+      "values": [
+       15
+      ],
+      "label": "Cold Resist 15%",
+      "priority": 40
+     },
+     {
+      "name": "magic_damage_reduction",
+      "values": [
+       6
+      ],
+      "label": "Magic Damage Taken Reduced by 6",
+      "priority": 21,
+      "min": 3,
+      "max": 6
+     }
+    ],
+    "name": "Communal Amulet of Guarding",
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 9,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Boots",
+     "stash_page": 9
+    },
+    "position": {
+     "column": 7,
+     "row": 4
+    },
+    "category": "misc",
+    "base_code": "amu",
+    "requirements": {
+     "level": 45,
+     "strength": 0,
+     "dexterity": 0
+    },
+    "corrupted": true,
+    "corruptions": [
+     "coldresist"
+    ],
+    "desecrated": false,
+    "properties": [
+     "Corrupted",
+     "+3 to Shape Shifting Skills (Druid Only)",
+     "Cold Resist 15%",
+     "Magic Damage Taken Reduced by 6"
+    ],
+    "hash": "a175d7ee550dbee02ab188d07ace17a81a4a48e4",
+    "account_id": "xilus"
+   },
+   "hr_price": 0,
+   "price": "3wss",
+   "bumped_at": "2026-10-28T23:43:27.720Z",
+   "user_last_online": "2026-10-28T23:43:09.390Z",
+   "user_last_ingame": "2026-10-28T08:56:00.533Z",
+   "created_at": "2026-10-27T23:52:10.551Z",
+   "updated_at": "2026-10-28T23:43:27.720Z",
+   "created_by_id": "6827e90c51abdd37265479b2",
+   "updated_by_id": "6827e90c51abdd37265479b2"
+  },
+  {
+   "_id": "6ae1672612a574860f3d0f15",
+   "user_id": "6827e90c51abdd37265479b2",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "rin",
+     "category": "misc",
+     "codes": {
+      "normal": "rin",
+      "exceptional": "",
+      "elite": ""
+     },
+     "name": "Ring",
+     "stackable": false,
+     "type": "Ring",
+     "type_code": "ring",
+     "size": {
+      "height": 1,
+      "width": 1
+     },
+     "requirements": {}
+    },
+    "socketed_count": 0,
+    "id": 10131461211,
+    "item_level": 88,
+    "quality": {
+     "id": 6,
+     "name": "Rare"
+    },
+    "graphic_id": 1,
+    "class_specifics": false,
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "corrupted",
+      "values": [
+       0,
+       71
+      ],
+      "label": "Corrupted",
+      "priority": 246
+     },
+     {
+      "name": "item_skillongethit",
+      "values": [
+       4,
+       38,
+       12
+      ],
+      "label": "12% Chance to cast level 4 Charged Bolt when struck",
+      "priority": 160
+     },
+     {
+      "name": "item_fastercastrate",
+      "values": [
+       10
+      ],
+      "label": "10% Faster Cast Rate",
+      "priority": 142
+     },
+     {
+      "name": "tohit",
+      "values": [
+       71
+      ],
+      "label": "+71 to Attack Rating",
+      "priority": 115,
+      "min": 61,
+      "max": 80
+     },
+     {
+      "name": "energy",
+      "corrupted": true,
+      "values": [
+       8
+      ],
+      "label": "+8 to Energy",
+      "priority": 61
+     },
+     {
+      "name": "maxmana",
+      "values": [
+       30
+      ],
+      "label": "+30 to Mana",
+      "priority": 55,
+      "min": 21,
+      "max": 30
+     },
+     {
+      "name": "fireresist",
+      "values": [
+       26
+      ],
+      "label": "Fire Resist 26%",
+      "priority": 36,
+      "min": 21,
+      "max": 30
+     },
+     {
+      "name": "item_halffreezeduration",
+      "values": [
+       1
+      ],
+      "label": "Half Freeze Duration",
+      "priority": 19
+     }
+    ],
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 9,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Boots",
+     "stash_page": 9
+    },
+    "position": {
+     "column": 9,
+     "row": 6
+    },
+    "category": "misc",
+    "base_code": "rin",
+    "name": "Ring",
+    "requirements": {
+     "level": 15,
+     "strength": 0,
+     "dexterity": 0
+    },
+    "corrupted": true,
+    "corruptions": [
+     "energy"
+    ],
+    "desecrated": false,
+    "properties": [
+     "Corrupted",
+     "12% Chance to cast level 4 Charged Bolt when struck",
+     "10% Faster Cast Rate",
+     "+71 to Attack Rating",
+     "+8 to Energy",
+     "+30 to Mana",
+     "Fire Resist 26%",
+     "Half Freeze Duration"
+    ],
+    "hash": "0e0e9c8fc585e2e8c29c71a7095155a9e30cf634",
+    "account_id": "xilus"
+   },
+   "hr_price": 0,
+   "price": ".50",
+   "bumped_at": "2026-10-28T23:43:27.720Z",
+   "user_last_online": "2026-10-28T23:43:09.390Z",
+   "user_last_ingame": "2026-10-28T08:56:00.533Z",
+   "created_at": "2026-10-28T03:08:22.762Z",
+   "updated_at": "2026-10-28T23:43:27.720Z",
+   "created_by_id": "6827e90c51abdd37265479b2",
+   "updated_by_id": "6827e90c51abdd37265479b2"
+  },
+  {
+   "_id": "6ae19b98bf27ce668360054d",
+   "user_id": "6827e90c51abdd37265479b2",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "item": {
+    "is_identified": true,
+    "is_socketed": true,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "7dg",
+     "category": "weapon",
+     "codes": {
+      "normal": "dgr",
+      "exceptional": "9dg",
+      "elite": "7dg"
+     },
+     "name": "Bone Knife",
+     "stackable": false,
+     "type": "Knife",
+     "type_code": "knif",
+     "size": {
+      "height": 2,
+      "width": 1
+     },
+     "class": {
+      "base_code": "1ht",
+      "2hd_code": "1ht",
+      "base": "1 Hand Thrust",
+      "2hd": "1 Hand Thrust"
+     },
+     "requirements": {
+      "level": 43,
+      "strength": 38,
+      "dexterity": 75
+     },
+     "damage": {
+      "one_handed": {
+       "minimum": 28,
+       "maximum": 56
+      },
+      "two_handed": {},
+      "missile": {}
+     }
+    },
+    "socketed_count": 0,
+    "id": 110961113142,
+    "item_level": 88,
+    "quality": {
+     "id": 7,
+     "name": "Unique"
+    },
+    "graphic_id": false,
+    "class_specifics": false,
+    "durability": {
+     "maximum": 72,
+     "current": 43
+    },
+    "socket_count": 2,
+    "modifiers": [
+     {
+      "name": "corrupted",
+      "values": [
+       0,
+       32
+      ],
+      "label": "Corrupted",
+      "priority": 246
+     },
+     {
+      "name": "item_splashonhit",
+      "values": [
+       1,
+       358,
+       100
+      ],
+      "label": "Melee Attacks Deal Splash Damage",
+      "priority": 245
+     },
+     {
+      "name": "item_indesctructible",
+      "values": [
+       1
+      ],
+      "label": "Indestructible",
+      "priority": 160
+     },
+     {
+      "name": "item_fastercastrate",
+      "values": [
+       50
+      ],
+      "label": "50% Faster Cast Rate",
+      "priority": 142
+     },
+     {
+      "name": "item_deadlystrike",
+      "values": [
+       20
+      ],
+      "label": "20% Chance of Deadly Strike",
+      "priority": 85
+     },
+     {
+      "name": "item_maxmana_percent",
+      "values": [
+       15
+      ],
+      "label": "Increase Maximum Mana 15%",
+      "priority": 54
+     },
+     {
+      "name": "item_mana_perlevel",
+      "values": [
+       2
+      ],
+      "label": "+2 to Mana (Based on Character Level)",
+      "priority": 53
+     },
+     {
+      "name": "manarecoverybonus",
+      "values": [
+       15
+      ],
+      "label": "Regenerate Mana 15%",
+      "priority": 52
+     },
+     {
+      "name": "all_resist",
+      "values": [
+       75
+      ],
+      "label": "All Resistances +75%",
+      "priority": 36
+     },
+     {
+      "name": "item_req_percent",
+      "values": [
+       -50
+      ],
+      "label": "Requirements -50%",
+      "priority": 0
+     }
+    ],
+    "name": "Wizardspike",
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 9,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Boots",
+     "stash_page": 9
+    },
+    "position": {
+     "column": 0,
+     "row": 0
+    },
+    "category": "weapon",
+    "base_code": "7dg",
+    "requirements": {
+     "level": 61,
+     "strength": 38,
+     "dexterity": 75
+    },
+    "corrupted": true,
+    "corruptions": [
+     "item_numsockets"
+    ],
+    "desecrated": false,
+    "properties": [
+     "Corrupted",
+     "Melee Attacks Deal Splash Damage",
+     "Indestructible",
+     "50% Faster Cast Rate",
+     "20% Chance of Deadly Strike",
+     "Increase Maximum Mana 15%",
+     "+2 to Mana (Based on Character Level)",
+     "Regenerate Mana 15%",
+     "All Resistances +75%",
+     "Requirements -50%"
+    ],
+    "damage": {
+     "one_handed": {
+      "minimum": 28,
+      "maximum": 56
+     }
+    },
+    "hash": "8bb30ef8999b9841307d610cd9928abd73bc678c",
+    "account_id": "xilus"
+   },
+   "hr_price": 0,
+   "price": "4wss",
+   "bumped_at": "2026-10-28T23:43:27.720Z",
+   "user_last_online": "2026-10-28T23:43:09.390Z",
+   "user_last_ingame": "2026-10-28T08:56:00.533Z",
+   "created_at": "2026-10-28T06:52:08.007Z",
+   "updated_at": "2026-10-28T23:43:27.720Z",
+   "created_by_id": "6827e90c51abdd37265479b2",
+   "updated_by_id": "6827e90c51abdd37265479b2"
+  },
+  {
+   "_id": "6ae1ace8e3af97f688a6f061",
+   "user_id": "6827e90c51abdd37265479b2",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "item": {
+    "is_identified": true,
+    "is_socketed": true,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "7fb",
+     "category": "weapon",
+     "codes": {
+      "normal": "flb",
+      "exceptional": "9fb",
+      "elite": "7fb"
+     },
+     "name": "Colossus Sword",
+     "stackable": false,
+     "type": "Sword",
+     "type_code": "swor",
+     "size": {
+      "height": 4,
+      "width": 2
+     },
+     "class": {
+      "base_code": "1hs",
+      "2hd_code": "2hs",
+      "base": "1 Hand Swing",
+      "2hd": "2 Hand Swing"
+     },
+     "requirements": {
+      "level": 60,
+      "strength": 182,
+      "dexterity": 95
+     },
+     "damage": {
+      "one_handed": {
+       "minimum": 33,
+       "maximum": 88
+      },
+      "two_handed": {
+       "minimum": 76,
+       "maximum": 151
+      },
+      "missile": {}
+     }
+    },
+    "socketed_count": 0,
+    "id": 5601111361,
+    "item_level": 87,
+    "quality": {
+     "id": 7,
+     "name": "Unique"
+    },
+    "graphic_id": false,
+    "class_specifics": false,
+    "durability": {
+     "maximum": 100,
+     "current": 93
+    },
+    "socket_count": 5,
+    "modifiers": [
+     {
+      "name": "corrupted",
+      "values": [
+       0,
+       32
+      ],
+      "label": "Corrupted",
+      "priority": 246
+     },
+     {
+      "name": "item_splashonhit",
+      "values": [
+       1,
+       358,
+       100
+      ],
+      "label": "Melee Attacks Deal Splash Damage",
+      "priority": 245
+     },
+     {
+      "name": "item_fasterattackrate",
+      "values": [
+       65
+      ],
+      "label": "65% Increased Attack Speed",
+      "priority": 145
+     },
+     {
+      "name": "min_damage",
+      "values": [
+       65
+      ],
+      "label": "+65 to Minimum Damage",
+      "priority": 127
+     },
+     {
+      "name": "maxdamage_percent",
+      "values": [
+       273,
+       273
+      ],
+      "label": "+273% Enhanced Damage",
+      "priority": 120,
+      "min": 250,
+      "max": 290
+     },
+     {
+      "name": "curse_resistance",
+      "values": [
+       40
+      ],
+      "label": "40% Reduced Curse Duration",
+      "priority": 100
+     },
+     {
+      "name": "colddam",
+      "values": [
+       600,
+       900,
+       0
+      ],
+      "label": "Adds 600-900 Cold Damage",
+      "priority": 96
+     },
+     {
+      "name": "passive_cold_pierce",
+      "values": [
+       28
+      ],
+      "label": "-28% to Enemy Cold Resistance",
+      "priority": 88,
+      "min": 20,
+      "max": 30
+     },
+     {
+      "name": "item_healafterdemonkill",
+      "values": [
+       10
+      ],
+      "label": "+10 Life after each Demon Kill",
+      "priority": 15,
+      "min": 10,
+      "max": 15
+     },
+     {
+      "name": "item_req_percent",
+      "values": [
+       -20
+      ],
+      "label": "Requirements -20%",
+      "priority": 0
+     }
+    ],
+    "name": "Odium",
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 9,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Boots",
+     "stash_page": 9
+    },
+    "position": {
+     "column": 0,
+     "row": 5
+    },
+    "category": "weapon",
+    "base_code": "7fb",
+    "requirements": {
+     "level": 80,
+     "strength": 182,
+     "dexterity": 95
+    },
+    "corrupted": true,
+    "corruptions": [
+     "item_numsockets"
+    ],
+    "desecrated": false,
+    "properties": [
+     "Corrupted",
+     "Melee Attacks Deal Splash Damage",
+     "65% Increased Attack Speed",
+     "+65 to Minimum Damage",
+     "+273% Enhanced Damage",
+     "40% Reduced Curse Duration",
+     "Adds 600-900 Cold Damage",
+     "-28% to Enemy Cold Resistance",
+     "+10 Life after each Demon Kill",
+     "Requirements -20%"
+    ],
+    "damage": {
+     "one_handed": {
+      "minimum": 188,
+      "maximum": 328
+     },
+     "two_handed": {
+      "minimum": 348,
+      "maximum": 563
+     }
+    },
+    "hash": "1f44aa25ec34a5b5eb5911802c049c8c58b180e7",
+    "account_id": "xilus"
+   },
+   "hr_price": 0,
+   "price": ".15",
+   "bumped_at": "2026-10-28T23:43:27.720Z",
+   "user_last_online": "2026-10-28T23:43:09.390Z",
+   "user_last_ingame": "2026-10-28T08:56:00.533Z",
+   "created_at": "2026-10-28T08:06:00.769Z",
+   "updated_at": "2026-10-28T23:43:27.720Z",
+   "created_by_id": "6827e90c51abdd37265479b2",
+   "updated_by_id": "6827e90c51abdd37265479b2"
+  },
+  {
+   "_id": "6ae04f376acc5b7c1f6b70fc",
+   "user_id": "6827e90c51abdd37265479b2",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "jew",
+     "category": "misc",
+     "codes": {
+      "normal": "jew",
+      "exceptional": "",
+      "elite": ""
+     },
+     "name": "Jewel",
+     "stackable": false,
+     "type": "Jewel",
+     "type_code": "jewl",
+     "size": {
+      "height": 1,
+      "width": 1
+     },
+     "requirements": {}
+    },
+    "socketed_count": 0,
+    "id": 101111212604,
+    "item_level": 81,
+    "quality": {
+     "id": 4,
+     "name": "Magic"
+    },
+    "graphic_id": 0,
+    "class_specifics": false,
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "all_resist",
+      "values": [
+       15
+      ],
+      "label": "All Resistances +15%",
+      "priority": 36,
+      "min": 11,
+      "max": 15
+     },
+     {
+      "name": "item_magicbonus",
+      "values": [
+       8
+      ],
+      "label": "8% Better Chance of Getting Magic Items",
+      "priority": 8,
+      "min": 5,
+      "max": 10
+     }
+    ],
+    "name": "Scintillating Jewel of Prosperity",
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 9,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Boots",
+     "stash_page": 9
+    },
+    "position": {
+     "column": 8,
+     "row": 5
+    },
+    "category": "misc",
+    "base_code": "jew",
+    "requirements": {
+     "level": 26,
+     "strength": 0,
+     "dexterity": 0
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "All Resistances +15%",
+     "8% Better Chance of Getting Magic Items"
+    ],
+    "hash": "4a5eb2a98e9c00e5e568a17b0308065bde027da9",
+    "account_id": "xilus"
+   },
+   "hr_price": 0.5,
+   "price": ".50",
+   "bumped_at": "2026-10-28T23:43:27.720Z",
+   "user_last_online": "2026-10-28T23:43:09.390Z",
+   "user_last_ingame": "2026-10-28T08:56:00.533Z",
+   "created_at": "2026-10-27T07:13:59.829Z",
+   "updated_at": "2026-10-28T23:43:27.720Z",
+   "created_by_id": "6827e90c51abdd37265479b2",
+   "updated_by_id": "6827e90c51abdd37265479b2"
+  },
+  {
+   "_id": "6ae175ca7eb9357f944ecb4e",
+   "user_id": "6827e90c51abdd37265479b2",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "dr8",
+     "category": "armor",
+     "codes": {
+      "normal": "dr3",
+      "exceptional": "dr8",
+      "elite": "drd"
+     },
+     "name": "Hunter's Guise",
+     "stackable": false,
+     "type": "Pelt",
+     "type_code": "pelt",
+     "size": {
+      "height": 2,
+      "width": 2
+     },
+     "requirements": {
+      "level": 29,
+      "strength": 56
+     }
+    },
+    "socketed_count": 0,
+    "id": 25131231259,
+    "item_level": 89,
+    "quality": {
+     "id": 5,
+     "name": "Set"
+    },
+    "graphic_id": false,
+    "class_specifics": false,
+    "defense": {
+     "base": 77,
+     "total": 167
+    },
+    "durability": {
+     "maximum": 20,
+     "current": 16
+    },
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "corrupted",
+      "values": [
+       0,
+       45
+      ],
+      "label": "Corrupted",
+      "priority": 246
+     },
+     {
+      "name": "item_addclassskills",
+      "values": [
+       5,
+       2
+      ],
+      "label": "+2 to Druid Skills",
+      "priority": 157,
+      "min": 1,
+      "max": 2
+     },
+     {
+      "name": "item_addskill_tab",
+      "values": [
+       40,
+       2
+      ],
+      "label": "+2 to Summoning Skills (Druid Only)",
+      "priority": 151,
+      "min": 1,
+      "max": 2
+     },
+     {
+      "name": "item_fastergethitrate",
+      "values": [
+       25
+      ],
+      "label": "25% Faster Hit Recovery",
+      "priority": 139
+     },
+     {
+      "name": "armorclass",
+      "values": [
+       90
+      ],
+      "label": "+90 Defense",
+      "priority": 71
+     },
+     {
+      "name": "manarecoverybonus",
+      "values": [
+       17
+      ],
+      "label": "Regenerate Mana 17%",
+      "priority": 52
+     },
+     {
+      "name": "coldresist",
+      "values": [
+       42
+      ],
+      "label": "Cold Resist 42%",
+      "priority": 40,
+      "min": 40,
+      "max": 50
+     },
+     {
+      "name": "item_cannotbefrozen",
+      "corrupted": true,
+      "values": [
+       1
+      ],
+      "label": "Cannot Be Frozen",
+      "priority": 20
+     }
+    ],
+    "name": "Aldur's Stony Gaze",
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 9,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Boots",
+     "stash_page": 9
+    },
+    "position": {
+     "column": 1,
+     "row": 0
+    },
+    "category": "armor",
+    "base_code": "dr8",
+    "requirements": {
+     "level": 36,
+     "strength": 56,
+     "dexterity": 0
+    },
+    "corrupted": true,
+    "corruptions": [
+     "item_cannotbefrozen"
+    ],
+    "desecrated": false,
+    "properties": [
+     "Corrupted",
+     "+2 to Druid Skills",
+     "+2 to Summoning Skills (Druid Only)",
+     "25% Faster Hit Recovery",
+     "+90 Defense",
+     "Regenerate Mana 17%",
+     "Cold Resist 42%",
+     "Cannot Be Frozen"
+    ],
+    "hash": "4eef5051779fe94e32ce7cbf4f619944dfb64fa9",
+    "account_id": "xilus"
+   },
+   "hr_price": 0,
+   "price": ".25",
+   "bumped_at": "2026-10-28T23:43:27.720Z",
+   "user_last_online": "2026-10-28T23:43:09.390Z",
+   "user_last_ingame": "2026-10-28T08:56:00.533Z",
+   "created_at": "2026-10-28T04:10:50.794Z",
+   "updated_at": "2026-10-28T23:43:27.720Z",
+   "created_by_id": "6827e90c51abdd37265479b2",
+   "updated_by_id": "6827e90c51abdd37265479b2"
+  },
+  {
+   "_id": "6ae18781bf27ce66835ffbf4",
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "uvc",
+     "category": "armor",
+     "codes": {
+      "normal": "vbl",
+      "exceptional": "zvb",
+      "elite": "uvc"
+     },
+     "name": "Vampirefang Belt",
+     "stackable": false,
+     "type": "Belt",
+     "type_code": "belt",
+     "size": {
+      "height": 1,
+      "width": 2
+     },
+     "requirements": {
+      "level": 51,
+      "strength": 50
+     }
+    },
+    "socketed_count": 0,
+    "id": 97151512753,
+    "item_level": 87,
+    "quality": {
+     "id": 6,
+     "name": "Rare"
+    },
+    "graphic_id": false,
+    "class_specifics": false,
+    "defense": {
+     "base": 64,
+     "total": 96
+    },
+    "durability": {
+     "maximum": 14,
+     "current": 8
+    },
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "item_armor_percent",
+      "values": [
+       51
+      ],
+      "label": "51% Enhanced Defense",
+      "priority": 74,
+      "min": 51,
+      "max": 65
+     },
+     {
+      "name": "maxhp",
+      "values": [
+       90
+      ],
+      "label": "+90 to Life",
+      "priority": 59,
+      "min": 81,
+      "max": 100
+     },
+     {
+      "name": "hpregen",
+      "values": [
+       14
+      ],
+      "label": "Replenish Life +14",
+      "priority": 56,
+      "min": 12,
+      "max": 18
+     },
+     {
+      "name": "maxcoldresist",
+      "values": [
+       2
+      ],
+      "label": "2% to Maximum Cold Resist",
+      "priority": 44,
+      "min": 2,
+      "max": 3
+     },
+     {
+      "name": "lightresist",
+      "values": [
+       21
+      ],
+      "label": "Lightning Resist 21%",
+      "priority": 38,
+      "min": 21,
+      "max": 30
+     },
+     {
+      "name": "damageresist",
+      "values": [
+       6
+      ],
+      "label": "Physical Damage Taken Reduced by 6%",
+      "priority": 22,
+      "min": 5,
+      "max": 10
+     }
+    ],
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 2,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Amulet",
+     "stash_page": 2
+    },
+    "position": {
+     "column": 0,
+     "row": 13
+    },
+    "category": "armor",
+    "base_code": "uvc",
+    "name": "Vampirefang Belt",
+    "requirements": {
+     "level": 52,
+     "strength": 50,
+     "dexterity": 0
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "51% Enhanced Defense",
+     "+90 to Life",
+     "Replenish Life +14",
+     "2% to Maximum Cold Resist",
+     "Lightning Resist 21%",
+     "Physical Damage Taken Reduced by 6%"
+    ],
+    "hash": "0c55df55d433a0cb9f330c3824e98623d23dbd34",
+    "account_id": "ailuropanda",
+    "sockets_max": 0
+   },
+   "user_id": "682f1a133606ba45087ff615",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": ".15",
+   "bumped_at": "2026-10-28T23:43:27.485Z",
+   "user_last_online": "2026-10-28T23:43:09.390Z",
+   "user_last_ingame": "2026-10-28T10:36:02.656Z",
+   "created_at": "2026-10-28T05:26:25.298Z",
+   "updated_at": "2026-10-28T23:43:27.657Z",
+   "created_by_id": "682f1a133606ba45087ff615",
+   "updated_by_id": "682f1a133606ba45087ff615"
+  },
+  {
+   "_id": "6ae2889fe5c8039208dc01fc",
+   "user_id": "6acc09a4b5ed1df1590d15f9",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "cm3",
+     "category": "misc",
+     "codes": {
+      "normal": "cm3",
+      "exceptional": "",
+      "elite": ""
+     },
+     "name": "Grand Charm",
+     "stackable": false,
+     "type": "Large Charm",
+     "type_code": "lcha",
+     "size": {
+      "height": 3,
+      "width": 1
+     },
+     "requirements": {}
+    },
+    "socketed_count": 0,
+    "id": 131066145712,
+    "item_level": 85,
+    "quality": {
+     "id": 4,
+     "name": "Magic"
+    },
+    "graphic_id": 1,
+    "class_specifics": false,
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "poisondam",
+      "values": [
+       154,
+       154,
+       2
+      ],
+      "label": "+154 Poison Damage over 2 Seconds",
+      "priority": 92
+     },
+     {
+      "name": "poisonresist",
+      "values": [
+       15
+      ],
+      "label": "Poison Resist 15%",
+      "priority": 34,
+      "min": 7,
+      "max": 15
+     }
+    ],
+    "name": "Beryl Grand Charm of Anthrax",
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 0,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "stash_page": 0
+    },
+    "position": {
+     "column": 4,
+     "row": 4
+    },
+    "category": "misc",
+    "base_code": "cm3",
+    "requirements": {
+     "level": 36,
+     "strength": 0,
+     "dexterity": 0
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "+154 Poison Damage over 2 Seconds",
+     "Poison Resist 15%"
+    ],
+    "hash": "0f210a8a951069e6619c8cda89e895ba54b266a5",
+    "account_id": "zale",
+    "character_id": "lunaburn",
+    "is_hardcore": false,
+    "is_ladder": true
+   },
+   "price": "5 wss",
+   "bumped_at": "2026-10-28T23:43:27.308Z",
+   "user_last_online": "2026-10-28T23:43:27.303Z",
+   "user_last_ingame": "2026-10-28T23:43:27.308Z",
+   "created_at": "2026-10-28T23:43:27.308Z",
+   "updated_at": "2026-10-28T23:43:27.308Z",
+   "created_by_id": "6acc09a4b5ed1df1590d15f9"
+  },
+  {
+   "_id": "6ae144170d2bdbb097e11889",
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "rin",
+     "category": "misc",
+     "codes": {
+      "normal": "rin",
+      "exceptional": "",
+      "elite": ""
+     },
+     "name": "Ring",
+     "stackable": false,
+     "type": "Ring",
+     "type_code": "ring",
+     "size": {
+      "height": 1,
+      "width": 1
+     },
+     "requirements": {}
+    },
+    "socketed_count": 0,
+    "id": 8104610179,
+    "item_level": 84,
+    "quality": {
+     "id": 7,
+     "name": "Unique"
+    },
+    "graphic_id": 1,
+    "class_specifics": false,
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "tohit",
+      "values": [
+       216
+      ],
+      "label": "+216 to Attack Rating",
+      "priority": 115,
+      "min": 150,
+      "max": 250
+     },
+     {
+      "name": "colddam",
+      "values": [
+       15,
+       45,
+       100
+      ],
+      "label": "Adds 15-45 Cold Damage",
+      "priority": 96
+     },
+     {
+      "name": "dexterity",
+      "values": [
+       19
+      ],
+      "label": "+19 to Dexterity",
+      "priority": 65,
+      "min": 15,
+      "max": 20
+     },
+     {
+      "name": "maxmana",
+      "values": [
+       40
+      ],
+      "label": "+40 to Mana",
+      "priority": 55
+     },
+     {
+      "name": "item_absorbcold_percent",
+      "values": [
+       5
+      ],
+      "label": "Cold Absorb 5%",
+      "priority": 25
+     },
+     {
+      "name": "item_cannotbefrozen",
+      "values": [
+       1
+      ],
+      "label": "Cannot Be Frozen",
+      "priority": 20
+     }
+    ],
+    "name": "Raven Frost",
+    "location": {
+     "storage_id": 0,
+     "equipment_id": 7,
+     "zone_id": 1,
+     "zone": "Equipped",
+     "storage": "Unknown",
+     "equipment": "Left Ring"
+    },
+    "position": {
+     "column": 7,
+     "row": 0
+    },
+    "category": "misc",
+    "base_code": "rin",
+    "requirements": {
+     "level": 45,
+     "strength": 0,
+     "dexterity": 0
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "+216 to Attack Rating",
+     "Adds 15-45 Cold Damage",
+     "+19 to Dexterity",
+     "+40 to Mana",
+     "Cold Absorb 5%",
+     "Cannot Be Frozen"
+    ],
+    "hash": "5872ab1ade0d67520ec18355d2e3dde72f9a715f",
+    "character_id": "Dubss",
+    "account_id": "dub"
+   },
+   "user_id": "671aebdd00d1fe149085a552",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": "Gul",
+   "bumped_at": "2026-10-28T23:43:26.767Z",
+   "user_last_online": "2026-10-28T23:43:09.390Z",
+   "user_last_ingame": "2026-10-28T23:43:24.338Z",
+   "created_at": "2026-10-28T00:38:47.555Z",
+   "updated_at": "2026-10-28T23:43:26.767Z",
+   "created_by_id": "671aebdd00d1fe149085a552",
+   "updated_by_id": "671aebdd00d1fe149085a552"
+  },
+  {
+   "_id": "6add36261b1261b35956e051",
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "cm2",
+     "category": "misc",
+     "codes": {
+      "normal": "cm2",
+      "exceptional": "",
+      "elite": ""
+     },
+     "name": "Large Charm",
+     "stackable": false,
+     "type": "Medium Charm",
+     "type_code": "mcha",
+     "size": {
+      "height": 2,
+      "width": 1
+     },
+     "requirements": {}
+    },
+    "socketed_count": 0,
+    "id": 13178614138,
+    "item_level": 80,
+    "quality": {
+     "id": 4,
+     "name": "Magic"
+    },
+    "graphic_id": 0,
+    "class_specifics": false,
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "passive_cold_mastery",
+      "values": [
+       3
+      ],
+      "label": "3% to Cold Skill Damage",
+      "priority": 88
+     },
+     {
+      "name": "dexterity",
+      "values": [
+       2
+      ],
+      "label": "+2 to Dexterity",
+      "priority": 65,
+      "min": 2,
+      "max": 3
+     }
+    ],
+    "name": "Numbing Large Charm of Dexterity",
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 9,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Boots",
+     "stash_page": 9
+    },
+    "position": {
+     "column": 0,
+     "row": 0
+    },
+    "category": "misc",
+    "base_code": "cm2",
+    "requirements": {
+     "level": 42,
+     "strength": 0,
+     "dexterity": 0
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "3% to Cold Skill Damage",
+     "+2 to Dexterity"
+    ],
+    "hash": "d2cace750ecc0fb55ab759ebe798ab2d01488c63",
+    "character_id": "Dubss",
+    "account_id": "dub",
+    "sockets_max": 0
+   },
+   "user_id": "671aebdd00d1fe149085a552",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": "3WSS",
+   "bumped_at": "2026-10-28T23:43:26.301Z",
+   "user_last_online": "2026-10-28T23:43:09.390Z",
+   "user_last_ingame": "2026-10-28T23:43:24.338Z",
+   "created_at": "2026-10-24T22:50:14.432Z",
+   "updated_at": "2026-10-28T23:43:26.301Z",
+   "created_by_id": "671aebdd00d1fe149085a552",
+   "updated_by_id": "671aebdd00d1fe149085a552"
+  },
+  {
+   "_id": "6ae187b1bf27ce66835ffc0d",
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "jew",
+     "category": "misc",
+     "codes": {
+      "normal": "jew",
+      "exceptional": "",
+      "elite": ""
+     },
+     "name": "Jewel",
+     "stackable": false,
+     "type": "Jewel",
+     "type_code": "jewl",
+     "size": {
+      "height": 1,
+      "width": 1
+     },
+     "requirements": {}
+    },
+    "socketed_count": 0,
+    "id": 1306570108,
+    "item_level": 87,
+    "quality": {
+     "id": 4,
+     "name": "Magic"
+    },
+    "graphic_id": 1,
+    "class_specifics": false,
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "lightresist",
+      "values": [
+       30
+      ],
+      "label": "Lightning Resist 30%",
+      "priority": 38,
+      "min": 16,
+      "max": 30
+     },
+     {
+      "name": "item_req_percent",
+      "values": [
+       -15
+      ],
+      "label": "Requirements -15%",
+      "priority": 0
+     }
+    ],
+    "name": "Ambergris Jewel of Freedom",
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 2,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Amulet",
+     "stash_page": 2
+    },
+    "position": {
+     "column": 5,
+     "row": 0
+    },
+    "category": "misc",
+    "base_code": "jew",
+    "requirements": {
+     "level": 14,
+     "strength": 0,
+     "dexterity": 0
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "Lightning Resist 30%",
+     "Requirements -15%"
+    ],
+    "hash": "84d566669b92f0fa73b80a926089e2387ffa6cdf",
+    "account_id": "ailuropanda",
+    "sockets_max": 0
+   },
+   "user_id": "682f1a133606ba45087ff615",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": "0.1",
+   "bumped_at": "2026-10-28T23:43:25.767Z",
+   "user_last_online": "2026-10-28T23:43:09.390Z",
+   "user_last_ingame": "2026-10-28T10:36:02.656Z",
+   "created_at": "2026-10-28T05:27:13.839Z",
+   "updated_at": "2026-10-28T23:43:25.949Z",
+   "created_by_id": "682f1a133606ba45087ff615",
+   "updated_by_id": "682f1a133606ba45087ff615"
+  },
+  {
+   "_id": "6ae2889ce9a0a1f80b7cc0ed",
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "uh9",
+     "category": "armor",
+     "codes": {
+      "normal": "bhm",
+      "exceptional": "xh9",
+      "elite": "uh9"
+     },
+     "name": "Bone Visage",
+     "stackable": false,
+     "type": "Helm",
+     "type_code": "helm",
+     "size": {
+      "height": 2,
+      "width": 2
+     },
+     "requirements": {
+      "level": 63,
+      "strength": 106
+     }
+    },
+    "socketed_count": 0,
+    "id": 84101294103,
+    "item_level": 88,
+    "quality": {
+     "id": 5,
+     "name": "Set"
+    },
+    "graphic_id": false,
+    "class_specifics": false,
+    "defense": {
+     "base": 136,
+     "total": 218
+    },
+    "durability": {
+     "maximum": 40,
+     "current": 26
+    },
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "item_fastergethitrate",
+      "values": [
+       25
+      ],
+      "label": "25% Faster Hit Recovery",
+      "priority": 139
+     },
+     {
+      "name": "armorclass",
+      "values": [
+       82
+      ],
+      "label": "+82 Defense",
+      "priority": 71,
+      "min": 80,
+      "max": 100
+     },
+     {
+      "name": "hpregen",
+      "values": [
+       24
+      ],
+      "label": "Replenish Life +24",
+      "priority": 56,
+      "min": 20,
+      "max": 30
+     },
+     {
+      "name": "maxmana",
+      "values": [
+       150
+      ],
+      "label": "+150 to Mana",
+      "priority": 55
+     },
+     {
+      "name": "item_attackertakesdamage",
+      "values": [
+       531
+      ],
+      "label": "Attacker Takes Damage of 531",
+      "priority": 13,
+      "min": 420,
+      "max": 620
+     }
+    ],
+    "name": "Trang-Oul's Guise",
+    "location": {
+     "storage_id": 4,
+     "equipment_id": 0,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Cube"
+    },
+    "position": {
+     "column": 0,
+     "row": 0
+    },
+    "category": "armor",
+    "base_code": "uh9",
+    "requirements": {
+     "level": 65,
+     "strength": 106,
+     "dexterity": 0
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "25% Faster Hit Recovery",
+     "+82 Defense",
+     "Replenish Life +24",
+     "+150 to Mana",
+     "Attacker Takes Damage of 531"
+    ],
+    "hash": "f78dadc400f423156b25fa5431647a95df7db20b",
+    "character_id": "Balkin",
+    "account_id": "astres",
+    "sockets_max": 0
+   },
+   "user_id": "6801e810d38b806dfe95ad36",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": "5 wss",
+   "bumped_at": "2026-10-28T23:43:24.468Z",
+   "user_last_online": "2026-10-28T23:43:24.452Z",
+   "user_last_ingame": "2026-10-28T23:43:24.468Z",
+   "created_at": "2026-10-28T23:43:24.468Z",
+   "updated_at": "2026-10-28T23:43:24.468Z",
+   "created_by_id": "6801e810d38b806dfe95ad36"
+  },
+  {
+   "_id": "6ae187bfbf27ce66835ffc13",
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "cm1",
+     "category": "misc",
+     "codes": {
+      "normal": "cm1",
+      "exceptional": "",
+      "elite": ""
+     },
+     "name": "Small Charm",
+     "stackable": false,
+     "type": "Small Charm",
+     "type_code": "scha",
+     "size": {
+      "height": 1,
+      "width": 1
+     },
+     "requirements": {}
+    },
+    "socketed_count": 0,
+    "id": 9721111119,
+    "item_level": 79,
+    "quality": {
+     "id": 4,
+     "name": "Magic"
+    },
+    "graphic_id": 0,
+    "class_specifics": false,
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "tohit",
+      "values": [
+       20
+      ],
+      "label": "+20 to Attack Rating",
+      "priority": 115,
+      "min": 13,
+      "max": 24
+     },
+     {
+      "name": "maxhp",
+      "values": [
+       14
+      ],
+      "label": "+14 to Life",
+      "priority": 59,
+      "min": 11,
+      "max": 15
+     }
+    ],
+    "name": "Iron Small Charm of Substinence",
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 2,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Amulet",
+     "stash_page": 2
+    },
+    "position": {
+     "column": 4,
+     "row": 0
+    },
+    "category": "misc",
+    "base_code": "cm1",
+    "requirements": {
+     "level": 31,
+     "strength": 0,
+     "dexterity": 0
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "+20 to Attack Rating",
+     "+14 to Life"
+    ],
+    "hash": "7b235b03af644023fda677613ba2e1272b866034",
+    "account_id": "ailuropanda",
+    "sockets_max": 0
+   },
+   "user_id": "682f1a133606ba45087ff615",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": ".5",
+   "bumped_at": "2026-10-28T23:43:22.223Z",
+   "user_last_online": "2026-10-28T23:43:09.390Z",
+   "user_last_ingame": "2026-10-28T10:36:02.656Z",
+   "created_at": "2026-10-28T05:27:27.961Z",
+   "updated_at": "2026-10-28T23:43:23.896Z",
+   "created_by_id": "682f1a133606ba45087ff615",
+   "updated_by_id": "682f1a133606ba45087ff615"
+  },
+  {
+   "_id": "6ae28899fe7e99c121a899fc",
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "umg",
+     "category": "armor",
+     "codes": {
+      "normal": "mgl",
+      "exceptional": "xmg",
+      "elite": "umg"
+     },
+     "name": "Vambraces",
+     "stackable": false,
+     "type": "Gloves",
+     "type_code": "glov",
+     "size": {
+      "height": 2,
+      "width": 2
+     },
+     "requirements": {
+      "level": 51,
+      "strength": 106
+     }
+    },
+    "socketed_count": 0,
+    "id": 8148192126,
+    "item_level": 88,
+    "quality": {
+     "id": 7,
+     "name": "Unique"
+    },
+    "graphic_id": false,
+    "class_specifics": false,
+    "defense": {
+     "base": 68,
+     "total": 146
+    },
+    "durability": {
+     "maximum": 16,
+     "current": 10
+    },
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "corrupted",
+      "values": [
+       0,
+       7
+      ],
+      "label": "Corrupted",
+      "priority": 246
+     },
+     {
+      "name": "passive_phys_pierce",
+      "values": [
+       3
+      ],
+      "label": "-3% to Enemy Physical Resistance",
+      "priority": 158,
+      "min": 3,
+      "max": 4
+     },
+     {
+      "name": "manadrainmindam",
+      "values": [
+       3
+      ],
+      "label": "3% Mana stolen per hit",
+      "priority": 89,
+      "min": 2,
+      "max": 3
+     },
+     {
+      "name": "lifedrainmindam",
+      "values": [
+       2
+      ],
+      "label": "2% Life stolen per hit",
+      "priority": 88,
+      "min": 2,
+      "max": 3
+     },
+     {
+      "name": "item_damagetargetac",
+      "values": [
+       -50
+      ],
+      "label": "-50 to Monster Defense Per Hit",
+      "priority": 75
+     },
+     {
+      "name": "item_armor_percent",
+      "values": [
+       115
+      ],
+      "label": "115% Enhanced Defense",
+      "priority": 74,
+      "min": 90,
+      "max": 120
+     },
+     {
+      "name": "hpregen",
+      "values": [
+       -30
+      ],
+      "label": "Drain Life -30",
+      "priority": 56
+     },
+     {
+      "name": "item_magicbonus",
+      "corrupted": true,
+      "values": [
+       16
+      ],
+      "label": "16% Better Chance of Getting Magic Items",
+      "priority": 8
+     }
+    ],
+    "name": "Soul Drainer",
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 2,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Amulet",
+     "stash_page": 2
+    },
+    "position": {
+     "column": 0,
+     "row": 3
+    },
+    "category": "armor",
+    "base_code": "umg",
+    "requirements": {
+     "level": 74,
+     "strength": 106,
+     "dexterity": 0
+    },
+    "corrupted": true,
+    "corruptions": [
+     "item_magicbonus"
+    ],
+    "desecrated": false,
+    "properties": [
+     "Corrupted",
+     "-3% to Enemy Physical Resistance",
+     "3% Mana stolen per hit",
+     "2% Life stolen per hit",
+     "-50 to Monster Defense Per Hit",
+     "115% Enhanced Defense",
+     "Drain Life -30",
+     "16% Better Chance of Getting Magic Items"
+    ],
+    "hash": "f227b689bc37b6d382929fe10ce65efd4ec10975",
+    "account_id": "harupd2",
+    "sockets_max": 0
+   },
+   "user_id": "63c6020cd1f685cb23425a72",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": "0.2",
+   "bumped_at": "2026-10-28T23:43:21.996Z",
+   "user_last_online": "2026-10-28T23:43:21.990Z",
+   "user_last_ingame": "2026-10-28T23:43:21.996Z",
+   "created_at": "2026-10-28T23:43:21.996Z",
+   "updated_at": "2026-10-28T23:43:21.996Z",
+   "created_by_id": "63c6020cd1f685cb23425a72"
+  },
+  {
+   "_id": "6add37151b1261b35956e11a",
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "jew",
+     "category": "misc",
+     "codes": {
+      "normal": "jew",
+      "exceptional": "",
+      "elite": ""
+     },
+     "name": "Jewel",
+     "stackable": false,
+     "type": "Jewel",
+     "type_code": "jewl",
+     "size": {
+      "height": 1,
+      "width": 1
+     },
+     "requirements": {}
+    },
+    "socketed_count": 0,
+    "id": 8765424,
+    "item_level": 81,
+    "quality": {
+     "id": 4,
+     "name": "Magic"
+    },
+    "graphic_id": 4,
+    "class_specifics": false,
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "passive_cold_mastery",
+      "values": [
+       5
+      ],
+      "label": "5% to Cold Skill Damage",
+      "priority": 88,
+      "min": 3,
+      "max": 5
+     },
+     {
+      "name": "dexterity",
+      "values": [
+       1
+      ],
+      "label": "+1 to Dexterity",
+      "priority": 65,
+      "min": 1,
+      "max": 3
+     }
+    ],
+    "name": "Numbing Jewel of Daring",
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 9,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Boots",
+     "stash_page": 9
+    },
+    "position": {
+     "column": 1,
+     "row": 1
+    },
+    "category": "misc",
+    "base_code": "jew",
+    "requirements": {
+     "level": 42,
+     "strength": 0,
+     "dexterity": 0
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "5% to Cold Skill Damage",
+     "+1 to Dexterity"
+    ],
+    "hash": "66db432a10a43e89d7573c1825ba3070992aceb9",
+    "character_id": "Dubss",
+    "account_id": "dub"
+   },
+   "user_id": "671aebdd00d1fe149085a552",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": ".05",
+   "bumped_at": "2026-10-28T23:43:21.489Z",
+   "user_last_online": "2026-10-28T23:43:09.390Z",
+   "user_last_ingame": "2026-10-28T23:43:24.338Z",
+   "created_at": "2026-10-24T22:54:13.633Z",
+   "updated_at": "2026-10-28T23:43:21.489Z",
+   "created_by_id": "671aebdd00d1fe149085a552",
+   "updated_by_id": "671aebdd00d1fe149085a552"
+  },
+  {
+   "_id": "6ae28899e9a0a1f80b7cc0ec",
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "cm2",
+     "category": "misc",
+     "codes": {
+      "normal": "cm2",
+      "exceptional": "",
+      "elite": ""
+     },
+     "name": "Large Charm",
+     "stackable": false,
+     "type": "Medium Charm",
+     "type_code": "mcha",
+     "size": {
+      "height": 2,
+      "width": 1
+     },
+     "requirements": {}
+    },
+    "socketed_count": 0,
+    "id": 116367714,
+    "item_level": 85,
+    "quality": {
+     "id": 4,
+     "name": "Magic"
+    },
+    "graphic_id": 0,
+    "class_specifics": false,
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "max_damage",
+      "values": [
+       1
+      ],
+      "label": "+1 to Maximum Damage",
+      "priority": 126
+     },
+     {
+      "name": "passive_fire_mastery",
+      "values": [
+       3
+      ],
+      "label": "3% to Fire Skill Damage",
+      "priority": 88,
+      "min": 2,
+      "max": 3
+     }
+    ],
+    "name": "Wildfire Large Charm of Craftsmanship",
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 2,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Amulet",
+     "stash_page": 2
+    },
+    "position": {
+     "column": 2,
+     "row": 10
+    },
+    "category": "misc",
+    "base_code": "cm2",
+    "requirements": {
+     "level": 28,
+     "strength": 0,
+     "dexterity": 0
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "+1 to Maximum Damage",
+     "3% to Fire Skill Damage"
+    ],
+    "hash": "9467bc68c4d48bd167d46cf22e8fe46a61d6584e",
+    "character_id": "Chulzard",
+    "account_id": "icemitstil",
+    "sockets_max": 0
+   },
+   "user_id": "682e0f5da9f998bb4434ad1e",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": "2wss",
+   "bumped_at": "2026-10-28T23:43:21.298Z",
+   "user_last_online": "2026-10-28T23:43:21.289Z",
+   "user_last_ingame": "2026-10-28T23:43:21.298Z",
+   "created_at": "2026-10-28T23:43:21.298Z",
+   "updated_at": "2026-10-28T23:43:21.298Z",
+   "created_by_id": "682e0f5da9f998bb4434ad1e"
+  },
+  {
+   "_id": "6ae28899006b96156d2b0c34",
+   "user_id": "692d6126adaf45356a5ad702",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "item": {
+    "is_identified": true,
+    "is_socketed": true,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "xit",
+     "category": "armor",
+     "codes": {
+      "normal": "kit",
+      "exceptional": "xit",
+      "elite": "uit"
+     },
+     "name": "Dragon Shield",
+     "stackable": false,
+     "type": "Shield",
+     "type_code": "shie",
+     "size": {
+      "height": 3,
+      "width": 2
+     },
+     "requirements": {
+      "level": 25,
+      "strength": 91
+     }
+    },
+    "socketed_count": 1,
+    "id": 133014421310,
+    "item_level": 89,
+    "quality": {
+     "id": 6,
+     "name": "Rare"
+    },
+    "graphic_id": false,
+    "class_specifics": false,
+    "defense": {
+     "base": 65,
+     "total": 65
+    },
+    "durability": {
+     "maximum": 76,
+     "current": 76
+    },
+    "socket_count": 1,
+    "modifiers": [
+     {
+      "name": "corrupted",
+      "values": [
+       0,
+       32
+      ],
+      "label": "Corrupted",
+      "priority": 246
+     },
+     {
+      "name": "item_addclassskills",
+      "values": [
+       0,
+       2
+      ],
+      "label": "+2 to Amazon Skills",
+      "priority": 157
+     },
+     {
+      "name": "item_fastergethitrate",
+      "values": [
+       24
+      ],
+      "label": "24% Faster Hit Recovery",
+      "priority": 139
+     },
+     {
+      "name": "item_fasterblockrate",
+      "values": [
+       30
+      ],
+      "label": "30% Faster Block Rate",
+      "priority": 136
+     },
+     {
+      "name": "toblock",
+      "values": [
+       20
+      ],
+      "label": "20% Increased Chance of Blocking",
+      "priority": 134
+     },
+     {
+      "name": "maxhp",
+      "values": [
+       85
+      ],
+      "label": "+85 to Life",
+      "priority": 59,
+      "min": 81,
+      "max": 100
+     },
+     {
+      "name": "maxfireresist",
+      "values": [
+       5
+      ],
+      "label": "5% to Maximum Fire Resist",
+      "priority": 42,
+      "min": 3,
+      "max": 5
+     },
+     {
+      "name": "coldresist",
+      "values": [
+       19
+      ],
+      "label": "Cold Resist 19%",
+      "priority": 40
+     },
+     {
+      "name": "lightresist",
+      "values": [
+       40
+      ],
+      "label": "Lightning Resist 40%",
+      "priority": 38,
+      "min": 21,
+      "max": 30
+     },
+     {
+      "name": "fireresist",
+      "values": [
+       19
+      ],
+      "label": "Fire Resist 19%",
+      "priority": 36
+     },
+     {
+      "name": "poisonresist",
+      "values": [
+       19
+      ],
+      "label": "Poison Resist 19%",
+      "priority": 34
+     }
+    ],
+    "socketed": [
+     {
+      "is_identified": true,
+      "is_socketed": false,
+      "is_new": true,
+      "is_ear": false,
+      "is_starter": false,
+      "is_simple": true,
+      "is_ethereal": false,
+      "is_personalized": false,
+      "is_runeword": false,
+      "format_version": 105,
+      "base": {
+       "id": "gpw",
+       "category": "misc",
+       "codes": {
+        "normal": "gpw",
+        "exceptional": "",
+        "elite": ""
+       },
+       "name": "Perfect Diamond",
+       "stackable": true,
+       "type": "Diamond",
+       "type_code": "gemd",
+       "size": {
+        "height": 1,
+        "width": 1
+       },
+       "requirements": {
+        "level": 18
+       }
+      },
+      "modifiers": [
+       {
+        "name": "all_resist",
+        "values": [
+         19
+        ],
+        "label": "All Resistances +19%",
+        "priority": 36
+       }
+      ],
+      "location": {
+       "storage_id": 0,
+       "equipment_id": 0,
+       "zone_id": 6,
+       "zone": "Socketed",
+       "storage": "Unknown"
+      },
+      "position": {
+       "column": 0,
+       "row": 0
+      },
+      "category": "misc",
+      "base_code": "gpw",
+      "name": "Perfect Diamond",
+      "requirements": {
+       "level": 18,
+       "strength": 0,
+       "dexterity": 0
+      },
+      "corrupted": false,
+      "desecrated": false,
+      "properties": [
+       null,
+       null,
+       null,
+       null
+      ],
+      "hash": "240f3ae61db94656df08c18881d7501bf3fb1129"
+     }
+    ],
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 2,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Amulet",
+     "stash_page": 2
+    },
+    "position": {
+     "column": 2,
+     "row": 4
+    },
+    "category": "armor",
+    "base_code": "xit",
+    "name": "Dragon Shield",
+    "requirements": {
+     "level": 68,
+     "strength": 91,
+     "dexterity": 0
+    },
+    "corrupted": true,
+    "corruptions": [
+     "item_numsockets"
+    ],
+    "desecrated": false,
+    "properties": [
+     "Corrupted",
+     "+2 to Amazon Skills",
+     "24% Faster Hit Recovery",
+     "30% Faster Block Rate",
+     "20% Increased Chance of Blocking",
+     "+85 to Life",
+     "5% to Maximum Fire Resist",
+     "Cold Resist 19%",
+     "Lightning Resist 40%",
+     "Fire Resist 19%",
+     "Poison Resist 19%"
+    ],
+    "hash": "1f4546368e04eb8e64bf0e47c26ed8d0c4a32bdc",
+    "account_id": "foxy-san"
+   },
+   "hr_price": 0,
+   "price": "sigh, missed the slam... i'll take a gul for it tho",
+   "bumped_at": "2026-10-28T23:43:21.071Z",
+   "user_last_online": "2026-10-28T23:43:21.702Z",
+   "user_last_ingame": "2026-10-28T23:43:21.707Z",
+   "created_at": "2026-10-28T23:43:21.707Z",
+   "updated_at": "2026-10-28T23:43:21.707Z",
+   "created_by_id": "692d6126adaf45356a5ad702"
+  },
+  {
+   "_id": "6ae188d7251c5bacbd375881",
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "dra",
+     "category": "armor",
+     "codes": {
+      "normal": "dr5",
+      "exceptional": "dra",
+      "elite": "drf"
+     },
+     "name": "Totemic Mask",
+     "stackable": false,
+     "type": "Pelt",
+     "type_code": "pelt",
+     "size": {
+      "height": 2,
+      "width": 2
+     },
+     "requirements": {
+      "level": 41,
+      "strength": 65
+     }
+    },
+    "socketed_count": 0,
+    "id": 141011248315,
+    "item_level": 90,
+    "quality": {
+     "id": 7,
+     "name": "Unique"
+    },
+    "graphic_id": false,
+    "class_specifics": false,
+    "defense": {
+     "base": 99,
+     "total": 289
+    },
+    "durability": {
+     "maximum": 20,
+     "current": 14
+    },
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "corrupted",
+      "values": [
+       0,
+       53
+      ],
+      "label": "Corrupted",
+      "priority": 246
+     },
+     {
+      "name": "item_addclassskills",
+      "values": [
+       5,
+       2
+      ],
+      "label": "+2 to Druid Skills",
+      "priority": 157
+     },
+     {
+      "name": "item_addskill_tab",
+      "values": [
+       41,
+       2
+      ],
+      "label": "+2 to Shape Shifting Skills (Druid Only)",
+      "priority": 151,
+      "min": 1,
+      "max": 2
+     },
+     {
+      "name": "item_fastergethitrate",
+      "values": [
+       30
+      ],
+      "label": "30% Faster Hit Recovery",
+      "priority": 139
+     },
+     {
+      "name": "item_tohit_percent",
+      "values": [
+       20
+      ],
+      "label": "20% Bonus to Attack Rating",
+      "priority": 117
+     },
+     {
+      "name": "item_armor_percent",
+      "values": [
+       192
+      ],
+      "label": "192% Enhanced Defense",
+      "priority": 74,
+      "min": 150,
+      "max": 200
+     },
+     {
+      "name": "strength",
+      "values": [
+       18
+      ],
+      "label": "+18 to Strength",
+      "priority": 67,
+      "min": 15,
+      "max": 20
+     },
+     {
+      "name": "energy",
+      "values": [
+       18
+      ],
+      "label": "+18 to Energy",
+      "priority": 61,
+      "min": 15,
+      "max": 20
+     },
+     {
+      "name": "maxfireresist",
+      "corrupted": true,
+      "values": [
+       5
+      ],
+      "label": "5% to Maximum Fire Resist",
+      "priority": 42
+     },
+     {
+      "name": "coldresist",
+      "values": [
+       25
+      ],
+      "label": "Cold Resist 25%",
+      "priority": 40
+     },
+     {
+      "name": "lightresist",
+      "values": [
+       25
+      ],
+      "label": "Lightning Resist 25%",
+      "priority": 38
+     },
+     {
+      "name": "fireresist",
+      "corrupted": true,
+      "values": [
+       40
+      ],
+      "label": "Fire Resist 40%",
+      "priority": 36
+     },
+     {
+      "name": "poisonresist",
+      "values": [
+       25
+      ],
+      "label": "Poison Resist 25%",
+      "priority": 34
+     },
+     {
+      "name": "item_manaafterkill",
+      "values": [
+       5
+      ],
+      "label": "+5 to Mana after each Kill",
+      "priority": 16
+     }
+    ],
+    "name": "Jalal's Mane",
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 2,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Amulet",
+     "stash_page": 2
+    },
+    "position": {
+     "column": 5,
+     "row": 4
+    },
+    "category": "armor",
+    "base_code": "dra",
+    "requirements": {
+     "level": 42,
+     "strength": 65,
+     "dexterity": 0
+    },
+    "corrupted": true,
+    "corruptions": [
+     "maxfireresist",
+     "fireresist"
+    ],
+    "desecrated": false,
+    "properties": [
+     "Corrupted",
+     "+2 to Druid Skills",
+     "+2 to Shape Shifting Skills (Druid Only)",
+     "30% Faster Hit Recovery",
+     "20% Bonus to Attack Rating",
+     "192% Enhanced Defense",
+     "+18 to Strength",
+     "+18 to Energy",
+     "5% to Maximum Fire Resist",
+     "Cold Resist 25%",
+     "Lightning Resist 25%",
+     "Fire Resist 40%",
+     "Poison Resist 25%",
+     "+5 to Mana after each Kill"
+    ],
+    "hash": "d316c7abf4df031e4bec0b2aabf88e6a992ea646",
+    "account_id": "ailuropanda",
+    "sockets_max": 0
+   },
+   "user_id": "682f1a133606ba45087ff615",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": ".25",
+   "bumped_at": "2026-10-28T23:43:20.843Z",
+   "user_last_online": "2026-10-28T23:43:09.390Z",
+   "user_last_ingame": "2026-10-28T10:36:02.656Z",
+   "created_at": "2026-10-28T05:32:07.498Z",
+   "updated_at": "2026-10-28T23:43:21.019Z",
+   "created_by_id": "682f1a133606ba45087ff615",
+   "updated_by_id": "682f1a133606ba45087ff615"
+  },
+  {
+   "_id": "6ae28898e9a0a1f80b7cc0eb",
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "7p7",
+     "category": "weapon",
+     "codes": {
+      "normal": "pik",
+      "exceptional": "9p9",
+      "elite": "7p7"
+     },
+     "name": "War Pike",
+     "stackable": false,
+     "type": "Spear",
+     "type_code": "spea",
+     "size": {
+      "height": 4,
+      "width": 2
+     },
+     "class": {
+      "base_code": "2ht",
+      "2hd_code": "2ht",
+      "base": "2 Hand Thrust",
+      "2hd": "2 Hand Thrust"
+     },
+     "requirements": {
+      "level": 66,
+      "strength": 165,
+      "dexterity": 106
+     },
+     "damage": {
+      "one_handed": {},
+      "two_handed": {
+       "minimum": 41,
+       "maximum": 223
+      },
+      "missile": {}
+     }
+    },
+    "socketed_count": 0,
+    "id": 91110151561012,
+    "item_level": 89,
+    "quality": {
+     "id": 3,
+     "name": "Superior",
+     "sub_id": 1
+    },
+    "graphic_id": false,
+    "class_specifics": 39,
+    "durability": {
+     "maximum": 75,
+     "current": 56
+    },
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "item_splashonhit",
+      "values": [
+       1,
+       358,
+       100
+      ],
+      "label": "Melee Attacks Deal Splash Damage",
+      "priority": 245
+     },
+     {
+      "name": "maxdamage_percent",
+      "values": [
+       20,
+       20
+      ],
+      "label": "+20% Enhanced Damage",
+      "priority": 120
+     }
+    ],
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 2,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Amulet",
+     "stash_page": 2
+    },
+    "position": {
+     "column": 6,
+     "row": 0
+    },
+    "category": "weapon",
+    "base_code": "7p7",
+    "name": "War Pike",
+    "requirements": {
+     "level": 66,
+     "strength": 165,
+     "dexterity": 106
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "Melee Attacks Deal Splash Damage",
+     "+20% Enhanced Damage"
+    ],
+    "damage": {
+     "two_handed": {
+      "minimum": 49,
+      "maximum": 267
+     }
+    },
+    "hash": "bba5d092f77d462d387816ac931285fc676e4d88",
+    "account_id": "kkez"
+   },
+   "user_id": "6931a543832012ceb0c50db1",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": "20wss",
+   "bumped_at": "2026-10-28T23:43:19.023Z",
+   "user_last_online": "2026-10-28T23:43:20.138Z",
+   "user_last_ingame": "2026-10-28T23:43:20.144Z",
+   "created_at": "2026-10-28T23:43:20.144Z",
+   "updated_at": "2026-10-28T23:43:20.144Z",
+   "created_by_id": "6931a543832012ceb0c50db1"
+  },
+  {
+   "_id": "6ae19940251c5bacbd375f93",
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "uar",
+     "category": "armor",
+     "codes": {
+      "normal": "aar",
+      "exceptional": "xar",
+      "elite": "uar"
+     },
+     "name": "Sacred Armor",
+     "stackable": false,
+     "type": "Armor",
+     "type_code": "tors",
+     "size": {
+      "height": 3,
+      "width": 2
+     },
+     "requirements": {
+      "level": 66,
+      "strength": 232
+     }
+    },
+    "socketed_count": 0,
+    "id": 1515141179100,
+    "item_level": 90,
+    "quality": {
+     "id": 7,
+     "name": "Unique"
+    },
+    "graphic_id": false,
+    "class_specifics": false,
+    "defense": {
+     "base": 731,
+     "total": 2331
+    },
+    "durability": {
+     "maximum": 60,
+     "current": 41
+    },
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "item_aura",
+      "values": [
+       98,
+       7
+      ],
+      "label": "Level 7 Might Aura When Equipped",
+      "priority": 159,
+      "min": 6,
+      "max": 8
+     },
+     {
+      "name": "item_fastergethitrate",
+      "values": [
+       20
+      ],
+      "label": "20% Faster Hit Recovery",
+      "priority": 139
+     },
+     {
+      "name": "item_armor_percent",
+      "values": [
+       219
+      ],
+      "label": "219% Enhanced Defense",
+      "priority": 74,
+      "min": 170,
+      "max": 220
+     },
+     {
+      "name": "armorclass_vs_missile",
+      "values": [
+       264
+      ],
+      "label": "+264 Defense vs. Missile",
+      "priority": 69,
+      "min": 250,
+      "max": 300
+     },
+     {
+      "name": "strength",
+      "values": [
+       45
+      ],
+      "label": "+45 to Strength",
+      "priority": 67,
+      "min": 40,
+      "max": 50
+     },
+     {
+      "name": "vitality",
+      "values": [
+       49
+      ],
+      "label": "+49 to Vitality",
+      "priority": 63,
+      "min": 40,
+      "max": 50
+     },
+     {
+      "name": "maxstamina",
+      "values": [
+       44
+      ],
+      "label": "+44 Maximum Stamina",
+      "priority": 51,
+      "min": 40,
+      "max": 50
+     },
+     {
+      "name": "curse_effectiveness",
+      "values": [
+       20
+      ],
+      "label": "Curse Resistance 20%",
+      "priority": 38
+     }
+    ],
+    "name": "Templar's Might",
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 2,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Amulet",
+     "stash_page": 2
+    },
+    "position": {
+     "column": 8,
+     "row": 0
+    },
+    "category": "armor",
+    "base_code": "uar",
+    "requirements": {
+     "level": 74,
+     "strength": 232,
+     "dexterity": 0
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "Level 7 Might Aura When Equipped",
+     "20% Faster Hit Recovery",
+     "219% Enhanced Defense",
+     "+264 Defense vs. Missile",
+     "+45 to Strength",
+     "+49 to Vitality",
+     "+44 Maximum Stamina",
+     "Curse Resistance 20%"
+    ],
+    "hash": "bbeb65f4f194fa1df5919eae2c53e2bb18e53127",
+    "account_id": "ailuropanda"
+   },
+   "user_id": "682f1a133606ba45087ff615",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": "1.3",
+   "bumped_at": "2026-10-28T23:43:18.727Z",
+   "user_last_online": "2026-10-28T23:43:09.390Z",
+   "user_last_ingame": "2026-10-28T10:36:02.656Z",
+   "created_at": "2026-10-28T06:42:08.106Z",
+   "updated_at": "2026-10-28T23:43:18.900Z",
+   "created_by_id": "682f1a133606ba45087ff615",
+   "updated_by_id": "682f1a133606ba45087ff615"
+  },
+  {
+   "_id": "6ae288957d181f7be7971cfe",
+   "item": {
+    "is_identified": true,
+    "is_socketed": true,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "oba",
+     "category": "weapon",
+     "codes": {
+      "normal": "ob5",
+      "exceptional": "oba",
+      "elite": "obf"
+     },
+     "name": "Swirling Crystal",
+     "stackable": false,
+     "type": "Orb",
+     "type_code": "orb",
+     "size": {
+      "height": 3,
+      "width": 1
+     },
+     "class": {
+      "base_code": "1hs",
+      "2hd_code": "1hs",
+      "base": "1 Hand Swing",
+      "2hd": "1 Hand Swing"
+     },
+     "requirements": {
+      "level": 37
+     },
+     "damage": {
+      "one_handed": {
+       "minimum": 18,
+       "maximum": 42
+      },
+      "two_handed": {},
+      "missile": {}
+     }
+    },
+    "socketed_count": 0,
+    "id": 145121165612,
+    "item_level": 89,
+    "quality": {
+     "id": 5,
+     "name": "Set"
+    },
+    "graphic_id": false,
+    "class_specifics": false,
+    "durability": {
+     "maximum": 100,
+     "current": 94
+    },
+    "socket_count": 3,
+    "modifiers": [
+     {
+      "name": "corrupted",
+      "values": [
+       0,
+       32
+      ],
+      "label": "Corrupted",
+      "priority": 246
+     },
+     {
+      "name": "item_fastercastrate",
+      "values": [
+       30
+      ],
+      "label": "30% Faster Cast Rate",
+      "priority": 142
+     },
+     {
+      "name": "item_singleskill",
+      "values": [
+       61,
+       3
+      ],
+      "label": "+3 to Fire Mastery (Sorceress Only)",
+      "priority": 81,
+      "min": 2,
+      "max": 3
+     },
+     {
+      "name": "item_singleskill",
+      "values": [
+       63,
+       2
+      ],
+      "label": "+2 to Lightning Mastery (Sorceress Only)",
+      "priority": 81,
+      "min": 2,
+      "max": 3
+     },
+     {
+      "name": "item_singleskill",
+      "values": [
+       65,
+       2
+      ],
+      "label": "+2 to Cold Mastery (Sorceress Only)",
+      "priority": 81,
+      "min": 2,
+      "max": 3
+     },
+     {
+      "name": "energy",
+      "values": [
+       10
+      ],
+      "label": "+10 to Energy",
+      "priority": 61
+     },
+     {
+      "name": "maxhp",
+      "values": [
+       57
+      ],
+      "label": "+57 to Life",
+      "priority": 59
+     },
+     {
+      "name": "maxmana",
+      "values": [
+       77
+      ],
+      "label": "+77 to Mana",
+      "priority": 55
+     }
+    ],
+    "name": "Tal Rasha's Lidless Eye",
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 1,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Helm",
+     "stash_page": 1
+    },
+    "position": {
+     "column": 5,
+     "row": 0
+    },
+    "category": "weapon",
+    "base_code": "oba",
+    "requirements": {
+     "level": 65,
+     "strength": 0,
+     "dexterity": 0
+    },
+    "corrupted": true,
+    "corruptions": [
+     "item_numsockets"
+    ],
+    "desecrated": false,
+    "properties": [
+     "Corrupted",
+     "30% Faster Cast Rate",
+     "+3 to Fire Mastery (Sorceress Only)",
+     "+2 to Lightning Mastery (Sorceress Only)",
+     "+2 to Cold Mastery (Sorceress Only)",
+     "+10 to Energy",
+     "+57 to Life",
+     "+77 to Mana"
+    ],
+    "damage": {
+     "one_handed": {
+      "minimum": 18,
+      "maximum": 42
+     }
+    },
+    "hash": "d92c7ec594ad8b08681677cccc5be90a78315210",
+    "character_id": "LaCarrie",
+    "account_id": "carrie"
+   },
+   "user_id": "6508957dfcbe38b32d5a666c",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": "0.15",
+   "bumped_at": "2026-10-28T23:43:16.658Z",
+   "user_last_online": "2026-10-28T23:43:17.099Z",
+   "user_last_ingame": "2026-10-28T23:43:17.127Z",
+   "created_at": "2026-10-28T23:43:17.127Z",
+   "updated_at": "2026-10-28T23:43:17.127Z",
+   "created_by_id": "6508957dfcbe38b32d5a666c"
+  },
+  {
+   "_id": "6ae19975251c5bacbd375fb4",
+   "item": {
+    "is_identified": true,
+    "is_socketed": true,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "xul",
+     "category": "armor",
+     "codes": {
+      "normal": "ful",
+      "exceptional": "xul",
+      "elite": "uul"
+     },
+     "name": "Chaos Armor",
+     "stackable": false,
+     "type": "Armor",
+     "type_code": "tors",
+     "size": {
+      "height": 3,
+      "width": 2
+     },
+     "requirements": {
+      "level": 25,
+      "strength": 140
+     }
+    },
+    "socketed_count": 0,
+    "id": 151026126141,
+    "item_level": 90,
+    "quality": {
+     "id": 5,
+     "name": "Set"
+    },
+    "graphic_id": false,
+    "class_specifics": false,
+    "defense": {
+     "base": 341,
+     "total": 852
+    },
+    "durability": {
+     "maximum": 70,
+     "current": 48
+    },
+    "socket_count": 2,
+    "modifiers": [
+     {
+      "name": "corrupted",
+      "values": [
+       0,
+       32
+      ],
+      "label": "Corrupted",
+      "priority": 246
+     },
+     {
+      "name": "item_addskill_tab",
+      "values": [
+       18,
+       2
+      ],
+      "label": "+2 to Summoning Skills (Necromancer Only)",
+      "priority": 151
+     },
+     {
+      "name": "item_fastermovevelocity",
+      "values": [
+       40
+      ],
+      "label": "40% Faster Run/Walk",
+      "priority": 148
+     },
+     {
+      "name": "item_singleskill",
+      "values": [
+       367,
+       3
+      ],
+      "label": "+3 to Blood Warp (Necromancer Only)",
+      "priority": 81,
+      "min": 2,
+      "max": 3
+     },
+     {
+      "name": "item_armor_percent",
+      "values": [
+       150
+      ],
+      "label": "150% Enhanced Defense",
+      "priority": 74
+     },
+     {
+      "name": "armorclass_vs_missile",
+      "values": [
+       100
+      ],
+      "label": "+100 Defense vs. Missile",
+      "priority": 69
+     },
+     {
+      "name": "poisonresist",
+      "values": [
+       40
+      ],
+      "label": "Poison Resist 40%",
+      "priority": 34
+     },
+     {
+      "name": "item_req_percent",
+      "values": [
+       -40
+      ],
+      "label": "Requirements -40%",
+      "priority": 0
+     }
+    ],
+    "name": "Trang-Oul's Scales",
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 2,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Amulet",
+     "stash_page": 2
+    },
+    "position": {
+     "column": 5,
+     "row": 6
+    },
+    "category": "armor",
+    "base_code": "xul",
+    "requirements": {
+     "level": 49,
+     "strength": 140,
+     "dexterity": 0
+    },
+    "corrupted": true,
+    "corruptions": [
+     "item_numsockets"
+    ],
+    "desecrated": false,
+    "properties": [
+     "Corrupted",
+     "+2 to Summoning Skills (Necromancer Only)",
+     "40% Faster Run/Walk",
+     "+3 to Blood Warp (Necromancer Only)",
+     "150% Enhanced Defense",
+     "+100 Defense vs. Missile",
+     "Poison Resist 40%",
+     "Requirements -40%"
+    ],
+    "hash": "52c45611bca3c7d768a43ff25788be9b1230460e",
+    "account_id": "ailuropanda"
+   },
+   "user_id": "682f1a133606ba45087ff615",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": ".15",
+   "bumped_at": "2026-10-28T23:43:16.447Z",
+   "user_last_online": "2026-10-28T23:43:09.390Z",
+   "user_last_ingame": "2026-10-28T10:36:02.656Z",
+   "created_at": "2026-10-28T06:43:01.063Z",
+   "updated_at": "2026-10-28T23:43:16.627Z",
+   "created_by_id": "682f1a133606ba45087ff615",
+   "updated_by_id": "682f1a133606ba45087ff615"
+  },
+  {
+   "_id": "6ae288947d181f7be7971cfb",
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "uth",
+     "category": "armor",
+     "codes": {
+      "normal": "gth",
+      "exceptional": "xth",
+      "elite": "uth"
+     },
+     "name": "Lacquered Plate",
+     "stackable": false,
+     "type": "Armor",
+     "type_code": "tors",
+     "size": {
+      "height": 3,
+      "width": 2
+     },
+     "requirements": {
+      "level": 62,
+      "strength": 208
+     }
+    },
+    "socketed_count": 0,
+    "id": 1467575611,
+    "item_level": 88,
+    "quality": {
+     "id": 5,
+     "name": "Set"
+    },
+    "graphic_id": false,
+    "class_specifics": false,
+    "defense": {
+     "base": 591,
+     "total": 991
+    },
+    "durability": {
+     "maximum": 55,
+     "current": 50
+    },
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "corrupted",
+      "values": [
+       0,
+       54
+      ],
+      "label": "Corrupted",
+      "priority": 246
+     },
+     {
+      "name": "armorclass",
+      "values": [
+       400
+      ],
+      "label": "+400 Defense",
+      "priority": 71
+     },
+     {
+      "name": "maxcoldresist",
+      "corrupted": true,
+      "values": [
+       5
+      ],
+      "label": "5% to Maximum Cold Resist",
+      "priority": 44
+     },
+     {
+      "name": "coldresist",
+      "corrupted": true,
+      "values": [
+       55
+      ],
+      "label": "Cold Resist 55%",
+      "priority": 40
+     },
+     {
+      "name": "lightresist",
+      "values": [
+       40
+      ],
+      "label": "Lightning Resist 40%",
+      "priority": 38
+     },
+     {
+      "name": "fireresist",
+      "values": [
+       40
+      ],
+      "label": "Fire Resist 40%",
+      "priority": 36
+     },
+     {
+      "name": "magic_damage_reduction",
+      "values": [
+       17
+      ],
+      "label": "Magic Damage Taken Reduced by 17",
+      "priority": 21,
+      "min": 12,
+      "max": 18
+     },
+     {
+      "name": "item_magicbonus",
+      "values": [
+       74
+      ],
+      "label": "74% Better Chance of Getting Magic Items",
+      "priority": 8,
+      "min": 70,
+      "max": 90
+     },
+     {
+      "name": "item_req_percent",
+      "values": [
+       -60
+      ],
+      "label": "Requirements -60%",
+      "priority": 0
+     }
+    ],
+    "name": "Tal Rasha's Guardianship",
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 6,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Right Ring",
+     "stash_page": 6
+    },
+    "position": {
+     "column": 8,
+     "row": 12
+    },
+    "category": "armor",
+    "base_code": "uth",
+    "requirements": {
+     "level": 71,
+     "strength": 208,
+     "dexterity": 0
+    },
+    "corrupted": true,
+    "corruptions": [
+     "maxcoldresist",
+     "coldresist"
+    ],
+    "desecrated": false,
+    "properties": [
+     "Corrupted",
+     "+400 Defense",
+     "5% to Maximum Cold Resist",
+     "Cold Resist 55%",
+     "Lightning Resist 40%",
+     "Fire Resist 40%",
+     "Magic Damage Taken Reduced by 17",
+     "74% Better Chance of Getting Magic Items",
+     "Requirements -60%"
+    ],
+    "hash": "98c2dba7044a6f07468febd6cb30eb9e3de38165",
+    "character_id": "Chunzo",
+    "account_id": "barfy"
+   },
+   "user_id": "64f7604cb92d414ea01a7517",
+   "type": "item",
+   "is_hardcore": true,
+   "is_ladder": true,
+   "price": "10wss / mal",
+   "bumped_at": "2026-10-28T23:43:16.237Z",
+   "user_last_online": "2026-10-28T23:43:16.711Z",
+   "user_last_ingame": "2026-10-28T23:43:16.723Z",
+   "created_at": "2026-10-28T23:43:16.723Z",
+   "updated_at": "2026-10-28T23:43:16.723Z",
+   "created_by_id": "64f7604cb92d414ea01a7517"
+  },
+  {
+   "_id": "6ae28897fab594632e222bb3",
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "cm1",
+     "category": "misc",
+     "codes": {
+      "normal": "cm1",
+      "exceptional": "",
+      "elite": ""
+     },
+     "name": "Small Charm",
+     "stackable": false,
+     "type": "Small Charm",
+     "type_code": "scha",
+     "size": {
+      "height": 1,
+      "width": 1
+     },
+     "requirements": {}
+    },
+    "socketed_count": 0,
+    "id": 615168081,
+    "item_level": 81,
+    "quality": {
+     "id": 4,
+     "name": "Magic"
+    },
+    "graphic_id": 1,
+    "class_specifics": false,
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "max_damage",
+      "values": [
+       2
+      ],
+      "label": "+2 to Maximum Damage",
+      "priority": 126,
+      "min": 1,
+      "max": 3
+     },
+     {
+      "name": "tohit",
+      "values": [
+       16
+      ],
+      "label": "+16 to Attack Rating",
+      "priority": 115,
+      "min": 10,
+      "max": 20
+     },
+     {
+      "name": "maxhp",
+      "values": [
+       19
+      ],
+      "label": "+19 to Life",
+      "priority": 59,
+      "min": 16,
+      "max": 20
+     }
+    ],
+    "name": "Fine Small Charm of Vita",
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 3,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Armor",
+     "stash_page": 3
+    },
+    "position": {
+     "column": 4,
+     "row": 9
+    },
+    "category": "misc",
+    "base_code": "cm1",
+    "requirements": {
+     "level": 39,
+     "strength": 0,
+     "dexterity": 0
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "+2 to Maximum Damage",
+     "+16 to Attack Rating",
+     "+19 to Life"
+    ],
+    "hash": "ed84628be77eafbee25f5a9e6a91542be99180be",
+    "character_id": "MetteMinkcTn",
+    "account_id": "pazzive",
+    "sockets_max": 0
+   },
+   "user_id": "6398d5e0bb6130359b1fc3af",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": "20 wss",
+   "bumped_at": "2026-10-28T23:43:15.237Z",
+   "user_last_online": "2026-10-28T23:43:19.138Z",
+   "user_last_ingame": "2026-10-28T23:43:19.143Z",
+   "created_at": "2026-10-28T23:43:19.143Z",
+   "updated_at": "2026-10-28T23:43:19.143Z",
+   "created_by_id": "6398d5e0bb6130359b1fc3af"
+  },
+  {
+   "_id": "6ae1997b251c5bacbd375fb9",
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "utb",
+     "category": "armor",
+     "codes": {
+      "normal": "tbt",
+      "exceptional": "xtb",
+      "elite": "utb"
+     },
+     "name": "Mirrored Boots",
+     "stackable": false,
+     "type": "Boots",
+     "type_code": "boot",
+     "size": {
+      "height": 2,
+      "width": 2
+     },
+     "requirements": {
+      "level": 60,
+      "strength": 163
+     }
+    },
+    "socketed_count": 0,
+    "id": 210101324151,
+    "item_level": 91,
+    "quality": {
+     "id": 6,
+     "name": "Rare"
+    },
+    "graphic_id": false,
+    "class_specifics": false,
+    "defense": {
+     "base": 69,
+     "total": 135
+    },
+    "durability": {
+     "maximum": 18,
+     "current": 18
+    },
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "corrupted",
+      "values": [
+       0,
+       44
+      ],
+      "label": "Corrupted",
+      "priority": 246
+     },
+     {
+      "name": "item_fastermovevelocity",
+      "corrupted": true,
+      "values": [
+       55
+      ],
+      "label": "55% Faster Run/Walk",
+      "priority": 148
+     },
+     {
+      "name": "item_armor_percent",
+      "values": [
+       97
+      ],
+      "label": "97% Enhanced Defense",
+      "priority": 74,
+      "min": 81,
+      "max": 100
+     },
+     {
+      "name": "dexterity",
+      "values": [
+       4
+      ],
+      "label": "+4 to Dexterity",
+      "priority": 65,
+      "min": 3,
+      "max": 5
+     },
+     {
+      "name": "coldresist",
+      "values": [
+       17
+      ],
+      "label": "Cold Resist 17%",
+      "priority": 40,
+      "min": 11,
+      "max": 20
+     },
+     {
+      "name": "fireresist",
+      "values": [
+       30
+      ],
+      "label": "Fire Resist 30%",
+      "priority": 36,
+      "min": 21,
+      "max": 30
+     },
+     {
+      "name": "item_replenish_durability",
+      "values": [
+       5
+      ],
+      "label": "Repairs 1 Durability in 0.05 Seconds",
+      "priority": 1
+     }
+    ],
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 2,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Amulet",
+     "stash_page": 2
+    },
+    "position": {
+     "column": 7,
+     "row": 6
+    },
+    "category": "armor",
+    "base_code": "utb",
+    "name": "Mirrored Boots",
+    "requirements": {
+     "level": 60,
+     "strength": 163,
+     "dexterity": 0
+    },
+    "corrupted": true,
+    "corruptions": [
+     "item_fastermovevelocity"
+    ],
+    "desecrated": false,
+    "properties": [
+     "Corrupted",
+     "55% Faster Run/Walk",
+     "97% Enhanced Defense",
+     "+4 to Dexterity",
+     "Cold Resist 17%",
+     "Fire Resist 30%",
+     "Repairs 1 Durability in 0.05 Seconds"
+    ],
+    "hash": "fc44ccfc8ef3903281fe127752ee361c91feb078",
+    "account_id": "ailuropanda"
+   },
+   "user_id": "682f1a133606ba45087ff615",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": ".25",
+   "bumped_at": "2026-10-28T23:43:15.213Z",
+   "user_last_online": "2026-10-28T23:43:09.390Z",
+   "user_last_ingame": "2026-10-28T10:36:02.656Z",
+   "created_at": "2026-10-28T06:43:07.800Z",
+   "updated_at": "2026-10-28T23:43:15.632Z",
+   "created_by_id": "682f1a133606ba45087ff615",
+   "updated_by_id": "682f1a133606ba45087ff615"
+  },
+  {
+   "_id": "6ae28892e5c8039208dc01f4",
+   "item": {
+    "is_identified": true,
+    "is_socketed": true,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "xow",
+     "category": "armor",
+     "codes": {
+      "normal": "tow",
+      "exceptional": "xow",
+      "elite": "uow"
+     },
+     "name": "Pavise",
+     "stackable": false,
+     "type": "Shield",
+     "type_code": "shie",
+     "size": {
+      "height": 3,
+      "width": 2
+     },
+     "requirements": {
+      "level": 25,
+      "strength": 133
+     }
+    },
+    "socketed_count": 1,
+    "id": 481313311412,
+    "item_level": 87,
+    "quality": {
+     "id": 7,
+     "name": "Unique"
+    },
+    "graphic_id": false,
+    "class_specifics": false,
+    "defense": {
+     "base": 79,
+     "total": 252
+    },
+    "durability": {
+     "maximum": 72,
+     "current": 172
+    },
+    "socket_count": 1,
+    "modifiers": [
+     {
+      "name": "corrupted",
+      "values": [
+       0,
+       32
+      ],
+      "label": "Corrupted",
+      "priority": 246
+     },
+     {
+      "name": "item_allskills",
+      "values": [
+       1
+      ],
+      "label": "+1 to All Skills",
+      "priority": 158
+     },
+     {
+      "name": "item_fasterblockrate",
+      "values": [
+       20
+      ],
+      "label": "20% Faster Block Rate",
+      "priority": 136
+     },
+     {
+      "name": "toblock",
+      "values": [
+       30
+      ],
+      "label": "30% Increased Chance of Blocking",
+      "priority": 134
+     },
+     {
+      "name": "item_armor_percent",
+      "values": [
+       220
+      ],
+      "label": "220% Enhanced Defense",
+      "priority": 74,
+      "min": 180,
+      "max": 240
+     },
+     {
+      "name": "hpregen",
+      "values": [
+       25
+      ],
+      "label": "Replenish Life +25",
+      "priority": 56
+     },
+     {
+      "name": "all_resist",
+      "values": [
+       40
+      ],
+      "label": "All Resistances +40%",
+      "priority": 36,
+      "min": 20,
+      "max": 30
+     },
+     {
+      "name": "normal_damage_reduction",
+      "values": [
+       14
+      ],
+      "label": "Physical Damage Taken Reduced by 14",
+      "priority": 22,
+      "min": 14,
+      "max": 18
+     },
+     {
+      "name": "magic_damage_reduction",
+      "values": [
+       17
+      ],
+      "label": "Magic Damage Taken Reduced by 17",
+      "priority": 21,
+      "min": 14,
+      "max": 18
+     },
+     {
+      "name": "maxdurability",
+      "values": [
+       100
+      ],
+      "label": "+100 Durability",
+      "priority": 0
+     }
+    ],
+    "socketed": [
+     {
+      "is_identified": true,
+      "is_socketed": false,
+      "is_new": false,
+      "is_ear": false,
+      "is_starter": false,
+      "is_simple": true,
+      "is_ethereal": false,
+      "is_personalized": false,
+      "is_runeword": false,
+      "format_version": 105,
+      "base": {
+       "id": "gpw",
+       "category": "misc",
+       "codes": {
+        "normal": "gpw",
+        "exceptional": "",
+        "elite": ""
+       },
+       "name": "Perfect Diamond",
+       "stackable": true,
+       "type": "Diamond",
+       "type_code": "gemd",
+       "size": {
+        "height": 1,
+        "width": 1
+       },
+       "requirements": {
+        "level": 18
+       }
+      },
+      "modifiers": [
+       {
+        "name": "all_resist",
+        "values": [
+         19
+        ],
+        "label": "All Resistances +19%",
+        "priority": 36
+       }
+      ],
+      "location": {
+       "storage_id": 0,
+       "equipment_id": 0,
+       "zone_id": 6,
+       "zone": "Socketed",
+       "storage": "Unknown"
+      },
+      "position": {
+       "column": 0,
+       "row": 0
+      },
+      "category": "misc",
+      "base_code": "gpw",
+      "name": "Perfect Diamond",
+      "requirements": {
+       "level": 18,
+       "strength": 0,
+       "dexterity": 0
+      },
+      "corrupted": false,
+      "desecrated": false,
+      "properties": [
+       null,
+       null,
+       null,
+       null
+      ],
+      "hash": "161a2b8a18f044f8738775e7af1eab3a61285154"
+     }
+    ],
+    "name": "Gerke's Sanctuary",
+    "location": {
+     "storage_id": 1,
+     "equipment_id": 0,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Inventory"
+    },
+    "position": {
+     "column": 1,
+     "row": 0
+    },
+    "category": "armor",
+    "base_code": "xow",
+    "requirements": {
+     "level": 44,
+     "strength": 133,
+     "dexterity": 0
+    },
+    "corrupted": true,
+    "corruptions": [
+     "item_numsockets"
+    ],
+    "desecrated": false,
+    "properties": [
+     "Corrupted",
+     "+1 to All Skills",
+     "20% Faster Block Rate",
+     "30% Increased Chance of Blocking",
+     "220% Enhanced Defense",
+     "Replenish Life +25",
+     "All Resistances +40%",
+     "Physical Damage Taken Reduced by 14",
+     "Magic Damage Taken Reduced by 17",
+     "+100 Durability"
+    ],
+    "hash": "9a7eee4106ca7609c065c72f479ae1ccdc62b0cc",
+    "character_id": "llamallama",
+    "account_id": "kirwandg"
+   },
+   "user_id": "6722ad564b73156931c3a4c3",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": "5 wss",
+   "bumped_at": "2026-10-28T23:43:14.849Z",
+   "user_last_online": "2026-10-28T23:43:14.835Z",
+   "user_last_ingame": "2020-01-01T00:00:00.000Z",
+   "created_at": "2026-10-28T23:43:14.849Z",
+   "updated_at": "2026-10-28T23:43:14.849Z",
+   "created_by_id": "6722ad564b73156931c3a4c3"
+  },
+  {
+   "_id": "6ae28892e9a0a1f80b7cc0e8",
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "urn",
+     "category": "armor",
+     "codes": {
+      "normal": "crn",
+      "exceptional": "xrn",
+      "elite": "urn"
+     },
+     "name": "Corona",
+     "stackable": false,
+     "type": "Helm",
+     "type_code": "helm",
+     "size": {
+      "height": 2,
+      "width": 2
+     },
+     "requirements": {
+      "level": 66,
+      "strength": 174
+     }
+    },
+    "socketed_count": 0,
+    "id": 1377141513,
+    "item_level": 87,
+    "quality": {
+     "id": 6,
+     "name": "Rare"
+    },
+    "graphic_id": false,
+    "class_specifics": false,
+    "defense": {
+     "base": 152,
+     "total": 152
+    },
+    "durability": {
+     "maximum": 50,
+     "current": 35
+    },
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "item_addclassskills",
+      "values": [
+       6,
+       1
+      ],
+      "label": "+1 to Assassin Skills",
+      "priority": 157
+     },
+     {
+      "name": "max_damage",
+      "values": [
+       11
+      ],
+      "label": "+11 to Maximum Damage",
+      "priority": 126,
+      "min": 11,
+      "max": 12
+     },
+     {
+      "name": "manadrainmindam",
+      "values": [
+       6
+      ],
+      "label": "6% Mana stolen per hit",
+      "priority": 89,
+      "min": 5,
+      "max": 6
+     },
+     {
+      "name": "dexterity",
+      "values": [
+       23
+      ],
+      "label": "+23 to Dexterity",
+      "priority": 65,
+      "min": 21,
+      "max": 30
+     },
+     {
+      "name": "coldresist",
+      "values": [
+       23
+      ],
+      "label": "Cold Resist 23%",
+      "priority": 40
+     },
+     {
+      "name": "lightresist",
+      "values": [
+       48
+      ],
+      "label": "Lightning Resist 48%",
+      "priority": 38,
+      "min": 21,
+      "max": 30
+     },
+     {
+      "name": "fireresist",
+      "values": [
+       23
+      ],
+      "label": "Fire Resist 23%",
+      "priority": 36
+     },
+     {
+      "name": "poisonresist",
+      "values": [
+       23
+      ],
+      "label": "Poison Resist 23%",
+      "priority": 34
+     }
+    ],
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 8,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Belt",
+     "stash_page": 8
+    },
+    "position": {
+     "column": 4,
+     "row": 0
+    },
+    "category": "armor",
+    "base_code": "urn",
+    "name": "Corona",
+    "requirements": {
+     "level": 66,
+     "strength": 174,
+     "dexterity": 0
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "+1 to Assassin Skills",
+     "+11 to Maximum Damage",
+     "6% Mana stolen per hit",
+     "+23 to Dexterity",
+     "Cold Resist 23%",
+     "Lightning Resist 48%",
+     "Fire Resist 23%",
+     "Poison Resist 23%"
+    ],
+    "hash": "9c99fe5ebd324aee1a0f8a6e6f46dd8a61586e53",
+    "character_id": "zOshy",
+    "account_id": "xaandroos",
+    "sockets_max": 0
+   },
+   "user_id": "69f7b3224678ae482470587d",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "hr_price": 0.1,
+   "bumped_at": "2026-10-28T23:43:14.540Z",
+   "user_last_online": "2026-10-28T23:43:14.577Z",
+   "user_last_ingame": "2026-10-28T23:43:14.584Z",
+   "created_at": "2026-10-28T23:43:14.584Z",
+   "updated_at": "2026-10-28T23:43:14.584Z",
+   "created_by_id": "69f7b3224678ae482470587d"
+  },
+  {
+   "_id": "6ae28892e5c8039208dc01f3",
+   "user_id": "6a6f8bdf3c0889164a93060c",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "item": {
+    "is_identified": true,
+    "is_socketed": true,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "7xf",
+     "category": "weapon",
+     "codes": {
+      "normal": "axf",
+      "exceptional": "9xf",
+      "elite": "7xf"
+     },
+     "name": "War Fist",
+     "stackable": false,
+     "type": "Hand to Hand 2",
+     "type_code": "h2h2",
+     "size": {
+      "height": 3,
+      "width": 1
+     },
+     "class": {
+      "base_code": "ht1",
+      "2hd_code": "ht1",
+      "base": "One Hand-to-Hand",
+      "2hd": "One Hand-to-Hand"
+     },
+     "requirements": {
+      "level": 51,
+      "strength": 108,
+      "dexterity": 108
+     },
+     "damage": {
+      "one_handed": {
+       "minimum": 60,
+       "maximum": 73
+      },
+      "two_handed": {},
+      "missile": {}
+     }
+    },
+    "socketed_count": 0,
+    "id": 7106171198,
+    "item_level": 86,
+    "quality": {
+     "id": 7,
+     "name": "Unique"
+    },
+    "graphic_id": false,
+    "class_specifics": false,
+    "durability": {
+     "maximum": 128,
+     "current": 93
+    },
+    "socket_count": 3,
+    "modifiers": [
+     {
+      "name": "corrupted",
+      "values": [
+       0,
+       32
+      ],
+      "label": "Corrupted",
+      "priority": 246
+     },
+     {
+      "name": "item_splashonhit",
+      "values": [
+       1,
+       358,
+       100
+      ],
+      "label": "Melee Attacks Deal Splash Damage",
+      "priority": 245
+     },
+     {
+      "name": "passive_phys_pierce",
+      "values": [
+       5
+      ],
+      "label": "-5% to Enemy Physical Resistance",
+      "priority": 158
+     },
+     {
+      "name": "item_addclassskills",
+      "values": [
+       6,
+       2
+      ],
+      "label": "+2 to Assassin Skills",
+      "priority": 157
+     },
+     {
+      "name": "extra_shadow",
+      "values": [
+       1
+      ],
+      "label": "+1 to Maximum Shadows",
+      "priority": 149
+     },
+     {
+      "name": "item_fastercastrate",
+      "values": [
+       10
+      ],
+      "label": "10% Faster Cast Rate",
+      "priority": 142
+     },
+     {
+      "name": "maxdamage_percent",
+      "values": [
+       161,
+       161
+      ],
+      "label": "+161% Enhanced Damage",
+      "priority": 120,
+      "min": 160,
+      "max": 220
+     },
+     {
+      "name": "item_undeaddamage_percent",
+      "values": [
+       217
+      ],
+      "label": "217% Damage to Undead",
+      "priority": 108,
+      "min": 200,
+      "max": 250
+     },
+     {
+      "name": "item_singleskill",
+      "values": [
+       268,
+       2
+      ],
+      "label": "+2 to Shadow Warrior (Assassin Only)",
+      "priority": 81,
+      "min": 1,
+      "max": 2
+     },
+     {
+      "name": "item_singleskill",
+      "values": [
+       279,
+       1
+      ],
+      "label": "+1 to Shadow Master (Assassin Only)",
+      "priority": 81,
+      "min": 1,
+      "max": 2
+     }
+    ],
+    "name": "Whispering Mirage",
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 1,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Helm",
+     "stash_page": 1
+    },
+    "position": {
+     "column": 2,
+     "row": 12
+    },
+    "category": "weapon",
+    "base_code": "7xf",
+    "requirements": {
+     "level": 68,
+     "strength": 108,
+     "dexterity": 108
+    },
+    "corrupted": true,
+    "corruptions": [
+     "item_numsockets"
+    ],
+    "desecrated": false,
+    "properties": [
+     "Corrupted",
+     "Melee Attacks Deal Splash Damage",
+     "-5% to Enemy Physical Resistance",
+     "+2 to Assassin Skills",
+     "+1 to Maximum Shadows",
+     "10% Faster Cast Rate",
+     "+161% Enhanced Damage",
+     "217% Damage to Undead",
+     "+2 to Shadow Warrior (Assassin Only)",
+     "+1 to Shadow Master (Assassin Only)"
+    ],
+    "damage": {
+     "one_handed": {
+      "minimum": 156,
+      "maximum": 190
+     }
+    },
+    "hash": "832126cf75dec98848949f45352630c604445cf3",
+    "account_id": "zedarflight"
+   },
+   "hr_price": 0,
+   "price": ".2 hr",
+   "bumped_at": "2026-10-28T23:43:14.344Z",
+   "user_last_online": "2026-10-28T23:43:14.834Z",
+   "user_last_ingame": "2026-10-28T23:43:14.845Z",
+   "created_at": "2026-10-28T23:43:14.845Z",
+   "updated_at": "2026-10-28T23:43:14.845Z",
+   "created_by_id": "6a6f8bdf3c0889164a93060c"
+  },
+  {
+   "_id": "6adde15e6cb84ed396ef8dd5",
+   "item": {
+    "is_identified": true,
+    "is_socketed": true,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "crs",
+     "category": "weapon",
+     "codes": {
+      "normal": "crs",
+      "exceptional": "9cr",
+      "elite": "7cr"
+     },
+     "name": "Crystal Sword",
+     "stackable": false,
+     "type": "Sword",
+     "type_code": "swor",
+     "size": {
+      "height": 3,
+      "width": 2
+     },
+     "class": {
+      "base_code": "1hs",
+      "2hd_code": "1hs",
+      "base": "1 Hand Swing",
+      "2hd": "1 Hand Swing"
+     },
+     "requirements": {
+      "strength": 43
+     },
+     "damage": {
+      "one_handed": {
+       "minimum": 5,
+       "maximum": 15
+      },
+      "two_handed": {},
+      "missile": {}
+     }
+    },
+    "socketed_count": 0,
+    "id": 57118122100,
+    "item_level": 79,
+    "quality": {
+     "id": 2,
+     "name": "Normal"
+    },
+    "graphic_id": false,
+    "class_specifics": 39,
+    "durability": {
+     "maximum": 40,
+     "current": 27
+    },
+    "socket_count": 4,
+    "modifiers": [
+     {
+      "name": "item_splashonhit",
+      "values": [
+       1,
+       358,
+       100
+      ],
+      "label": "Melee Attacks Deal Splash Damage",
+      "priority": 245
+     }
+    ],
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 9,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Boots",
+     "stash_page": 9
+    },
+    "position": {
+     "column": 4,
+     "row": 8
+    },
+    "category": "weapon",
+    "base_code": "crs",
+    "name": "Crystal Sword",
+    "requirements": {
+     "level": 0,
+     "strength": 43,
+     "dexterity": 0
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "Melee Attacks Deal Splash Damage"
+    ],
+    "damage": {
+     "one_handed": {
+      "minimum": 5,
+      "maximum": 15
+     }
+    },
+    "hash": "ff6d350bb75689d69b4653fc76e6efd0fbe41f3d",
+    "character_id": "Dubss",
+    "account_id": "dub"
+   },
+   "user_id": "671aebdd00d1fe149085a552",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": "2wss ",
+   "bumped_at": "2026-10-28T23:43:14.237Z",
+   "user_last_online": "2026-10-28T23:43:09.390Z",
+   "user_last_ingame": "2026-10-28T23:43:24.338Z",
+   "created_at": "2026-10-25T11:00:46.190Z",
+   "updated_at": "2026-10-28T23:43:14.237Z",
+   "created_by_id": "671aebdd00d1fe149085a552",
+   "updated_by_id": "671aebdd00d1fe149085a552"
+  },
+  {
+   "_id": "6ae28891312acd8deac83af5",
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "cm2",
+     "category": "misc",
+     "codes": {
+      "normal": "cm2",
+      "exceptional": "",
+      "elite": ""
+     },
+     "name": "Large Charm",
+     "stackable": false,
+     "type": "Medium Charm",
+     "type_code": "mcha",
+     "size": {
+      "height": 2,
+      "width": 1
+     },
+     "requirements": {}
+    },
+    "socketed_count": 0,
+    "id": 64101089311,
+    "item_level": 92,
+    "quality": {
+     "id": 4,
+     "name": "Magic"
+    },
+    "graphic_id": 0,
+    "class_specifics": false,
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "passive_mag_mastery",
+      "values": [
+       3
+      ],
+      "label": "3% To Magic Skill Damage",
+      "priority": 88
+     },
+     {
+      "name": "maxhp",
+      "values": [
+       19
+      ],
+      "label": "+19 to Life",
+      "priority": 59,
+      "min": 16,
+      "max": 20
+     }
+    ],
+    "name": "Scintillating Large Charm of Substinence",
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 7,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Left Ring",
+     "stash_page": 7
+    },
+    "position": {
+     "column": 8,
+     "row": 0
+    },
+    "category": "misc",
+    "base_code": "cm2",
+    "requirements": {
+     "level": 42,
+     "strength": 0,
+     "dexterity": 0
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "3% To Magic Skill Damage",
+     "+19 to Life"
+    ],
+    "hash": "3b2f282431f4d0fd8fea09c6f7062d8e5abb74f9",
+    "account_id": "confus"
+   },
+   "user_id": "645408f16be25d3627026744",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": ".15",
+   "bumped_at": "2026-10-28T23:43:12.284Z",
+   "user_last_online": "2026-10-28T23:43:13.028Z",
+   "user_last_ingame": "2026-10-28T23:43:13.033Z",
+   "created_at": "2026-10-28T23:43:13.033Z",
+   "updated_at": "2026-10-28T23:43:13.033Z",
+   "created_by_id": "645408f16be25d3627026744"
+  },
+  {
+   "_id": "6ae19985251c5bacbd375fbd",
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "uui",
+     "category": "armor",
+     "codes": {
+      "normal": "qui",
+      "exceptional": "xui",
+      "elite": "uui"
+     },
+     "name": "Dusk Shroud",
+     "stackable": false,
+     "type": "Armor",
+     "type_code": "tors",
+     "size": {
+      "height": 3,
+      "width": 2
+     },
+     "requirements": {
+      "level": 49,
+      "strength": 77
+     }
+    },
+    "socketed_count": 0,
+    "id": 7011943414,
+    "item_level": 91,
+    "quality": {
+     "id": 6,
+     "name": "Rare"
+    },
+    "graphic_id": false,
+    "class_specifics": false,
+    "defense": {
+     "base": 303,
+     "total": 590
+    },
+    "durability": {
+     "maximum": 20,
+     "current": 11
+    },
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "item_skillongethit",
+      "values": [
+       5,
+       48,
+       14
+      ],
+      "label": "14% Chance to cast level 5 Nova when struck",
+      "priority": 160
+     },
+     {
+      "name": "item_addclassskills",
+      "values": [
+       5,
+       2
+      ],
+      "label": "+2 to Druid Skills",
+      "priority": 157
+     },
+     {
+      "name": "maxdamage_percent",
+      "values": [
+       178,
+       178
+      ],
+      "label": "+178% Enhanced Damage",
+      "priority": 120,
+      "min": 160,
+      "max": 200
+     },
+     {
+      "name": "item_armor_percent",
+      "values": [
+       95
+      ],
+      "label": "95% Enhanced Defense",
+      "priority": 74,
+      "min": 81,
+      "max": 100
+     },
+     {
+      "name": "damageresist",
+      "values": [
+       8
+      ],
+      "label": "Physical Damage Taken Reduced by 8%",
+      "priority": 22,
+      "min": 8,
+      "max": 14
+     },
+     {
+      "name": "item_attackertakesdamage",
+      "values": [
+       256
+      ],
+      "label": "Attacker Takes Damage of 256",
+      "priority": 13,
+      "min": 200,
+      "max": 400
+     }
+    ],
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 2,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Amulet",
+     "stash_page": 2
+    },
+    "position": {
+     "column": 4,
+     "row": 10
+    },
+    "category": "armor",
+    "base_code": "uui",
+    "name": "Dusk Shroud",
+    "requirements": {
+     "level": 73,
+     "strength": 77,
+     "dexterity": 0
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "14% Chance to cast level 5 Nova when struck",
+     "+2 to Druid Skills",
+     "+178% Enhanced Damage",
+     "95% Enhanced Defense",
+     "Physical Damage Taken Reduced by 8%",
+     "Attacker Takes Damage of 256"
+    ],
+    "hash": "ab90894bfd56aa084863928698881b95f69d26ce",
+    "account_id": "ailuropanda"
+   },
+   "user_id": "682f1a133606ba45087ff615",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": "1",
+   "bumped_at": "2026-10-28T23:43:11.868Z",
+   "user_last_online": "2026-10-28T23:43:09.390Z",
+   "user_last_ingame": "2026-10-28T10:36:02.656Z",
+   "created_at": "2026-10-28T06:43:17.892Z",
+   "updated_at": "2026-10-28T23:43:12.072Z",
+   "created_by_id": "682f1a133606ba45087ff615",
+   "updated_by_id": "682f1a133606ba45087ff615"
+  },
+  {
+   "_id": "6ae288937d181f7be7971cf8",
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "7vo",
+     "category": "weapon",
+     "codes": {
+      "normal": "vou",
+      "exceptional": "9vo",
+      "elite": "7vo"
+     },
+     "name": "Colossus Voulge",
+     "stackable": false,
+     "type": "Polearm",
+     "type_code": "pole",
+     "size": {
+      "height": 4,
+      "width": 2
+     },
+     "class": {
+      "base_code": "stf",
+      "2hd_code": "stf",
+      "base": "Staff",
+      "2hd": "Staff"
+     },
+     "requirements": {
+      "level": 48,
+      "strength": 210,
+      "dexterity": 55
+     },
+     "damage": {
+      "one_handed": {},
+      "two_handed": {
+       "minimum": 21,
+       "maximum": 206
+      },
+      "missile": {}
+     }
+    },
+    "socketed_count": 0,
+    "id": 651461137,
+    "item_level": 87,
+    "quality": {
+     "id": 2,
+     "name": "Normal"
+    },
+    "graphic_id": false,
+    "class_specifics": 39,
+    "durability": {
+     "maximum": 100,
+     "current": 96
+    },
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "item_splashonhit",
+      "values": [
+       1,
+       358,
+       100
+      ],
+      "label": "Melee Attacks Deal Splash Damage",
+      "priority": 245
+     }
+    ],
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 4,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Right Hand",
+     "stash_page": 4
+    },
+    "position": {
+     "column": 2,
+     "row": 4
+    },
+    "category": "weapon",
+    "base_code": "7vo",
+    "name": "Colossus Voulge",
+    "requirements": {
+     "level": 48,
+     "strength": 210,
+     "dexterity": 55
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "Melee Attacks Deal Splash Damage"
+    ],
+    "damage": {
+     "two_handed": {
+      "minimum": 21,
+      "maximum": 206
+     }
+    },
+    "hash": "5a3ed932f39bde36a81ab3efdebbe5a0648f1b7f",
+    "character_id": "DieGabi",
+    "account_id": "lord_el",
+    "sockets_max": 0
+   },
+   "user_id": "6ade8f7bde82ffbab66009f2",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": "1 wss",
+   "bumped_at": "2026-10-28T23:43:11.741Z",
+   "user_last_online": "2026-10-28T23:43:15.823Z",
+   "user_last_ingame": "2026-10-28T23:43:15.834Z",
+   "created_at": "2026-10-28T23:43:15.834Z",
+   "updated_at": "2026-10-28T23:43:15.834Z",
+   "created_by_id": "6ade8f7bde82ffbab66009f2"
+  },
+  {
+   "_id": "6adefe074b73c4249b5123b0",
+   "item": {
+    "is_identified": true,
+    "is_socketed": true,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "ula",
+     "category": "armor",
+     "codes": {
+      "normal": "hla",
+      "exceptional": "xla",
+      "elite": "ula"
+     },
+     "name": "Scarab Husk",
+     "stackable": false,
+     "type": "Armor",
+     "type_code": "tors",
+     "size": {
+      "height": 3,
+      "width": 2
+     },
+     "requirements": {
+      "level": 51,
+      "strength": 95
+     }
+    },
+    "socketed_count": 0,
+    "id": 412143221212,
+    "item_level": 85,
+    "quality": {
+     "id": 2,
+     "name": "Normal"
+    },
+    "graphic_id": false,
+    "class_specifics": false,
+    "defense": {
+     "base": 327,
+     "total": 327
+    },
+    "durability": {
+     "maximum": 28,
+     "current": 18
+    },
+    "socket_count": 4,
+    "modifiers": [],
+    "location": {
+     "storage_id": 4,
+     "equipment_id": 0,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Cube"
+    },
+    "position": {
+     "column": 2,
+     "row": 0
+    },
+    "category": "armor",
+    "base_code": "ula",
+    "name": "Scarab Husk",
+    "requirements": {
+     "level": 51,
+     "strength": 95,
+     "dexterity": 0
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [],
+    "hash": "3a85c99bfcf91f28bb01f9ac02aa18b480001ab3",
+    "character_id": "Dubss",
+    "account_id": "dub"
+   },
+   "user_id": "671aebdd00d1fe149085a552",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": "2wss",
+   "bumped_at": "2026-10-28T23:43:11.693Z",
+   "user_last_online": "2026-10-28T23:43:09.390Z",
+   "user_last_ingame": "2026-10-28T23:43:24.338Z",
+   "created_at": "2026-10-26T07:15:19.559Z",
+   "updated_at": "2026-10-28T23:43:11.693Z",
+   "created_by_id": "671aebdd00d1fe149085a552",
+   "updated_by_id": "671aebdd00d1fe149085a552"
+  },
+  {
+   "_id": "6ae19990251c5bacbd375fc6",
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "ci1",
+     "category": "armor",
+     "codes": {
+      "normal": "ci1",
+      "exceptional": "ci2",
+      "elite": "ci3"
+     },
+     "name": "Coronet",
+     "stackable": false,
+     "type": "Circlet",
+     "type_code": "circ",
+     "size": {
+      "height": 2,
+      "width": 2
+     },
+     "requirements": {
+      "level": 39
+     }
+    },
+    "socketed_count": 0,
+    "id": 41213911383,
+    "item_level": 91,
+    "quality": {
+     "id": 6,
+     "name": "Rare"
+    },
+    "graphic_id": false,
+    "class_specifics": false,
+    "defense": {
+     "base": 39,
+     "total": 39
+    },
+    "durability": {
+     "maximum": 30,
+     "current": 21
+    },
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "item_addskill_tab",
+      "values": [
+       2,
+       2
+      ],
+      "label": "+2 to Javelin and Spear Skills (Amazon Only)",
+      "priority": 151
+     },
+     {
+      "name": "item_tohitpercent_perlevel",
+      "values": [
+       1
+      ],
+      "label": "1% Bonus to Attack Rating (Based on Character Level)",
+      "priority": 116
+     },
+     {
+      "name": "dexterity",
+      "values": [
+       26
+      ],
+      "label": "+26 to Dexterity",
+      "priority": 65,
+      "min": 21,
+      "max": 30
+     },
+     {
+      "name": "all_resist",
+      "values": [
+       21
+      ],
+      "label": "All Resistances +21%",
+      "priority": 36,
+      "min": 21,
+      "max": 30
+     },
+     {
+      "name": "item_halffreezeduration",
+      "values": [
+       1
+      ],
+      "label": "Half Freeze Duration",
+      "priority": 19
+     },
+     {
+      "name": "item_magicbonus",
+      "values": [
+       6
+      ],
+      "label": "6% Better Chance of Getting Magic Items",
+      "priority": 8,
+      "min": 5,
+      "max": 15
+     }
+    ],
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 2,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Amulet",
+     "stash_page": 2
+    },
+    "position": {
+     "column": 2,
+     "row": 12
+    },
+    "category": "armor",
+    "base_code": "ci1",
+    "name": "Coronet",
+    "requirements": {
+     "level": 64,
+     "strength": 0,
+     "dexterity": 0
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "+2 to Javelin and Spear Skills (Amazon Only)",
+     "1% Bonus to Attack Rating (Based on Character Level)",
+     "+26 to Dexterity",
+     "All Resistances +21%",
+     "Half Freeze Duration",
+     "6% Better Chance of Getting Magic Items"
+    ],
+    "hash": "e5f7f7a034039314366bd4a0514e15b0860e331f",
+    "account_id": "ailuropanda",
+    "sockets_max": 0
+   },
+   "user_id": "682f1a133606ba45087ff615",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": ".25",
+   "bumped_at": "2026-10-28T23:43:10.720Z",
+   "user_last_online": "2026-10-28T23:43:09.390Z",
+   "user_last_ingame": "2026-10-28T10:36:02.656Z",
+   "created_at": "2026-10-28T06:43:28.338Z",
+   "updated_at": "2026-10-28T23:43:10.900Z",
+   "created_by_id": "682f1a133606ba45087ff615",
+   "updated_by_id": "682f1a133606ba45087ff615"
+  },
+  {
+   "_id": "6ae2888e006b96156d2b0c31",
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "cm2",
+     "category": "misc",
+     "codes": {
+      "normal": "cm2",
+      "exceptional": "",
+      "elite": ""
+     },
+     "name": "Large Charm",
+     "stackable": false,
+     "type": "Medium Charm",
+     "type_code": "mcha",
+     "size": {
+      "height": 2,
+      "width": 1
+     },
+     "requirements": {}
+    },
+    "socketed_count": 0,
+    "id": 1503775813,
+    "item_level": 82,
+    "quality": {
+     "id": 4,
+     "name": "Magic"
+    },
+    "graphic_id": 1,
+    "class_specifics": false,
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "passive_pois_mastery",
+      "values": [
+       3
+      ],
+      "label": "3% to Poison Skill Damage",
+      "priority": 88,
+      "min": 2,
+      "max": 3
+     }
+    ],
+    "name": "Malicious Large Charm",
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 8,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Belt",
+     "stash_page": 8
+    },
+    "position": {
+     "column": 0,
+     "row": 13
+    },
+    "category": "misc",
+    "base_code": "cm2",
+    "requirements": {
+     "level": 28,
+     "strength": 0,
+     "dexterity": 0
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "3% to Poison Skill Damage"
+    ],
+    "hash": "708d709c767eeb7c3aa5cb2d00dea0f7798fd51e",
+    "account_id": "m92961"
+   },
+   "user_id": "671a38a00c2f3375e81ae624",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": "5wss",
+   "bumped_at": "2026-10-28T23:43:10.366Z",
+   "user_last_online": "2026-10-28T23:43:10.471Z",
+   "user_last_ingame": "2026-10-28T23:43:10.476Z",
+   "created_at": "2026-10-28T23:43:10.476Z",
+   "updated_at": "2026-10-28T23:43:10.476Z",
+   "created_by_id": "671a38a00c2f3375e81ae624"
+  },
+  {
+   "_id": "6ae2888e7d181f7be7971cf7",
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "cm3",
+     "category": "misc",
+     "codes": {
+      "normal": "cm3",
+      "exceptional": "",
+      "elite": ""
+     },
+     "name": "Grand Charm",
+     "stackable": false,
+     "type": "Large Charm",
+     "type_code": "lcha",
+     "size": {
+      "height": 3,
+      "width": 1
+     },
+     "requirements": {}
+    },
+    "socketed_count": 0,
+    "id": 158941210410,
+    "item_level": 81,
+    "quality": {
+     "id": 4,
+     "name": "Magic"
+    },
+    "graphic_id": 2,
+    "class_specifics": false,
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "item_addskill_tab",
+      "values": [
+       8,
+       1
+      ],
+      "label": "+1 to Fire Skills (Sorceress Only)",
+      "priority": 151
+     }
+    ],
+    "name": "Burning Grand Charm",
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 8,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Belt",
+     "stash_page": 8
+    },
+    "position": {
+     "column": 1,
+     "row": 12
+    },
+    "category": "misc",
+    "base_code": "cm3",
+    "requirements": {
+     "level": 42,
+     "strength": 0,
+     "dexterity": 0
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "+1 to Fire Skills (Sorceress Only)"
+    ],
+    "hash": "d5afea6a034e4de117f6393694fb12f5b19da3e2",
+    "character_id": "SirFuzzlesworth",
+    "account_id": "toasted88",
+    "sockets_max": 0
+   },
+   "user_id": "645864b3ec18a883b5cb7ff6",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": "10 wss",
+   "bumped_at": "2026-10-28T23:43:10.303Z",
+   "user_last_online": "2026-10-28T23:43:10.299Z",
+   "user_last_ingame": "2026-10-28T23:43:10.303Z",
+   "created_at": "2026-10-28T23:43:10.304Z",
+   "updated_at": "2026-10-28T23:43:10.304Z",
+   "created_by_id": "645864b3ec18a883b5cb7ff6"
+  },
+  {
+   "_id": "6ae2888d312acd8deac83af3",
+   "item": {
+    "is_identified": true,
+    "is_socketed": true,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "6cs",
+     "category": "weapon",
+     "codes": {
+      "normal": "cst",
+      "exceptional": "8cs",
+      "elite": "6cs"
+     },
+     "name": "Elder Staff",
+     "stackable": false,
+     "type": "Staff",
+     "type_code": "staf",
+     "size": {
+      "height": 4,
+      "width": 1
+     },
+     "class": {
+      "base_code": "stf",
+      "2hd_code": "stf",
+      "base": "Staff",
+      "2hd": "Staff"
+     },
+     "requirements": {
+      "level": 55,
+      "strength": 44,
+      "dexterity": 37
+     },
+     "damage": {
+      "one_handed": {},
+      "two_handed": {
+       "minimum": 100,
+       "maximum": 116
+      },
+      "missile": {}
+     }
+    },
+    "socketed_count": 0,
+    "id": 1551034058,
+    "item_level": 90,
+    "quality": {
+     "id": 2,
+     "name": "Normal"
+    },
+    "graphic_id": false,
+    "class_specifics": 44,
+    "durability": {
+     "maximum": 105,
+     "current": 89
+    },
+    "socket_count": 4,
+    "modifiers": [
+     {
+      "name": "item_splashonhit",
+      "values": [
+       1,
+       358,
+       100
+      ],
+      "label": "Melee Attacks Deal Splash Damage",
+      "priority": 245
+     },
+     {
+      "name": "item_fastercastrate",
+      "values": [
+       50
+      ],
+      "label": "50% Faster Cast Rate",
+      "priority": 142
+     },
+     {
+      "name": "item_singleskill",
+      "values": [
+       53,
+       3
+      ],
+      "label": "+3 to Chain Lightning (Sorceress Only)",
+      "priority": 81
+     },
+     {
+      "name": "item_singleskill",
+      "values": [
+       54,
+       1
+      ],
+      "label": "+1 to Teleport (Sorceress Only)",
+      "priority": 81
+     },
+     {
+      "name": "item_singleskill",
+      "values": [
+       59,
+       3
+      ],
+      "label": "+3 to Blizzard (Sorceress Only)",
+      "priority": 81
+     }
+    ],
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 8,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Belt",
+     "stash_page": 8
+    },
+    "position": {
+     "column": 1,
+     "row": 3
+    },
+    "category": "weapon",
+    "base_code": "6cs",
+    "name": "Elder Staff",
+    "requirements": {
+     "level": 55,
+     "strength": 44,
+     "dexterity": 37
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "Melee Attacks Deal Splash Damage",
+     "50% Faster Cast Rate",
+     "+3 to Chain Lightning (Sorceress Only)",
+     "+1 to Teleport (Sorceress Only)",
+     "+3 to Blizzard (Sorceress Only)"
+    ],
+    "damage": {
+     "two_handed": {
+      "minimum": 100,
+      "maximum": 116
+     }
+    },
+    "hash": "9fbdccaa094fc84c95a059b0a991ed88ed6ecd82",
+    "account_id": "kakareaper"
+   },
+   "user_id": "6527e81fe6bb7513688d7b68",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": "wsses",
+   "bumped_at": "2026-10-28T23:43:09.923Z",
+   "user_last_online": "2026-10-28T23:43:09.911Z",
+   "user_last_ingame": "2026-10-28T23:43:09.923Z",
+   "created_at": "2026-10-28T23:43:09.924Z",
+   "updated_at": "2026-10-28T23:43:09.924Z",
+   "created_by_id": "6527e81fe6bb7513688d7b68"
+  },
+  {
+   "_id": "6ae19997251c5bacbd375fcb",
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "ulg",
+     "category": "armor",
+     "codes": {
+      "normal": "lgl",
+      "exceptional": "xlg",
+      "elite": "ulg"
+     },
+     "name": "Bramble Mitts",
+     "stackable": false,
+     "type": "Gloves",
+     "type_code": "glov",
+     "size": {
+      "height": 2,
+      "width": 2
+     },
+     "requirements": {
+      "level": 42,
+      "strength": 50
+     }
+    },
+    "socketed_count": 0,
+    "id": 4341441485,
+    "item_level": 81,
+    "quality": {
+     "id": 6,
+     "name": "Rare"
+    },
+    "graphic_id": false,
+    "class_specifics": false,
+    "defense": {
+     "base": 58,
+     "total": 58
+    },
+    "durability": {
+     "maximum": 12,
+     "current": 12
+    },
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "item_addskill_tab",
+      "values": [
+       1,
+       2
+      ],
+      "label": "+2 to Passive and Magic Skills (Amazon Only)",
+      "priority": 151
+     },
+     {
+      "name": "item_fasterattackrate",
+      "values": [
+       20
+      ],
+      "label": "20% Increased Attack Speed",
+      "priority": 145
+     },
+     {
+      "name": "tohit",
+      "values": [
+       52
+      ],
+      "label": "+52 to Attack Rating",
+      "priority": 115,
+      "min": 41,
+      "max": 60
+     },
+     {
+      "name": "poisonresist",
+      "values": [
+       15
+      ],
+      "label": "Poison Resist 15%",
+      "priority": 34,
+      "min": 11,
+      "max": 20
+     },
+     {
+      "name": "item_magicbonus",
+      "values": [
+       6
+      ],
+      "label": "6% Better Chance of Getting Magic Items",
+      "priority": 8,
+      "min": 5,
+      "max": 15
+     },
+     {
+      "name": "item_replenish_durability",
+      "values": [
+       5
+      ],
+      "label": "Repairs 1 Durability in 0.05 Seconds",
+      "priority": 1
+     }
+    ],
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 2,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Amulet",
+     "stash_page": 2
+    },
+    "position": {
+     "column": 2,
+     "row": 4
+    },
+    "category": "armor",
+    "base_code": "ulg",
+    "name": "Bramble Mitts",
+    "requirements": {
+     "level": 42,
+     "strength": 50,
+     "dexterity": 0
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "+2 to Passive and Magic Skills (Amazon Only)",
+     "20% Increased Attack Speed",
+     "+52 to Attack Rating",
+     "Poison Resist 15%",
+     "6% Better Chance of Getting Magic Items",
+     "Repairs 1 Durability in 0.05 Seconds"
+    ],
+    "hash": "43220b1d4bc3de58b55e30215a4d847aca6fd7f7",
+    "account_id": "ailuropanda"
+   },
+   "user_id": "682f1a133606ba45087ff615",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": ".25",
+   "bumped_at": "2026-10-28T23:43:09.566Z",
+   "user_last_online": "2026-10-28T23:43:09.390Z",
+   "user_last_ingame": "2026-10-28T10:36:02.656Z",
+   "created_at": "2026-10-28T06:43:35.861Z",
+   "updated_at": "2026-10-28T23:43:09.738Z",
+   "created_by_id": "682f1a133606ba45087ff615",
+   "updated_by_id": "682f1a133606ba45087ff615"
+  },
+  {
+   "_id": "6ae2888dfab594632e222bb1",
+   "user_id": "68c4865811c9694a5b3f4a8c",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": true,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "ulg",
+     "category": "armor",
+     "codes": {
+      "normal": "lgl",
+      "exceptional": "xlg",
+      "elite": "ulg"
+     },
+     "name": "Bramble Mitts",
+     "stackable": false,
+     "type": "Gloves",
+     "type_code": "glov",
+     "size": {
+      "height": 2,
+      "width": 2
+     },
+     "requirements": {
+      "level": 42,
+      "strength": 50
+     }
+    },
+    "socketed_count": 0,
+    "id": 19143151359,
+    "item_level": 71,
+    "quality": {
+     "id": 6,
+     "name": "Rare"
+    },
+    "graphic_id": false,
+    "class_specifics": false,
+    "defense": {
+     "base": 78,
+     "total": 145
+    },
+    "durability": {
+     "maximum": 12,
+     "current": 12
+    },
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "corrupted",
+      "values": [
+       0,
+       64
+      ],
+      "label": "Corrupted",
+      "priority": 246
+     },
+     {
+      "name": "item_fasterblockrate",
+      "corrupted": true,
+      "values": [
+       15
+      ],
+      "label": "15% Faster Block Rate",
+      "priority": 136
+     },
+     {
+      "name": "toblock",
+      "values": [
+       11
+      ],
+      "label": "11% Increased Chance of Blocking",
+      "priority": 134,
+      "min": 6,
+      "max": 12
+     },
+     {
+      "name": "lifedrainmindam",
+      "values": [
+       3
+      ],
+      "label": "3% Life stolen per hit",
+      "priority": 88
+     },
+     {
+      "name": "item_armor_percent",
+      "values": [
+       86
+      ],
+      "label": "86% Enhanced Defense",
+      "priority": 74,
+      "min": 81,
+      "max": 100
+     },
+     {
+      "name": "coldresist",
+      "values": [
+       12
+      ],
+      "label": "Cold Resist 12%",
+      "priority": 40,
+      "min": 11,
+      "max": 20
+     },
+     {
+      "name": "item_manaafterkill",
+      "values": [
+       3
+      ],
+      "label": "+3 to Mana after each Kill",
+      "priority": 16,
+      "min": 2,
+      "max": 3
+     },
+     {
+      "name": "item_replenish_durability",
+      "values": [
+       3
+      ],
+      "label": "Repairs 1 Durability in 0.03 Seconds",
+      "priority": 1
+     }
+    ],
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 3,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Armor",
+     "stash_page": 3
+    },
+    "position": {
+     "column": 0,
+     "row": 11
+    },
+    "category": "armor",
+    "base_code": "ulg",
+    "name": "Bramble Mitts",
+    "requirements": {
+     "level": 42,
+     "strength": 50,
+     "dexterity": 0
+    },
+    "corrupted": true,
+    "corruptions": [
+     "item_fasterblockrate"
+    ],
+    "desecrated": false,
+    "properties": [
+     "Corrupted",
+     "15% Faster Block Rate",
+     "11% Increased Chance of Blocking",
+     "3% Life stolen per hit",
+     "86% Enhanced Defense",
+     "Cold Resist 12%",
+     "+3 to Mana after each Kill",
+     "Repairs 1 Durability in 0.03 Seconds"
+    ],
+    "hash": "5c3faa3342ac52d99555b7b04f148dff19cba3bf",
+    "account_id": "hackerman2000"
+   },
+   "hr_price": 0,
+   "price": "3wss",
+   "bumped_at": "2026-10-28T23:43:09.182Z",
+   "user_last_online": "2026-10-28T23:43:09.322Z",
+   "user_last_ingame": "2026-10-28T23:43:09.327Z",
+   "created_at": "2026-10-28T23:43:09.327Z",
+   "updated_at": "2026-10-28T23:43:09.327Z",
+   "created_by_id": "68c4865811c9694a5b3f4a8c"
+  },
+  {
+   "_id": "6aded6b5c9d44fde549a2825",
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "utu",
+     "category": "armor",
+     "codes": {
+      "normal": "stu",
+      "exceptional": "xtu",
+      "elite": "utu"
+     },
+     "name": "Wire Fleece",
+     "stackable": false,
+     "type": "Armor",
+     "type_code": "tors",
+     "size": {
+      "height": 3,
+      "width": 2
+     },
+     "requirements": {
+      "level": 53,
+      "strength": 111
+     }
+    },
+    "socketed_count": 0,
+    "id": 14154506614,
+    "item_level": 85,
+    "quality": {
+     "id": 7,
+     "name": "Unique"
+    },
+    "graphic_id": false,
+    "class_specifics": false,
+    "defense": {
+     "base": 392,
+     "total": 1105
+    },
+    "durability": {
+     "maximum": 32,
+     "current": 16
+    },
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "item_fastergethitrate",
+      "values": [
+       40
+      ],
+      "label": "40% Faster Hit Recovery",
+      "priority": 139
+     },
+     {
+      "name": "item_crit_chance",
+      "values": [
+       15
+      ],
+      "label": "15% Chance of Critical Strike",
+      "priority": 84,
+      "min": 12,
+      "max": 16
+     },
+     {
+      "name": "item_armor_percent",
+      "values": [
+       182
+      ],
+      "label": "182% Enhanced Defense",
+      "priority": 74,
+      "min": 150,
+      "max": 200
+     },
+     {
+      "name": "normal_damage_reduction",
+      "values": [
+       24
+      ],
+      "label": "Physical Damage Taken Reduced by 24",
+      "priority": 22,
+      "min": 15,
+      "max": 25
+     },
+     {
+      "name": "magic_damage_reduction",
+      "values": [
+       15
+      ],
+      "label": "Magic Damage Taken Reduced by 15",
+      "priority": 21,
+      "min": 10,
+      "max": 20
+     },
+     {
+      "name": "item_cannotbefrozen",
+      "values": [
+       1
+      ],
+      "label": "Cannot Be Frozen",
+      "priority": 20
+     },
+     {
+      "name": "item_poisonlengthresist",
+      "values": [
+       50
+      ],
+      "label": "Poison Length Reduced by 50%",
+      "priority": 18
+     },
+     {
+      "name": "item_attackertakesdamage",
+      "values": [
+       654
+      ],
+      "label": "Attacker Takes Damage of 654",
+      "priority": 13,
+      "min": 600,
+      "max": 700
+     },
+     {
+      "name": "maxdurability",
+      "values": [
+       103
+      ],
+      "label": "+103 Durability",
+      "priority": 0
+     }
+    ],
+    "name": "The Gladiator's Bane",
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 9,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Boots",
+     "stash_page": 9
+    },
+    "position": {
+     "column": 2,
+     "row": 5
+    },
+    "category": "armor",
+    "base_code": "utu",
+    "requirements": {
+     "level": 85,
+     "strength": 111,
+     "dexterity": 0
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "40% Faster Hit Recovery",
+     "15% Chance of Critical Strike",
+     "182% Enhanced Defense",
+     "Physical Damage Taken Reduced by 24",
+     "Magic Damage Taken Reduced by 15",
+     "Cannot Be Frozen",
+     "Poison Length Reduced by 50%",
+     "Attacker Takes Damage of 654",
+     "+103 Durability"
+    ],
+    "hash": "fa1fe6484531de9d85394b39017048b1092bc6a3",
+    "character_id": "Dubss",
+    "account_id": "dub",
+    "sockets_max": 0
+   },
+   "user_id": "671aebdd00d1fe149085a552",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": ".15",
+   "bumped_at": "2026-10-28T23:43:08.947Z",
+   "user_last_online": "2026-10-28T23:43:09.390Z",
+   "user_last_ingame": "2026-10-28T23:43:24.338Z",
+   "created_at": "2026-10-26T04:27:33.403Z",
+   "updated_at": "2026-10-28T23:43:08.947Z",
+   "created_by_id": "671aebdd00d1fe149085a552",
+   "updated_by_id": "671aebdd00d1fe149085a552"
+  },
+  {
+   "_id": "6ae2888cfe7e99c121a899fa",
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "cm3",
+     "category": "misc",
+     "codes": {
+      "normal": "cm3",
+      "exceptional": "",
+      "elite": ""
+     },
+     "name": "Grand Charm",
+     "stackable": false,
+     "type": "Large Charm",
+     "type_code": "lcha",
+     "size": {
+      "height": 3,
+      "width": 1
+     },
+     "requirements": {}
+    },
+    "socketed_count": 0,
+    "id": 991184921,
+    "item_level": 61,
+    "quality": {
+     "id": 4,
+     "name": "Magic"
+    },
+    "graphic_id": 2,
+    "class_specifics": false,
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "item_addskill_tab",
+      "values": [
+       25,
+       1
+      ],
+      "label": "+1 to Offensive Auras Skills (Paladin Only)",
+      "priority": 151
+     },
+     {
+      "name": "dexterity",
+      "values": [
+       5
+      ],
+      "label": "+5 to Dexterity",
+      "priority": 65,
+      "min": 5,
+      "max": 6
+     }
+    ],
+    "name": "Captain's Grand Charm of Dexterity",
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 1,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Helm",
+     "stash_page": 1
+    },
+    "position": {
+     "column": 0,
+     "row": 7
+    },
+    "category": "misc",
+    "base_code": "cm3",
+    "requirements": {
+     "level": 42,
+     "strength": 0,
+     "dexterity": 0
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "+1 to Offensive Auras Skills (Paladin Only)",
+     "+5 to Dexterity"
+    ],
+    "hash": "e132472abfa95baad70f6f097cc102453f068c19",
+    "character_id": "CeNedra",
+    "account_id": "algonquinz",
+    "sockets_max": 0
+   },
+   "user_id": "64497dca2377d4a32f8079f6",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": "5wss",
+   "bumped_at": "2026-10-28T23:43:08.756Z",
+   "user_last_online": "2026-10-28T23:43:08.905Z",
+   "user_last_ingame": "2026-10-28T23:43:08.924Z",
+   "created_at": "2026-10-28T23:43:08.924Z",
+   "updated_at": "2026-10-28T23:43:08.924Z",
+   "created_by_id": "64497dca2377d4a32f8079f6"
+  },
+  {
+   "_id": "6ae199a5251c5bacbd375fcc",
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "cm3",
+     "category": "misc",
+     "codes": {
+      "normal": "cm3",
+      "exceptional": "",
+      "elite": ""
+     },
+     "name": "Grand Charm",
+     "stackable": false,
+     "type": "Large Charm",
+     "type_code": "lcha",
+     "size": {
+      "height": 3,
+      "width": 1
+     },
+     "requirements": {}
+    },
+    "socketed_count": 0,
+    "id": 61401189411,
+    "item_level": 87,
+    "quality": {
+     "id": 4,
+     "name": "Magic"
+    },
+    "graphic_id": 2,
+    "class_specifics": false,
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "item_addskill_tab",
+      "values": [
+       50,
+       1
+      ],
+      "label": "+1 to Martial Arts Skills (Assassin Only)",
+      "priority": 151
+     },
+     {
+      "name": "maxhp",
+      "values": [
+       32
+      ],
+      "label": "+32 to Life",
+      "priority": 59,
+      "min": 31,
+      "max": 35
+     }
+    ],
+    "name": "Shogukusha's Grand Charm of Substinence",
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 2,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Amulet",
+     "stash_page": 2
+    },
+    "position": {
+     "column": 9,
+     "row": 3
+    },
+    "category": "misc",
+    "base_code": "cm3",
+    "requirements": {
+     "level": 53,
+     "strength": 0,
+     "dexterity": 0
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "+1 to Martial Arts Skills (Assassin Only)",
+     "+32 to Life"
+    ],
+    "hash": "16a518753f10bf4da24cffacc0139c7c56a83942",
+    "account_id": "ailuropanda",
+    "sockets_max": 0
+   },
+   "user_id": "682f1a133606ba45087ff615",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": ".5",
+   "bumped_at": "2026-10-28T23:43:08.333Z",
+   "user_last_online": "2026-10-28T23:43:09.390Z",
+   "user_last_ingame": "2026-10-28T10:36:02.656Z",
+   "created_at": "2026-10-28T06:43:49.539Z",
+   "updated_at": "2026-10-28T23:43:08.505Z",
+   "created_by_id": "682f1a133606ba45087ff615",
+   "updated_by_id": "682f1a133606ba45087ff615"
+  },
+  {
+   "_id": "6ae1ce78ecf01a7d3a164a63",
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "jew",
+     "category": "misc",
+     "codes": {
+      "normal": "jew",
+      "exceptional": "",
+      "elite": ""
+     },
+     "name": "Jewel",
+     "stackable": false,
+     "type": "Jewel",
+     "type_code": "jewl",
+     "size": {
+      "height": 1,
+      "width": 1
+     },
+     "requirements": {}
+    },
+    "socketed_count": 0,
+    "id": 73030618,
+    "item_level": 87,
+    "quality": {
+     "id": 6,
+     "name": "Rare"
+    },
+    "graphic_id": 3,
+    "class_specifics": false,
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "min_damage",
+      "values": [
+       3
+      ],
+      "label": "+3 to Minimum Damage",
+      "priority": 127
+     },
+     {
+      "name": "maxdamage_percent",
+      "values": [
+       40,
+       40
+      ],
+      "label": "+40% Enhanced Damage",
+      "priority": 120,
+      "min": 31,
+      "max": 40
+     },
+     {
+      "name": "tohit",
+      "values": [
+       20
+      ],
+      "label": "+20 to Attack Rating",
+      "priority": 115,
+      "min": 10,
+      "max": 20
+     }
+    ],
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 2,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Amulet",
+     "stash_page": 2
+    },
+    "position": {
+     "column": 7,
+     "row": 9
+    },
+    "category": "misc",
+    "base_code": "jew",
+    "name": "Jewel",
+    "requirements": {
+     "level": 58,
+     "strength": 0,
+     "dexterity": 0
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "+3 to Minimum Damage",
+     "+40% Enhanced Damage",
+     "+20 to Attack Rating"
+    ],
+    "hash": "efafbcb552ae4ffd3d601d5e8678fcf06e78ea64",
+    "account_id": "ailuropanda",
+    "sockets_max": 0
+   },
+   "user_id": "682f1a133606ba45087ff615",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": ".75",
+   "bumped_at": "2026-10-28T23:43:07.449Z",
+   "user_last_online": "2026-10-28T23:43:09.390Z",
+   "user_last_ingame": "2026-10-28T10:36:02.656Z",
+   "created_at": "2026-10-28T10:29:12.760Z",
+   "updated_at": "2026-10-28T23:43:07.762Z",
+   "created_by_id": "682f1a133606ba45087ff615",
+   "updated_by_id": "682f1a133606ba45087ff615"
+  },
+  {
+   "_id": "6ae2888afab594632e222bae",
+   "item": {
+    "is_identified": true,
+    "is_socketed": true,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "ci2",
+     "category": "armor",
+     "codes": {
+      "normal": "ci1",
+      "exceptional": "ci2",
+      "elite": "ci3"
+     },
+     "name": "Tiara",
+     "stackable": false,
+     "type": "Circlet",
+     "type_code": "circ",
+     "size": {
+      "height": 2,
+      "width": 2
+     },
+     "requirements": {
+      "level": 52
+     }
+    },
+    "socketed_count": 0,
+    "id": 4398134214,
+    "item_level": 91,
+    "quality": {
+     "id": 6,
+     "name": "Rare"
+    },
+    "graphic_id": false,
+    "class_specifics": false,
+    "defense": {
+     "base": 50,
+     "total": 50
+    },
+    "durability": {
+     "maximum": 25,
+     "current": 22
+    },
+    "socket_count": 1,
+    "modifiers": [
+     {
+      "name": "corrupted",
+      "values": [
+       0,
+       32
+      ],
+      "label": "Corrupted",
+      "priority": 246
+     },
+     {
+      "name": "item_addclassskills",
+      "values": [
+       2,
+       2
+      ],
+      "label": "+2 to Necromancer Skills",
+      "priority": 157
+     },
+     {
+      "name": "dexterity",
+      "values": [
+       6
+      ],
+      "label": "+6 to Dexterity",
+      "priority": 65,
+      "min": 6,
+      "max": 9
+     },
+     {
+      "name": "maxhp",
+      "values": [
+       47
+      ],
+      "label": "+47 to Life",
+      "priority": 59,
+      "min": 41,
+      "max": 60
+     },
+     {
+      "name": "coldresist",
+      "values": [
+       23
+      ],
+      "label": "Cold Resist 23%",
+      "priority": 40
+     },
+     {
+      "name": "lightresist",
+      "values": [
+       23
+      ],
+      "label": "Lightning Resist 23%",
+      "priority": 38
+     },
+     {
+      "name": "fireresist",
+      "values": [
+       54
+      ],
+      "label": "Fire Resist 54%",
+      "priority": 36,
+      "min": 31,
+      "max": 40
+     },
+     {
+      "name": "poisonresist",
+      "values": [
+       23
+      ],
+      "label": "Poison Resist 23%",
+      "priority": 34
+     },
+     {
+      "name": "item_attackertakesdamage",
+      "values": [
+       238
+      ],
+      "label": "Attacker Takes Damage of 238",
+      "priority": 13,
+      "min": 200,
+      "max": 400
+     }
+    ],
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 5,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Left Hand",
+     "stash_page": 5
+    },
+    "position": {
+     "column": 8,
+     "row": 9
+    },
+    "category": "armor",
+    "base_code": "ci2",
+    "name": "Tiara",
+    "requirements": {
+     "level": 67,
+     "strength": 0,
+     "dexterity": 0
+    },
+    "corrupted": true,
+    "corruptions": [
+     "item_numsockets"
+    ],
+    "desecrated": false,
+    "properties": [
+     "Corrupted",
+     "+2 to Necromancer Skills",
+     "+6 to Dexterity",
+     "+47 to Life",
+     "Cold Resist 23%",
+     "Lightning Resist 23%",
+     "Fire Resist 54%",
+     "Poison Resist 23%",
+     "Attacker Takes Damage of 238"
+    ],
+    "hash": "32bbf2e2cf908f1bb23fc863a5e061456fb59536",
+    "account_id": "nosenses"
+   },
+   "user_id": "645c5af6a8495026c18dd3ba",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": "1 obo",
+   "bumped_at": "2026-10-28T23:43:06.555Z",
+   "user_last_online": "2026-10-28T23:43:06.692Z",
+   "user_last_ingame": "2026-10-28T23:43:06.698Z",
+   "created_at": "2026-10-28T23:43:06.698Z",
+   "updated_at": "2026-10-28T23:43:06.698Z",
+   "created_by_id": "645c5af6a8495026c18dd3ba"
+  },
+  {
+   "_id": "6ae2888ce9a0a1f80b7cc0e4",
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "jew",
+     "category": "misc",
+     "codes": {
+      "normal": "jew",
+      "exceptional": "",
+      "elite": ""
+     },
+     "name": "Jewel",
+     "stackable": false,
+     "type": "Jewel",
+     "type_code": "jewl",
+     "size": {
+      "height": 1,
+      "width": 1
+     },
+     "requirements": {}
+    },
+    "socketed_count": 0,
+    "id": 7156471159,
+    "item_level": 90,
+    "quality": {
+     "id": 7,
+     "name": "Unique"
+    },
+    "graphic_id": 3,
+    "class_specifics": false,
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "item_skillonlevelup",
+      "values": [
+       41,
+       48,
+       100
+      ],
+      "label": "100% Chance to cast level 41 Nova when you Level-Up",
+      "priority": 160
+     },
+     {
+      "name": "lightdam",
+      "values": [
+       1,
+       74
+      ],
+      "label": "Adds 1-74 Lightning Damage",
+      "priority": 99
+     },
+     {
+      "name": "passive_ltng_mastery",
+      "values": [
+       3
+      ],
+      "label": "3% to Lightning Skill Damage",
+      "priority": 88,
+      "min": 3,
+      "max": 5
+     },
+     {
+      "name": "passive_ltng_pierce",
+      "values": [
+       5
+      ],
+      "label": "-5% to Enemy Lightning Resistance",
+      "priority": 88,
+      "min": 3,
+      "max": 5
+     }
+    ],
+    "name": "Rainbow Facet",
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 2,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Amulet",
+     "stash_page": 2
+    },
+    "position": {
+     "column": 6,
+     "row": 4
+    },
+    "category": "misc",
+    "base_code": "jew",
+    "requirements": {
+     "level": 49,
+     "strength": 0,
+     "dexterity": 0
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "100% Chance to cast level 41 Nova when you Level-Up",
+     "Adds 1-74 Lightning Damage",
+     "3% to Lightning Skill Damage",
+     "-5% to Enemy Lightning Resistance"
+    ],
+    "hash": "b10f6b0dae178bb9c6fae9a2161298970e686b2e",
+    "account_id": "caddiemaster",
+    "sockets_max": 0
+   },
+   "user_id": "6829b28cd90238531660eca1",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": ".25",
+   "bumped_at": "2026-10-28T23:43:06.402Z",
+   "user_last_online": "2026-10-28T23:43:08.082Z",
+   "user_last_ingame": "2026-10-28T23:43:08.088Z",
+   "created_at": "2026-10-28T23:43:08.088Z",
+   "updated_at": "2026-10-28T23:43:08.088Z",
+   "created_by_id": "6829b28cd90238531660eca1"
+  },
+  {
+   "_id": "6ae1ce87ecf01a7d3a164a6a",
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "jew",
+     "category": "misc",
+     "codes": {
+      "normal": "jew",
+      "exceptional": "",
+      "elite": ""
+     },
+     "name": "Jewel",
+     "stackable": false,
+     "type": "Jewel",
+     "type_code": "jewl",
+     "size": {
+      "height": 1,
+      "width": 1
+     },
+     "requirements": {}
+    },
+    "socketed_count": 0,
+    "id": 41441513414,
+    "item_level": 87,
+    "quality": {
+     "id": 4,
+     "name": "Magic"
+    },
+    "graphic_id": 0,
+    "class_specifics": false,
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "item_fasterattackrate",
+      "values": [
+       15
+      ],
+      "label": "15% Increased Attack Speed",
+      "priority": 145
+     },
+     {
+      "name": "max_damage",
+      "values": [
+       9
+      ],
+      "label": "+9 to Maximum Damage",
+      "priority": 126,
+      "min": 6,
+      "max": 9
+     }
+    ],
+    "name": "Carmine Jewel of Fervor",
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 2,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Amulet",
+     "stash_page": 2
+    },
+    "position": {
+     "column": 9,
+     "row": 6
+    },
+    "category": "misc",
+    "base_code": "jew",
+    "requirements": {
+     "level": 31,
+     "strength": 0,
+     "dexterity": 0
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "15% Increased Attack Speed",
+     "+9 to Maximum Damage"
+    ],
+    "hash": "a3378539994c5a5a937233630fc9ff6cc7f529f4",
+    "account_id": "ailuropanda",
+    "sockets_max": 0
+   },
+   "user_id": "682f1a133606ba45087ff615",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": "2wss",
+   "bumped_at": "2026-10-28T23:43:06.377Z",
+   "user_last_online": "2026-10-28T23:43:09.390Z",
+   "user_last_ingame": "2026-10-28T10:36:02.656Z",
+   "created_at": "2026-10-28T10:29:27.486Z",
+   "updated_at": "2026-10-28T23:43:06.564Z",
+   "created_by_id": "682f1a133606ba45087ff615",
+   "updated_by_id": "682f1a133606ba45087ff615"
+  },
+  {
+   "_id": "6ae28889312acd8deac83af0",
+   "item": {
+    "is_identified": true,
+    "is_socketed": false,
+    "is_new": false,
+    "is_ear": false,
+    "is_starter": false,
+    "is_simple": false,
+    "is_ethereal": false,
+    "is_personalized": false,
+    "is_runeword": false,
+    "format_version": 105,
+    "base": {
+     "id": "6ls",
+     "category": "weapon",
+     "codes": {
+      "normal": "lst",
+      "exceptional": "8ls",
+      "elite": "6ls"
+     },
+     "name": "Stalagmite",
+     "stackable": false,
+     "type": "Staff",
+     "type_code": "staf",
+     "size": {
+      "height": 4,
+      "width": 1
+     },
+     "class": {
+      "base_code": "stf",
+      "2hd_code": "stf",
+      "base": "Staff",
+      "2hd": "Staff"
+     },
+     "requirements": {
+      "level": 49,
+      "strength": 63,
+      "dexterity": 35
+     },
+     "damage": {
+      "one_handed": {},
+      "two_handed": {
+       "minimum": 94,
+       "maximum": 134
+      },
+      "missile": {}
+     }
+    },
+    "socketed_count": 0,
+    "id": 12610111321313,
+    "item_level": 89,
+    "quality": {
+     "id": 2,
+     "name": "Normal"
+    },
+    "graphic_id": false,
+    "class_specifics": 44,
+    "durability": {
+     "maximum": 90,
+     "current": 73
+    },
+    "socket_count": 0,
+    "modifiers": [
+     {
+      "name": "item_splashonhit",
+      "values": [
+       1,
+       358,
+       100
+      ],
+      "label": "Melee Attacks Deal Splash Damage",
+      "priority": 245
+     },
+     {
+      "name": "item_fastercastrate",
+      "values": [
+       50
+      ],
+      "label": "50% Faster Cast Rate",
+      "priority": 142
+     },
+     {
+      "name": "item_singleskill",
+      "values": [
+       48,
+       3
+      ],
+      "label": "+3 to Nova (Sorceress Only)",
+      "priority": 81
+     },
+     {
+      "name": "item_singleskill",
+      "values": [
+       51,
+       1
+      ],
+      "label": "+1 to Fire Wall (Sorceress Only)",
+      "priority": 81
+     },
+     {
+      "name": "item_singleskill",
+      "values": [
+       54,
+       1
+      ],
+      "label": "+1 to Teleport (Sorceress Only)",
+      "priority": 81
+     }
+    ],
+    "location": {
+     "storage_id": 6,
+     "equipment_id": 8,
+     "zone_id": 0,
+     "zone": "Stored",
+     "storage": "Shared Stash",
+     "equipment": "Belt",
+     "stash_page": 8
+    },
+    "position": {
+     "column": 0,
+     "row": 7
+    },
+    "category": "weapon",
+    "base_code": "6ls",
+    "name": "Stalagmite",
+    "requirements": {
+     "level": 49,
+     "strength": 63,
+     "dexterity": 35
+    },
+    "corrupted": false,
+    "desecrated": false,
+    "properties": [
+     "Melee Attacks Deal Splash Damage",
+     "50% Faster Cast Rate",
+     "+3 to Nova (Sorceress Only)",
+     "+1 to Fire Wall (Sorceress Only)",
+     "+1 to Teleport (Sorceress Only)"
+    ],
+    "damage": {
+     "two_handed": {
+      "minimum": 94,
+      "maximum": 134
+     }
+    },
+    "hash": "f31d0e67c7f81a3046e0420ba8c82cfb71323416",
+    "account_id": "kakareaper"
+   },
+   "user_id": "6527e81fe6bb7513688d7b68",
+   "type": "item",
+   "is_hardcore": false,
+   "is_ladder": true,
+   "price": "10wss",
+   "bumped_at": "2026-10-28T23:43:05.554Z",
+   "user_last_online": "2026-10-28T23:43:05.550Z",
+   "user_last_ingame": "2026-10-28T23:43:05.554Z",
+   "created_at": "2026-10-28T23:43:05.554Z",
+   "updated_at": "2026-10-28T23:43:05.554Z",
+   "created_by_id": "6527e81fe6bb7513688d7b68"
+  }
+ ]
+}
