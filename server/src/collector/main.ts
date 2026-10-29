@@ -1,4 +1,3 @@
-import { Profanity } from '@2toad/profanity';
 import { loadConfig } from '../config';
 import { getLastIngest } from '../db/characters-repo';
 import { migrate } from '../db/migrate';
@@ -8,10 +7,11 @@ import {
   heartbeat,
   isPaused,
   markAccountChecked,
-  takePriorityAccounts,
+  listPriorityAccounts,
+  removePriorityAccount,
   type CollectorStats,
 } from '../db/status-repo';
-import { Pd2Client } from '../upstream/pd2-client';
+import { Pd2Client, UpstreamError } from '../upstream/pd2-client';
 import { RateLimiter } from '../upstream/rate-limiter';
 import { ladderNames, planFromAccount, planFromLadder } from './discovery';
 import { ingestOne } from './ingest';
@@ -53,7 +53,7 @@ async function main(): Promise<void> {
   });
   const client = new Pd2Client(limiter);
   const queue = new CharQueue();
-  const profanity = new Profanity({ wholeWord: false });
+  let firstOnlineSweep = true;
 
   let stopping = false;
   const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
@@ -79,7 +79,6 @@ async function main(): Promise<void> {
 
   const queueNames = (names: string[], priority: 0 | 1 | 2, account?: string) => {
     for (const name of names) {
-      if (profanity.exists(name)) continue;
       queue.push({ name, account, priority });
     }
   };
@@ -95,14 +94,17 @@ async function main(): Promise<void> {
       name: 'priority-accounts',
       everyMs: MIN,
       run: async () => {
-        if (!(await active())) return;
-        for (const account of await takePriorityAccounts(pool)) {
+        for (const account of await listPriorityAccounts(pool)) {
+          if (stopping || !(await active())) return;
           try {
             await planAccount(account, 0);
             await markAccountChecked(pool, account, new Date());
+            await removePriorityAccount(pool, account);
           } catch (e) {
             errors.add();
             log('error', `priority account ${account} failed`, e);
+            // Retryable upstream errors keep the row for the next minute; anything else is dropped.
+            if (!(e instanceof UpstreamError && e.retryable)) await removePriorityAccount(pool, account);
           }
         }
       },
@@ -114,7 +116,7 @@ async function main(): Promise<void> {
         if (!(await active())) return;
         const ladder = await client.ladder();
         const last = await getLastIngest(pool, cfg.currentSeason, ladderNames(ladder));
-        queueNames(planFromLadder(ladder, last, new Date()), 1);
+        queueNames(planFromLadder(ladder, last, new Date(), cfg), 1);
         stats.lastLadderPassAt = new Date().toISOString();
       },
     },
@@ -123,7 +125,10 @@ async function main(): Promise<void> {
       everyMs: 30 * MIN,
       run: async () => {
         if (!(await active())) return;
-        const due = await accountsDue(pool, await client.online(), new Date());
+        // After a restart the first sweep ignores the 24 h account cooldown; the 20 h
+        // freshness check in planFromAccount still prevents re-ingesting fresh characters.
+        const due = await accountsDue(pool, await client.online(), new Date(), firstOnlineSweep ? 0 : undefined);
+        firstOnlineSweep = false;
         for (const account of due) {
           if (stopping || !(await active())) return;
           try {
