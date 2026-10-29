@@ -1,10 +1,11 @@
 import { Pool } from 'pg';
 import { toCompact } from '../core/compact';
 import { readRaw, replaceItems } from '../db/characters-repo';
+import { withMetaRollup } from '../db/meta-rollup';
 import type { CharacterApiResponse } from '../core/vendor/types';
 
 /**
- * Rewrites character_items from stored raw for one season. Leaves last_ingested_at and history alone.
+ * Rewrites character_items from stored raw for one season and keeps meta_rollup in step. Leaves last_ingested_at and history alone.
  * Each row is locked (serialises with upsertCharacter) and guarded by a savepoint, so a bad row is
  * logged and skipped instead of aborting the run. Returns the number of characters backfilled.
  */
@@ -34,7 +35,10 @@ export async function backfillItems(pool: Pool, season: number, batchSize = 200)
             continue;
           }
           const c = toCompact(readRaw(locked.rows[0]) as CharacterApiResponse);
-          await replaceItems(client, id, c.items);
+          await withMetaRollup(client, id, async () => {
+            await replaceItems(client, id, c.items);
+            return id;
+          });
           await client.query('release savepoint row_sp');
           count++;
         } catch (e) {
