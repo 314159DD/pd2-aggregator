@@ -19,6 +19,7 @@ import {
   toggleSkill,
   type BuildsState,
 } from "@/lib/builds/url-state";
+import { AddAccount } from "./AddAccount";
 import { ActiveFilters } from "./ActiveFilters";
 import { BuildsHeader } from "./BuildsHeader";
 import { CharacterTable } from "./CharacterTable";
@@ -183,6 +184,13 @@ export function BuildsView() {
                 <div className="flex min-w-0 flex-col gap-5 lg:col-span-8">
                   <ShoppingList items={data.usage.items} />
                   <CharacterTable page={data.characters} state={state} onChange={update} />
+                  <section className="mat-thick flex flex-col gap-3 rounded-[var(--radius-panel)] p-5" aria-label="Add account">
+                    <div>
+                      <h2 className="text-sm font-semibold text-ink">Add account</h2>
+                      <p className="mt-1 text-xs text-ink-soft">Not listed? Track an account and its characters show up here.</p>
+                    </div>
+                    <AddAccount />
+                  </section>
                 </div>
               </div>
             </>
