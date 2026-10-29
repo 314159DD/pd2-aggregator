@@ -138,7 +138,12 @@ export function CharacterTable({ page, state, onChange }: Props) {
         <span className="font-mono text-xs text-ink-soft tabular-nums">{formatCount(page.total)} characters match</span>
       </div>
 
-      {page.characters.length === 0 ? (
+      {page.characters.length === 0 && page.total > 0 ? (
+        <div className="flex flex-col items-center gap-3 py-8 text-center text-sm text-ink-soft">
+          <p>Page out of range</p>
+          <Button size="sm" onClick={() => go(1)}>Go to page 1</Button>
+        </div>
+      ) : page.characters.length === 0 ? (
         <p className="py-8 text-center text-sm text-ink-soft">No characters match these filters.</p>
       ) : (
         <div className="overflow-x-auto">
